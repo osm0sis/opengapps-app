@@ -1,0 +1,54 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Open GApps</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="architectures" tools:ignore="MissingTranslation">
+        <item>ARM</item>
+        <item>ARM64</item>
+        <item>x86</item>
+        <item>x86_64</item>
+    </string-array>
+    <string-array name="android_versions" tools:ignore="MissingTranslation">
+        <item>4.4</item>
+        <item>5.0</item>
+        <item>5.1</item>
+        <item>6.0</item>
+    </string-array>
+    <string-array name="opengapps_variant" tools:ignore="MissingTranslation">
+        <item>aroma</item>
+        <item>super</item>
+        <item>stock</item>
+        <item>full</item>
+        <item>mini</item>
+        <item>micro</item>
+        <item>nano</item>
+        <item>pico</item>
+    </string-array>
+    <string name="variants">Variants</string>
+    <string name="ok">OK</string>
+    <string name="variants_explanation" translatable="false">
+        <b>Aroma</b>\n
+           <p>The Aroma package is a special version of the regular \'Super\' package, but with a graphical front-end that will allow you to select which specific applications to install (or not) without having to manually write a gapps-config file. Note: For versions of 5.0 and lower the Aroma package is based on Stock, and not all options shown are actually available within the package. AROMA has some <b>known issues</b>, which varies by device and recovery version.</p>\n\n
+        <b>Full</b>\n
+            <p>This package is similar to the Google Stock Package above except that it does NOT include Google Camera and Google Keyboard and will NOT remove your stock/AOSP Browser, Camera, Email, Gallery, Launcher, Keyboard, SMS App, Pico TTS or WebView.</p>\n\n
+
+    </string>
+    <string name="label_download">Download</string>
+    <string name="label_architecture">Architecture</string>
+    <string name="label_android" translatable="false">Android</string>
+    <string name="label_variant">Variant</string>
+    <string name="label_info">Info</string>
+    <string name="download_url" translatable="false">https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip</string>
+    <string name="feed_url" translatable="false">https://github.com/opengapps/%arch/releases.atom</string>
+    <string name="invalid_combo">Invalid Combo</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_header_gapps_selection">GApps</string>
+    <string name="pref_header_download">Download</string>
+    <string name="pref_header_general">General</string>
+    <string name="pref_name" translatable="false">org.opengapps.opengapps_preferences</string>
+    <string name="permission_granted">Permission granted! Thanks!</string>
+    <string name="slide_android_description">You can select the android version here. lol</string>
+    <string name="slide_arch_description">Funny stuff about architectures!</string>
+    <string name="slide_variant_description">Stuff bout Variants</string>
+
+
+</resources>

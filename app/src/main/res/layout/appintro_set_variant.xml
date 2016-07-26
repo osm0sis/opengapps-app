@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:id="@+id/constraintLayout3">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/description_intro_gapps"
+        android:text="Important text!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout3"
+        android:layout_marginStart="16dp"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout3"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
+        android:layout_marginBottom="112dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/arch_radio_group"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout3"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout3"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout3"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintVertical_bias="0.44">
+
+    </RadioGroup>
+
+    <TextView
+        android:text="Architecture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/headline_intro_gapps"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@android:color/white"
+        android:textStyle="normal|bold"
+        android:textSize="28sp"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout3"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout3"
+        android:layout_marginTop="64dp"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout3"
+        android:layout_marginEnd="16dp" />
+
+</android.support.constraint.ConstraintLayout>

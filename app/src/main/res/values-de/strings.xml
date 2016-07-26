@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Open GApps</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="invalid_combo">Ungültige Wahl</string>
+    <string name="label_architecture">Architektur</string>
+    <string name="label_download">Herunterladen</string>
+    <string name="label_info">Info</string>
+    <string name="label_variant">Variante</string>
+    <string name="ok">OK</string>
+    <string name="pref_header_download">Download</string>
+    <string name="pref_header_gapps_selection">GApps</string>
+    <string name="pref_header_general">Allgemein</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="variants">Varianten</string>
+    <string name="permission_granted">Berechtigung erteilt! Danke!</string>
+    <string name="slide_android_description">You can select the android version here. lol</string>
+    <string name="slide_arch_description">Funny stuff about architectures!</string>
+    <string name="slide_variant_description">Stuff bout Vars!</string>
+</resources>
