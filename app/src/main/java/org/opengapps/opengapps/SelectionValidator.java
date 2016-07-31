@@ -4,15 +4,10 @@ package org.opengapps.opengapps;
     Todo - Enable Validation in settings-menu (will get interesting)
  */
 
-
-import android.content.Context;
 @SuppressWarnings({"SimplifiableIfStatement", "WeakerAccess"})
 public class SelectionValidator {
-    private Context context;
 
-    public SelectionValidator(Context context) {
-        this.context = context;
-    }
+    private SelectionValidator(){}
 
     public static boolean isValid(String arch, String android, String variant) {
         if (arch.equals("x86") && android.equals("4.4") && (variant.equals("stock") || variant.equals("full")))

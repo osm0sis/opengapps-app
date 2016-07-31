@@ -27,4 +27,5 @@
     <string name="update_available">Update verfügbar!</string>
     <string name="label_update">Update</string>
     <string name="package_updated">Paket aktualisiert</string>
+    <string name="label_cancel">Abbrechen</string>
 </resources>

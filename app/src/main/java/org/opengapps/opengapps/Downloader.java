@@ -24,14 +24,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class Downloader extends AsyncTask<Void, Void, Long> {
+class Downloader extends AsyncTask<Void, Void, Long> {
     private final MainActivity mainActivity;
     private String architecture, android, variant, tag;
     private static File lastFile;
 
-    public Downloader(MainActivity mainActivity) {
+    Downloader(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
-        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), Context.MODE_PRIVATE);
         this.architecture = prefs.getString("selection_arch", null);
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
@@ -52,17 +52,17 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         mainActivity.downloadStarted(id, tag);
     }
 
-    public String getTag() {
+    String getTag() {
         return tag;
     }
 
-    public void deleteLastFile() {
+    void deleteLastFile() {
         if (lastFile != null)
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
     }
 
-    public class TagUpdater extends AsyncTask<Void, Void, String> {
+    class TagUpdater extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {
             refreshFeed();
@@ -77,7 +77,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private Uri generateUri() {
-        String url = mainActivity.getResources().getString(R.string.download_url);
+        String url = mainActivity.getString(R.string.download_url);
         url = url.replace("%arch", architecture);
         url = url.replace("%tag", tag);
         url = url.replace("%variant", variant);
@@ -109,7 +109,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mainActivity.getResources().getString(R.string.feed_url).replace("%arch", architecture))
+                    .url(mainActivity.getString(R.string.feed_url).replace("%arch", architecture))
                     .build();
 
             Response response = client.newCall(request).execute();
@@ -124,6 +124,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private long doDownload(Uri uri) {
+        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), Context.MODE_PRIVATE);
         if (lastFile != null) {
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
@@ -132,11 +133,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         DownloadManager.Request request = new DownloadManager.Request(uri);
         String title = "OpenGApps-" + architecture + "-" + android + "-" + variant;
         request.setTitle(title);
-        if (mainActivity.getPreferences(Context.MODE_PRIVATE).getBoolean("download_wifi_only", true))
+        if (prefs.getBoolean("download_wifi_only", true))
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-        String path = mainActivity.getPreferences(Context.MODE_PRIVATE).getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
+        String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         File f = new File(new File(path), title + ".zip");
         lastFile = f;
+        //noinspection ResultOfMethodCallIgnored
         f.delete();
         request.setDestinationUri(Uri.fromFile(f));
         DownloadManager downloadManager = (DownloadManager) mainActivity.getSystemService(Context.DOWNLOAD_SERVICE);
@@ -162,14 +164,14 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     private static String convertHashToString(byte[] md5Bytes) {
         String returnVal = "";
-        for (int i = 0; i < md5Bytes.length; i++) {
-            returnVal += Integer.toString((md5Bytes[i] & 0xff) + 0x100, 16).substring(1);
+        for (byte md5Byte : md5Bytes) {
+            returnVal += Integer.toString((md5Byte & 0xff) + 0x100, 16).substring(1);
         }
         return returnVal.toUpperCase();
     }
 
-    public static String getDownloadedFile(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(context.getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+    static String getDownloadedFile(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), Context.MODE_PRIVATE);
         String architecture = prefs.getString("selection_arch", null);
         String android = prefs.getString("selection_android", null);
         String variant = prefs.getString("selection_variant", null);

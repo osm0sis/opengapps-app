@@ -1,6 +1,5 @@
 package org.opengapps.opengapps;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -10,16 +9,16 @@ import java.io.IOException;
 
 import eu.chainfire.libsuperuser.Shell;
 
-public class ZipInstaller {
+class ZipInstaller {
     private final Context context;
     private final SharedPreferences prefs;
 
-    public ZipInstaller(Context context){
+    ZipInstaller(Context context){
         this.context = context;
-        prefs = context.getSharedPreferences(context.getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        prefs = context.getSharedPreferences(context.getString(R.string.pref_name), Context.MODE_PRIVATE);
     }
 
-    public void installZip(){
+    void installZip(){
         if(Shell.SU.available()){
             try {
                 File f = new File(context.getFilesDir(), "openrecoveryscript");

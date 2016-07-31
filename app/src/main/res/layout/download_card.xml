@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/progressView"
         android:layout_marginTop="16dp"
         app:layout_constraintRight_toLeftOf="@+id/install_button"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="8dp" />
 
     <ImageButton
         android:id="@+id/variant_info_button"
@@ -184,7 +184,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/label_variant"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintRight_toRightOf="@+id/constraintLayout" />
 
     <Button

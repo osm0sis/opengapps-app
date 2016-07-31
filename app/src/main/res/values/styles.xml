@@ -21,8 +21,10 @@
         <item name="android:textStyle">normal|bold</item>
         <item name="android:textColor">#ffff</item>
     </style>
-    
-    <style name="card_updated" parent="CardView.Light">
-        <item name="android:textColor">@color/colorPrimary</item>
+
+    <style name="HiddenButton">
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
     </style>
 </resources>

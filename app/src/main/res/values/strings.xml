@@ -59,6 +59,7 @@
     <string name="update_available">Update available!</string>
     <string name="label_update">Update</string>
     <string name="package_updated">Package updated</string>
+    <string name="label_cancel">Cancel</string>
 
 
 </resources>

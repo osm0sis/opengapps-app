@@ -1,11 +1,11 @@
 package org.opengapps.opengapps;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // Start the thread
         t.start();
 
-
-        prefs = getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        prefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
         initButtons();
         initSelections();
@@ -76,8 +75,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private void restoreDownloadProgress() {
         Long id = prefs.getLong("running_download_id", 0);
-        if(id !=0){
-            //TODO - Restore downloads!
+        if (id != 0) {
+            DownloadProgressView progress = (DownloadProgressView) findViewById(R.id.progressView);
+            progress.show(id, this);
         }
     }
 
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         super.onPostCreate(savedInstanceState);
         if (!prefs.getBoolean("firstStart", true))
             initDownloader();
-        restoreDownloadProgress();
     }
 
     /**
@@ -118,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      */
     private void initDownloadButton() {
         Button downloadButton = (Button) findViewById(R.id.download_button);
+        downloadButton.setText(getString(R.string.label_download));
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,33 +159,51 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         version.setText(prefs.getString("last_downloaded_tag", null));
     }
 
-    private void setNewVersionAvailable(boolean visible) {
+    /**
+     * Is responsible for changing the UI when a new Version gets available
+     *
+     * @param updateAvailable true if a new Version is available
+     */
+    private void setNewVersionAvailable(boolean updateAvailable) {
         CardView card = (CardView) findViewById(R.id.cardView);
         TextView header = (TextView) findViewById(R.id.headline_download);
         Button downloadButton = (Button) findViewById(R.id.download_button);
         Button installButton = (Button) findViewById(R.id.install_button);
 
         card.setVisibility(View.VISIBLE);
-        if (visible) {
+        if (updateAvailable) {
             header.setText(getString(R.string.update_available));
             header.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
-            downloadButton.setText(getString(R.string.update_available));
+            downloadButton.setText(getString(R.string.label_update));
             downloadButton.setEnabled(true);
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
+            params.setMarginStart(0);
+            params.setMarginEnd(8);
+            installButton.setLayoutParams(params);
             installButton.setVisibility(View.VISIBLE);
         } else {
             header.setText(getString(R.string.package_updated));
             header.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-            downloadButton.setEnabled(false);
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
+            params.setMarginStart(0);
+            params.setMarginEnd(8);
             downloadButton.setVisibility(View.GONE);
+            installButton.setLayoutParams(params);
             installButton.setVisibility(View.VISIBLE);
         }
         if (prefs.getString("last_downloaded_tag", "unset").equals("unset")) {
-            header.setText(getResources().getString(R.string.label_download));
+            header.setText(getString(R.string.label_download));
             header.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-            downloadButton.setText(getResources().getString(R.string.label_download));
+            downloadButton.setText(getString(R.string.label_download));
             downloadButton.setEnabled(true);
+            downloadButton.setVisibility(View.VISIBLE);
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
+            params.setMarginStart(0);
+            params.setMarginEnd(0);
+            installButton.setLayoutParams(params);
             installButton.setVisibility(View.GONE);
         }
+        restoreDownloadProgress();
     }
 
     @Override
@@ -207,14 +225,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Intent t = new Intent(this, Preferences.class);
             startActivity(t);
             return true;
-        } else if(id == R.id.reload){
+        } else if (id == R.id.reload) {
             downloader.new TagUpdater();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    //Test!
+    /**
+     * Mostly handles special cases like change of GApps-Selection and firstRun-Behaviour
+     */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         initSelections();
@@ -222,16 +242,22 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             if (s.equals("selection_android") || s.equals("selection_arch") || s.equals("selection_variant")) {
                 clearAll();
             }
-        if (s.equals("firstStart"))
+        if (s.equals("firstStart")) {
             initDownloader();
+            setNewVersionAvailable(false);
+        }
     }
 
+    /**
+     * Clears all settings to give the user a fresh start
+     */
     private void clearAll() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove("last_downloaded_tag");
         editor.apply();
         downloader.deleteLastFile();
         downloader = new Downloader(this);
+        downloader.new TagUpdater();
     }
 
     void OnTagUpdated() {
@@ -241,13 +267,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             setNewVersionAvailable(true);
     }
 
-    void downloadStarted(long id, String tag){
+    void downloadStarted(long id, String tag) {
         prefs.edit().putLong("running_download_id", id).apply();
         prefs.edit().putString("running_download_tag", tag).apply();
     }
 
     @Override
     public void downloadFailed(int reason) {
+        initDownloadButton();
         downloader = new Downloader(this);
         prefs.edit().putLong("running_download_id", 0).apply();
         prefs.edit().putString("running_download_tag", null).apply();
@@ -255,12 +282,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public void downloadSuccessful(String filePath) {
+        initDownloadButton();
         Log.e("DL", "I AM SUCCESSFUL. ONCE");
         new FileValidator(this).execute(filePath);
     }
 
     @Override
     public void downloadCancelled() {
+        initDownloadButton();
         downloader = new Downloader(this);
         downloader.new TagUpdater();
         prefs.edit().putLong("running_download_id", 0).apply();
@@ -268,35 +297,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     void hashSuccess(Boolean match) {
-        if(match){
-            String tag = prefs.getString("running_download_tag", null);
-            prefs.edit().putString("last_downloaded_tag", tag).apply();
+        if (match) {
+            String tag = prefs.getString("running_download_tag", "failed");
+            if (!tag.equals("failed")) // dirty hack :(
+                prefs.edit().putString("last_downloaded_tag", tag).apply();
             setNewVersionAvailable(false);
-        } else{
+        } else {
             Toast.makeText(this, "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
+        downloadCancelled();
     }
-
-/*    @Override
-    public void downloadFailed(int reason) {
-        downloader = new Downloader(this);
-        prefs.edit().putLong("running_download_id", 0).apply();
-        prefs.edit().putString("running_download_tag", null).apply();
-    }
-
-    @Override
-    public void downloadSuccessful() {
-        String tag = prefs.getString("running_download_tag", null);
-        prefs.edit().putString("last_downloaded_tag", tag).apply();
-        downloadFailed(0);
-        setNewVersionAvailable(false);
-    }
-
-    @Override
-    public void downloadCancelled() {
-        downloader = new Downloader(this);
-        downloader.new TagUpdater();
-        prefs.edit().putLong("running_download_id", 0).apply();
-        prefs.edit().putString("running_download_tag", null).apply();
-    }*/
 }

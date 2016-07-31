@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,6 @@ public class DownloadProgressView extends LinearLayout {
 
     private final ProgressBar downloadProgressBar;
     private final TextView downloadedSizeView, totalSizeView, percentageView;
-    private final ImageButton cancelButton;
     private final DownloadManager downloadManager;
     private final Context context;
     private int downloadedSizeColor, totalSizeColor, percentageColor;
@@ -71,23 +71,6 @@ public class DownloadProgressView extends LinearLayout {
         downloadedSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
         totalSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
         percentageView.setTextColor(ColorStateList.valueOf(percentageColor));
-
-        cancelButton = (ImageButton) findViewById(R.id.cancelButton);
-        cancelButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (downloadManager != null) {
-                    downloadManager.remove(downloadID);
-                    try {
-                        for (DownloadStatusListener downloadStatusListener : listeners) {
-                            downloadStatusListener.downloadCancelled();
-                        }
-                    } catch (Exception ignored) {
-                    }
-                }
-                setVisibility(View.GONE);
-            }
-        });
 
         //hides view.
         setVisibility(View.GONE);
@@ -172,7 +155,24 @@ public class DownloadProgressView extends LinearLayout {
 
     private void showDownloadProgress() {
         setVisibility(View.VISIBLE);
-
+        View test = (View) getParent();
+        Button downloadButton = (Button) test.findViewById(R.id.download_button);
+        downloadButton.setText(getResources().getString(R.string.label_cancel));
+        downloadButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (downloadManager != null) {
+                    downloadManager.remove(downloadID);
+                    try {
+                        for (DownloadStatusListener downloadStatusListener : listeners) {
+                            downloadStatusListener.downloadCancelled();
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+                setVisibility(View.GONE);
+            }
+        });
         new Thread() {
             @Override
             public void run() {
