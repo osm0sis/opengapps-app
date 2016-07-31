@@ -24,22 +24,22 @@
             android:key="selection_variant"
             android:icon="@drawable/ic_variant" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Download">
+    <PreferenceCategory android:title="@string/label_download">
 
         <SwitchPreference
             android:defaultValue="false"
-            android:title="Wifi only"
+            android:title="@string/label_wifi_only"
             android:key="download_wifi_only"
-            android:summary="Download Packages only over wifi" />
+            android:summary="@string/summary_wifi_only" />
         <org.opengapps.opengapps.prefs.FileChooserPref
-            android:title="Download Directory"
+            android:title="@string/label_download_dir"
             android:key="download_dir"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="Flashing">
 
         <CheckBoxPreference
             android:defaultValue="true"
-            android:title="Wipe Cache/Dalvik"
+            android:title="@string/label_wipe_cache"
             android:key="wipe_cache" />
         <CheckBoxPreference
             android:defaultValue="false"

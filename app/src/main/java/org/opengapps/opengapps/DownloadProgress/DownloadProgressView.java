@@ -1,5 +1,6 @@
 package org.opengapps.opengapps.DownloadProgress;
 
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -22,9 +23,11 @@ import org.opengapps.opengapps.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Ayoola Ajebeku on 6/29/15.
+ * Modified by Christoph Loy
  */
 public class DownloadProgressView extends LinearLayout {
 
@@ -36,7 +39,7 @@ public class DownloadProgressView extends LinearLayout {
     private int downloadedSizeColor, totalSizeColor, percentageColor;
     private long downloadID;
     private boolean downloading;
-    private List<DownloadStatusListener> listeners = new ArrayList<DownloadStatusListener>();
+    private List<DownloadStatusListener> listeners = new ArrayList<>();
 
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -79,7 +82,7 @@ public class DownloadProgressView extends LinearLayout {
                         for (DownloadStatusListener downloadStatusListener : listeners) {
                             downloadStatusListener.downloadCancelled();
                         }
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                 }
                 setVisibility(View.GONE);
@@ -186,16 +189,17 @@ public class DownloadProgressView extends LinearLayout {
                         final long bytes_downloaded = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
                         final long bytes_total = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
                         final String filePath = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                        final long download_percentage = (bytes_downloaded * 100l) / bytes_total;
+                        final long download_percentage = (bytes_downloaded * 100L) / bytes_total;
 
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @SuppressLint("SetTextI18n")
                             @Override
                             public void run() {
                                 if (status == DownloadManager.STATUS_RUNNING) {
                                     downloading = true;
                                     downloadProgressBar.setIndeterminate(false);
-                                    downloadedSizeView.setText(String.format("%.0fMB", ((bytes_downloaded * 1.0) / 1024l / 1024l)));
-                                    totalSizeView.setText(String.format("%.0fMB", ((bytes_total * 1.0) / 1024l / 1024l)));
+                                    downloadedSizeView.setText(String.format(Locale.US, "%.0fMB", ((bytes_downloaded * 1.0) / 1024L / 1024L)));
+                                    totalSizeView.setText(String.format(Locale.US, "%.0fMB", ((bytes_total * 1.0) / 1024L / 1024L)));
                                     percentageView.setText((int) download_percentage + "%");
                                     downloadProgressBar.setProgress((int) download_percentage);
                                 } else if (status == DownloadManager.STATUS_FAILED) {
@@ -206,7 +210,7 @@ public class DownloadProgressView extends LinearLayout {
                                         for (DownloadStatusListener downloadStatusListener : listeners) {
                                             downloadStatusListener.downloadFailed(reason);
                                         }
-                                    } catch (Exception e) {
+                                    } catch (Exception ignored) {
                                     }
                                 } else if (status == DownloadManager.STATUS_SUCCESSFUL) {
                                     downloading = false;
@@ -247,11 +251,11 @@ public class DownloadProgressView extends LinearLayout {
     }
 
     public interface DownloadStatusListener {
-        public void downloadFailed(int reason);
+        void downloadFailed(int reason);
 
-        public void downloadSuccessful(String filePath);
+        void downloadSuccessful(String filePath);
 
-        public void downloadCancelled();
+        void downloadCancelled();
 
     }
 }

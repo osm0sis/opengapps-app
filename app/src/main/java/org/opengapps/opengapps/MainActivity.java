@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void restoreDownloadProgress() {
         Long id = prefs.getLong("running_download_id", 0);
         if(id !=0){
+            //TODO - Restore downloads!
         }
     }
 
@@ -158,24 +160,31 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void setNewVersionAvailable(boolean visible) {
+        CardView card = (CardView) findViewById(R.id.cardView);
         TextView header = (TextView) findViewById(R.id.headline_download);
         Button downloadButton = (Button) findViewById(R.id.download_button);
+        Button installButton = (Button) findViewById(R.id.install_button);
+
+        card.setVisibility(View.VISIBLE);
         if (visible) {
-            header.setText("Update available");
+            header.setText(getString(R.string.update_available));
             header.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
-            downloadButton.setText("Update");
+            downloadButton.setText(getString(R.string.update_available));
             downloadButton.setEnabled(true);
+            installButton.setVisibility(View.VISIBLE);
         } else {
-            header.setText(getResources().getString(R.string.label_download));
+            header.setText(getString(R.string.package_updated));
             header.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-            downloadButton.setText("Package UPDATED");
             downloadButton.setEnabled(false);
+            downloadButton.setVisibility(View.GONE);
+            installButton.setVisibility(View.VISIBLE);
         }
         if (prefs.getString("last_downloaded_tag", "unset").equals("unset")) {
             header.setText(getResources().getString(R.string.label_download));
             header.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
             downloadButton.setText(getResources().getString(R.string.label_download));
             downloadButton.setEnabled(true);
+            installButton.setVisibility(View.GONE);
         }
     }
 
@@ -198,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Intent t = new Intent(this, Preferences.class);
             startActivity(t);
             return true;
+        } else if(id == R.id.reload){
+            downloader.new TagUpdater();
         }
 
         return super.onOptionsItemSelected(item);
@@ -223,14 +234,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         downloader = new Downloader(this);
     }
 
-    public void OnTagUpdated() {
+    void OnTagUpdated() {
         if (prefs.getString("last_downloaded_tag", "").equals(downloader.getTag()))
             setNewVersionAvailable(false);
         else
             setNewVersionAvailable(true);
     }
 
-    public void downloadStarted(long id, String tag){
+    void downloadStarted(long id, String tag){
         prefs.edit().putLong("running_download_id", id).apply();
         prefs.edit().putString("running_download_tag", tag).apply();
     }
@@ -256,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         prefs.edit().putString("running_download_tag", null).apply();
     }
 
-    public void hashSuccess(Boolean match) {
+    void hashSuccess(Boolean match) {
         if(match){
             String tag = prefs.getString("running_download_tag", null);
             prefs.edit().putString("last_downloaded_tag", tag).apply();

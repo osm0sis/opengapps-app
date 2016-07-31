@@ -17,4 +17,14 @@
     <string name="slide_android_description">You can select the android version here. lol</string>
     <string name="slide_arch_description">Funny stuff about architectures!</string>
     <string name="slide_variant_description">Stuff bout Vars!</string>
+    <string name="label_install">Installieren</string>
+    <string name="label_version">Version</string>
+    <string name="label_wifi_only">Nur WLAN</string>
+    <string name="summary_wifi_only">Nur über WLAN herunterladen</string>
+    <string name="label_download_dir">Download-Ordner</string>
+    <string name="label_wipe_cache">Cache/Dalvik löschen</string>
+    <string name="label_refresh">Aktualisieren</string>
+    <string name="update_available">Update verfügbar!</string>
+    <string name="label_update">Update</string>
+    <string name="package_updated">Paket aktualisiert</string>
 </resources>

@@ -49,6 +49,16 @@
     <string name="slide_android_description">You can select the android version here. lol</string>
     <string name="slide_arch_description">Funny stuff about architectures!</string>
     <string name="slide_variant_description">Stuff bout Variants</string>
+    <string name="label_install">Install</string>
+    <string name="label_version">Version</string>
+    <string name="label_wifi_only">Wifi only</string>
+    <string name="summary_wifi_only">Download only over wifi</string>
+    <string name="label_download_dir">Download Directory</string>
+    <string name="label_wipe_cache">Wipe Cache/Dalvik</string>
+    <string name="label_refresh">Refresh</string>
+    <string name="update_available">Update available!</string>
+    <string name="label_update">Update</string>
+    <string name="package_updated">Package updated</string>
 
 
 </resources>

@@ -1,10 +1,12 @@
 package org.opengapps.opengapps;
+
 /*
     Todo - Enable Validation in settings-menu (will get interesting)
  */
 
 
 import android.content.Context;
+@SuppressWarnings({"SimplifiableIfStatement", "WeakerAccess"})
 public class SelectionValidator {
     private Context context;
 
@@ -20,23 +22,14 @@ public class SelectionValidator {
     }
 
     public static boolean isValidArchAnd(String arch, String android) {
-        if (arch.contains("64") && android.equals("4.4"))
-            return false;
-        else
-            return true;
+        return !(arch.contains("64") && android.equals("4.4"));
     }
 
     public static boolean isValidArchVar(String arch, String variant) {
-        if (arch.contains("86") && variant.equals("aroma"))
-            return false;
-        else
-            return true;
+        return !(arch.contains("86") && variant.equals("aroma"));
     }
 
     public static boolean isValidAndVar(String android, String variant) {
-        if ((android.equals("5.0") || android.equals("4.4")) && variant.equals("super"))
-            return false;
-        else
-            return true;
+        return !((android.equals("5.0") || android.equals("4.4")) && variant.equals("super"));
     }
 }
