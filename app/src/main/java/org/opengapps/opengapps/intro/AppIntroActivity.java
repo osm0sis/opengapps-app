@@ -35,6 +35,8 @@ public class AppIntroActivity extends AppIntro2 {
                 addSlide(new SlidePermissionFragment());
             }
         }
+        addSlide(AppIntro2Fragment.newInstance("Get Root Permission", "As most of our fellow users are rooted anyway, we integrated an auto-install-mode in the app. This is completely voluntary", R.drawable.ic_supersu, Color.parseColor("#00796B")));
+        addSlide(new RequestRootFragment());
 
         addSlide(AppIntro2Fragment.newInstance("Your Device", "In the following steps, we'll ask you a few questions about your device. We'll do our best to guess them, but if it fails, you can help us",
                 R.drawable.ic_architecture, Color.parseColor("#00796B")));
@@ -128,6 +130,15 @@ public class AppIntroActivity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         GappsSelectionFragment fragment = (GappsSelectionFragment) currentFragment;
         fragment.saveSelection();
+        SharedPreferences sharedPref = getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("firstStart", false);
+        editor.apply();
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //NoOp
     }
 }

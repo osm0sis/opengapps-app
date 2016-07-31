@@ -24,6 +24,7 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
     private final int stringArray;
     private RadioGroup group;
     private SparseArray<RadioButton> buttons;
+    private SharedPreferences prefs;
 
     public GappsSelectionFragment(int title, int description, String key, int stringArray) {
         this.title = title;
@@ -51,7 +52,8 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
         TextView descriptionView = (TextView) getView().findViewById(R.id.description_intro_gapps);
         descriptionView.setText(getString(description));
         loadRadioBoxes();
-        getActivity().getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE).registerOnSharedPreferenceChangeListener(this);
+        prefs = getActivity().getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        prefs.registerOnSharedPreferenceChangeListener(this);
     }
 
     protected abstract boolean isValid(String selection);
@@ -80,7 +82,6 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
     }
 
     public void saveSelection() {
-        SharedPreferences prefs = getActivity().getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(key, buttons.get(group.getCheckedRadioButtonId()).getText().toString());
         editor.apply();
@@ -88,14 +89,15 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (!s.equals(key)) {
-            group.removeAllViews();
-            loadRadioBoxes();
-        }
+        if (prefs.getBoolean("firstStart", true))
+            if (!s.equals(key)) {
+                group.removeAllViews();
+                loadRadioBoxes();
+            }
     }
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        saveSelection();
+        //NoOp
     }
 }

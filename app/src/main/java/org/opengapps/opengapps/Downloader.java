@@ -1,15 +1,14 @@
 package org.opengapps.opengapps;
 
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 
+
+import org.opengapps.opengapps.DownloadProgress.DownloadProgressView;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -18,16 +17,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.MessageDigest;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class Downloader extends AsyncTask<Void, Void, Void> {
+public class Downloader extends AsyncTask<Void, Void, Long> {
     private final MainActivity mainActivity;
     private String architecture, android, variant, tag;
+    private static File lastFile;
 
-    public Downloader( MainActivity mainActivity) {
+    public Downloader(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
         this.architecture = prefs.getString("selection_arch", null);
@@ -36,12 +38,18 @@ public class Downloader extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Long doInBackground(Void... voids) {
         refreshFeed();
         tag = parseFeed();
         Uri uri = generateUri();
-        doDownload(uri);
-        return null;
+        return doDownload(uri);
+    }
+
+    @Override
+    protected void onPostExecute(Long id) {
+        DownloadProgressView progress = (DownloadProgressView) mainActivity.findViewById(R.id.progressView);
+        progress.show(id, mainActivity);
+        mainActivity.downloadStarted(id, tag);
     }
 
     public String getTag() {
@@ -49,7 +57,9 @@ public class Downloader extends AsyncTask<Void, Void, Void> {
     }
 
     public void deleteLastFile() {
-
+        if (lastFile != null)
+            //noinspection ResultOfMethodCallIgnored
+            lastFile.delete();
     }
 
     public class TagUpdater extends AsyncTask<Void, Void, String> {
@@ -113,35 +123,57 @@ public class Downloader extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private void doDownload(Uri uri) {
+    private long doDownload(Uri uri) {
+        if (lastFile != null) {
+            //noinspection ResultOfMethodCallIgnored
+            lastFile.delete();
+        }
+        downloadMd5(uri.toString());
         DownloadManager.Request request = new DownloadManager.Request(uri);
         String title = "OpenGApps-" + architecture + "-" + android + "-" + variant;
-        request.setTitle(title+"-zip");
-        new File(title+".zip").delete();
-        request.setDestinationUri(Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), title)));
+        request.setTitle(title);
+        if (mainActivity.getPreferences(Context.MODE_PRIVATE).getBoolean("download_wifi_only", true))
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+        String path = mainActivity.getPreferences(Context.MODE_PRIVATE).getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
+        File f = new File(new File(path), title + ".zip");
+        lastFile = f;
+        f.delete();
+        request.setDestinationUri(Uri.fromFile(f));
         DownloadManager downloadManager = (DownloadManager) mainActivity.getSystemService(Context.DOWNLOAD_SERVICE);
-        long id = downloadManager.enqueue(request);
-        registerReceiver(id, tag);
+        return downloadManager.enqueue(request);
     }
 
-    private void onDownloadComplete() {
-        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("last_downloaded_tag", tag);
-        editor.apply();
-        mainActivity.onDownloadComplete(tag);
+    private void downloadMd5(String uri) {
+        uri += ".md5";
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(uri)
+                    .build();
+            Response response = client.newCall(request).execute();
+            File feedFile = new File(mainActivity.getFilesDir(), "gapps.md5");
+            FileWriter fileWriter = new FileWriter(feedFile, false);
+            fileWriter.write(response.body().string());
+            fileWriter.close();
+        } catch (Exception ignored) {
+
+        }
     }
 
-    private void registerReceiver(final long id, final String currentTag) {
-        BroadcastReceiver onComplete = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1) == id) {
-                    onDownloadComplete();
-                    context.unregisterReceiver(this);
-                }
-            }
-        };
-        mainActivity.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+    private static String convertHashToString(byte[] md5Bytes) {
+        String returnVal = "";
+        for (int i = 0; i < md5Bytes.length; i++) {
+            returnVal += Integer.toString((md5Bytes[i] & 0xff) + 0x100, 16).substring(1);
+        }
+        return returnVal.toUpperCase();
+    }
+
+    public static String getDownloadedFile(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(context.getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        String architecture = prefs.getString("selection_arch", null);
+        String android = prefs.getString("selection_android", null);
+        String variant = prefs.getString("selection_variant", null);
+        String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
+        return path + "/" + "OpenGApps-" + architecture + "-" + android + "-" + variant + ".zip";
     }
 }

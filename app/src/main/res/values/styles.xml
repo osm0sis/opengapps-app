@@ -20,6 +20,9 @@
     <style name="intro_radio_button" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textStyle">normal|bold</item>
         <item name="android:textColor">#ffff</item>
-        <item name="android:buttonTint">#ffff</item>
+    </style>
+    
+    <style name="card_updated" parent="CardView.Light">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 </resources>

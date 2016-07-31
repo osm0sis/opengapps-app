@@ -1,12 +1,10 @@
 package org.opengapps.opengapps;
+/*
+    Todo - Enable Validation in settings-menu (will get interesting)
+ */
+
 
 import android.content.Context;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.Toast;
-
 public class SelectionValidator {
     private Context context;
 

@@ -35,4 +35,7 @@ dependencies {
 
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.paolorotolo:appintro:4.0.0'
+    compile 'eu.chainfire:libsuperuser:1.0.0.+'
+    compile 'com.github.Angads25:android-filepicker:1.0.0'
+
 }
