@@ -1,11 +1,17 @@
 package org.opengapps.opengapps;
 
+import android.*;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import org.opengapps.opengapps.DownloadProgress.DownloadProgressView;
 import org.opengapps.opengapps.intro.AppIntroActivity;
 import org.opengapps.opengapps.prefs.Preferences;
@@ -29,16 +40,29 @@ import org.opengapps.opengapps.prefs.Preferences;
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener {
     private Downloader downloader;
     private SharedPreferences prefs;
+    private InterstitialAd downloadAd;
+    private FirebaseAnalytics analytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        analytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        downloadAd = new InterstitialAd(this);
+        downloadAd.setAdUnitId(getString(R.string.download_interstitial));
+        requestAd();
+        downloadAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestAd();
+            }
+        });
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                analytics.logEvent(FirebaseAnalytics.Event.TUTORIAL_BEGIN, new Bundle());
                 //  Initialize SharedPreferences
                 SharedPreferences getPrefs = PreferenceManager
                         .getDefaultSharedPreferences(getBaseContext());
@@ -73,6 +97,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         initSelections();
     }
 
+    private void requestAd() {
+        AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("4AAD86A2F6F9FBC35B94E952288382AC")
+                .addTestDevice("05814904E0308580F4ECF981062E5079")
+                .build();
+        downloadAd.loadAd(request);
+    }
+
     private void restoreDownloadProgress() {
         Long id = prefs.getLong("running_download_id", 0);
         if (id != 0) {
@@ -91,6 +124,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         super.onPostCreate(savedInstanceState);
         if (!prefs.getBoolean("firstStart", true))
             initDownloader();
+        initPermissionCard();
+    }
+
+    private void initPermissionCard() {
+        CardView permssionCard = (CardView) findViewById(R.id.permission_card);
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED)
+            permssionCard.setVisibility(View.GONE);
+        else {
+            permssionCard.setVisibility(View.VISIBLE);
+            initPermissionButton();
+        }
     }
 
     /**
@@ -100,6 +145,22 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         initDownloadButton();
         initInfoButton();
         initInstallButton();
+    }
+
+    private void initPermissionButton() {
+        Button permissionButton = (Button) findViewById(R.id.grant_permission_button);
+        final Activity mainActivity = this;
+        permissionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityCompat.requestPermissions(mainActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        initPermissionCard();
     }
 
     private void initInstallButton() {
@@ -121,6 +182,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (downloadAd.isLoaded())
+                    downloadAd.show();
                 downloader.execute();
             }
         });
@@ -227,6 +290,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             return true;
         } else if (id == R.id.reload) {
             downloader.new TagUpdater();
+        } else if (id == R.id.about) {
+            Intent t = new Intent(this, AboutActivity.class);
+            startActivity(t);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -238,10 +305,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         initSelections();
-        if (!prefs.getBoolean("firstStart", true))
+        if (!prefs.getBoolean("firstStart", true)) {
             if (s.equals("selection_android") || s.equals("selection_arch") || s.equals("selection_variant")) {
                 clearAll();
             }
+        }
         if (s.equals("firstStart")) {
             initDownloader();
             setNewVersionAvailable(false);

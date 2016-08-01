@@ -16,8 +16,11 @@ import android.widget.Button;
 
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.R;
+
+import static android.os.Build.SUPPORTED_32_BIT_ABIS;
 
 public class AppIntroActivity extends AppIntro2 {
     private Button permButton;
@@ -43,7 +46,6 @@ public class AppIntroActivity extends AppIntro2 {
         addSlide(new slideArchSelectorFragment());
         addSlide(new slideAndroidSelectorFragment());
         addSlide(new slideVariantSelectionFragment());
-
     }
 
 
@@ -88,18 +90,26 @@ public class AppIntroActivity extends AppIntro2 {
         SharedPreferences sharedPref = getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
+        String arch = "arm";
+        boolean x64 = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            arch = Build.SUPPORTED_32_BIT_ABIS[0];
+            x64 = Build.SUPPORTED_64_BIT_ABIS.length > 0;
+        } else{
+            arch = Build.CPU_ABI;
+            x64 = false;
+        }
         if (!sharedPref.contains("selection_arch")) {
-            String arch = System.getProperty("os.arch");
             if (arch.contains("arm")) {
-                if (arch.contains("64")) {
+                if (x64) {
                     editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[1]);
                 } else
                     editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[0]);
             } else if (arch.contains("86")) {
-                if (arch.contains("64"))
-                    editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[2]);
-                else
+                if (x64)
                     editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[3]);
+                else
+                    editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[2]);
             }
         }
 

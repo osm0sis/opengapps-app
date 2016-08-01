@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.DownloadProgress.DownloadProgressView;
 import org.xmlpull.v1.XmlPullParser;
@@ -24,6 +27,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 class Downloader extends AsyncTask<Void, Void, Long> {
     private final MainActivity mainActivity;
     private String architecture, android, variant, tag;
@@ -31,7 +36,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
 
     Downloader(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
-        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), MODE_PRIVATE);
         this.architecture = prefs.getString("selection_arch", null);
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
@@ -71,8 +76,20 @@ class Downloader extends AsyncTask<Void, Void, Long> {
 
         @Override
         protected void onPostExecute(String s) {
+            logSelections();
             tag = s;
             mainActivity.OnTagUpdated();
+        }
+    }
+
+    private void logSelections() {
+        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(mainActivity);
+        SharedPreferences preferences = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), MODE_PRIVATE);
+        for(String entry : new String[]{"selection_arch", "selection_android", "selection_variant"}){
+            Bundle bundle = new Bundle(2);
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, entry);
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, preferences.getString(entry, "null"));
+            analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         }
     }
 
@@ -124,7 +141,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private long doDownload(Uri uri) {
-        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), MODE_PRIVATE);
         if (lastFile != null) {
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
@@ -171,7 +188,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     static String getDownloadedFile(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
         String architecture = prefs.getString("selection_arch", null);
         String android = prefs.getString("selection_android", null);
         String variant = prefs.getString("selection_variant", null);

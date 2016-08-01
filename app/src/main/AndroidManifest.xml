@@ -31,13 +31,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.opengapps.opengapps.MainActivity" />
         </activity>
-        <activity android:name=".intro.AppIntroActivity"
+        <activity
+            android:name=".intro.AppIntroActivity"
             android:label="AppIntro"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.opengapps.opengapps.MainActivity"/>
+                android:value="org.opengapps.opengapps.MainActivity" />
         </activity>
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

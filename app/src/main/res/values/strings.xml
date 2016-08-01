@@ -60,6 +60,5 @@
     <string name="label_update">Update</string>
     <string name="package_updated">Package updated</string>
     <string name="label_cancel">Cancel</string>
-
-
+    <string name="download_interstitial" translatable="false">ca-app-pub-9489060368971640/9426486679</string>
 </resources>

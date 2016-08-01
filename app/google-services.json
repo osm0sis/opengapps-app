@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "636830569701",
+    "firebase_url": "https://open-gapps-app.firebaseio.com",
+    "project_id": "open-gapps-app",
+    "storage_bucket": "open-gapps-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636830569701:android:82e82e82bdf2ee2b",
+        "android_client_info": {
+          "package_name": "org.opengapps.opengapps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636830569701-p1cf182tid397rda4u1io8lj9tr6lsmr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD5RozX89A9lQ9GjfN45ETX-nz8Lkx2cg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
