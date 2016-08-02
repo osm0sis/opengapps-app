@@ -33,7 +33,7 @@ public class FileChooserPref extends Preference implements DialogSelectionListen
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return super.onGetDefaultValue(a, index);
+        return a.getString(index);
     }
 
     @Override

@@ -61,4 +61,9 @@
     <string name="package_updated">Package updated</string>
     <string name="label_cancel">Cancel</string>
     <string name="download_interstitial" translatable="false">ca-app-pub-9489060368971640/9426486679</string>
+    <string name="label_permission_denied">Permission denied</string>
+    <string name="explanation_permission_denied">In order to work correctly you have to grant OpenGApps the permission to your external storage. Makes sense, doesn\'t it?</string>
+    <string name="label_grant_permission">Grant Permission</string>
+    <string name="title_activity_about">About</string>
+    <string name="title_activity_demm">demm</string>
 </resources>

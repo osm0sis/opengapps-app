@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +37,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import org.opengapps.opengapps.DownloadProgress.DownloadProgressView;
 import org.opengapps.opengapps.intro.AppIntroActivity;
 import org.opengapps.opengapps.prefs.Preferences;
+
+import eu.chainfire.libsuperuser.Shell;
 
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener {
@@ -64,8 +68,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void run() {
                 analytics.logEvent(FirebaseAnalytics.Event.TUTORIAL_BEGIN, new Bundle());
                 //  Initialize SharedPreferences
-                SharedPreferences getPrefs = PreferenceManager
-                        .getDefaultSharedPreferences(getBaseContext());
+                SharedPreferences getPrefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
 
                 //  Create a new boolean and preference and set it to true
                 boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
@@ -122,9 +125,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (!prefs.getBoolean("firstStart", true))
+        if (!prefs.getBoolean("firstStart", true)) {
             initDownloader();
-        initPermissionCard();
+            initPermissionCard();
+        }
     }
 
     private void initPermissionCard() {
@@ -143,8 +147,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      */
     private void initButtons() {
         initDownloadButton();
-        initInfoButton();
         initInstallButton();
+        initFab();
+    }
+
+    private void initFab() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.refresh_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloader.new TagUpdater();
+            }
+        });
     }
 
     private void initPermissionButton() {
@@ -160,7 +174,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        initPermissionCard();
+        if (!prefs.getBoolean("firstStart", true))
+            initPermissionCard();
     }
 
     private void initInstallButton() {
@@ -189,22 +204,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         });
     }
 
-    /**
-     * Sets OnClickListener for InfoButton and displays an Dialog
-     */
-    private void initInfoButton() {
-        ImageButton variantInfoButton = (ImageButton) findViewById(R.id.variant_info_button);
-        variantInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AlertDialog.Builder(view.getContext())
-                        .setTitle(R.string.variants)
-                        .setMessage(R.string.variants_explanation)
-                        .setPositiveButton(R.string.ok, null)
-                        .show();
-            }
-        });
-    }
 
     /**
      * Sets up all the spinners, fills them with entries and initializes the validation
@@ -288,8 +287,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Intent t = new Intent(this, Preferences.class);
             startActivity(t);
             return true;
-        } else if (id == R.id.reload) {
-            downloader.new TagUpdater();
         } else if (id == R.id.about) {
             Intent t = new Intent(this, AboutActivity.class);
             startActivity(t);

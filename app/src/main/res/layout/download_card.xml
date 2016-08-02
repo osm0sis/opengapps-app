@@ -65,18 +65,6 @@
         app:layout_constraintRight_toLeftOf="@+id/install_button"
         android:layout_marginEnd="8dp" />
 
-    <ImageButton
-        android:id="@+id/variant_info_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/label_info"
-        app:srcCompat="@drawable/ic_info"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        android:layout_marginTop="16dp"
-        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
-        android:layout_marginEnd="16dp" />
-
     <ImageView
         android:id="@+id/image_arch"
         android:layout_width="wrap_content"

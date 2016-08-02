@@ -52,14 +52,14 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
         TextView descriptionView = (TextView) getView().findViewById(R.id.description_intro_gapps);
         descriptionView.setText(getString(description));
         loadRadioBoxes();
-        prefs = getActivity().getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
     }
 
     protected abstract boolean isValid(String selection);
 
     private void loadRadioBoxes() {
-        SharedPreferences prefs = getActivity().getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
         String selection = prefs.getString(key, null);
         String[] items = getResources().getStringArray(stringArray);
         if (getView() != null)

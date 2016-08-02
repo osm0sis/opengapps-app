@@ -28,4 +28,8 @@
     <string name="label_update">Update</string>
     <string name="package_updated">Paket aktualisiert</string>
     <string name="label_cancel">Abbrechen</string>
+    <string name="label_permission_denied">Berechtigung verweigert</string>
+    <string name="explanation_permission_denied">Damit OpenGApps korrekt funktioniert, muss die Speicher-Berechtigung gewährt werden. Eigentlich logisch, oder?</string>
+    <string name="label_grant_permission">Berechtigung erteilen</string>
+    <string name="title_activity_about">Über</string>
 </resources>

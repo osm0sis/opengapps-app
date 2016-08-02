@@ -27,18 +27,19 @@
     <PreferenceCategory android:title="@string/label_download">
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:title="@string/label_wifi_only"
             android:key="download_wifi_only"
             android:summary="@string/summary_wifi_only" />
         <org.opengapps.opengapps.prefs.FileChooserPref
+            android:defaultValue="/sdcard/Download"
             android:title="@string/label_download_dir"
             android:key="download_dir"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="Flashing">
 
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:title="@string/label_wipe_cache"
             android:key="wipe_cache" />
         <CheckBoxPreference

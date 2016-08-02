@@ -15,7 +15,7 @@ public class slideAndroidSelectorFragment extends GappsSelectionFragment {
 
     @Override
     protected boolean isValid(String selection) {
-        SharedPreferences prefs = getActivity().getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
         String arch = prefs.getString("selection_arch", "");
         return SelectionValidator.isValidArchAnd(arch, selection);
     }

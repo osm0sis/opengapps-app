@@ -7,7 +7,7 @@
     android:id="@+id/constraintLayout4">
 
     <TextView
-        android:text="Permission denied"
+        android:text="@string/label_permission_denied"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/label_permission_denied"
@@ -20,7 +20,7 @@
         android:layout_marginTop="16dp" />
 
     <TextView
-        android:text="In order to work correctly you have to grant OpenGApps the permission to your external storage. Makes sense, doesnt it?"
+        android:text="@string/explanation_permission_denied"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="99"
@@ -35,7 +35,7 @@
         android:layout_marginEnd="24dp" />
 
     <Button
-        android:text="Grant Permission"
+        android:text="@string/label_grant_permission"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:layout_width="wrap_content"

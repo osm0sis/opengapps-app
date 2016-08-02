@@ -30,11 +30,11 @@ public class AppIntroActivity extends AppIntro2 {
         super.onCreate(savedInstanceState);
         setInitialSettings();
         skipButtonEnabled = false;
-        addSlide(AppIntro2Fragment.newInstance("Open-GApps", "Welcome to the official App for OpenGApps", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
+        addSlide(AppIntro2Fragment.newInstance("Open-GApps", "Welcome to the official App for OpenGApps", R.drawable.opengapps_large, Color.parseColor("#00796B")));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                addSlide(AppIntro2Fragment.newInstance("First things first", "To download an OpenGApps-Package, you have to grant us Permission to your External Storage", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
+                addSlide(AppIntro2Fragment.newInstance("First things first", "To download an OpenGApps-Package, you have to grant us Permission to your External Storage", R.drawable.opengapps_large, Color.parseColor("#00796B")));
                 addSlide(new SlidePermissionFragment());
             }
         }
@@ -87,7 +87,7 @@ public class AppIntroActivity extends AppIntro2 {
     }
 
     private void setInitialSettings() {
-        SharedPreferences sharedPref = getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         String arch = "arm";
@@ -140,7 +140,7 @@ public class AppIntroActivity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         GappsSelectionFragment fragment = (GappsSelectionFragment) currentFragment;
         fragment.saveSelection();
-        SharedPreferences sharedPref = getSharedPreferences(getResources().getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("firstStart", false);
         editor.apply();
