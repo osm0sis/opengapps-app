@@ -45,6 +45,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:title="Wipe Data"
+            android:summary="You will loose all your data if you activate that?"
             android:key="wipe_data"/>
     </PreferenceCategory>
 </PreferenceScreen>
