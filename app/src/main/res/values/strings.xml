@@ -66,4 +66,8 @@
     <string name="label_grant_permission">Grant Permission</string>
     <string name="title_activity_about">About</string>
     <string name="title_activity_demm">demm</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

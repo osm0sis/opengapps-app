@@ -10,17 +10,17 @@ import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class FileValidator extends AsyncTask<String , Void, Boolean>{
-    private final MainActivity context;
+    private final DownloadFragment context;
 
-    public FileValidator(MainActivity context){
+    public FileValidator(DownloadFragment context){
         this.context = context;
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
         try {
-            context.getFilesDir();
-            File f = new File(context.getFilesDir(), "gapps.md5");
+            context.getContext().getFilesDir();
+            File f = new File(context.getContext().getFilesDir(), "gapps.md5");
             Scanner scanner = new Scanner(f);
             String expectedHash = scanner.nextLine();
             expectedHash = expectedHash.substring(0, expectedHash.indexOf(" "));

@@ -28,13 +28,13 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 class Downloader extends AsyncTask<Void, Void, Long> {
-    private final MainActivity mainActivity;
+    private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
     private static File lastFile;
 
-    Downloader(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
-        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), MODE_PRIVATE);
+    Downloader(DownloadFragment downloadFragment) {
+        this.downloadFragment = downloadFragment;
+        SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
         this.architecture = prefs.getString("selection_arch", null);
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
@@ -50,9 +50,9 @@ class Downloader extends AsyncTask<Void, Void, Long> {
 
     @Override
     protected void onPostExecute(Long id) {
-        DownloadProgressView progress = (DownloadProgressView) mainActivity.findViewById(R.id.progressView);
-        progress.show(id, mainActivity);
-        mainActivity.downloadStarted(id, tag);
+        DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progressView);
+        progress.show(id, downloadFragment);
+        downloadFragment.downloadStarted(id, tag);
     }
 
     String getTag() {
@@ -76,13 +76,13 @@ class Downloader extends AsyncTask<Void, Void, Long> {
         protected void onPostExecute(String s) {
             logSelections();
             tag = s;
-            mainActivity.OnTagUpdated();
+            downloadFragment.OnTagUpdated();
         }
     }
 
     private void logSelections() {
-        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(mainActivity);
-        SharedPreferences preferences = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), MODE_PRIVATE);
+        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
+        SharedPreferences preferences = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
         for(String entry : new String[]{"selection_arch", "selection_android", "selection_variant"}){
             Bundle bundle = new Bundle(2);
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, entry);
@@ -92,7 +92,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private Uri generateUri() {
-        String url = mainActivity.getString(R.string.download_url);
+        String url = downloadFragment.getString(R.string.download_url);
         url = url.replace("%arch", architecture);
         url = url.replace("%tag", tag);
         url = url.replace("%variant", variant);
@@ -105,7 +105,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(false);
             XmlPullParser xpp = factory.newPullParser();
-            xpp.setInput(new FileReader(new File(mainActivity.getFilesDir(), "gapps_feed.xml")));
+            xpp.setInput(new FileReader(new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml")));
             int eventType = xpp.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG && xpp.getName().equals("link") && xpp.getAttributeValue(0).equals("alternate")) {
@@ -124,12 +124,12 @@ class Downloader extends AsyncTask<Void, Void, Long> {
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mainActivity.getString(R.string.feed_url).replace("%arch", architecture))
+                    .url(downloadFragment.getString(R.string.feed_url).replace("%arch", architecture))
                     .build();
 
             Response response = client.newCall(request).execute();
 
-            File feedFile = new File(mainActivity.getFilesDir(), "gapps_feed.xml");
+            File feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
             FileWriter fileWriter = new FileWriter(feedFile, false);
             fileWriter.write(response.body().string());
             fileWriter.close();
@@ -139,7 +139,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private long doDownload(Uri uri) {
-        SharedPreferences prefs = mainActivity.getSharedPreferences(mainActivity.getString(R.string.pref_name), MODE_PRIVATE);
+        SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
         if (lastFile != null) {
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
@@ -156,7 +156,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
         //noinspection ResultOfMethodCallIgnored
         f.delete();
         request.setDestinationUri(Uri.fromFile(f));
-        DownloadManager downloadManager = (DownloadManager) mainActivity.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         return downloadManager.enqueue(request);
     }
 
@@ -168,7 +168,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
                     .url(uri)
                     .build();
             Response response = client.newCall(request).execute();
-            File feedFile = new File(mainActivity.getFilesDir(), "gapps.md5");
+            File feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
             FileWriter fileWriter = new FileWriter(feedFile, false);
             fileWriter.write(response.body().string());
             fileWriter.close();

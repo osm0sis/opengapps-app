@@ -1,33 +1,25 @@
 package org.opengapps.opengapps;
 
-import android.*;
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -38,23 +30,42 @@ import org.opengapps.opengapps.DownloadProgress.DownloadProgressView;
 import org.opengapps.opengapps.intro.AppIntroActivity;
 import org.opengapps.opengapps.prefs.Preferences;
 
-import eu.chainfire.libsuperuser.Shell;
+import static android.content.Context.MODE_PRIVATE;
 
 
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener {
+public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener {
     private Downloader downloader;
     private SharedPreferences prefs;
     private InterstitialAd downloadAd;
     private FirebaseAnalytics analytics;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        analytics = FirebaseAnalytics.getInstance(this);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        downloadAd = new InterstitialAd(this);
+        prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.content_main, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (!prefs.getBoolean("firstStart", true)) {
+            initDownloader();
+            initPermissionCard();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        analytics = FirebaseAnalytics.getInstance(getContext());
+        downloadAd = new InterstitialAd(getContext());
         downloadAd.setAdUnitId(getString(R.string.download_interstitial));
         requestAd();
         downloadAd.setAdListener(new AdListener() {
@@ -68,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void run() {
                 analytics.logEvent(FirebaseAnalytics.Event.TUTORIAL_BEGIN, new Bundle());
                 //  Initialize SharedPreferences
-                SharedPreferences getPrefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+                SharedPreferences getPrefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
 
                 //  Create a new boolean and preference and set it to true
                 boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
@@ -77,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 if (isFirstStart) {
 
                     //  Launch app intro
-                    Intent i = new Intent(MainActivity.this, AppIntroActivity.class);
+                    Intent i = new Intent(getContext(), AppIntroActivity.class);
                     startActivity(i);
 
                     //  Make a new preferences editor
@@ -94,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // Start the thread
         t.start();
 
-        prefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+        prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
         initButtons();
         initSelections();
@@ -112,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void restoreDownloadProgress() {
         Long id = prefs.getLong("running_download_id", 0);
         if (id != 0) {
-            DownloadProgressView progress = (DownloadProgressView) findViewById(R.id.progressView);
+            DownloadProgressView progress = (DownloadProgressView) getView().findViewById(R.id.progressView);
             progress.show(id, this);
         }
     }
@@ -122,18 +133,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         downloader.new TagUpdater().execute();
     }
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        if (!prefs.getBoolean("firstStart", true)) {
-            initDownloader();
-            initPermissionCard();
-        }
-    }
-
     private void initPermissionCard() {
-        CardView permssionCard = (CardView) findViewById(R.id.permission_card);
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        CardView permssionCard = (CardView) getView().findViewById(R.id.permission_card);
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED)
             permssionCard.setVisibility(View.GONE);
         else {
@@ -152,22 +154,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void initFab() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.refresh_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                downloader.new TagUpdater();
-            }
-        });
     }
 
     private void initPermissionButton() {
-        Button permissionButton = (Button) findViewById(R.id.grant_permission_button);
-        final Activity mainActivity = this;
+        Button permissionButton = (Button) getView().findViewById(R.id.grant_permission_button);
         permissionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityCompat.requestPermissions(mainActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             }
         });
     }
@@ -179,11 +173,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void initInstallButton() {
-        Button install_button = (Button) findViewById(R.id.install_button);
+        Button install_button = (Button) getView().findViewById(R.id.install_button);
         install_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ZipInstaller(getApplicationContext()).installZip();
+                new ZipInstaller(getContext()).installZip();
             }
         });
     }
@@ -192,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      * Create OnClickListner for DownloadButton
      */
     private void initDownloadButton() {
-        Button downloadButton = (Button) findViewById(R.id.download_button);
+        Button downloadButton = (Button) getView().findViewById(R.id.download_button);
         downloadButton.setText(getString(R.string.label_download));
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,10 +203,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      * Sets up all the spinners, fills them with entries and initializes the validation
      */
     private void initSelections() {
-        TextView arch_selection = (TextView) findViewById(R.id.selected_architecture);
-        TextView android_selection = (TextView) findViewById(R.id.selected_android);
-        TextView variant_selection = (TextView) findViewById(R.id.selected_variant);
-        TextView version = (TextView) findViewById(R.id.selected_version);
+        TextView arch_selection = (TextView) getView().findViewById(R.id.selected_architecture);
+        TextView android_selection = (TextView) getView().findViewById(R.id.selected_android);
+        TextView variant_selection = (TextView) getView().findViewById(R.id.selected_variant);
+        TextView version = (TextView) getView().findViewById(R.id.selected_version);
 
 
         arch_selection.setText(prefs.getString("selection_arch", "Err"));
@@ -227,15 +221,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      * @param updateAvailable true if a new Version is available
      */
     private void setNewVersionAvailable(boolean updateAvailable) {
-        CardView card = (CardView) findViewById(R.id.cardView);
-        TextView header = (TextView) findViewById(R.id.headline_download);
-        Button downloadButton = (Button) findViewById(R.id.download_button);
-        Button installButton = (Button) findViewById(R.id.install_button);
+        CardView card = (CardView) getView().findViewById(R.id.cardView);
+        TextView header = (TextView) getView().findViewById(R.id.headline_download);
+        Button downloadButton = (Button) getView().findViewById(R.id.download_button);
+        Button installButton = (Button) getView().findViewById(R.id.install_button);
 
         card.setVisibility(View.VISIBLE);
         if (updateAvailable) {
             header.setText(getString(R.string.update_available));
-            header.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+            header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             downloadButton.setText(getString(R.string.label_update));
             downloadButton.setEnabled(true);
             ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
@@ -245,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             installButton.setVisibility(View.VISIBLE);
         } else {
             header.setText(getString(R.string.package_updated));
-            header.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
             params.setMarginStart(0);
             params.setMarginEnd(8);
@@ -255,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         if (prefs.getString("last_downloaded_tag", "unset").equals("unset")) {
             header.setText(getString(R.string.label_download));
-            header.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             downloadButton.setText(getString(R.string.label_download));
             downloadButton.setEnabled(true);
             downloadButton.setVisibility(View.VISIBLE);
@@ -269,13 +263,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -284,11 +271,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent t = new Intent(this, Preferences.class);
+            Intent t = new Intent(getContext(), Preferences.class);
             startActivity(t);
             return true;
         } else if (id == R.id.about) {
-            Intent t = new Intent(this, AboutActivity.class);
+            Intent t = new Intent(getContext(), AboutActivity.class);
             startActivity(t);
             return true;
         }
@@ -368,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 prefs.edit().putString("last_downloaded_tag", tag).apply();
             setNewVersionAvailable(false);
         } else {
-            Toast.makeText(this, "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
         downloadCancelled();
     }

@@ -4,20 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    android:background="@android:color/holo_red_dark"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="org.opengapps.opengapps.MainActivity"
+    tools:context="org.opengapps.opengapps.DownloadFragment"
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.CardView
         android:id="@+id/permission_card"
         android:layout_width="match_parent"
-        ads:cardBackgroundColor="@color/colorPrimaryDark"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        ads:cardBackgroundColor="@color/colorPrimaryDark"
         ads:cardCornerRadius="0dp">
-        <include layout="@layout/permission_card"/>
+
+        <include layout="@layout/permission_card" />
     </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -27,7 +31,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
 
         <include layout="@layout/download_card" />
