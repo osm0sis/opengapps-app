@@ -32,4 +32,7 @@
     <string name="explanation_permission_denied">Damit OpenGApps korrekt funktioniert, muss die Speicher-Berechtigung gewährt werden. Eigentlich logisch, oder?</string>
     <string name="label_grant_permission">Berechtigung erteilen</string>
     <string name="title_activity_about">Über</string>
+    <string name="title_activity_navigation">Navigation</string>
+    <string name="navigation_drawer_close">Öfnne nav</string>
+    <string name="navigation_drawer_open">Svhließe nav</string>
 </resources>

@@ -1,18 +1,23 @@
 package org.opengapps.opengapps.prefs;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import net.rdrei.android.dirchooser.DirectoryChooserConfig;
+import net.rdrei.android.dirchooser.DirectoryChooserFragment;
 
 import org.opengapps.opengapps.R;
 
@@ -42,7 +47,9 @@ public class Preferences extends AppCompatActivity {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragment{
+        private DirectoryChooserFragment dialog;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -53,11 +60,10 @@ public class Preferences extends AppCompatActivity {
             bindPreferenceSummaryToValue(findPreference("download_dir"));
         }
 
-        private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+        private Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object value) {
                 String stringValue = value.toString();
-
                 if (preference instanceof ListPreference) {
                     // For list preferences, look up the correct display value in
                     // the preference's 'entries' list.
@@ -69,7 +75,6 @@ public class Preferences extends AppCompatActivity {
                             index >= 0
                                     ? listPreference.getEntries()[index]
                                     : null);
-
                 } else {
                     // For all other preferences, set the summary to the value's
                     // simple string representation.
@@ -79,7 +84,7 @@ public class Preferences extends AppCompatActivity {
             }
         };
 
-        private static void bindPreferenceSummaryToValue(Preference preference) {
+        private void bindPreferenceSummaryToValue(Preference preference) {
             // Set the listener to watch for value changes.
             preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 

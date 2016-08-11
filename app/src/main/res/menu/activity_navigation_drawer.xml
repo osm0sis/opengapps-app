@@ -3,33 +3,37 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_download"
+            android:icon="@drawable/ic_download"
+            android:title="Download/Install" />
+    </group>
+    <group
+        android:id="@+id/settingsstuff"
+        android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_customize"
+            android:title="Settings" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info"
+            android:title="About" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Links">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_github"
+                android:icon="@drawable/ic_github"
+                android:title="Github" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_blog"
+                android:icon="@drawable/ic_blog"
+                android:title="Blog" />
+            <item
+                android:id="@+id/nav_donate"
+                android:icon="@drawable/ic_donate"
+                android:title="Donate"/>
         </menu>
     </item>
 

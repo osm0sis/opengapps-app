@@ -1,34 +1,43 @@
 package org.opengapps.opengapps.prefs;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Environment;
 import android.preference.Preference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.widget.Toast;
 
-import com.github.angads25.filepicker.controller.DialogSelectionListener;
-import com.github.angads25.filepicker.model.DialogConfigs;
-import com.github.angads25.filepicker.model.DialogProperties;
-import com.github.angads25.filepicker.view.FilePickerDialog;
+import net.rdrei.android.dirchooser.DirectoryChooserConfig;
+import net.rdrei.android.dirchooser.DirectoryChooserFragment;
 
-public class FileChooserPref extends Preference implements DialogSelectionListener {
-    private FilePickerDialog dialog;
+public class FileChooserPref extends Preference implements DirectoryChooserFragment.OnFragmentInteractionListener {
+    private DirectoryChooserFragment dialog;
 
     public FileChooserPref(Context context, AttributeSet attrs) {
         super(context, attrs);
-        DialogProperties properties = new DialogProperties();
-        properties.selection_mode = DialogConfigs.SINGLE_MODE;
-        properties.selection_type = DialogConfigs.DIR_SELECT;
-        properties.extensions = null;
-        properties.root = Environment.getExternalStorageDirectory();
-        dialog = new FilePickerDialog(getContext(), properties);
-        dialog.setDialogSelectionListener(this);
+    }
+
+    @Override
+    protected void onAttachedToActivity() {
+        super.onAttachedToActivity();
+        setSummary(getPersistedString(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
     }
 
     @Override
     protected void onClick() {
-        dialog.show();
+        final DirectoryChooserConfig config = DirectoryChooserConfig.builder()
+                .initialDirectory(Environment.getExternalStorageDirectory().getAbsolutePath())
+                .newDirectoryName("New folder")
+                .allowNewDirectoryNameModification(true)
+                .allowReadOnlyDirectory(false)
+                .build();
+        if (dialog == null)
+            dialog = DirectoryChooserFragment.newInstance(config);
+        dialog.setDirectoryChooserListener(this);
+        FragmentManager fragmentManager = ((Activity) getContext()).getFragmentManager();
+        dialog.show(fragmentManager, null);
     }
 
     @Override
@@ -37,11 +46,20 @@ public class FileChooserPref extends Preference implements DialogSelectionListen
     }
 
     @Override
-    public void onSelectedFilePaths(String[] files) {
-        if (files.length == 0) {
-            Toast.makeText(getContext(), "You have to tick the checkbox for the directory", Toast.LENGTH_SHORT).show();
-        } else {
-            persistString(files[0]);
-        }
+    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
+    }
+
+    @Override
+    public void onSelectDirectory(@NonNull String path) {
+        persistString(path);
+        setSummary(path);
+        dialog.dismiss();
+        dialog = null;
+    }
+
+    @Override
+    public void onCancelChooser() {
+        dialog.dismiss();
+        dialog = null;
     }
 }

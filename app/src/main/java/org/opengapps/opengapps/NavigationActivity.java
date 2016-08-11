@@ -1,6 +1,10 @@
 package org.opengapps.opengapps;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,14 +18,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import org.opengapps.opengapps.intro.AppIntroActivity;
+import org.opengapps.opengapps.prefs.Preferences;
+
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DownloadFragment downloadFragment;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -30,7 +43,7 @@ public class NavigationActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -38,11 +51,44 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment mainFragment = new DownloadFragment();
-        transaction.replace(R.id.replaceme, mainFragment).commit();
-        fragmentManager.executePendingTransactions();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+
+                //  Create a new boolean and preference and set it to true
+                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+
+                //  If the activity has never started before...
+                if (isFirstStart) {
+
+                    //  Launch app intro
+                    Intent i = new Intent(getApplicationContext(), AppIntroActivity.class);
+                    startActivity(i);
+
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = getPrefs.edit();
+
+                    //  Edit preference to make it false because we don't want this to run again
+                    //  Apply changes
+                    e.apply();
+                }
+
+            }
+        });
+
+        // Start the thread
+        t.start();
+        downloadFragment = new DownloadFragment();
+        showFragment(downloadFragment);
+        toolbar.setTitle("Download/Install");
+        navigationView.setCheckedItem(R.id.nav_download);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        downloadFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -55,27 +101,27 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.navigation, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -83,22 +129,34 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_download) {
+            showFragment(downloadFragment);
+            toolbar.setTitle("Download/Install");
+        } else if (id == R.id.nav_settings) {
+            Intent i = new Intent(this, Preferences.class);
+            startActivity(i);
+        } else if (id == R.id.nav_about) {
+            Intent i = new Intent(this, AboutActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_github){
+            Intent i  = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_link)));
+            startActivity(i);
+        } else if (id == R.id.nav_blog){
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_blog)));
+            startActivity(i);
+        } else if (id == R.id.nav_donate){
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_donate)));
+            startActivity(i);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.replaceme, fragment).commit();
+        fragmentManager.executePendingTransactions();
     }
 }

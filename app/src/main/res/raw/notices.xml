@@ -1,0 +1,40 @@
+<notices>
+    <notice>
+        <name>LicensesDialog</name>
+        <url>http://psdev.de</url>
+        <copyright>Copyright 2013 Philip Schiffer &lt;admin@psdev.de></copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>OkHttp</name>
+        <url>http://square.github.io/okhttp/</url>
+        <copyright>Copyright 2016 Square, Inc.</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>AppIntro</name>
+        <url>https://github.com/PaoloRotolo/AppIntro</url>
+        <copyright>Copyright 2015 Paolo Rotolo
+            Copyright 2016 Maximilian Narr
+        </copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>libsuperuser</name>
+        <url>https://github.com/Chainfire/libsuperuser</url>
+        <copyright>Chainfire</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Android-DirectoryChooser</name>
+        <url>https://github.com/passy/Android-DirectoryChooser</url>
+        <copyright>Copyright 2013-2015 Pascal Hartig</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>DownloadProgress</name>
+        <url>https://github.com/ayz4sci/DownloadProgress</url>
+        <copyright>ayz4sci</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+</notices>

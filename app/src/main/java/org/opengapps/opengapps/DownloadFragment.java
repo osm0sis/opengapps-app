@@ -43,7 +43,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initPermissionCard();
     }
 
     @Nullable
@@ -57,7 +62,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         super.onActivityCreated(savedInstanceState);
         if (!prefs.getBoolean("firstStart", true)) {
             initDownloader();
-            initPermissionCard();
         }
     }
 
@@ -74,36 +78,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 requestAd();
             }
         });
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                analytics.logEvent(FirebaseAnalytics.Event.TUTORIAL_BEGIN, new Bundle());
-                //  Initialize SharedPreferences
-                SharedPreferences getPrefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
-
-                //  Create a new boolean and preference and set it to true
-                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
-
-                //  If the activity has never started before...
-                if (isFirstStart) {
-
-                    //  Launch app intro
-                    Intent i = new Intent(getContext(), AppIntroActivity.class);
-                    startActivity(i);
-
-                    //  Make a new preferences editor
-                    SharedPreferences.Editor e = getPrefs.edit();
-
-                    //  Edit preference to make it false because we don't want this to run again
-                    //  Apply changes
-                    e.apply();
-                }
-
-            }
-        });
-
-        // Start the thread
-        t.start();
 
         prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
@@ -260,27 +234,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             installButton.setVisibility(View.GONE);
         }
         restoreDownloadProgress();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent t = new Intent(getContext(), Preferences.class);
-            startActivity(t);
-            return true;
-        } else if (id == R.id.about) {
-            Intent t = new Intent(getContext(), AboutActivity.class);
-            startActivity(t);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
