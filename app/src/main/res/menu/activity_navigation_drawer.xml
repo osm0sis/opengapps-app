@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_download"
             android:icon="@drawable/ic_download"
-            android:title="Download/Install" />
+            android:title="@string/label_download_install" />
     </group>
     <group
         android:id="@+id/settingsstuff"
@@ -13,27 +13,27 @@
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_customize"
-            android:title="Settings" />
+            android:title="@string/action_settings" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info"
-            android:title="About" />
+            android:title="@string/title_activity_about" />
     </group>
 
-    <item android:title="Links">
+    <item android:title="@string/label_links">
         <menu>
             <item
                 android:id="@+id/nav_github"
                 android:icon="@drawable/ic_github"
-                android:title="Github" />
+                android:title="@string/label_Github" />
             <item
                 android:id="@+id/nav_blog"
                 android:icon="@drawable/ic_blog"
-                android:title="Blog" />
+                android:title="@string/label_blog" />
             <item
                 android:id="@+id/nav_donate"
                 android:icon="@drawable/ic_donate"
-                android:title="Donate"/>
+                android:title="@string/label_donate"/>
         </menu>
     </item>
 

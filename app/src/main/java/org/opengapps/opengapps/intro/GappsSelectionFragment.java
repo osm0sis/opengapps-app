@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +16,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.github.fcannizzaro.materialstepper.AbstractStep;
+
 import org.opengapps.opengapps.R;
 
 
-public abstract class GappsSelectionFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, RadioGroup.OnCheckedChangeListener {
+public abstract class GappsSelectionFragment extends AbstractStep implements SharedPreferences.OnSharedPreferenceChangeListener, RadioGroup.OnCheckedChangeListener {
     private final int title;
     private final int description;
     private final String key;
@@ -31,6 +35,19 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
         this.description = description;
         this.key = key;
         this.stringArray = stringArray;
+    }
+
+    @Override
+    public void onStepVisible() {
+        if (isAdded()) {
+            group.removeAllViews();
+            loadRadioBoxes();
+        }
+    }
+
+    @Override
+    public String name() {
+        return getArguments().getString("title", "NOT FOUND");
     }
 
     @Nullable
@@ -47,10 +64,18 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Bundle b = getArguments();
         TextView header = (TextView) getView().findViewById(R.id.headline_intro_gapps);
         header.setText(getString(title));
         TextView descriptionView = (TextView) getView().findViewById(R.id.description_intro_gapps);
         descriptionView.setText(getString(description));
+        if (b!= null && b.containsKey("position")) {
+            header.setVisibility(View.GONE);
+            descriptionView.setVisibility(View.GONE);
+        } else {
+            ConstraintLayout layout = (ConstraintLayout) getView().findViewById(R.id.constraint_selection);
+            layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+        }
         loadRadioBoxes();
         prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
@@ -68,7 +93,7 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
         for (String item : items) {
             RadioButton radioButton = new RadioButton(getActivity());
             radioButton.setText(item);
-            radioButton.setTextColor(Color.parseColor("#ffffff"));
+//            radioButton.setTextColor(Color.parseColor("#ffffff"));
             if (selection.toLowerCase().equals(item.toLowerCase()))
                 radioButton.setChecked(true);
             if (!isValid(item))
@@ -98,6 +123,8 @@ public abstract class GappsSelectionFragment extends Fragment implements SharedP
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        //NoOp
+        saveSelection();
     }
+
+
 }

@@ -1,9 +1,5 @@
 package org.opengapps.opengapps;
 
-/*
-    Todo - Enable Validation in settings-menu (will get interesting)
- */
-
 @SuppressWarnings({"SimplifiableIfStatement", "WeakerAccess"})
 public class SelectionValidator {
 

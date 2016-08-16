@@ -152,7 +152,6 @@ public class DownloadProgressView extends LinearLayout {
         showDownloadProgress();
     }
 
-
     private void showDownloadProgress() {
         setVisibility(View.VISIBLE);
         View test = (View) getParent();

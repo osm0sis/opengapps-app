@@ -38,6 +38,16 @@ class Downloader extends AsyncTask<Void, Void, Long> {
         this.architecture = prefs.getString("selection_arch", null);
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
+        setLastFile();
+    }
+
+    private void setLastFile() {
+        SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
+        String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
+        String title = "OpenGApps-" + architecture + "-" + android + "-" + variant;
+        File f = new File(path, title + ".zip");
+        if (f.exists())
+            lastFile = f;
     }
 
     @Override
@@ -83,7 +93,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
     private void logSelections() {
         FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
         SharedPreferences preferences = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
-        for(String entry : new String[]{"selection_arch", "selection_android", "selection_variant"}){
+        for (String entry : new String[]{"selection_arch", "selection_android", "selection_variant"}) {
             Bundle bundle = new Bundle(2);
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, entry);
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, preferences.getString(entry, "null"));
@@ -175,6 +185,14 @@ class Downloader extends AsyncTask<Void, Void, Long> {
         } catch (Exception ignored) {
 
         }
+    }
+
+    public boolean fileExists() {
+        if (lastFile != null) {
+            if (lastFile.exists())
+                return true;
+        }
+        return false;
     }
 
     private static String convertHashToString(byte[] md5Bytes) {

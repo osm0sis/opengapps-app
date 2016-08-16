@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 import net.rdrei.android.dirchooser.DirectoryChooserConfig;
 import net.rdrei.android.dirchooser.DirectoryChooserFragment;
 
+import org.opengapps.opengapps.R;
+
 public class FileChooserPref extends Preference implements DirectoryChooserFragment.OnFragmentInteractionListener {
     private DirectoryChooserFragment dialog;
 
@@ -29,7 +31,7 @@ public class FileChooserPref extends Preference implements DirectoryChooserFragm
     protected void onClick() {
         final DirectoryChooserConfig config = DirectoryChooserConfig.builder()
                 .initialDirectory(Environment.getExternalStorageDirectory().getAbsolutePath())
-                .newDirectoryName("New folder")
+                .newDirectoryName(getContext().getString(R.string.new_folder))
                 .allowNewDirectoryNameModification(true)
                 .allowReadOnlyDirectory(false)
                 .build();

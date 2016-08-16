@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private Downloader downloader;
     private SharedPreferences prefs;
     private InterstitialAd downloadAd;
-    private FirebaseAnalytics analytics;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onResume() {
         super.onResume();
         initPermissionCard();
+        if (!downloader.fileExists()) {
+            prefs.edit().remove("last_downloaded_tag").apply();
+            setNewVersionAvailable(true);
+        }
     }
 
     @Nullable
@@ -68,7 +72,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onStart() {
         super.onStart();
-        analytics = FirebaseAnalytics.getInstance(getContext());
+        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getContext());
         downloadAd = new InterstitialAd(getContext());
         downloadAd.setAdUnitId(getString(R.string.download_interstitial));
         requestAd();
@@ -124,7 +128,19 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void initButtons() {
         initDownloadButton();
         initInstallButton();
+        initCustomizeButton();
         initFab();
+    }
+
+    private void initCustomizeButton() {
+        ImageButton customize = (ImageButton) getView().findViewById(R.id.button_customize);
+        customize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), Stepper.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void initFab() {
@@ -194,7 +210,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      *
      * @param updateAvailable true if a new Version is available
      */
-    private void setNewVersionAvailable(boolean updateAvailable) {
+    private void
+    setNewVersionAvailable(boolean updateAvailable) {
         CardView card = (CardView) getView().findViewById(R.id.cardView);
         TextView header = (TextView) getView().findViewById(R.id.headline_download);
         Button downloadButton = (Button) getView().findViewById(R.id.download_button);
@@ -266,10 +283,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     void OnTagUpdated() {
-        if (prefs.getString("last_downloaded_tag", "").equals(downloader.getTag()))
-            setNewVersionAvailable(false);
-        else
-            setNewVersionAvailable(true);
+        if (downloader.fileExists()) {
+            if (prefs.getString("last_downloaded_tag", "").equals(downloader.getTag()))
+                setNewVersionAvailable(false);
+            else
+                setNewVersionAvailable(true);
+        }
     }
 
     void downloadStarted(long id, String tag) {

@@ -44,7 +44,7 @@ class ZipInstaller {
                 PowerManager pm = (PowerManager) context.getSystemService(POWER_SERVICE);
                 pm.reboot("recovery");
             } catch (Exception e) {
-                Toast.makeText(context, "Automatic Install only works with root/if OpenGApps is installed as system app", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.autoinstall_root_disclaimer), Toast.LENGTH_LONG).show();
             }
         }
     }

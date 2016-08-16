@@ -16,6 +16,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="Stepper"
+            android:label="DEMO"/>
         <activity
             android:name=".intro.AppIntroActivity"
             android:label="AppIntro"

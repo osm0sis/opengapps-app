@@ -48,15 +48,11 @@ public class Preferences extends AppCompatActivity {
 
     @SuppressWarnings("WeakerAccess")
     public static class SettingsFragment extends PreferenceFragment{
-        private DirectoryChooserFragment dialog;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
-            bindPreferenceSummaryToValue(findPreference("selection_arch"));
-            bindPreferenceSummaryToValue(findPreference("selection_android"));
-            bindPreferenceSummaryToValue(findPreference("selection_variant"));
             bindPreferenceSummaryToValue(findPreference("download_dir"));
         }
 

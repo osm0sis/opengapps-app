@@ -22,7 +22,7 @@
     <notice>
         <name>libsuperuser</name>
         <url>https://github.com/Chainfire/libsuperuser</url>
-        <copyright>Chainfire</copyright>
+        <copyright>Copyright Chainfire</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
@@ -34,7 +34,7 @@
     <notice>
         <name>DownloadProgress</name>
         <url>https://github.com/ayz4sci/DownloadProgress</url>
-        <copyright>ayz4sci</copyright>
+        <copyright>Copyright ayz4sci</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
 </notices>

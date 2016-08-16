@@ -9,7 +9,7 @@
     <string name="label_variant">Variante</string>
     <string name="ok">OK</string>
     <string name="pref_header_download">Download</string>
-    <string name="pref_header_gapps_selection">GApps</string>
+    <string name="pref_header_gapps_selection">GApps-Auswahl</string>
     <string name="pref_header_general">Allgemein</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="variants">Varianten</string>
@@ -33,6 +33,16 @@
     <string name="label_grant_permission">Berechtigung erteilen</string>
     <string name="title_activity_about">Über</string>
     <string name="title_activity_navigation">Navigation</string>
-    <string name="navigation_drawer_close">Öfnne nav</string>
-    <string name="navigation_drawer_open">Svhließe nav</string>
+    <string name="navigation_drawer_close">Öfnne Navigation</string>
+    <string name="navigation_drawer_open">Schließe Navigation</string>
+    <string name="new_folder">Neuer Ordner</string>
+    <string name="label_download_install">Download/Installieren</string>
+    <string name="autoinstall_root_disclaimer">Das Automatische Installieren funktioniert nur als System-App oder mit Root</string>
+    <string name="main_dev">Hauptentwickler</string>
+    <string name="label_design">Design/Artwork</string>
+    <string name="used_libs">Bibliotheken</string>
+    <string name="click_show_more">Für mehr Info klicken</string>
+    <string name="label_links">Links</string>
+    <string name="label_blog">Blog</string>
+    <string name="label_donate">Spenden</string>
 </resources>
