@@ -1,4 +1,4 @@
-package org.opengapps.opengapps.DownloadProgress;
+package org.opengapps.opengapps.download;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
@@ -9,13 +9,12 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.MessageQueue;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,10 +35,11 @@ public class DownloadProgressView extends LinearLayout {
     private final TextView downloadedSizeView, totalSizeView, percentageView;
     private final DownloadManager downloadManager;
     private final Context context;
+    private DownloadObserver observer;
     private int downloadedSizeColor, totalSizeColor, percentageColor;
     private long downloadID;
     private boolean downloading;
-    private List<DownloadStatusListener> listeners = new ArrayList<>();
+    private DownloadStatusListener listener;
 
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -148,14 +148,14 @@ public class DownloadProgressView extends LinearLayout {
      */
     public void show(long downloadID, DownloadStatusListener downloadStatusListener) {
         this.downloadID = downloadID;
-        listeners.add(downloadStatusListener);
+        listener = downloadStatusListener;
         showDownloadProgress();
     }
 
     private void showDownloadProgress() {
         setVisibility(View.VISIBLE);
-        View test = (View) getParent();
-        Button downloadButton = (Button) test.findViewById(R.id.download_button);
+        View parentView = (View) getParent();
+        Button downloadButton = (Button) parentView.findViewById(R.id.download_button);
         downloadButton.setText(getResources().getString(R.string.label_cancel));
         downloadButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -163,9 +163,7 @@ public class DownloadProgressView extends LinearLayout {
                 if (downloadManager != null) {
                     downloadManager.remove(downloadID);
                     try {
-                        for (DownloadStatusListener downloadStatusListener : listeners) {
-                            downloadStatusListener.downloadCancelled();
-                        }
+                        listener.downloadCancelled();
                     } catch (Exception ignored) {
                     }
                 }
@@ -206,17 +204,14 @@ public class DownloadProgressView extends LinearLayout {
                                     setVisibility(View.GONE);
 
                                     try {
-                                        for (DownloadStatusListener downloadStatusListener : listeners) {
-                                            downloadStatusListener.downloadFailed(reason);
-                                        }
+                                        listener.downloadFailed(reason);
                                     } catch (Exception ignored) {
                                     }
                                 } else if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                                    downloading = false;
-                                    setVisibility(View.GONE);
-
-                                    for (DownloadStatusListener downloadStatusListener : listeners) {
-                                        downloadStatusListener.downloadSuccessful(filePath.substring(7));
+                                    synchronized (Looper.getMainLooper()) {
+                                        downloading = false;
+                                        setVisibility(View.GONE);
+                                        listener.downloadSuccessful(filePath.substring(7));
                                     }
                                 } else {
                                     downloading = true;
@@ -235,15 +230,18 @@ public class DownloadProgressView extends LinearLayout {
                                 setVisibility(View.GONE);
 
                                 try {
-                                    for (DownloadStatusListener downloadStatusListener : listeners) {
-                                        downloadStatusListener.downloadFailed(-1);
-                                    }
+                                    listener.downloadFailed(-1);
                                 } catch (Exception ignored) {
                                 }
                             }
                         });
                     }
                     c.close();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } while (downloading);
             }
         }.start();

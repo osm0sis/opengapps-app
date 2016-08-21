@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="org.opengapps.opengapps.AboutActivity">
+    tools:downloadFragment="org.opengapps.opengapps.AboutActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,10 +22,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <android.support.constraint.ConstraintLayout
         android:id="@+id/content_about"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_width="170dp"
@@ -48,6 +51,5 @@
             <include layout="@layout/content_about" />
         </android.support.v7.widget.CardView>
     </android.support.constraint.ConstraintLayout>
-
-
+    </ScrollView>
 </LinearLayout>

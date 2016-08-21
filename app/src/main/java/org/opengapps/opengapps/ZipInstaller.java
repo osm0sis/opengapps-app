@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.widget.Toast;
 
+import org.opengapps.opengapps.download.Downloader;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

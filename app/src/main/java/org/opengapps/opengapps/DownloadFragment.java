@@ -11,10 +11,12 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,17 +29,18 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import org.opengapps.opengapps.DownloadProgress.DownloadProgressView;
-import org.opengapps.opengapps.intro.AppIntroActivity;
-import org.opengapps.opengapps.prefs.Preferences;
+import org.opengapps.opengapps.download.DownloadProgressView;
+import org.opengapps.opengapps.download.Downloader;
+import org.opengapps.opengapps.download.FileValidator;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener {
+public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener, SwipeRefreshLayout.OnRefreshListener {
     private Downloader downloader;
     private SharedPreferences prefs;
     private InterstitialAd downloadAd;
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,30 +51,24 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onResume() {
         super.onResume();
-        initPermissionCard();
-        if (!downloader.fileExists()) {
-            prefs.edit().remove("last_downloaded_tag").apply();
-            setNewVersionAvailable(true);
-        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.content_main, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        refreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.dl_refresher);
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         if (!prefs.getBoolean("firstStart", true)) {
             initDownloader();
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
+        refreshLayout.setOnRefreshListener(this);
         FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getContext());
         downloadAd = new InterstitialAd(getContext());
         downloadAd.setAdUnitId(getString(R.string.download_interstitial));
@@ -89,11 +86,19 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initSelections();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_download_fragment, menu);
+        menu.findItem(R.id.menu_refresh).setVisible(true);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     private void requestAd() {
         AdRequest request = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("4AAD86A2F6F9FBC35B94E952288382AC")
                 .addTestDevice("05814904E0308580F4ECF981062E5079")
+                .addTestDevice("85DDA6F7FBE8D768E038C9B67BD1041A")
                 .build();
         downloadAd.loadAd(request);
     }
@@ -109,6 +114,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void initDownloader() {
         downloader = new Downloader(this);
         downloader.new TagUpdater().execute();
+        refreshLayout.setRefreshing(true);
     }
 
     private void initPermissionCard() {
@@ -129,7 +135,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initDownloadButton();
         initInstallButton();
         initCustomizeButton();
-        initFab();
     }
 
     private void initCustomizeButton() {
@@ -141,9 +146,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 startActivity(i);
             }
         });
-    }
-
-    private void initFab() {
     }
 
     private void initPermissionButton() {
@@ -210,8 +212,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      *
      * @param updateAvailable true if a new Version is available
      */
-    private void
-    setNewVersionAvailable(boolean updateAvailable) {
+    private void setNewVersionAvailable(boolean updateAvailable) {
         CardView card = (CardView) getView().findViewById(R.id.cardView);
         TextView header = (TextView) getView().findViewById(R.id.headline_download);
         Button downloadButton = (Button) getView().findViewById(R.id.download_button);
@@ -282,7 +283,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         downloader.new TagUpdater();
     }
 
-    void OnTagUpdated() {
+    public void OnTagUpdated() {
+        refreshLayout.setRefreshing(false);
         if (downloader.fileExists()) {
             if (prefs.getString("last_downloaded_tag", "").equals(downloader.getTag()))
                 setNewVersionAvailable(false);
@@ -291,7 +293,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         }
     }
 
-    void downloadStarted(long id, String tag) {
+    public void downloadStarted(long id, String tag) {
         prefs.edit().putLong("running_download_id", id).apply();
         prefs.edit().putString("running_download_tag", tag).apply();
     }
@@ -308,7 +310,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void downloadSuccessful(String filePath) {
         initDownloadButton();
         Log.e("DL", "I AM SUCCESSFUL. ONCE");
-        new FileValidator(this).execute(filePath);
+        if (prefs.getBoolean("checkMissing", false)) {
+            prefs.edit().remove("checkMissing").apply();
+            new FileValidator(this).execute(filePath);
+        }
     }
 
     @Override
@@ -320,7 +325,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         prefs.edit().putString("running_download_tag", null).apply();
     }
 
-    void hashSuccess(Boolean match) {
+    public void hashSuccess(Boolean match) {
         if (match) {
             String tag = prefs.getString("running_download_tag", "failed");
             if (!tag.equals("failed")) // dirty hack :(
@@ -330,5 +335,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             Toast.makeText(getContext(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
         downloadCancelled();
+    }
+
+    @Override
+    public void onRefresh() {
+        downloader.new TagUpdater().execute();
     }
 }

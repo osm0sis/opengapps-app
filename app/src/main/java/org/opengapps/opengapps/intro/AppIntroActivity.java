@@ -16,11 +16,9 @@ import android.widget.Button;
 
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.R;
 
-import static android.os.Build.SUPPORTED_32_BIT_ABIS;
 
 public class AppIntroActivity extends AppIntro2 {
     private Button permButton;
@@ -96,6 +94,7 @@ public class AppIntroActivity extends AppIntro2 {
             arch = Build.SUPPORTED_32_BIT_ABIS[0];
             x64 = Build.SUPPORTED_64_BIT_ABIS.length > 0;
         } else{
+            //noinspection deprecation
             arch = Build.CPU_ABI;
             x64 = false;
         }

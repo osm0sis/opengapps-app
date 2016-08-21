@@ -1,4 +1,4 @@
-package org.opengapps.opengapps;
+package org.opengapps.opengapps.download;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -7,11 +7,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.FileObserver;
 
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import org.opengapps.opengapps.DownloadProgress.DownloadProgressView;
+import org.opengapps.opengapps.DownloadFragment;
+import org.opengapps.opengapps.R;
+import org.opengapps.opengapps.download.DownloadProgressView;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -27,12 +30,13 @@ import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-class Downloader extends AsyncTask<Void, Void, Long> {
+public class Downloader extends AsyncTask<Void, Void, Long> {
     private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
     private static File lastFile;
+    private static DownloadObserver observer;
 
-    Downloader(DownloadFragment downloadFragment) {
+    public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
         SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
         this.architecture = prefs.getString("selection_arch", null);
@@ -50,6 +54,10 @@ class Downloader extends AsyncTask<Void, Void, Long> {
             lastFile = f;
     }
 
+    public static DownloadObserver getObserver() {
+        return observer;
+    }
+
     @Override
     protected Long doInBackground(Void... voids) {
         refreshFeed();
@@ -63,19 +71,21 @@ class Downloader extends AsyncTask<Void, Void, Long> {
         DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progressView);
         progress.show(id, downloadFragment);
         downloadFragment.downloadStarted(id, tag);
+        SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
+        prefs.edit().putBoolean("checkMissing", true).apply();
     }
 
-    String getTag() {
+    public String getTag() {
         return tag;
     }
 
-    void deleteLastFile() {
+    public void deleteLastFile() {
         if (lastFile != null)
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
     }
 
-    class TagUpdater extends AsyncTask<Void, Void, String> {
+    public class TagUpdater extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {
             refreshFeed();
@@ -203,7 +213,7 @@ class Downloader extends AsyncTask<Void, Void, Long> {
         return returnVal.toUpperCase();
     }
 
-    static String getDownloadedFile(Context context) {
+    public static String getDownloadedFile(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
         String architecture = prefs.getString("selection_arch", null);
         String android = prefs.getString("selection_android", null);

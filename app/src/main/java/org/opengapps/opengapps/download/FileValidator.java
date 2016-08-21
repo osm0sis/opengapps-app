@@ -1,6 +1,8 @@
-package org.opengapps.opengapps;
+package org.opengapps.opengapps.download;
 
 import android.os.AsyncTask;
+
+import org.opengapps.opengapps.DownloadFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,17 +12,17 @@ import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class FileValidator extends AsyncTask<String , Void, Boolean>{
-    private final DownloadFragment context;
+    private final DownloadFragment downloadFragment;
 
-    public FileValidator(DownloadFragment context){
-        this.context = context;
+    public FileValidator(DownloadFragment downloadFragment){
+        this.downloadFragment = downloadFragment;
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
         try {
-            context.getContext().getFilesDir();
-            File f = new File(context.getContext().getFilesDir(), "gapps.md5");
+            downloadFragment.getContext().getFilesDir();
+            File f = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
             Scanner scanner = new Scanner(f);
             String expectedHash = scanner.nextLine();
             expectedHash = expectedHash.substring(0, expectedHash.indexOf(" "));
@@ -34,7 +36,7 @@ public class FileValidator extends AsyncTask<String , Void, Boolean>{
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
-        context.hashSuccess(aBoolean);
+        downloadFragment.hashSuccess(aBoolean);
     }
 
     private static String fileToMD5(String filePath) {
@@ -57,15 +59,15 @@ public class FileValidator extends AsyncTask<String , Void, Boolean>{
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (Exception e) { }
+                } catch (Exception ignored) { }
             }
         }
     }
 
     private static String convertHashToString(byte[] md5Bytes) {
         String returnVal = "";
-        for (int i = 0; i < md5Bytes.length; i++) {
-            returnVal += Integer.toString(( md5Bytes[i] & 0xff ) + 0x100, 16).substring(1);
+        for (byte md5Byte : md5Bytes) {
+            returnVal += Integer.toString((md5Byte & 0xff) + 0x100, 16).substring(1);
         }
         return returnVal.toUpperCase();
     }

@@ -4,21 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Handler;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import de.psdev.licensesdialog.LicensesDialog;
-import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
-import de.psdev.licensesdialog.licenses.License;
-import de.psdev.licensesdialog.model.Notice;
 
 public class AboutActivity extends AppCompatActivity {
     private boolean playGAppsActive = false;
@@ -29,6 +25,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initButtons();
         initLabels();
@@ -43,6 +40,21 @@ public class AboutActivity extends AppCompatActivity {
         initLicenseButton();
         intitSecretButton();
         initYetiButton();
+        initCopyrightButton();
+    }
+
+    private void initCopyrightButton() {
+        LinearLayout copyright = (LinearLayout) findViewById(R.id.copyright);
+        final AppCompatActivity ac = this;
+        copyright.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(ac)
+                        .setTitle(R.string.label_copyright)
+                        .setMessage(R.string.app_copyright)
+                        .show();
+            }
+        });
     }
 
     private void initYetiButton() {
@@ -50,6 +62,7 @@ public class AboutActivity extends AppCompatActivity {
         yeti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new Handler().postDelayed(new ButtonDisabler(view), 3000);
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_yeti)));
                 startActivity(i);
             }
@@ -62,6 +75,7 @@ public class AboutActivity extends AppCompatActivity {
         license.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new Handler().postDelayed(new ButtonDisabler(view), 3000);
                 new LicensesDialog.Builder(thisAc)
                         .setNotices(R.raw.notices)
                         .build()
@@ -76,14 +90,26 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View view) {
                 if (playGAppsActive)
-                    logoLarge.setImageDrawable(getResources().getDrawable(R.drawable.opengapps_large));
+                    logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.opengapps_large));
                 else
-                    logoLarge.setImageDrawable(getResources().getDrawable(R.drawable.playgapps_large));
+                    logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.playgapps_large));
                 playGAppsActive = !playGAppsActive;
                 return false;
             }
         });
     }
 
+    private static class ButtonDisabler implements Runnable {
+        private View view;
 
+        private ButtonDisabler(View v) {
+            view = v;
+            v.setEnabled(false);
+        }
+
+        @Override
+        public void run() {
+            view.setEnabled(true);
+        }
+    }
 }

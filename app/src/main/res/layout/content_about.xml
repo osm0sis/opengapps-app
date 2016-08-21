@@ -60,6 +60,7 @@
         android:paddingRight="16dp">
 
         <ImageView
+            android:contentDescription="@string/main_dev"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_person"/>
@@ -102,6 +103,7 @@
         android:paddingRight="16dp">
 
         <ImageView
+            android:contentDescription="@string/label_design"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_yeti"/>
@@ -171,6 +173,51 @@
                 android:maxLines="1"
                 android:ellipsize="marquee"
                 android:text="@string/click_show_more"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                tools:text="1.0" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/copyright"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_copyright"
+            android:contentDescription="@string/label_producer" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_producer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                android:text="@string/copyright_owner"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 tools:text="1.0" />
         </LinearLayout>
