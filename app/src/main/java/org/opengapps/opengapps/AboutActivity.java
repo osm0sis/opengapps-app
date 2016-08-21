@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import de.psdev.licensesdialog.LicensesDialog;
+import de.psdev.licensesdialog.licenses.MITLicense;
 
 public class AboutActivity extends AppCompatActivity {
     private boolean playGAppsActive = false;
@@ -56,7 +57,6 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
-
     private void initYetiButton() {
         LinearLayout yeti = (LinearLayout) findViewById(R.id.yeti_button);
         yeti.setOnClickListener(new View.OnClickListener() {

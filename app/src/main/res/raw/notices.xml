@@ -37,4 +37,10 @@
         <copyright>Copyright ayz4sci</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
+    <notice>
+        <name>Material Stepper</name>
+        <url>https://github.com/fcannizzaro/material-stepper</url>
+        <copyright>Copyright (c) 2015 Francesco Saverio Cannizzaro</copyright>
+        <license>MIT License</license>
+    </notice>
 </notices>
