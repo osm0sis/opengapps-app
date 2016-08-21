@@ -30,11 +30,11 @@ import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
+@SuppressWarnings("ConstantConditions")
 public class Downloader extends AsyncTask<Void, Void, Long> {
     private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
     private static File lastFile;
-    private static DownloadObserver observer;
 
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
@@ -54,9 +54,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             lastFile = f;
     }
 
-    public static DownloadObserver getObserver() {
-        return observer;
-    }
 
     @Override
     protected Long doInBackground(Void... voids) {

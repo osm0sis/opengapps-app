@@ -39,8 +39,9 @@
     <string name="label_copyright">Copyright</string>
     <string name="label_adblock_detected">Werbeblocker erkannt</string>
     <string name="explanation_adblock_detected">Sieht so aus als wäre ein Werbeblocker installiert. Wir verstehen, dass Werbung nervig sein kann, aber auch wir müssen unsere Server bezahlen. Bitte überlegen Sie, ob Sie den AdBlocker deaktivieren oder uns spenden wollen</string>
-    <string name="app_copyright"></string>
+    <string name="app_copyright">Platzhalter REPLACEME EDITME</string>
     <string name="slide_variant_description">Stuff bout Variants EDITME</string>
     <string name="slide_arch_description">Funny stuff about architectures! EDITME</string>
     <string name="slide_android_description">You can select the android version here. EDITME</string>
+    <string name="label_change_selection">Auswahl ändern</string>
 </resources>

@@ -85,4 +85,5 @@
     <string name="app_copyright">this is just for now a placeholder</string>
     <string name="label_adblock_detected">AdBlocker Detected</string>
     <string name="explanation_adblock_detected">Seems like you may have an adblocker. Why we understand that ads can be frustrating, we also have to run our servers. Please consider disabling your adblocker or donating to us</string>
+    <string name="label_change_selection">Change Selection</string>
 </resources>

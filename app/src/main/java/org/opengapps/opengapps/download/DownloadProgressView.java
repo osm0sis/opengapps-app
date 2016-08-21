@@ -35,7 +35,6 @@ public class DownloadProgressView extends LinearLayout {
     private final TextView downloadedSizeView, totalSizeView, percentageView;
     private final DownloadManager downloadManager;
     private final Context context;
-    private DownloadObserver observer;
     private int downloadedSizeColor, totalSizeColor, percentageColor;
     private long downloadID;
     private boolean downloading;

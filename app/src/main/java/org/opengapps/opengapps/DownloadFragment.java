@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,6 +37,7 @@ import org.opengapps.opengapps.download.FileValidator;
 import static android.content.Context.MODE_PRIVATE;
 
 
+@SuppressWarnings("ConstantConditions")
 public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener, SwipeRefreshLayout.OnRefreshListener {
     private Downloader downloader;
     private SharedPreferences prefs;
@@ -94,8 +96,19 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_download_fragment, menu);
-        menu.findItem(R.id.menu_refresh).setVisible(true);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId){
+            case R.id.menu_selection:
+                Intent i = new Intent(getContext(), Stepper.class);
+                startActivity(i);
+                return true;
+        }
+        return false;
     }
 
     private void requestAd() {
