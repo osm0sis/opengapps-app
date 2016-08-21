@@ -51,6 +51,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onResume() {
         super.onResume();
+        initPermissionCard();
+        if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
+            prefs.edit().remove("last_downloaded_tag").apply();
+            setNewVersionAvailable(true);
+        }
     }
 
     @Nullable
