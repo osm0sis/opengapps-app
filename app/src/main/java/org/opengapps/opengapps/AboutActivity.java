@@ -1,24 +1,32 @@
 package org.opengapps.opengapps;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.MITLicense;
 
 public class AboutActivity extends AppCompatActivity {
     private boolean playGAppsActive = false;
+    private int gfCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +46,67 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void initButtons() {
+        initMainDevButton();
         initLicenseButton();
         intitSecretButton();
+        initMausiButton();
         initYetiButton();
         initCopyrightButton();
+    }
+
+    private void initMainDevButton() {
+        final Activity thisFrag = this;
+        LinearLayout mainDev = (LinearLayout) findViewById(R.id.main_dev_button);
+        mainDev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText edit = new EditText(thisFrag);
+                DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String input = edit.getText().toString();
+
+                        if (input.trim().toUpperCase().startsWith("MI")) {
+                            Pattern p = Pattern.compile("(mii*\\s){2}(mii*)", Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = p.matcher(input);
+                            if (matcher.matches())
+                                Toast.makeText(thisFrag, "Meh❤", Toast.LENGTH_LONG).show();
+                        }
+                        if (input.trim().toLowerCase().startsWith("ha")) {
+                            Pattern p = Pattern.compile("Haa*sii*", Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = p.matcher(input);
+                            if (matcher.matches())
+                                Toast.makeText(thisFrag, "Maauusiiii❤", Toast.LENGTH_LONG).show();
+                        }
+                        if (input.contains("Chris") && input.contains("Cross"))
+                            Toast.makeText(thisFrag, "Mein Engel❤︎", Toast.LENGTH_LONG).show();
+                    }
+                };
+                if (gfCount == "Tanja".length()) {
+                    edit.setHint("Enter secret word");
+                    new AlertDialog.Builder(thisFrag)
+                            .setTitle("This is only meant for my loved one, glad you found it")
+                            .setView(edit)
+                            .setPositiveButton(android.R.string.ok, listener)
+                            .show();
+                } else if (gfCount >= 1)
+                    gfCount++;
+                else {
+                    //regular stuff
+                }
+            }
+        });
+    }
+
+    private void initMausiButton() {
+        LinearLayout mainDev = (LinearLayout) findViewById(R.id.main_dev_button);
+        mainDev.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                gfCount = 1;
+                return true;
+            }
+        });
     }
 
     private void initCopyrightButton() {
@@ -57,6 +122,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
+
     private void initYetiButton() {
         LinearLayout yeti = (LinearLayout) findViewById(R.id.yeti_button);
         yeti.setOnClickListener(new View.OnClickListener() {

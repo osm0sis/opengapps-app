@@ -49,6 +49,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/main_dev_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
