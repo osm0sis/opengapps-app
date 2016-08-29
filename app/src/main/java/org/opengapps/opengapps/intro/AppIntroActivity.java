@@ -88,43 +88,53 @@ public class AppIntroActivity extends AppIntro2 {
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        String arch = "arm";
-        boolean x64 = false;
+        String arch;
+        boolean x64;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             arch = Build.SUPPORTED_32_BIT_ABIS[0];
             x64 = Build.SUPPORTED_64_BIT_ABIS.length > 0;
-        } else{
+        } else {
             //noinspection deprecation
             arch = Build.CPU_ABI;
             x64 = false;
         }
         if (!sharedPref.contains("selection_arch")) {
+            String[] architectures = getResources().getStringArray(R.array.architectures);
             if (arch.contains("arm")) {
-                if (x64) {
-                    editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[1]);
-                } else
-                    editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[0]);
+                if (!x64) {
+                    editor.putString("selection_arch", architectures[0]); //arm
+                } else {
+                    editor.putString("selection_arch", architectures[1]); //arm64
+                }
             } else if (arch.contains("86")) {
-                if (x64)
-                    editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[3]);
+                if (!x64)
+                    editor.putString("selection_arch", architectures[2]); //x86
                 else
-                    editor.putString("selection_arch", getResources().getStringArray(R.array.architectures)[2]);
-            }
+                    editor.putString("selection_arch", architectures[3]); //x86x64
+            } else
+                editor.putString("selection_arch", architectures[0]); //Default to arm
         }
 
         if (!sharedPref.contains("selection_android")) {
+            String[] androidVersion = getResources().getStringArray(R.array.android_versions);
             switch (Build.VERSION.SDK_INT) {
                 case 19:
-                    editor.putString("selection_android", getResources().getStringArray(R.array.android_versions)[0]);//KitKat-Device
+                    editor.putString("selection_android", androidVersion[0]);//KitKat-Device
                     break;
                 case 21:
-                    editor.putString("selection_android", getResources().getStringArray(R.array.android_versions)[1]);//Lollipop-5.0-Device
+                    editor.putString("selection_android", androidVersion[1]);//Lollipop-5.0-Device
                     break;
                 case 22:
-                    editor.putString("selection_android", getResources().getStringArray(R.array.android_versions)[2]);//Lollipop-5.1-Device
+                    editor.putString("selection_android", androidVersion[2]);//Lollipop-5.1-Device
                     break;
                 case 23:
-                    editor.putString("selection_android", getResources().getStringArray(R.array.android_versions)[3]);//Marshmallow-Device
+                    editor.putString("selection_android", androidVersion[3]);//Marshmallow-Device
+                    break;
+                case 24:
+                    editor.putString("selection_android", androidVersion[4]);//Nougat-Device
+                    break;
+                default:
+                    editor.putString("selection_android", androidVersion[androidVersion.length - 1]); //Default to latest
             }
         }
 

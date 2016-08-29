@@ -39,7 +39,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
         SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
-        this.architecture = prefs.getString("selection_arch", null);
+        this.architecture = prefs.getString("selection_arch", "arm");
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
         setLastFile();
@@ -194,7 +194,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
     }
 
-    public boolean fileExists() {
+    public static boolean fileExists() {
         if (lastFile != null) {
             if (lastFile.exists())
                 return true;

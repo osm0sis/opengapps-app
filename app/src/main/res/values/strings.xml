@@ -12,6 +12,7 @@
         <item>5.0</item>
         <item>5.1</item>
         <item>6.0</item>
+        <item>7.0</item>
     </string-array>
     <string-array name="opengapps_variant" tools:ignore="MissingTranslation">
         <item>aroma</item>
@@ -80,10 +81,11 @@
     <string name="label_blog">Blog</string>
     <string name="label_donate">Donate</string>
     <string name="label_producer">Producer</string>
-    <string name="copyright_owner" translatable="false">Fonville IT</string>
+    <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016  - all rights reserved</string>
     <string name="label_copyright">Copyright</string>
     <string name="app_copyright">this is just for now a placeholder</string>
     <string name="label_adblock_detected">AdBlocker Detected</string>
     <string name="explanation_adblock_detected">Seems like you may have an adblocker. Why we understand that ads can be frustrating, we also have to run our servers. Please consider disabling your adblocker or donating to us</string>
     <string name="label_change_selection">Change Selection</string>
+    <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
 </resources>

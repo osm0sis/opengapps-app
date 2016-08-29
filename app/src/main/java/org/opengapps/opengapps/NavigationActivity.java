@@ -143,6 +143,9 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_donate){
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_donate)));
             startActivity(i);
+        } else if(id == R.id.nav_opengapps){
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_opengapps)));
+            startActivity(i);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
