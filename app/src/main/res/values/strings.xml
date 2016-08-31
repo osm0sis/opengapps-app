@@ -88,4 +88,13 @@
     <string name="explanation_adblock_detected">Seems like you may have an adblocker. Why we understand that ads can be frustrating, we also have to run our servers. Please consider disabling your adblocker or donating to us</string>
     <string name="label_change_selection">Change Selection</string>
     <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
+    <string name="url_app_version" translatable="false">http://192.168.178.26:8000/version.info</string>
+    <string name="download_started">Download started</string>
+    <string name="label_wiki">Wiki</string>
+    <string name="url_wiki" translatable="false">https://github.com/opengapps/opengapps/wiki</string>
+    <string name="label_support_chat">Support Chat</string>
+    <string name="url_support_chat" translatable="false">https://gitter.im/opengapps/general</string>
+    <string name="label_report_bug">Report Bug</string>
+    <string name="url_report_bug" translatable="false">http://bugreport.me</string>
+    <string name="label_support">Support</string>
 </resources>

@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.FileObserver;
+import android.widget.Toast;
 
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -65,6 +66,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     @Override
     protected void onPostExecute(Long id) {
+        Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
         DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progressView);
         progress.show(id, downloadFragment);
         downloadFragment.downloadStarted(id, tag);
@@ -141,7 +143,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(downloadFragment.getString(R.string.feed_url).replace("%arch", architecture))
+                    .url(downloadFragment.getContext().getString(R.string.feed_url).replace("%arch", architecture))
                     .build();
 
             Response response = client.newCall(request).execute();
@@ -194,7 +196,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
     }
 
-    public static boolean fileExists() {
+    public boolean fileExists() {
         if (lastFile != null) {
             if (lastFile.exists())
                 return true;

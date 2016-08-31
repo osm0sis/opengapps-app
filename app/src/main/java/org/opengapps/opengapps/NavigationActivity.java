@@ -50,6 +50,10 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        final boolean isFirstStart = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE).getBoolean("firstStart", true);
+        if (!isFirstStart && AppUpdater.checkAllowed(getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE))) {
+            new AppUpdater().execute(this);
+        }
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -57,10 +61,9 @@ public class NavigationActivity extends AppCompatActivity
                 SharedPreferences getPrefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
 
                 //  Create a new boolean and preference and set it to true
-                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
                 //  If the activity has never started before...
                 if (isFirstStart) {
-                    //Open Nav-Drawe
+                    //Open Nav-Drawer
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.openDrawer(Gravity.LEFT, false);
 
@@ -86,7 +89,7 @@ public class NavigationActivity extends AppCompatActivity
         toolbar.setTitle(getString(R.string.label_download_install));
         navigationView.setCheckedItem(R.id.nav_download);
 
-        if(AdBlockDetector.hasAdBlockEnabled(this))
+        if (AdBlockDetector.hasAdBlockEnabled(this))
             showAdBlockDialog();
     }
 
@@ -131,19 +134,22 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             Intent i = new Intent(this, Preferences.class);
             startActivity(i);
+        } else if (id == R.id.nav_support) {
+            Intent i = new Intent(this, SupportActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_about) {
             Intent i = new Intent(this, AboutActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_github){
-            Intent i  = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_link)));
+        } else if (id == R.id.nav_github) {
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_link)));
             startActivity(i);
-        } else if (id == R.id.nav_blog){
+        } else if (id == R.id.nav_blog) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_blog)));
             startActivity(i);
-        } else if (id == R.id.nav_donate){
+        } else if (id == R.id.nav_donate) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_donate)));
             startActivity(i);
-        } else if(id == R.id.nav_opengapps){
+        } else if (id == R.id.nav_opengapps) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_opengapps)));
             startActivity(i);
         }
@@ -153,11 +159,11 @@ public class NavigationActivity extends AppCompatActivity
     }
 
 
-
     private void showFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.replaceme, fragment).commit();
         fragmentManager.executePendingTransactions();
     }
+
 }

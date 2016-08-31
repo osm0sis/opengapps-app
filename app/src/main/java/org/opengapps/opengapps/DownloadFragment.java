@@ -54,9 +54,19 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onResume() {
         super.onResume();
         initPermissionCard();
+        if(downloader == null)
+            initDownloader();
         if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
             prefs.edit().remove("last_downloaded_tag").apply();
             setNewVersionAvailable(true);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!prefs.getBoolean("firstStart", true)) {
+            initDownloader();
         }
     }
 
@@ -64,6 +74,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+
         return inflater.inflate(R.layout.content_main, container, false);
     }
 
@@ -72,9 +83,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         super.onActivityCreated(savedInstanceState);
         refreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.dl_refresher);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        if (!prefs.getBoolean("firstStart", true)) {
-            initDownloader();
-        }
+
         refreshLayout.setOnRefreshListener(this);
         FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getContext());
         downloadAd = new InterstitialAd(getContext());
@@ -102,7 +111,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        switch (itemId){
+        switch (itemId) {
             case R.id.menu_selection:
                 Intent i = new Intent(getContext(), Stepper.class);
                 startActivity(i);
@@ -114,9 +123,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void requestAd() {
         AdRequest request = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("4AAD86A2F6F9FBC35B94E952288382AC")
-                .addTestDevice("05814904E0308580F4ECF981062E5079")
-                .addTestDevice("85DDA6F7FBE8D768E038C9B67BD1041A")
+                .addTestDevice("F98ACBE481522BAE0A91AC208FDF938F")
                 .build();
         downloadAd.loadAd(request);
     }

@@ -195,7 +195,10 @@ public class DownloadProgressView extends LinearLayout {
                                     downloading = true;
                                     downloadProgressBar.setIndeterminate(false);
                                     downloadedSizeView.setText(String.format(Locale.US, "%.0fMB", ((bytes_downloaded * 1.0) / 1024L / 1024L)));
-                                    totalSizeView.setText(String.format(Locale.US, "%.0fMB", ((bytes_total * 1.0) / 1024L / 1024L)));
+                                    if (bytes_total != -1)
+                                        totalSizeView.setText(String.format(Locale.US, "%.0fMB", ((bytes_total * 1.0) / 1024L / 1024L)));
+                                    else
+                                        totalSizeView.setText("??");
                                     percentageView.setText((int) download_percentage + "%");
                                     downloadProgressBar.setProgress((int) download_percentage);
                                 } else if (status == DownloadManager.STATUS_FAILED) {

@@ -20,12 +20,13 @@ import com.github.paolorotolo.appintro.AppIntro2Fragment;
 import org.opengapps.opengapps.R;
 
 
-public class AppIntroActivity extends AppIntro2 {
+public class AppIntroActivity extends AppIntro2{
     private Button permButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        moveTaskToBack(true);
         setInitialSettings();
         skipButtonEnabled = false;
         addSlide(AppIntro2Fragment.newInstance("Open-GApps", "Welcome to the official App for OpenGApps", R.drawable.opengapps_large, Color.parseColor("#00796B")));
@@ -45,7 +46,6 @@ public class AppIntroActivity extends AppIntro2 {
         addSlide(new slideAndroidSelectorFragment());
         addSlide(new slideVariantSelectionFragment());
     }
-
 
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
         if (newFragment != null) {
