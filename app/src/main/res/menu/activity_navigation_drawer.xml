@@ -29,7 +29,7 @@
             <item
                 android:id="@+id/nav_opengapps"
                 android:icon="@drawable/ic_opengapps_o"
-                android:title="@string/app_name"/>
+                android:title="Website"/>
             <item
                 android:id="@+id/nav_donate"
                 android:icon="@drawable/ic_donate"

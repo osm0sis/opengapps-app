@@ -36,20 +36,26 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private static File lastFile;
     private File feedFile;
     private String urlString;
+    private String baseUrl;
+    private FirebaseAnalytics analytics;
+    private SharedPreferences prefs;
+    private DownloadManager downloadManager;
 
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
-        SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
+        analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
+        prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
+        downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         this.architecture = prefs.getString("selection_arch", "arm");
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
         feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
         urlString = downloadFragment.getString(R.string.feed_url).replace("%arch", architecture);
+        baseUrl = downloadFragment.getString(R.string.download_url);
         setLastFile();
     }
 
     private void setLastFile() {
-        SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         String title = "OpenGApps-" + architecture + "-" + android + "-" + variant;
         File f = new File(path, title + ".zip");
@@ -68,11 +74,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     @Override
     protected void onPostExecute(Long id) {
-        Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
-        DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progressView);
-        progress.show(id, downloadFragment);
-        downloadFragment.downloadStarted(id, tag);
-        SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
+        if (downloadFragment != null) {
+            Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
+            DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progressView);
+            progress.show(id, downloadFragment);
+            downloadFragment.downloadStarted(id, tag);
+        }
         prefs.edit().putBoolean("checkMissing", true).apply();
     }
 
@@ -97,23 +104,22 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         protected void onPostExecute(String s) {
             logSelections();
             tag = s;
-            downloadFragment.OnTagUpdated();
+            if (downloadFragment != null)
+                downloadFragment.OnTagUpdated();
         }
     }
 
     private void logSelections() {
-        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
-        SharedPreferences preferences = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
         for (String entry : new String[]{"selection_arch", "selection_android", "selection_variant"}) {
             Bundle bundle = new Bundle(2);
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, entry);
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, preferences.getString(entry, "null"));
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, prefs.getString(entry, "null"));
             analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         }
     }
 
     private Uri generateUri() {
-        String url = downloadFragment.getString(R.string.download_url);
+        String url = baseUrl;
         url = url.replace("%arch", architecture);
         url = url.replace("%tag", tag);
         url = url.replace("%variant", variant);
@@ -126,7 +132,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(false);
             XmlPullParser xpp = factory.newPullParser();
-            xpp.setInput(new FileReader(new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml")));
+            xpp.setInput(new FileReader(feedFile));
             int eventType = xpp.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG && xpp.getName().equals("link") && xpp.getAttributeValue(0).equals("alternate")) {
@@ -159,7 +165,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private long doDownload(Uri uri) {
-        SharedPreferences prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
         if (lastFile != null) {
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
@@ -176,7 +181,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         //noinspection ResultOfMethodCallIgnored
         f.delete();
         request.setDestinationUri(Uri.fromFile(f));
-        DownloadManager downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         return downloadManager.enqueue(request);
     }
 
@@ -188,7 +192,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
                     .url(uri)
                     .build();
             Response response = client.newCall(request).execute();
-            File feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
             FileWriter fileWriter = new FileWriter(feedFile, false);
             fileWriter.write(response.body().string());
             fileWriter.close();

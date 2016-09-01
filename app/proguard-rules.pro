@@ -24,6 +24,7 @@
     public static int e(...);
 }
 
+-keepattributes EnclosingMethod
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class okhttp3.** { *; }
