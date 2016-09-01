@@ -43,6 +43,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private SharedPreferences prefs;
     private InterstitialAd downloadAd;
     private SwipeRefreshLayout refreshLayout;
+    private boolean downloaderLoaded = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onResume() {
         super.onResume();
         initPermissionCard();
-        if(downloader == null)
+        if (downloader == null)
             initDownloader();
         if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
             prefs.edit().remove("last_downloaded_tag").apply();
@@ -65,8 +66,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onStart() {
         super.onStart();
-        if (!prefs.getBoolean("firstStart", true)) {
+        if (!prefs.getBoolean("firstStart", true) && !downloaderLoaded) {
             initDownloader();
+            downloaderLoaded = true;
         }
     }
 
@@ -124,6 +126,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         AdRequest request = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("F98ACBE481522BAE0A91AC208FDF938F")
+                .addTestDevice("CAAA7C86D5955208EF75484D93E09948")
                 .build();
         downloadAd.loadAd(request);
     }
@@ -284,7 +287,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        initSelections();
+        if (!s.equals("eastereggFound"))
+            initSelections();
         if (!prefs.getBoolean("firstStart", true)) {
             if (s.equals("selection_android") || s.equals("selection_arch") || s.equals("selection_variant")) {
                 clearAll();

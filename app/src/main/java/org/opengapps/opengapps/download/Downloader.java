@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.FileObserver;
 import android.widget.Toast;
 
 
@@ -15,7 +14,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.DownloadFragment;
 import org.opengapps.opengapps.R;
-import org.opengapps.opengapps.download.DownloadProgressView;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;

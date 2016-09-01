@@ -3,6 +3,7 @@ package org.opengapps.opengapps;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +53,15 @@ public class AboutActivity extends AppCompatActivity {
         initMausiButton();
         initYetiButton();
         initCopyrightButton();
+        initEasterEggFoundButton();
+    }
+
+    private void initEasterEggFoundButton() {
+        boolean found = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE).getBoolean("eastereggFound", false);
+        if (found) {
+            TextView easterEggFound = (TextView) findViewById(R.id.found_indicator);
+            easterEggFound.setText(R.string.label_yes);
+        }
     }
 
     private void initMainDevButton() {
@@ -82,7 +92,7 @@ public class AboutActivity extends AppCompatActivity {
                             Toast.makeText(thisFrag, "Mein Engel❤︎", Toast.LENGTH_LONG).show();
                     }
                 };
-                if (gfCount == "Tanja".length()) {
+                if (gfCount == 5) {
                     edit.setHint("Enter secret word");
                     new AlertDialog.Builder(thisFrag)
                             .setTitle("This is only meant for my loved one, glad you found it")
@@ -152,15 +162,18 @@ public class AboutActivity extends AppCompatActivity {
 
     private void intitSecretButton() {
         final ImageView logoLarge = (ImageView) findViewById(R.id.logo_large);
+        final SharedPreferences prefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
         logoLarge.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                prefs.edit().putBoolean("eastereggFound", true).apply();
+                initEasterEggFoundButton();
                 if (playGAppsActive)
                     logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.opengapps_large));
                 else
                     logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.playgapps_large));
                 playGAppsActive = !playGAppsActive;
-                return false;
+                return true;
             }
         });
     }

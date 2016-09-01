@@ -135,6 +135,53 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/eastergg_found"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_eastergg"
+            android:contentDescription="@string/label_easteregg_found" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_easteregg_found"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:id="@+id/found_indicator"
+                android:ellipsize="marquee"
+                android:text="@string/label_no"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                tools:text="1.0" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/licenses"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

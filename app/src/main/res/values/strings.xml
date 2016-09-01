@@ -97,4 +97,7 @@
     <string name="label_report_bug">Report Bug</string>
     <string name="url_report_bug" translatable="false">http://bugreport.me</string>
     <string name="label_support">Support</string>
+    <string name="label_easteregg_found">Easteregg found</string>
+    <string name="label_no">No</string>
+    <string name="label_yes">Yes</string>
 </resources>

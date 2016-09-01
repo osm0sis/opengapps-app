@@ -26,7 +26,6 @@ public class AppIntroActivity extends AppIntro2{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        moveTaskToBack(true);
         setInitialSettings();
         skipButtonEnabled = false;
         addSlide(AppIntro2Fragment.newInstance("Open-GApps", "Welcome to the official App for OpenGApps", R.drawable.opengapps_large, Color.parseColor("#00796B")));
@@ -94,7 +93,6 @@ public class AppIntroActivity extends AppIntro2{
             arch = Build.SUPPORTED_32_BIT_ABIS[0];
             x64 = Build.SUPPORTED_64_BIT_ABIS.length > 0;
         } else {
-            //noinspection deprecation
             arch = Build.CPU_ABI;
             x64 = false;
         }
