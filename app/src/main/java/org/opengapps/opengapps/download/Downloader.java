@@ -34,6 +34,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
     private static File lastFile;
+    private File feedFile;
+    private String urlString;
 
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
@@ -41,6 +43,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         this.architecture = prefs.getString("selection_arch", "arm");
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
+        feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
+        urlString = downloadFragment.getString(R.string.feed_url).replace("%arch", architecture);
         setLastFile();
     }
 
@@ -141,17 +145,16 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(downloadFragment.getContext().getString(R.string.feed_url).replace("%arch", architecture))
+                    .url(urlString)
                     .build();
 
             Response response = client.newCall(request).execute();
 
-            File feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
+
             FileWriter fileWriter = new FileWriter(feedFile, false);
             fileWriter.write(response.body().string());
             fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 
