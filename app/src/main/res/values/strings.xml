@@ -37,17 +37,17 @@
     <string name="label_variant">Variant</string>
     <string name="download_url" translatable="false">https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip</string>
     <string name="feed_url" translatable="false">https://github.com/opengapps/%arch/releases.atom</string>
-    <string name="invalid_combo">Invalid Combo</string>
+    <string name="invalid_combo">Invalid combination</string>
     <string name="pref_header_gapps_selection">GApps-Selection</string>
     <string name="pref_name" translatable="false">org.opengapps.opengapps_preferences</string>
     <string name="permission_granted">Permission granted! Thanks!</string>
-    <string name="slide_android_description">You can select the android version here. lol</string>
+    <string name="slide_android_description">You can select the Android version here. lol</string>
     <string name="slide_arch_description">Funny stuff about architectures!</string>
     <string name="slide_variant_description">Stuff bout Variants</string>
     <string name="label_install">Install</string>
     <string name="label_version">Version</string>
-    <string name="label_wifi_only">Wifi only</string>
-    <string name="summary_wifi_only">Download only over wifi</string>
+    <string name="label_wifi_only">WiFi only</string>
+    <string name="summary_wifi_only">Download only over WiFi</string>
     <string name="label_download_dir">Download Directory</string>
     <string name="label_wipe_cache">Wipe Cache/Dalvik</string>
     <string name="label_refresh">Refresh</string>
@@ -69,7 +69,7 @@
     <string name="url_donate" translatable="false">http://opengapps.org/donate/</string>
     <string name="new_folder">New Folder</string>
     <string name="label_download_install">Install</string>
-    <string name="autoinstall_root_disclaimer">Automatic Install only works with root/if OpenGApps is installed as system app</string>
+    <string name="autoinstall_root_disclaimer">Automatic Install only works only if OpenGApps installed as system app or with root</string>
     <string name="main_dev">Main Developer</string>
     <string name="dev" translatable="false">Christoph Loy</string>
     <string name="label_design">Artwork</string>
@@ -81,11 +81,11 @@
     <string name="label_blog">Blog</string>
     <string name="label_donate">Donate</string>
     <string name="label_producer">Producer</string>
-    <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016  - all rights reserved</string>
+    <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016  - All Rights Reserved</string>
     <string name="label_copyright">Copyright</string>
     <string name="app_copyright">this is just for now a placeholder</string>
-    <string name="label_adblock_detected">AdBlocker Detected</string>
-    <string name="explanation_adblock_detected">Seems like you may have an adblocker. Why we understand that ads can be frustrating, we also have to run our servers. Please consider disabling your adblocker or donating to us</string>
+    <string name="label_adblock_detected">Adblocker Detected</string>
+    <string name="explanation_adblock_detected">Seems like you may have an adblocker. Why we understand that ads can be frustrating, we also have to run our servers. Please consider disabling your adblocker or donating </string>
     <string name="label_change_selection">Change Selection</string>
     <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
     <string name="url_app_version" translatable="false">http://192.168.178.26:8000/version.info</string>
