@@ -40,7 +40,7 @@
                 app:layout_constraintLeft_toLeftOf="@+id/content_about"
                 app:layout_constraintRight_toRightOf="@+id/content_about"
                 app:layout_constraintTop_toTopOf="@+id/content_about"
-                app:srcCompat="@drawable/opengapps_large" />
+                app:srcCompat="@drawable/ic_opengapps_large" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/about_card"

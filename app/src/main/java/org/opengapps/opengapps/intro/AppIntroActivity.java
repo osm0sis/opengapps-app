@@ -28,11 +28,11 @@ public class AppIntroActivity extends AppIntro2{
         super.onCreate(savedInstanceState);
         setInitialSettings();
         skipButtonEnabled = false;
-        addSlide(AppIntro2Fragment.newInstance("Open-GApps", "Welcome to the official App for OpenGApps", R.mipmap.ic_launcher, Color.parseColor("#00796B")));
+        addSlide(AppIntro2Fragment.newInstance("Open-GApps", "Welcome to the official App for OpenGApps", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                addSlide(AppIntro2Fragment.newInstance("First things first", "To download an OpenGApps-Package, you have to grant us Permission to your External Storage", R.mipmap.ic_launcher, Color.parseColor("#00796B")));
+                addSlide(AppIntro2Fragment.newInstance("First things first", "To download an OpenGApps-Package, you have to grant us Permission to your External Storage", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
                 addSlide(new SlidePermissionFragment());
             }
         }

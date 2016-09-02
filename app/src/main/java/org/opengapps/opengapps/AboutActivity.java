@@ -169,9 +169,9 @@ public class AboutActivity extends AppCompatActivity {
                 prefs.edit().putBoolean("eastereggFound", true).apply();
                 initEasterEggFoundButton();
                 if (playGAppsActive)
-                    logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.opengapps_large));
+                    logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_opengapps_large));
                 else
-                    logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.playgapps_large));
+                    logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_playgapps_large));
                 playGAppsActive = !playGAppsActive;
                 return true;
             }
