@@ -85,7 +85,7 @@
     <string name="label_copyright">Copyright</string>
     <string name="app_copyright">this is just for now a placeholder</string>
     <string name="label_adblock_detected">Adblocker Detected</string>
-    <string name="explanation_adblock_detected">Seems like you may have an adblocker. Why we understand that ads can be frustrating, we also have to run our servers. Please consider disabling your adblocker or donating </string>
+    <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead.</string>
     <string name="label_change_selection">Change Selection</string>
     <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
     <string name="url_app_version" translatable="false">http://192.168.178.26:8000/version.info</string>
