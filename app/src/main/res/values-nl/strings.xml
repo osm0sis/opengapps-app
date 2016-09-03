@@ -6,7 +6,7 @@
     <string name="autoinstall_root_disclaimer">Automatische Installatie werkt enkel als OpenGApps als systeemapplicatie is geinstalleerd of met root</string>
     <string name="click_show_more">Klik voor meer info</string>
     <string name="download_started">Download gestart</string>
-    <string name="explanation_adblock_detected">Het lijkt dat je een adblocker gebruikt. We weten dat advertenties vervelend kunnen zijn, maar onze servers kosten geld. Wilt u aub uw Adbloker uitschakelen of ons een donatie schenken?</string>
+    <string name="explanation_adblock_detected">Maarten Fonville (maarten.fonville@gmail.com)  Adblocker gedetecteerd!? Advertenties kunnen vervelend zijn, maar houden dit project en de ontwikkelaars in leven! Wil je a.u.b. je adblocker uitschakelen of anders een donatie schenken?</string>
     <string name="explanation_permission_denied">Om goed te kunnen functioneren dien je OpenGApps toestemming te geven je opslag te gebruiken. Logisch, toch?</string>
     <string name="invalid_combo">Ongeldige combinatie</string>
     <string name="label_adblock_detected">Adblocker gedetecteerd</string>
