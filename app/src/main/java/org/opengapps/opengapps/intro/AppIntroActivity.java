@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.Button;
 
@@ -26,6 +27,7 @@ public class AppIntroActivity extends AppIntro2{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setInitialSettings();
         skipButtonEnabled = false;
         addSlide(AppIntro2Fragment.newInstance("Open-GApps", "Welcome to the official App for OpenGApps", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
@@ -39,8 +41,8 @@ public class AppIntroActivity extends AppIntro2{
         addSlide(AppIntro2Fragment.newInstance("Get Root Permission", "As most of our fellow users are rooted anyway, we integrated an auto-install-mode in the app. This is completely voluntary", R.drawable.ic_supersu, Color.parseColor("#00796B")));
         addSlide(new RequestRootFragment());
 
-        addSlide(AppIntro2Fragment.newInstance("Your Device", "In the following steps, we'll ask you a few questions about your device. We'll do our best to guess them, but if it fails, you can help us",
-                R.drawable.ic_architecture, Color.parseColor("#00796B")));
+//        addSlide(AppIntro2Fragment.newInstance("Your Device", "In the following steps, we'll ask you a few questions about your device. We'll do our best to guess them, but if it fails, you can help us",
+//                R.drawable.ic_architecture, Color.parseColor("#00796B")));
         addSlide(new slideArchSelectorFragment());
         addSlide(new slideAndroidSelectorFragment());
         addSlide(new slideVariantSelectionFragment());
@@ -51,6 +53,7 @@ public class AppIntroActivity extends AppIntro2{
             if (newFragment.getClass().equals(SlidePermissionFragment.class) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 permButton = (Button) findViewById(R.id.permission_button);
                 setupPermissionButton();
+
                 setNextPageSwipeLock(true);
                 if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     setNextPageSwipeLock(false);

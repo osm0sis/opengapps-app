@@ -4,8 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -125,11 +125,17 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private void requestAd() {
-        AdRequest request = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("F98ACBE481522BAE0A91AC208FDF938F")
-                .addTestDevice("CAAA7C86D5955208EF75484D93E09948")
-                .build();
+        AdRequest request;
+        if (BuildConfig.DEBUG)
+            request = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice("F98ACBE481522BAE0A91AC208FDF938F")
+                    .addTestDevice("CAAA7C86D5955208EF75484D93E09948")
+                    .addTestDevice(Settings.Secure.getString(getContext().getContentResolver(), "android_id"))
+                    .build();
+        else
+            request = new AdRequest.Builder()
+                    .build();
         downloadAd.loadAd(request);
     }
 
@@ -243,7 +249,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      * @param updateAvailable true if a new Version is available
      */
     private void setNewVersionAvailable(boolean updateAvailable) {
-        CardView card = (CardView) getView().findViewById(R.id.cardView);
+        CardView card = (CardView) getView().findViewById(R.id.download_card);
         TextView header = (TextView) getView().findViewById(R.id.headline_download);
         Button downloadButton = (Button) getView().findViewById(R.id.download_button);
         Button installButton = (Button) getView().findViewById(R.id.install_button);
@@ -289,7 +295,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (!s.equals("eastereggFound"))
+        if (s.contains("selection") || s.contains("last_downloaded"))
             initSelections();
         if (!prefs.getBoolean("firstStart", true)) {
             if (s.equals("selection_android") || s.equals("selection_arch") || s.equals("selection_variant")) {

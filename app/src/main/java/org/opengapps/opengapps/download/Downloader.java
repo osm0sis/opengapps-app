@@ -35,6 +35,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private String architecture, android, variant, tag;
     private static File lastFile;
     private File feedFile;
+    private File md5File;
     private String urlString;
     private String baseUrl;
     private FirebaseAnalytics analytics;
@@ -50,6 +51,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
         feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
+        md5File = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
         urlString = downloadFragment.getString(R.string.feed_url).replace("%arch", architecture);
         baseUrl = downloadFragment.getString(R.string.download_url);
         setLastFile();
@@ -57,7 +59,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     private void setLastFile() {
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
-        String title = "OpenGApps-" + architecture + "-" + android + "-" + variant;
+        String tag = prefs.getString("last_downloaded_tag", "");
+        String title = "OpenGApps-" + architecture + "-" + android + "-" + variant + "-" + tag;
         File f = new File(path, title + ".zip");
         if (f.exists())
             lastFile = f;
@@ -171,15 +174,16 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
         downloadMd5(uri.toString());
         DownloadManager.Request request = new DownloadManager.Request(uri);
-        String title = "OpenGApps-" + architecture + "-" + android + "-" + variant;
+        String title = "OpenGApps-" + architecture + "-" + android + "-" + variant + "-" + tag;
         request.setTitle(title);
         if (prefs.getBoolean("download_wifi_only", true))
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         File f = new File(new File(path), title + ".zip");
+        if (lastFile != null)
+            //noinspection ResultOfMethodCallIgnored
+            lastFile.delete();
         lastFile = f;
-        //noinspection ResultOfMethodCallIgnored
-        f.delete();
         request.setDestinationUri(Uri.fromFile(f));
         return downloadManager.enqueue(request);
     }
@@ -192,7 +196,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
                     .url(uri)
                     .build();
             Response response = client.newCall(request).execute();
-            FileWriter fileWriter = new FileWriter(feedFile, false);
+            FileWriter fileWriter = new FileWriter(md5File, false);
             fileWriter.write(response.body().string());
             fileWriter.close();
         } catch (Exception ignored) {
@@ -201,11 +205,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     public boolean fileExists() {
-        if (lastFile != null) {
-            if (lastFile.exists())
-                return true;
-        }
-        return false;
+        return lastFile != null && lastFile.exists();
     }
 
     private static String convertHashToString(byte[] md5Bytes) {

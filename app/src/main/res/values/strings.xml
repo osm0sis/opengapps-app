@@ -100,4 +100,5 @@
     <string name="label_easteregg_found">Easteregg found</string>
     <string name="label_no">No</string>
     <string name="label_yes">Yes</string>
+    <string name="label_website" translatable="false">OpenGApps.org</string>
 </resources>

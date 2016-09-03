@@ -2,6 +2,8 @@ package org.opengapps.opengapps;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.PowerManager;
 import android.widget.Toast;
 
@@ -48,6 +50,15 @@ class ZipInstaller {
             } catch (Exception e) {
                 Toast.makeText(context, context.getString(R.string.autoinstall_root_disclaimer), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    public static boolean canReboot(Context context) {
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(BuildConfig.APPLICATION_ID, 0);
+            return info.sourceDir.contains("priv-app") || Shell.SU.available();
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 }
