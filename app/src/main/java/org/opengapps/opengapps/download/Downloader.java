@@ -86,11 +86,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         prefs.edit().putBoolean("checkMissing", true).apply();
     }
 
+
     public String getTag() {
         return tag;
     }
 
-    public void deleteLastFile() {
+    public static void deleteLastFile() {
         if (lastFile != null)
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
@@ -221,7 +222,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         String architecture = prefs.getString("selection_arch", null);
         String android = prefs.getString("selection_android", null);
         String variant = prefs.getString("selection_variant", null);
+        String tag = prefs.getString("last_downloaded_tag", null);
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
-        return path + "/" + "OpenGApps-" + architecture + "-" + android + "-" + variant + ".zip";
+        return path + "/" + "OpenGApps-" + architecture + "-" + android + "-" + variant + "-" + tag + ".zip";
     }
 }

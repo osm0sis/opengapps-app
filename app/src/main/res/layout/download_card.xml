@@ -14,8 +14,8 @@
         android:text="@string/label_download"
         android:textSize="@dimen/font_size_headline"
         android:textStyle="normal|bold"
-        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/label_architecture"
@@ -58,7 +58,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/label_architecture"
-        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_version"
         app:srcCompat="@drawable/ic_architecture" />
 
@@ -69,7 +69,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/label_android"
-        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_arch"
         app:srcCompat="@drawable/ic_android" />
 
@@ -80,7 +80,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/label_variant"
-        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_android"
         app:srcCompat="@drawable/ic_variant" />
 
@@ -94,7 +94,7 @@
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toRightOf="@+id/label_architecture"
-        app:layout_constraintTop_toBottomOf="@+id/selected_version" />
+        app:layout_constraintTop_toBottomOf="@+id/downloaded_filename" />
 
     <TextView
         android:id="@+id/selected_android"
@@ -132,7 +132,7 @@
         app:layout_constraintTop_toBottomOf="@+id/headline_download" />
 
     <TextView
-        android:id="@+id/selected_version"
+        android:id="@+id/downloaded_filename"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
@@ -149,7 +149,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/label_version"
-        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headline_download"
         app:srcCompat="@drawable/ic_current_version" />
 
@@ -158,8 +158,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
-        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_variant" />
 
     <Button
@@ -167,24 +167,13 @@
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:enabled="false"
         android:text="@string/label_download"
         android:textColor="@color/colorAccent"
-        app:layout_constraintRight_toLeftOf="@+id/install_button"
-        app:layout_constraintTop_toBottomOf="@+id/progressView" />
-
-    <Button
-        android:id="@+id/install_button"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_install"
-        android:visibility="visible"
-        android:layout_marginTop="16dp"
-        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/progressView" />
+        app:layout_constraintTop_toBottomOf="@+id/progressView"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageButton
         android:contentDescription="@string/action_settings"
@@ -193,10 +182,8 @@
         app:srcCompat="@drawable/ic_customize"
         android:visibility="gone"
         android:id="@+id/button_customize"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:background="?attr/selectableItemBackground" />
 
 </android.support.constraint.ConstraintLayout>

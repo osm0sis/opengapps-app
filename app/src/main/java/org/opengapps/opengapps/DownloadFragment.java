@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -35,6 +34,8 @@ import org.opengapps.opengapps.download.DownloadProgressView;
 import org.opengapps.opengapps.download.Downloader;
 import org.opengapps.opengapps.download.FileValidator;
 
+import java.io.File;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -60,9 +61,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             initDownloader();
         }
         if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
-            prefs.edit().remove("last_downloaded_tag").apply();
-            setNewVersionAvailable(true);
+            onDeleteFile();
         }
+    }
+
+    public void onDeleteFile(){
+        prefs.edit().remove("last_downloaded_tag").apply();
+        setNewVersionAvailable(true);
     }
 
     @Override
@@ -201,13 +206,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private void initInstallButton() {
-        Button install_button = (Button) getView().findViewById(R.id.install_button);
-        install_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new ZipInstaller(getContext()).installZip();
-            }
-        });
+//        Button install_button = (Button) getView().findViewById(R.id.install_button);
+//        install_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new ZipInstaller(getContext()).installZip();
+//            }
+//        });
     }
 
     /**
@@ -234,7 +239,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         TextView arch_selection = (TextView) getView().findViewById(R.id.selected_architecture);
         TextView android_selection = (TextView) getView().findViewById(R.id.selected_android);
         TextView variant_selection = (TextView) getView().findViewById(R.id.selected_variant);
-        TextView version = (TextView) getView().findViewById(R.id.selected_version);
+        TextView version = (TextView) getView().findViewById(R.id.downloaded_filename);
 
 
         arch_selection.setText(prefs.getString("selection_arch", "Err"));
@@ -252,7 +257,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         CardView card = (CardView) getView().findViewById(R.id.download_card);
         TextView header = (TextView) getView().findViewById(R.id.headline_download);
         Button downloadButton = (Button) getView().findViewById(R.id.download_button);
-        Button installButton = (Button) getView().findViewById(R.id.install_button);
+        InstallCard installCard = (InstallCard) getView().findViewById(R.id.install_card);
+//        Button installButton = (Button) getView().findViewById(R.id.install_button);
 
         card.setVisibility(View.VISIBLE);
         if (updateAvailable) {
@@ -260,20 +266,23 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             downloadButton.setText(getString(R.string.label_update));
             downloadButton.setEnabled(true);
-            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
-            params.setMarginStart(0);
-            params.setMarginEnd(8);
-            installButton.setLayoutParams(params);
-            installButton.setVisibility(View.VISIBLE);
+            installCard.setVisibility(View.VISIBLE);
+//            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
+//            params.setMarginStart(0);
+//            params.setMarginEnd(8);
+//            installButton.setLayoutParams(params);
+//            installButton.setVisibility(View.VISIBLE);
         } else {
             header.setText(getString(R.string.package_updated));
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
-            params.setMarginStart(0);
-            params.setMarginEnd(8);
+//            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
+//            params.setMarginStart(0);
+//            params.setMarginEnd(8);
             downloadButton.setVisibility(View.GONE);
-            installButton.setLayoutParams(params);
-            installButton.setVisibility(View.VISIBLE);
+            installCard.setFile(new File(Downloader.getDownloadedFile(getContext())));
+            installCard.setVisibility(View.VISIBLE);
+//            installButton.setLayoutParams(params);
+//            installButton.setVisibility(View.VISIBLE);
         }
         if (prefs.getString("last_downloaded_tag", "unset").equals("unset")) {
             header.setText(getString(R.string.label_download));
@@ -281,11 +290,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadButton.setText(getString(R.string.label_download));
             downloadButton.setEnabled(true);
             downloadButton.setVisibility(View.VISIBLE);
-            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
-            params.setMarginStart(0);
-            params.setMarginEnd(0);
-            installButton.setLayoutParams(params);
-            installButton.setVisibility(View.GONE);
+            installCard.setVisibility(View.INVISIBLE);
+//            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
+//            params.setMarginStart(0);
+//            params.setMarginEnd(0);
+//            installButton.setLayoutParams(params);
+//            installButton.setVisibility(View.GONE);
         }
         restoreDownloadProgress();
     }

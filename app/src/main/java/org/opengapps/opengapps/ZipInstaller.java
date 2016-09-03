@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PermissionInfo;
 import android.os.PowerManager;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ class ZipInstaller {
         prefs = context.getSharedPreferences(context.getString(R.string.pref_name), Context.MODE_PRIVATE);
     }
 
-    void installZip() {
+    void installZip(File file) {
         if (Shell.SU.available()) {
             try {
                 File f = new File(context.getFilesDir(), "openrecoveryscript");
@@ -35,7 +36,7 @@ class ZipInstaller {
                     fileWriter.append("\nwipe cache");
                 if (prefs.getBoolean("wipe_data", false))
                     fileWriter.append("\nwipe data");
-                fileWriter.append("\ninstall ").append(Downloader.getDownloadedFile(context));
+                fileWriter.append("\ninstall ").append(file.getAbsolutePath());
                 fileWriter.close();
                 String command = "cp " + f.getAbsolutePath() + " /cache/recovery/openrecoveryscript";
                 Shell.SU.run(command);
@@ -53,10 +54,16 @@ class ZipInstaller {
         }
     }
 
+    void installZip(){
+        installZip(new File(Downloader.getDownloadedFile(context)));
+    }
+
     public static boolean canReboot(Context context) {
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(BuildConfig.APPLICATION_ID, 0);
-            return info.sourceDir.contains("priv-app") || Shell.SU.available();
+            PermissionInfo permissionInfo = context.getPackageManager().getPermissionInfo("android.permission.RECOVERY", 0);
+            int result = info.flags & PermissionInfo.PROTECTION_FLAG_PRIVILEGED;
+            return result != 0 || Shell.SU.available();
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
