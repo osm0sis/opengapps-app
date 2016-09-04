@@ -2,6 +2,7 @@ package org.opengapps.opengapps.intro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 
 import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.SelectionValidator;

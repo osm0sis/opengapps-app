@@ -102,7 +102,8 @@ public class AboutActivity extends AppCompatActivity {
                 } else if (gfCount >= 1)
                     gfCount++;
                 else {
-                    //regular stuff
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_main_dev)));
+                    startActivity(i);
                 }
             }
         });
@@ -125,10 +126,9 @@ public class AboutActivity extends AppCompatActivity {
         copyright.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AlertDialog.Builder(ac)
-                        .setTitle(R.string.label_copyright)
-                        .setMessage(R.string.app_copyright)
-                        .show();
+                new Handler().postDelayed(new ButtonDisabler(view), 3000);
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_main_dev)));
+                startActivity(i);
             }
         });
     }

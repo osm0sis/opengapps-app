@@ -48,6 +48,12 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("isRestored", true);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         final boolean isFirstStart = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE).getBoolean("firstStart", true);
@@ -85,7 +91,8 @@ public class NavigationActivity extends AppCompatActivity
         // Start the thread
         t.start();
         downloadFragment = new DownloadFragment();
-        showFragment(downloadFragment);
+        if (savedInstanceState == null)
+            showFragment(downloadFragment);
         toolbar.setTitle(getString(R.string.label_download_install));
         navigationView.setCheckedItem(R.id.nav_download);
 

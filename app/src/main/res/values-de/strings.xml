@@ -52,4 +52,7 @@
     <string name="label_easteregg_found">Easteregg gefunden</string>
     <string name="label_no">Nein</string>
     <string name="label_yes">Ja</string>
+    <string name="label_download_package">Paket herunterladen</string>
+    <string name="label_install_package">Paket installieren</string>
+    <string name="label_delete">Löschen</string>
 </resources>

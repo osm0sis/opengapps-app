@@ -67,7 +67,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Sha
         header.setText(getString(title));
         TextView descriptionView = (TextView) getView().findViewById(R.id.description_intro_gapps);
         descriptionView.setText(getString(description));
-        if (b!= null && b.containsKey("position")) {
+        if (b != null && b.containsKey("position")) {
             header.setVisibility(View.GONE);
             descriptionView.setVisibility(View.GONE);
         } else {

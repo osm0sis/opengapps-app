@@ -35,6 +35,7 @@ public class Stepper extends TabStepper {
         //noOp - you can't escape the selection
     }
 
+
     private AbstractStep createFragment(AbstractStep fragment) {
         Bundle b = new Bundle();
         b.putInt("position", i++);

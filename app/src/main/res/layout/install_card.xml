@@ -11,47 +11,26 @@
         android:id="@+id/headline_install"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_install"
+        android:text="@string/label_install_package"
         android:textSize="@dimen/font_size_headline"
         android:textStyle="normal|bold"
+        android:textColor="@color/colorPrimary"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/label_installed_tag"
-        android:layout_width="110dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/label_version"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/image_version"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/headline_install" />
-
-    <TextView
-        android:id="@+id/downloaded_filename"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="20160304"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        app:layout_constraintLeft_toRightOf="@+id/label_installed_tag"
-        app:layout_constraintTop_toBottomOf="@+id/headline_install" />
-
-    <ImageView
-        android:id="@+id/image_version"
+        android:id="@+id/newest_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/label_version"
-        app:srcCompat="@drawable/ic_current_version"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/headline_install"
         android:layout_marginStart="24dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="14sp"
+        tools:text="OpenGApps-ARM-7.0-pico-20160903.zip"
+        android:typeface="monospace" />
 
     <Button
         android:text="@string/label_install"
@@ -62,16 +41,16 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_installed_tag" />
+        app:layout_constraintTop_toBottomOf="@+id/newest_version" />
 
     <Button
-        android:text="Löschen"
+        android:text="@string/label_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/delete_button"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_installed_tag"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/newest_version"
+        app:layout_constraintRight_toLeftOf="@+id/install_button"
+        android:layout_marginEnd="8dp" />
 </android.support.constraint.ConstraintLayout>

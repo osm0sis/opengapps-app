@@ -66,6 +66,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             lastFile = f;
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        if (downloadFragment != null)
+            Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected Long doInBackground(Void... voids) {
@@ -78,7 +84,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     @Override
     protected void onPostExecute(Long id) {
         if (downloadFragment != null) {
-            Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
             DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progressView);
             progress.show(id, downloadFragment);
             downloadFragment.downloadStarted(id, tag);
@@ -86,6 +91,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         prefs.edit().putBoolean("checkMissing", true).apply();
     }
 
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public String getTag() {
         return tag;
@@ -108,7 +116,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         protected void onPostExecute(String s) {
             logSelections();
             tag = s;
-            if (downloadFragment != null)
+            if (downloadFragment != null && downloadFragment.isVisible())
                 downloadFragment.OnTagUpdated();
         }
     }

@@ -30,7 +30,7 @@ public class AppIntroActivity extends AppIntro2{
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setInitialSettings();
         skipButtonEnabled = false;
-        addSlide(AppIntro2Fragment.newInstance("Open-GApps", "Welcome to the official App for OpenGApps", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
+        addSlide(AppIntro2Fragment.newInstance(getString(R.string.app_name), "Welcome to the official App for OpenGApps", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {

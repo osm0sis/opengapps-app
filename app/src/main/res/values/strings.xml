@@ -60,7 +60,6 @@
     <string name="explanation_permission_denied">In order to work correctly you have to grant OpenGApps the permission to your external storage. Makes sense, doesn\'t it?</string>
     <string name="label_grant_permission">Grant Permission</string>
     <string name="title_activity_about">About</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="github_link" translatable="false">https://github.com/opengapps/opengapps</string>
@@ -85,7 +84,7 @@
     <string name="label_copyright">Copyright</string>
     <string name="app_copyright">this is just for now a placeholder</string>
     <string name="label_adblock_detected">Adblocker Detected</string>
-    <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead.</string>
+    <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead</string>
     <string name="label_change_selection">Change Selection</string>
     <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
     <string name="url_app_version" translatable="false">http://192.168.178.26:8000/version.info</string>
@@ -101,4 +100,9 @@
     <string name="label_no">No</string>
     <string name="label_yes">Yes</string>
     <string name="label_website" translatable="false">OpenGApps.org</string>
+    <string name="label_download_package">Download package</string>
+    <string name="label_install_package">Install package</string>
+    <string name="label_delete">Delete</string>
+    <string name="url_main_dev" translatable="false">https://github.com/beatbrot/</string>
+    <string name="url_producer" translatable="false">https://github.com/mfonville</string>
 </resources>

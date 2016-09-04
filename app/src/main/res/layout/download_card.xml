@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/label_download"
+        android:text="@string/label_download_package"
         android:textSize="@dimen/font_size_headline"
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -94,7 +94,7 @@
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toRightOf="@+id/label_architecture"
-        app:layout_constraintTop_toBottomOf="@+id/downloaded_filename" />
+        app:layout_constraintTop_toBottomOf="@+id/newest_version" />
 
     <TextView
         android:id="@+id/selected_android"
@@ -132,7 +132,7 @@
         app:layout_constraintTop_toBottomOf="@+id/headline_download" />
 
     <TextView
-        android:id="@+id/downloaded_filename"
+        android:id="@+id/newest_version"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"

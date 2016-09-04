@@ -49,7 +49,7 @@ public class InstallCard extends CardView {
 
     public void setFile(File file) {
         gappsFile = file;
-        TextView fileName = (TextView) findViewById(R.id.downloaded_filename);
+        TextView fileName = (TextView) findViewById(R.id.newest_version);
         fileName.setText(file.getName());
     }
 }

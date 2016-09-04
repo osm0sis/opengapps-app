@@ -35,6 +35,9 @@ import org.opengapps.opengapps.download.Downloader;
 import org.opengapps.opengapps.download.FileValidator;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -46,11 +49,24 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private InterstitialAd downloadAd;
     private SwipeRefreshLayout refreshLayout;
     private boolean downloaderLoaded = false;
+    private static boolean isRestored;
+    private String lastTag;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isRestored = savedInstanceState != null && savedInstanceState.getBoolean("isRestored", false);
+        if(savedInstanceState!=null)
+            lastTag = savedInstanceState.getString("lastTag", "");
         prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("isRestored", true);
+        if (downloader != null)
+            outState.putString("lastTag", downloader.getTag());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -58,14 +74,14 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         super.onResume();
         initPermissionCard();
         if (downloader == null) {
-            initDownloader();
+            initDownloader(isRestored);
         }
         if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
             onDeleteFile();
         }
     }
 
-    public void onDeleteFile(){
+    public void onDeleteFile() {
         prefs.edit().remove("last_downloaded_tag").apply();
         setNewVersionAvailable(true);
     }
@@ -74,7 +90,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onStart() {
         super.onStart();
         if (!prefs.getBoolean("firstStart", true) && !downloaderLoaded) {
-            initDownloader();
+            initDownloader(isRestored);
             downloaderLoaded = true;
         }
     }
@@ -92,6 +108,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         super.onActivityCreated(savedInstanceState);
         refreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.dl_refresher);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        InstallCard installCard = (InstallCard) getView().findViewById(R.id.install_card);
+        installCard.setDeleteListener(this);
 
         refreshLayout.setOnRefreshListener(this);
         FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getContext());
@@ -152,10 +170,15 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         }
     }
 
-    private void initDownloader() {
+    private void initDownloader(boolean isRestored) {
         downloader = new Downloader(this);
-        downloader.new TagUpdater().execute();
-        refreshLayout.setRefreshing(true);
+        if (!isRestored) {
+            downloader.new TagUpdater().execute();
+            refreshLayout.setRefreshing(true);
+        } else{
+            downloader.setTag(lastTag);
+            OnTagUpdated();
+        }
     }
 
     private void initPermissionCard() {
@@ -239,13 +262,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         TextView arch_selection = (TextView) getView().findViewById(R.id.selected_architecture);
         TextView android_selection = (TextView) getView().findViewById(R.id.selected_android);
         TextView variant_selection = (TextView) getView().findViewById(R.id.selected_variant);
-        TextView version = (TextView) getView().findViewById(R.id.downloaded_filename);
 
 
-        arch_selection.setText(prefs.getString("selection_arch", "Err"));
+        arch_selection.setText(prefs.getString("selection_arch", null));
         android_selection.setText(prefs.getString("selection_android", null));
         variant_selection.setText(prefs.getString("selection_variant", null));
-        version.setText(prefs.getString("last_downloaded_tag", null));
     }
 
     /**
@@ -267,35 +288,19 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadButton.setText(getString(R.string.label_update));
             downloadButton.setEnabled(true);
             installCard.setVisibility(View.VISIBLE);
-//            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
-//            params.setMarginStart(0);
-//            params.setMarginEnd(8);
-//            installButton.setLayoutParams(params);
-//            installButton.setVisibility(View.VISIBLE);
         } else {
-            header.setText(getString(R.string.package_updated));
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
-//            params.setMarginStart(0);
-//            params.setMarginEnd(8);
             downloadButton.setVisibility(View.GONE);
             installCard.setFile(new File(Downloader.getDownloadedFile(getContext())));
             installCard.setVisibility(View.VISIBLE);
-//            installButton.setLayoutParams(params);
-//            installButton.setVisibility(View.VISIBLE);
         }
-        if (prefs.getString("last_downloaded_tag", "unset").equals("unset")) {
+        if (prefs.getString("last_downloaded_tag", "unset").equals("unset") && prefs.getString("running_download_tag", "unset").equals("unset")) {
             header.setText(getString(R.string.label_download));
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             downloadButton.setText(getString(R.string.label_download));
             downloadButton.setEnabled(true);
             downloadButton.setVisibility(View.VISIBLE);
             installCard.setVisibility(View.INVISIBLE);
-//            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) installButton.getLayoutParams();
-//            params.setMarginStart(0);
-//            params.setMarginEnd(0);
-//            installButton.setLayoutParams(params);
-//            installButton.setVisibility(View.GONE);
         }
         restoreDownloadProgress();
     }
@@ -313,7 +318,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             }
         }
         if (s.equals("firstStart")) {
-            initDownloader();
+            initDownloader(isRestored);
             setNewVersionAvailable(false);
         }
     }
@@ -332,12 +337,28 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     public void OnTagUpdated() {
         refreshLayout.setRefreshing(false);
+        TextView version = (TextView) getView().findViewById(R.id.newest_version);
+        version.setText(convertDate(downloader.getTag()));
         if (downloader.fileExists()) {
             if (prefs.getString("last_downloaded_tag", "").equals(downloader.getTag()))
                 setNewVersionAvailable(false);
             else
                 setNewVersionAvailable(true);
         }
+    }
+
+    private String convertDate(String tag) {
+        if (tag == null)
+            return "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Date date = null;
+        try {
+            date = sdf.parse(tag);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
+        return dateFormat.format(date);
     }
 
     public void downloadStarted(long id, String tag) {
