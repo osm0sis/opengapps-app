@@ -50,23 +50,18 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private InterstitialAd downloadAd;
     private SwipeRefreshLayout refreshLayout;
     private boolean downloaderLoaded = false;
-    private static boolean isRestored;
-    private String lastTag;
+    private static boolean isRestored = false;
+    private static String lastTag = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isRestored = savedInstanceState != null && savedInstanceState.getBoolean("isRestored", false);
-        if (savedInstanceState != null)
-            lastTag = savedInstanceState.getString("lastTag", "");
         prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean("isRestored", true);
-        if (downloader != null)
-            outState.putString("lastTag", downloader.getTag());
         super.onSaveInstanceState(outState);
     }
 
@@ -80,7 +75,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
             onDeleteFile();
         }
+
+
+        isRestored = true;
     }
+
 
     public void onDeleteFile() {
         prefs.edit().remove("last_downloaded_tag").apply();
@@ -311,11 +310,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     public void OnTagUpdated() {
+        lastTag = downloader.getTag();
         refreshLayout.setRefreshing(false);
         TextView version = (TextView) getView().findViewById(R.id.newest_version);
-        version.setText(convertDate(downloader.getTag()));
+        version.setText(convertDate(lastTag));
         if (downloader.fileExists()) {
-            if (prefs.getString("last_downloaded_tag", "").equals(downloader.getTag()))
+            if (prefs.getString("last_downloaded_tag", "").equals(lastTag))
                 setNewVersionAvailable(false);
             else
                 setNewVersionAvailable(true);
