@@ -14,6 +14,13 @@ public class InstallCard extends CardView {
     private File gappsFile;
     private DownloadFragment deleteListener;
 
+    public InstallCard(Context context) {
+        super(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.install_card, this, true);
+        initButtons();
+    }
+
     public InstallCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -21,7 +28,7 @@ public class InstallCard extends CardView {
         initButtons();
     }
 
-    public void setDeleteListener(DownloadFragment listener){
+    public void setDeleteListener(DownloadFragment listener) {
         deleteListener = listener;
     }
 
@@ -30,8 +37,7 @@ public class InstallCard extends CardView {
         deleteButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (gappsFile != null)
-                {
+                if (gappsFile != null) {
                     gappsFile.delete();
                     deleteListener.onDeleteFile();
                 }

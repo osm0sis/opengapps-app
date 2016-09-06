@@ -1,12 +1,15 @@
 package org.opengapps.opengapps.download;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 
@@ -21,7 +24,9 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.Arrays;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -60,7 +65,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private void setLastFile() {
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         String tag = prefs.getString("last_downloaded_tag", "");
-        String title = "OpenGApps-" + architecture + "-" + android + "-" + variant + "-" + tag;
+        String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + tag;
         File f = new File(path, title + ".zip");
         if (f.exists())
             lastFile = f;
@@ -75,7 +80,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     @Override
     protected Long doInBackground(Void... voids) {
-//        refreshFeed();
         if (tag == null)
             tag = parseFeed();
         Uri uri = generateUri();
@@ -184,7 +188,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
         downloadMd5(uri.toString());
         DownloadManager.Request request = new DownloadManager.Request(uri);
-        String title = "OpenGApps-" + architecture + "-" + android + "-" + variant + "-" + tag;
+        String title = "open_gapps" + "-" + architecture + "-" + android + "-" + variant + "-" + tag;
         request.setTitle(title);
         if (prefs.getBoolean("download_wifi_only", true))
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
@@ -233,6 +237,35 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         String variant = prefs.getString("selection_variant", null);
         String tag = prefs.getString("last_downloaded_tag", null);
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
-        return path + "/" + "OpenGApps-" + architecture + "-" + android + "-" + variant + "-" + tag + ".zip";
+        return path + "/" + "open_gapps" + "-" + architecture + "-" + android + "-" + variant + "-" + tag + ".zip";
+    }
+
+    public static String getLastDownloadedTag(Context context) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
+            final String architecture = prefs.getString("selection_arch", null);
+            final String selection_android = prefs.getString("selection_android", null);
+            final String variant = prefs.getString("selection_variant", null);
+            final String filterString = "open_gapps" + "-" + architecture + "-" + selection_android + "-" + variant + "-";
+            FilenameFilter filter = new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.startsWith(filterString);
+                }
+            };
+
+
+            File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
+            File[] files = downloadDir.listFiles(filter);
+            Arrays.sort(files);
+            if (files.length > 1) {
+                String tag = files[files.length - 1].getName();
+                tag = tag.substring(filterString.length(), tag.length() - 4);
+                return tag;
+            } else {
+                return "";
+            }
+        }
+        return "";
     }
 }

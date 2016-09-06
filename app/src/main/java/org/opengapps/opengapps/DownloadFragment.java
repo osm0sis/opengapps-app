@@ -1,6 +1,7 @@
 package org.opengapps.opengapps;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,13 +18,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +68,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onResume() {
         super.onResume();
         initPermissionCard();
+        Downloader.getLastDownloadedTag(getContext());
         if (downloader == null) {
             initDownloader(isRestored);
         }
@@ -127,6 +127,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         prefs.registerOnSharedPreferenceChangeListener(this);
         initButtons();
         initSelections();
+
+        addInstallCard();
     }
 
     private void requestAd() {
@@ -304,9 +306,26 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove("last_downloaded_tag");
         editor.apply();
-        downloader.deleteLastFile();
+        Downloader.deleteLastFile();
         downloader = new Downloader(this);
         downloader.new TagUpdater();
+    }
+
+    private void addInstallCard(File file) {
+        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+        InstallCard card = new InstallCard(getContext());
+        card.setDeleteListener(this);
+        card.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) card.getLayoutParams();
+        params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), 0);
+        card.setLayoutParams(params);
+        card.setVisibility(View.VISIBLE);
+        layout.addView(card, layout.getChildCount() - 1);
+    }
+
+    private int dpToPx(int dp) {
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
     }
 
     public void OnTagUpdated() {
@@ -325,7 +344,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private String convertDate(String tag) {
         if (tag == null)
             return "";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Date date = null;
         try {
             date = sdf.parse(tag);
