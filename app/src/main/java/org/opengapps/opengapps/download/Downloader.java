@@ -75,8 +75,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     @Override
     protected Long doInBackground(Void... voids) {
-        refreshFeed();
-        tag = parseFeed();
+//        refreshFeed();
+        if (tag == null)
+            tag = parseFeed();
         Uri uri = generateUri();
         return doDownload(uri);
     }
