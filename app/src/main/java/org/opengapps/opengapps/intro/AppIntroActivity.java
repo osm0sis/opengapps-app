@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +21,10 @@ import com.github.paolorotolo.appintro.AppIntro2Fragment;
 
 import org.opengapps.opengapps.R;
 
+import eu.chainfire.libsuperuser.Shell;
 
-public class AppIntroActivity extends AppIntro2{
+
+public class AppIntroActivity extends AppIntro2 {
     private Button permButton;
 
     @Override
@@ -30,19 +33,16 @@ public class AppIntroActivity extends AppIntro2{
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setInitialSettings();
         skipButtonEnabled = false;
-        addSlide(AppIntro2Fragment.newInstance(getString(R.string.app_name), "Welcome to the official App for OpenGApps", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
+        int primaryDarkColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
+        addSlide(AppIntro2Fragment.newInstance(getString(R.string.app_name), getString(R.string.appintro_introslide_title), R.drawable.ic_opengapps_large, primaryDarkColor));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                addSlide(AppIntro2Fragment.newInstance("First things first", "To download an OpenGApps-Package, you have to grant us Permission to your External Storage", R.drawable.ic_opengapps_large, Color.parseColor("#00796B")));
                 addSlide(new SlidePermissionFragment());
             }
         }
-        addSlide(AppIntro2Fragment.newInstance("Get Root Permission", "As most of our fellow users are rooted anyway, we integrated an auto-install-mode in the app. This is completely voluntary", R.drawable.ic_supersu, Color.parseColor("#00796B")));
-        addSlide(new RequestRootFragment());
+            addSlide(new RequestRootFragment());
 
-//        addSlide(AppIntro2Fragment.newInstance("Your Device", "In the following steps, we'll ask you a few questions about your device. We'll do our best to guess them, but if it fails, you can help us",
-//                R.drawable.ic_architecture, Color.parseColor("#00796B")));
         addSlide(new slideArchSelectorFragment());
         addSlide(new slideAndroidSelectorFragment());
         addSlide(new slideVariantSelectionFragment());

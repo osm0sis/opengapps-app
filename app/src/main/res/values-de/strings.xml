@@ -55,4 +55,8 @@
     <string name="label_download_package">Paket herunterladen</string>
     <string name="label_install_package">Paket installieren</string>
     <string name="label_delete">Löschen</string>
+    <string name="appintro_introslide_title">Willkommen bei der offiziellen OpenGApps.org App</string>
+    <string name="appintro_storageperm_title">Dateizugriff-Berechtigung</string>
+    <string name="appintro_storageperm_explain">Um ein OpenGApps-Paket herunterzuladen, muss die Berechtigung für den Speicher erteilt werden</string>
+    <string name="appintro_root_title">Root Berechtigung</string>
 </resources>

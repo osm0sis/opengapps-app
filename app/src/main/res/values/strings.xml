@@ -105,4 +105,9 @@
     <string name="label_delete">Delete</string>
     <string name="url_main_dev" translatable="false">https://github.com/beatbrot/</string>
     <string name="url_producer" translatable="false">https://github.com/mfonville</string>
+    <string name="appintro_introslide_title">Welcome to the official OpenGApps.org App</string>
+    <string name="appintro_storageperm_title">File Storage Permission</string>
+    <string name="appintro_storageperm_explain">To download an Open GApps package, you have to grant the app permission to your File Storage</string>
+    <string name="appintro_root_title">Root Permission</string>
+    <string name="appintro_root_explanation">The app offers an integrated install-mode to directly install a downloaded package. This install-mode requires ‘root access’. If you want to use it, you need to grant us root permission. This step is completely optional.</string>
 </resources>

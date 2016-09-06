@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -56,7 +57,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isRestored = savedInstanceState != null && savedInstanceState.getBoolean("isRestored", false);
-        if(savedInstanceState!=null)
+        if (savedInstanceState != null)
             lastTag = savedInstanceState.getString("lastTag", "");
         prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
     }
@@ -129,24 +130,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initSelections();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_download_fragment, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        switch (itemId) {
-            case R.id.menu_selection:
-                Intent i = new Intent(getContext(), Stepper.class);
-                startActivity(i);
-                return true;
-        }
-        return false;
-    }
-
     private void requestAd() {
         AdRequest request;
         if (BuildConfig.DEBUG)
@@ -175,7 +158,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (!isRestored) {
             downloader.new TagUpdater().execute();
             refreshLayout.setRefreshing(true);
-        } else{
+        } else {
             downloader.setTag(lastTag);
             OnTagUpdated();
         }
@@ -197,12 +180,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      */
     private void initButtons() {
         initDownloadButton();
-        initInstallButton();
         initCustomizeButton();
     }
 
     private void initCustomizeButton() {
-        ImageButton customize = (ImageButton) getView().findViewById(R.id.button_customize);
+        Button customize = (Button) getView().findViewById(R.id.change_button);
         customize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,16 +210,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             initPermissionCard();
     }
 
-    private void initInstallButton() {
-//        Button install_button = (Button) getView().findViewById(R.id.install_button);
-//        install_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new ZipInstaller(getContext()).installZip();
-//            }
-//        });
-    }
-
     /**
      * Create OnClickListner for DownloadButton
      */
@@ -259,14 +231,16 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      * Sets up all the spinners, fills them with entries and initializes the validation
      */
     private void initSelections() {
-        TextView arch_selection = (TextView) getView().findViewById(R.id.selected_architecture);
-        TextView android_selection = (TextView) getView().findViewById(R.id.selected_android);
-        TextView variant_selection = (TextView) getView().findViewById(R.id.selected_variant);
+        if (isAdded()) {
+            TextView arch_selection = (TextView) getView().findViewById(R.id.selected_architecture);
+            TextView android_selection = (TextView) getView().findViewById(R.id.selected_android);
+            TextView variant_selection = (TextView) getView().findViewById(R.id.selected_variant);
 
 
-        arch_selection.setText(prefs.getString("selection_arch", null));
-        android_selection.setText(prefs.getString("selection_android", null));
-        variant_selection.setText(prefs.getString("selection_variant", null));
+            arch_selection.setText(prefs.getString("selection_arch", null));
+            android_selection.setText(prefs.getString("selection_android", null));
+            variant_selection.setText(prefs.getString("selection_variant", null));
+        }
     }
 
     /**
@@ -279,7 +253,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         TextView header = (TextView) getView().findViewById(R.id.headline_download);
         Button downloadButton = (Button) getView().findViewById(R.id.download_button);
         InstallCard installCard = (InstallCard) getView().findViewById(R.id.install_card);
-//        Button installButton = (Button) getView().findViewById(R.id.install_button);
 
         card.setVisibility(View.VISIBLE);
         if (updateAvailable) {
@@ -287,10 +260,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             downloadButton.setText(getString(R.string.label_update));
             downloadButton.setEnabled(true);
+            downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             installCard.setVisibility(View.VISIBLE);
         } else {
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-            downloadButton.setVisibility(View.GONE);
+            downloadButton.setEnabled(false);
+            downloadButton.setTextColor(Color.parseColor("#757575"));
             installCard.setFile(new File(Downloader.getDownloadedFile(getContext())));
             installCard.setVisibility(View.VISIBLE);
         }
@@ -299,7 +274,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             downloadButton.setText(getString(R.string.label_download));
             downloadButton.setEnabled(true);
-            downloadButton.setVisibility(View.VISIBLE);
+            downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             installCard.setVisibility(View.INVISIBLE);
         }
         restoreDownloadProgress();

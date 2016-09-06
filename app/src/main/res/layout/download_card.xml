@@ -1,5 +1,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -140,7 +141,8 @@
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toRightOf="@+id/label_installed_tag"
-        app:layout_constraintTop_toBottomOf="@+id/headline_download" />
+        app:layout_constraintTop_toBottomOf="@+id/headline_download"
+        tools:text="latest Version" />
 
     <ImageView
         android:id="@+id/image_version"
@@ -175,15 +177,15 @@
         app:layout_constraintTop_toBottomOf="@+id/progressView"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <ImageButton
-        android:contentDescription="@string/action_settings"
+    <Button
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:text="@string/label_change_selection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_customize"
-        android:visibility="gone"
-        android:id="@+id/button_customize"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:background="?attr/selectableItemBackground" />
+        android:id="@+id/change_button"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/progressView"
+        app:layout_constraintRight_toLeftOf="@+id/download_button"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>
