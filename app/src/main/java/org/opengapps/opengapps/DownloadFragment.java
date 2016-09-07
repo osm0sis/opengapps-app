@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,8 +36,10 @@ import org.opengapps.opengapps.download.Downloader;
 import org.opengapps.opengapps.download.FileValidator;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -82,6 +85,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
 
     public void onDeleteFile() {
+        addCards();
         prefs.edit().remove("last_downloaded_tag").apply();
         setNewVersionAvailable(true);
     }
@@ -108,8 +112,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         super.onActivityCreated(savedInstanceState);
         refreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.dl_refresher);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        InstallCard installCard = (InstallCard) getView().findViewById(R.id.install_card);
-        installCard.setDeleteListener(this);
 
         refreshLayout.setOnRefreshListener(this);
         FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getContext());
@@ -128,7 +130,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initButtons();
         initSelections();
 
-        addInstallCard();
+        addCards();
     }
 
     private void requestAd() {
@@ -253,7 +255,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         CardView card = (CardView) getView().findViewById(R.id.download_card);
         TextView header = (TextView) getView().findViewById(R.id.headline_download);
         Button downloadButton = (Button) getView().findViewById(R.id.download_button);
-        InstallCard installCard = (InstallCard) getView().findViewById(R.id.install_card);
 
         card.setVisibility(View.VISIBLE);
         if (updateAvailable) {
@@ -262,13 +263,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadButton.setText(getString(R.string.label_update));
             downloadButton.setEnabled(true);
             downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-            installCard.setVisibility(View.VISIBLE);
+//            installCard.setVisibility(View.VISIBLE);
         } else {
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             downloadButton.setEnabled(false);
             downloadButton.setTextColor(Color.parseColor("#757575"));
-            installCard.setFile(new File(Downloader.getDownloadedFile(getContext())));
-            installCard.setVisibility(View.VISIBLE);
+//            installCard.setFile(new File(Downloader.getDownloadedFile(getContext())));
+//            installCard.setVisibility(View.VISIBLE);
         }
         if (prefs.getString("last_downloaded_tag", "unset").equals("unset") && prefs.getString("running_download_tag", "unset").equals("unset")) {
             header.setText(getString(R.string.label_download));
@@ -276,7 +277,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadButton.setText(getString(R.string.label_download));
             downloadButton.setEnabled(true);
             downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-            installCard.setVisibility(View.INVISIBLE);
+//            installCard.setVisibility(View.INVISIBLE);
         }
         restoreDownloadProgress();
     }
@@ -304,23 +305,52 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      */
     private void clearAll() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.remove("last_downloaded_tag");
-        editor.apply();
-        Downloader.deleteLastFile();
+        editor.putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
+        Downloader.setLastFile(getContext(), false);
+        lastTag = "";
         downloader = new Downloader(this);
         downloader.new TagUpdater();
+    }
+
+    private void addCards() {
+        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+        for (int i = 1; i < layout.getChildCount(); i++) {
+            if (layout.getChildAt(i) instanceof InstallCard)
+                layout.removeViewAt(i);
+        }
+        for (File file : findFiles())
+            addInstallCard(file);
     }
 
     private void addInstallCard(File file) {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
         InstallCard card = new InstallCard(getContext());
         card.setDeleteListener(this);
+        card.setFile(file);
         card.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) card.getLayoutParams();
         params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), 0);
         card.setLayoutParams(params);
         card.setVisibility(View.VISIBLE);
         layout.addView(card, layout.getChildCount() - 1);
+    }
+
+    private File[] findFiles() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+            return new File[]{};
+        File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
+
+        FilenameFilter filter = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                return name.startsWith("open_gapps-") && name.endsWith(".zip");
+            }
+        };
+
+        File[] files = downloadDir.listFiles(filter);
+        Arrays.sort(files);
+        return files;
+
     }
 
     private int dpToPx(int dp) {
@@ -342,7 +372,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private String convertDate(String tag) {
-        if (tag == null)
+        if (tag == null || tag.equals(""))
             return "";
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Date date = null;
@@ -396,6 +426,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         } else {
             Toast.makeText(getContext(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
+        addCards();
         downloadCancelled();
     }
 

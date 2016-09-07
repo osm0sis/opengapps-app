@@ -18,6 +18,7 @@ import android.widget.Button;
 
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.R;
 
@@ -26,6 +27,7 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class AppIntroActivity extends AppIntro2 {
     private Button permButton;
+    private boolean termsAccepted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +37,15 @@ public class AppIntroActivity extends AppIntro2 {
         skipButtonEnabled = false;
         int primaryDarkColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
         addSlide(AppIntro2Fragment.newInstance(getString(R.string.app_name), getString(R.string.appintro_introslide_title), R.drawable.ic_opengapps_large, primaryDarkColor));
+        addSlide(new slideTermsOfUse());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 addSlide(new SlidePermissionFragment());
             }
         }
+
+        if (Shell.SU.available())
             addSlide(new RequestRootFragment());
 
         addSlide(new slideArchSelectorFragment());
@@ -57,6 +62,24 @@ public class AppIntroActivity extends AppIntro2 {
                 setNextPageSwipeLock(true);
                 if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     setNextPageSwipeLock(false);
+            }
+            if (newFragment.getClass().equals(slideTermsOfUse.class)) {
+                final Button termButton = (Button) findViewById(R.id.accept_button);
+                termButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        termButton.setText(R.string.label_accepted);
+                        setNextPageSwipeLock(false);
+                        view.setEnabled(false);
+                        termsAccepted = true;
+                        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getApplicationContext());
+                        Bundle bundle = new Bundle(1);
+                        bundle.putBoolean("terms_accepted", true);
+                        analytics.logEvent("terms_of_service", bundle);
+                    }
+                });
+                if (!termsAccepted)
+                    setNextPageSwipeLock(true);
             }
         }
     }

@@ -59,15 +59,19 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         md5File = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
         urlString = downloadFragment.getString(R.string.feed_url).replace("%arch", architecture);
         baseUrl = downloadFragment.getString(R.string.download_url);
-        setLastFile();
+        setLastFile(downloadFragment.getContext(), true);
     }
 
-    private void setLastFile() {
+    public static void setLastFile(Context context, boolean fileExists) {
+        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
+        String architecture = prefs.getString("selection_arch", "arm");
+        String android = prefs.getString("selection_android", null);
+        String variant = prefs.getString("selection_variant", null);
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         String tag = prefs.getString("last_downloaded_tag", "");
         String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + tag;
         File f = new File(path, title + ".zip");
-        if (f.exists())
+        if (fileExists && f.exists())
             lastFile = f;
     }
 
@@ -108,6 +112,10 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         if (lastFile != null)
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
+    }
+
+    public static void setLastFile(File lastFile) {
+        Downloader.lastFile = lastFile;
     }
 
     public class TagUpdater extends AsyncTask<Void, Void, String> {

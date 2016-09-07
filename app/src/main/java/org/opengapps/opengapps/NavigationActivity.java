@@ -29,6 +29,7 @@ public class NavigationActivity extends AppCompatActivity
     private DownloadFragment downloadFragment;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    public final static int EXIT_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class NavigationActivity extends AppCompatActivity
 
                     //  Launch app intro
                     Intent i = new Intent(getApplicationContext(), AppIntroActivity.class);
-                    startActivity(i);
+                    startActivityForResult(i, EXIT_CODE);
 
                     //  Make a new preferences editor
                     SharedPreferences.Editor e = getPrefs.edit();
@@ -112,6 +113,12 @@ public class NavigationActivity extends AppCompatActivity
                     }
                 })
                 .show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EXIT_CODE && resultCode == 1)
+            finish();
     }
 
     @Override

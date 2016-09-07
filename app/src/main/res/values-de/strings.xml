@@ -59,4 +59,7 @@
     <string name="appintro_storageperm_title">Dateizugriff-Berechtigung</string>
     <string name="appintro_storageperm_explain">Um ein OpenGApps-Paket herunterzuladen, muss die Berechtigung für den Speicher erteilt werden</string>
     <string name="appintro_root_title">Root Berechtigung</string>
+    <string name="label_accept">Akzeptieren</string>
+    <string name="label_accepted">Akzeptiert</string>
+    <string name="label_decline">Ablehnen</string>
 </resources>
