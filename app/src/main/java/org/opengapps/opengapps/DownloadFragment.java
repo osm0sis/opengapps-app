@@ -85,9 +85,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
 
     public void onDeleteFile() {
-        addCards();
+        loadInstallCards();
         prefs.edit().remove("last_downloaded_tag").apply();
-        setNewVersionAvailable(true);
+        initDownloader(false);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initButtons();
         initSelections();
 
-        addCards();
+        loadInstallCards();
     }
 
     private void requestAd() {
@@ -268,10 +268,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             downloadButton.setEnabled(false);
             downloadButton.setTextColor(Color.parseColor("#757575"));
-//            installCard.setFile(new File(Downloader.getDownloadedFile(getContext())));
-//            installCard.setVisibility(View.VISIBLE);
         }
-        if (prefs.getString("last_downloaded_tag", "unset").equals("unset") && prefs.getString("running_download_tag", "unset").equals("unset")) {
+        boolean unset = prefs.getString("last_downloaded_tag", "unset").equals("unset") || prefs.getString("last_downloaded_tag", "unset").equals("");
+        if (unset && prefs.getString("running_download_tag", "unset").equals("unset")) {
             header.setText(getString(R.string.label_download));
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             downloadButton.setText(getString(R.string.label_download));
@@ -315,7 +314,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initDownloader(false);
     }
 
-    private void addCards() {
+    private void loadInstallCards() {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
         int childCount = layout.getChildCount();
         for (int i = childCount - 2; i >= 0; i--) {
@@ -364,15 +363,15 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     public void OnTagUpdated() {
         lastTag = downloader.getTag();
+        prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
         refreshLayout.setRefreshing(false);
         TextView version = (TextView) getView().findViewById(R.id.newest_version);
         version.setText(convertDate(lastTag));
-        if (downloader.fileExists()) {
-            if (Downloader.getLastDownloadedTag(getContext()).equals(lastTag))
-                setNewVersionAvailable(false);
-            else
-                setNewVersionAvailable(true);
-        }
+        if (Downloader.getLastDownloadedTag(getContext()).equals(lastTag))
+            setNewVersionAvailable(false);
+        else
+            setNewVersionAvailable(true);
+
     }
 
     private String convertDate(String tag) {
@@ -430,13 +429,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         } else {
             Toast.makeText(getContext(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
-        addCards();
+        loadInstallCards();
         downloadCancelled();
     }
 
     @Override
     public void onRefresh() {
-        addCards();
+        loadInstallCards();
         downloader.new TagUpdater().execute();
     }
 }

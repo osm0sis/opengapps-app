@@ -262,7 +262,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
             File[] files = downloadDir.listFiles(filter);
             Arrays.sort(files);
-            if (files.length > 1) {
+            if (files.length >= 1) {
                 String tag = files[files.length - 1].getName();
                 tag = tag.substring(filterString.length(), tag.length() - 4);
                 return tag;
