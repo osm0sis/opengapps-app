@@ -305,16 +305,20 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      */
     private void clearAll() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
+        String lastDL = Downloader.getLastDownloadedTag(getContext());
+        if (lastDL.equals(""))
+            editor.remove("last_downloaded_tag").apply();
+        else
+            editor.putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
         Downloader.setLastFile(getContext(), false);
         lastTag = "";
-        downloader = new Downloader(this);
-        downloader.new TagUpdater();
+        initDownloader(false);
     }
 
     private void addCards() {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
-        for (int i = 1; i < layout.getChildCount(); i++) {
+        int childCount = layout.getChildCount();
+        for (int i = childCount - 2; i >= 0; i--) {
             if (layout.getChildAt(i) instanceof InstallCard)
                 layout.removeViewAt(i);
         }
@@ -364,7 +368,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         TextView version = (TextView) getView().findViewById(R.id.newest_version);
         version.setText(convertDate(lastTag));
         if (downloader.fileExists()) {
-            if (prefs.getString("last_downloaded_tag", "").equals(lastTag))
+            if (Downloader.getLastDownloadedTag(getContext()).equals(lastTag))
                 setNewVersionAvailable(false);
             else
                 setNewVersionAvailable(true);
@@ -379,7 +383,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         try {
             date = sdf.parse(tag);
         } catch (ParseException e) {
-            e.printStackTrace();
+            return "";
         }
         java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
         return dateFormat.format(date);
@@ -432,6 +436,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onRefresh() {
+        addCards();
         downloader.new TagUpdater().execute();
     }
 }

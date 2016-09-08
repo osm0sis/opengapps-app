@@ -68,8 +68,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         String android = prefs.getString("selection_android", null);
         String variant = prefs.getString("selection_variant", null);
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
-        String tag = prefs.getString("last_downloaded_tag", "");
-        String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + tag;
+        String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + getLastDownloadedTag(context);
         File f = new File(path, title + ".zip");
         if (fileExists && f.exists())
             lastFile = f;
@@ -202,9 +201,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         File f = new File(new File(path), title + ".zip");
-        if (lastFile != null)
-            //noinspection ResultOfMethodCallIgnored
-            lastFile.delete();
         lastFile = f;
         request.setDestinationUri(Uri.fromFile(f));
         return downloadManager.enqueue(request);
@@ -227,7 +223,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     public boolean fileExists() {
-        return lastFile != null && lastFile.exists();
+        return !getLastDownloadedTag(downloadFragment.getContext()).equals("");
     }
 
     private static String convertHashToString(byte[] md5Bytes) {
