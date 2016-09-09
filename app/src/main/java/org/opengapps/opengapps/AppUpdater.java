@@ -2,8 +2,11 @@ package org.opengapps.opengapps;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -11,7 +14,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class AppUpdater extends AsyncTask<Context, Void, Boolean> {
+public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus> {
     private OkHttpClient client;
     private Context context;
 
@@ -21,7 +24,7 @@ public class AppUpdater extends AsyncTask<Context, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Context... contexts) {
+    protected UpdateStatus doInBackground(Context... contexts) {
         context = contexts[0];
         Request request = new Request.Builder()
                 .url(context.getString(R.string.url_app_version))
@@ -34,20 +37,31 @@ public class AppUpdater extends AsyncTask<Context, Void, Boolean> {
                 SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.pref_name), Context.MODE_PRIVATE);
                 preferences.edit().putLong("checkAgain", currentTime + result[1]).apply();
             }
-            return result[0] > BuildConfig.VERSION_CODE;
+            if (result[2] > BuildConfig.VERSION_CODE)
+                return UpdateStatus.forced;
+            else if (result[0] > BuildConfig.VERSION_CODE)
+                return UpdateStatus.optional;
+            else
+                return UpdateStatus.none;
         } catch (IOException e) {
-            return false;
+            return UpdateStatus.none;
         }
     }
 
     @Override
-    protected void onPostExecute(Boolean updateAvailable) {
-        if (updateAvailable)
+    protected void onPostExecute(UpdateStatus updateAvailable) {
+        if (updateAvailable == UpdateStatus.optional)
             new AlertDialog.Builder(context)
                     .setTitle("App-Update available")
-                    .setMessage("YOLO")
-                    .setPositiveButton("MANA", null)
+                    .setMessage("You may wanna update bro")
+                    .setPositiveButton("Yes", null)
                     .show();
+        else if(updateAvailable == UpdateStatus.forced){
+            NavigationActivity.forcedUpdate = true;
+            Toast.makeText(context, "You have to update in order to continue using the app", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.url_download_update)));
+            context.startActivity(i);
+        }
     }
 
     public static boolean checkAllowed(SharedPreferences preferences) {
@@ -55,7 +69,7 @@ public class AppUpdater extends AsyncTask<Context, Void, Boolean> {
     }
 
     private static int[] parseVersionFile(String fileContent) {
-        int[] result = new int[]{-1, -1};
+        int[] result = new int[]{-1, -1, -1};
         String[] splittedString = fileContent.split("[\\r\\n]+");
 
         for (String line : splittedString) {
@@ -63,7 +77,14 @@ public class AppUpdater extends AsyncTask<Context, Void, Boolean> {
                 result[0] = Integer.parseInt(line.substring(line.indexOf('=') + 1));
             else if (line.startsWith("checkAgain="))
                 result[1] = Integer.parseInt(line.substring(line.indexOf('=') + 1));
+            else if (line.startsWith("minVersion="))
+                result[2] = Integer.parseInt(line.substring(line.indexOf('=') + 1));
         }
         return result;
+    }
+
+
+    public enum UpdateStatus {
+        none, optional, forced
     }
 }

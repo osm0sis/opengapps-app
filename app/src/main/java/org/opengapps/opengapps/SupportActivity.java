@@ -42,7 +42,9 @@ public class SupportActivity extends AppCompatActivity {
         LinearLayout wiki = (LinearLayout) findViewById(R.id.wiki_button);
         LinearLayout supportChat = (LinearLayout) findViewById(R.id.chat_button);
         LinearLayout reportBug = (LinearLayout) findViewById(R.id.bugreport_button);
+        LinearLayout supportForum = (LinearLayout) findViewById(R.id.support_forum_button);
 
+        supportForum.setOnClickListener(listener);
         wiki.setOnClickListener(listener);
         supportChat.setOnClickListener(listener);
         reportBug.setOnClickListener(listener);

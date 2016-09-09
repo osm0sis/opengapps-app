@@ -47,7 +47,7 @@
     <string name="label_install">Install</string>
     <string name="label_version">Version</string>
     <string name="label_wifi_only">WiFi only</string>
-    <string name="summary_wifi_only">Download only over WiFi</string>
+    <string name="summary_wifi_only">Download over WiFi only</string>
     <string name="label_download_dir">Download Directory</string>
     <string name="label_wipe_cache">Wipe Cache/Dalvik</string>
     <string name="label_refresh">Refresh</string>
@@ -89,12 +89,12 @@
     <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
     <string name="url_app_version" translatable="false">http://192.168.178.26:8000/version.info</string>
     <string name="download_started">Download started</string>
-    <string name="label_wiki">Wiki</string>
+    <string name="label_wiki">Open GApps Wiki</string>
     <string name="url_wiki" translatable="false">https://github.com/opengapps/opengapps/wiki</string>
     <string name="label_support_chat">Support Chat</string>
     <string name="url_support_chat" translatable="false">https://gitter.im/opengapps/general</string>
     <string name="label_report_bug">Report Bug</string>
-    <string name="url_report_bug" translatable="false">http://bugreport.me</string>
+    <string name="url_report_bug" translatable="false">https://github.com/opengapps/opengapps-app-support/issues</string>
     <string name="label_support">Support</string>
     <string name="label_easteregg_found">Easteregg found</string>
     <string name="label_no">No</string>
@@ -115,4 +115,7 @@
     <string name="label_accept">Accept</string>
     <string name="label_accepted">Accepted</string>
     <string name="label_decline">Decline</string>
+    <string name="label_support_forum">Support Forum</string>
+    <string name="url_support_forum" translatable="false">http://forum.xda-developers.com/android/software/Open-GApps-t3098071</string>
+    <string name="url_download_update" translatable="false">http://opengapps.org/app</string>
 </resources>

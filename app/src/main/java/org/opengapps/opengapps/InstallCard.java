@@ -45,6 +45,8 @@ public class InstallCard extends CardView {
         });
 
         Button installButton = (Button) findViewById(R.id.install_button);
+        if(ZipInstaller.canReboot(getContext()))
+            installButton.setEnabled(false);
         installButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

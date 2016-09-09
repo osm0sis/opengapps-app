@@ -81,6 +81,50 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/support_forum_button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="48dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/label_support_forum"
+                        app:srcCompat="@drawable/ic_xda" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_support_forum"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="normal|bold" />
+
+                        <TextView
+                            android:id="@+id/support_url_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/url_support_forum"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="DuplicateIds" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/chat_button"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

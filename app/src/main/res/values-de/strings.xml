@@ -45,7 +45,7 @@
     <string name="slide_android_description">You can select the android version here. EDITME</string>
     <string name="label_change_selection">Auswahl ändern</string>
     <string name="download_started">Download gestartet</string>
-    <string name="label_wiki">Wiki</string>
+    <string name="label_wiki">Open GApps Wiki</string>
     <string name="label_support_chat">Support Chat</string>
     <string name="label_report_bug">Fehler melden</string>
     <string name="label_support">Support</string>
@@ -62,4 +62,5 @@
     <string name="label_accept">Akzeptieren</string>
     <string name="label_accepted">Akzeptiert</string>
     <string name="label_decline">Ablehnen</string>
+    <string name="label_support_forum">Support Forum</string>
 </resources>

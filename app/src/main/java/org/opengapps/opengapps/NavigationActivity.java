@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.opengapps.opengapps.intro.AppIntroActivity;
 import org.opengapps.opengapps.prefs.Preferences;
@@ -30,6 +31,7 @@ public class NavigationActivity extends AppCompatActivity
     private Toolbar toolbar;
     private NavigationView navigationView;
     public final static int EXIT_CODE = 1;
+    public static boolean forcedUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,16 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         downloadFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (forcedUpdate) {
+            Toast.makeText(this, "You have to update in order to continue using the app", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_download_update)));
+            startActivity(i);
+        }
     }
 
     @Override

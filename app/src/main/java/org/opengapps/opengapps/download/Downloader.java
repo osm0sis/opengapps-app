@@ -72,6 +72,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         File f = new File(path, title + ".zip");
         if (fileExists && f.exists())
             lastFile = f;
+        if (!fileExists)
+            lastFile = null;
     }
 
     @Override

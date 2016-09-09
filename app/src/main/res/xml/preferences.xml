@@ -1,29 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-<!--    <PreferenceCategory android:title="GApps">
-        <ListPreference
-            android:defaultValue="1"
-            android:title="@string/label_architecture"
-            android:entries="@array/architectures"
-            android:entryValues="@array/architectures"
-            android:key="selection_arch"
-            android:icon="@drawable/ic_architecture" />
-        <ListPreference
-            android:defaultValue="1"
-            android:title="@string/label_android"
-            android:entries="@array/android_versions"
-            android:entryValues="@array/android_versions"
-            android:key="selection_android"
-            android:icon="@drawable/ic_android" />
-        <ListPreference
-            android:defaultValue="1"
-            android:title="@string/label_variant"
-            android:entries="@array/opengapps_variant"
-            android:entryValues="@array/opengapps_variant"
-            android:key="selection_variant"
-            android:icon="@drawable/ic_variant" />
-    </PreferenceCategory>-->
     <PreferenceCategory android:title="@string/label_download">
 
         <SwitchPreference
@@ -42,10 +18,5 @@
             android:defaultValue="false"
             android:title="@string/label_wipe_cache"
             android:key="wipe_cache" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:title="Wipe Data"
-            android:summary="You will loose all your data if you activate that?"
-            android:key="wipe_data"/>
     </PreferenceCategory>
 </PreferenceScreen>

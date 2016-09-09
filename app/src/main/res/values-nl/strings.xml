@@ -35,7 +35,7 @@
     <string name="label_variant">Variant</string>
     <string name="label_version">Versie</string>
     <string name="label_wifi_only">Alleen op WiFi</string>
-    <string name="label_wiki">Wiki</string>
+    <string name="label_wiki">Open GApps Wiki</string>
     <string name="label_wipe_cache">Cache/Dalvik wissen</string>
     <string name="label_yes">Ja</string>
     <string name="main_dev">Ontwikkelaar</string>
@@ -52,4 +52,5 @@
     <string name="summary_wifi_only">Enkel over Wifi downloaden</string>
     <string name="used_libs">Bibliotheken</string>
     <string name="slide_arch_description">Funny stuff about architectures!</string>
+    <string name="label_support_forum">Support Forum</string>
 </resources>
