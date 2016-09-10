@@ -1,6 +1,8 @@
 package org.opengapps.opengapps;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -38,21 +40,30 @@ public class InstallCard extends CardView {
             @Override
             public void onClick(View view) {
                 if (gappsFile != null) {
-                    gappsFile.delete();
-                    deleteListener.onDeleteFile();
+                    removeFiles();
+                    deleteListener.onDeleteFile(gappsFile);
                 }
             }
         });
 
         Button installButton = (Button) findViewById(R.id.install_button);
-        if(ZipInstaller.canReboot(getContext()))
+        if (!ZipInstaller.canReboot(getContext())) {
             installButton.setEnabled(false);
+            installButton.setTextColor(Color.parseColor("#757575"));
+        }
         installButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 new ZipInstaller(getContext()).installZip(gappsFile);
             }
         });
+    }
+
+    private void removeFiles() {
+        String substring = gappsFile.getAbsolutePath().substring(0, gappsFile.getAbsolutePath().length() - 4) + ".versionlog.txt";
+        gappsFile.delete();
+        new File(gappsFile.getAbsolutePath() + ".md5").delete();
+        new File(substring).delete();
     }
 
     public void setFile(File file) {

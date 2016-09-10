@@ -40,7 +40,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private String architecture, android, variant, tag;
     private static File lastFile;
     private File feedFile;
-    private File md5File;
     private String urlString;
     private String baseUrl;
     private FirebaseAnalytics analytics;
@@ -56,7 +55,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
         feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
-        md5File = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
         urlString = downloadFragment.getString(R.string.feed_url).replace("%arch", architecture);
         baseUrl = downloadFragment.getString(R.string.download_url);
         setLastFile(downloadFragment.getContext(), true);
@@ -64,9 +62,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     public static void setLastFile(Context context, boolean fileExists) {
         SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
-        String architecture = prefs.getString("selection_arch", "arm");
-        String android = prefs.getString("selection_android", null);
-        String variant = prefs.getString("selection_variant", null);
+        String architecture = prefs.getString("selection_arch", "arm").toLowerCase();
+        String android = prefs.getString("selection_android", null).toLowerCase();
+        String variant = prefs.getString("selection_variant", null).toLowerCase();
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + getLastDownloadedTag(context);
         File f = new File(path, title + ".zip");
@@ -195,20 +193,38 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             //noinspection ResultOfMethodCallIgnored
             lastFile.delete();
         }
-        downloadMd5(uri.toString());
         DownloadManager.Request request = new DownloadManager.Request(uri);
-        String title = "open_gapps" + "-" + architecture + "-" + android + "-" + variant + "-" + tag;
+        String title = "open_gapps" + "-" + architecture.toLowerCase() + "-" + android.toLowerCase() + "-" + variant.toLowerCase() + "-" + tag.toLowerCase();
         request.setTitle(title);
         if (prefs.getBoolean("download_wifi_only", true))
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-        String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
-        File f = new File(new File(path), title + ".zip");
-        lastFile = f;
-        request.setDestinationUri(Uri.fromFile(f));
+        File path = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()));
+        File gappsPackage = new File(path, title + ".zip");
+        if (prefs.getBoolean("download_md5", true))
+            downloadMD5(uri.toString(), new File(path, title + ".zip" + ".md5"));
+        if (prefs.getBoolean("download_versionlog", false))
+            downloadVersionLog(uri.toString(), new File(path, title + ".versionlog.txt"));
+        lastFile = gappsPackage;
+        request.setDestinationUri(Uri.fromFile(gappsPackage));
         return downloadManager.enqueue(request);
     }
 
-    private void downloadMd5(String uri) {
+    private void downloadVersionLog(String uri, File file) {
+        uri = uri.substring(0, uri.length() - 4) + ".versionlog.txt";
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(uri)
+                    .build();
+            Response response = client.newCall(request).execute();
+            FileWriter fileWriter = new FileWriter(file, false);
+            fileWriter.write(response.body().string());
+            fileWriter.close();
+        } catch (Exception ignored) {
+        }
+    }
+
+    private void downloadMD5(String uri, File file) {
         uri += ".md5";
         try {
             OkHttpClient client = new OkHttpClient();
@@ -216,13 +232,13 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
                     .url(uri)
                     .build();
             Response response = client.newCall(request).execute();
-            FileWriter fileWriter = new FileWriter(md5File, false);
+            FileWriter fileWriter = new FileWriter(file, false);
             fileWriter.write(response.body().string());
             fileWriter.close();
         } catch (Exception ignored) {
-
         }
     }
+
 
     public boolean fileExists() {
         return !getLastDownloadedTag(downloadFragment.getContext()).equals("");
@@ -238,10 +254,10 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     public static String getDownloadedFile(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
-        String architecture = prefs.getString("selection_arch", null);
-        String android = prefs.getString("selection_android", null);
-        String variant = prefs.getString("selection_variant", null);
-        String tag = prefs.getString("last_downloaded_tag", null);
+        String architecture = prefs.getString("selection_arch", null).toLowerCase();
+        String android = prefs.getString("selection_android", null).toLowerCase();
+        String variant = prefs.getString("selection_variant", null).toLowerCase();
+        String tag = prefs.getString("last_downloaded_tag", null).toLowerCase();
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         return path + "/" + "open_gapps" + "-" + architecture + "-" + android + "-" + variant + "-" + tag + ".zip";
     }
@@ -249,14 +265,14 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     public static String getLastDownloadedTag(Context context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
-            final String architecture = prefs.getString("selection_arch", null);
-            final String selection_android = prefs.getString("selection_android", null);
-            final String variant = prefs.getString("selection_variant", null);
+            final String architecture = prefs.getString("selection_arch", null).toLowerCase();
+            final String selection_android = prefs.getString("selection_android", null).toLowerCase();
+            final String variant = prefs.getString("selection_variant", null).toLowerCase();
             final String filterString = "open_gapps" + "-" + architecture + "-" + selection_android + "-" + variant + "-";
             FilenameFilter filter = new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    return name.startsWith(filterString);
+                    return name.startsWith(filterString) && name.endsWith(".zip");
                 }
             };
 

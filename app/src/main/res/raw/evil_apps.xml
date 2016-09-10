@@ -1,0 +1,7 @@
+<apps>
+    <app>tw.fatminmin.xposed.minminguard</app> <!--https://github.com/chiehmin/MinMinGuard-->
+    <app>eu.faircode.netguard</app> <!-- https://github.com/M66B/NetGuard -->
+    <app>com.adguard.android</app> <!-- https://adguard.com/en/adguard-android/overview.html -->
+    <app>com.seven.adclear</app> <!-- https://www.seven.com/android-adblocker-download.php -->
+    <app>com.savageorgiev.blockthis</app> <!-- https://github.com/ggsava/block-this -->
+</apps>

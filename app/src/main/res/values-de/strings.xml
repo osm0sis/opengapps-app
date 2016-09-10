@@ -63,4 +63,6 @@
     <string name="label_accepted">Akzeptiert</string>
     <string name="label_decline">Ablehnen</string>
     <string name="label_support_forum">Support Forum</string>
+    <string name="label_download_md5">MD5-Checksumme herunterladen</string>
+    <string name="explanation_download_md5">MD5-Checksumme herunterladen um Downloadfehler zu vermeiden</string>
 </resources>

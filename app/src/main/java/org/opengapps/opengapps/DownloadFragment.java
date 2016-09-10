@@ -41,6 +41,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -52,6 +53,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private InterstitialAd downloadAd;
     private SwipeRefreshLayout refreshLayout;
     private boolean downloaderLoaded = false;
+    private static HashMap<String, InstallCard> fileCards = new HashMap<>();
     private static boolean isRestored = false;
     private static String lastTag = "";
 
@@ -62,16 +64,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean("isRestored", true);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         initPermissionCard();
-        Downloader.getLastDownloadedTag(getContext());
         if (downloader == null) {
             initDownloader(isRestored);
         }
@@ -85,8 +80,21 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
 
     public void onDeleteFile() {
-        loadInstallCards();
-        prefs.edit().remove("last_downloaded_tag").apply();
+        onDeleteFile(null);
+    }
+
+    public void onDeleteFile(@Nullable File gappsFile) {
+        if (gappsFile == null)
+            loadInstallCards();
+        else {
+            InstallCard card = fileCards.get(gappsFile.getAbsolutePath());
+            if (card != null) {
+                LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+                layout.removeView(card);
+            }
+            fileCards.remove(gappsFile.getAbsolutePath());
+        }
+        prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
         initDownloader(false);
     }
 
@@ -102,8 +110,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-
         return inflater.inflate(R.layout.content_main, container, false);
     }
 
@@ -213,6 +219,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             initPermissionCard();
     }
 
+
     /**
      * Create OnClickListner for DownloadButton
      */
@@ -228,7 +235,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             }
         });
     }
-
 
     /**
      * Sets up all the spinners, fills them with entries and initializes the validation
@@ -265,13 +271,14 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
 //            installCard.setVisibility(View.VISIBLE);
         } else {
+            header.setText(getString(R.string.label_download_package));
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             downloadButton.setEnabled(false);
             downloadButton.setTextColor(Color.parseColor("#757575"));
         }
-        boolean unset = prefs.getString("last_downloaded_tag", "unset").equals("unset") || prefs.getString("last_downloaded_tag", "unset").equals("");
+        boolean unset = Downloader.getLastDownloadedTag(getContext()).equals("");
         if (unset && prefs.getString("running_download_tag", "unset").equals("unset")) {
-            header.setText(getString(R.string.label_download));
+            header.setText(getString(R.string.label_download_package));
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             downloadButton.setText(getString(R.string.label_download));
             downloadButton.setEnabled(true);
@@ -315,17 +322,14 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private void loadInstallCards() {
-        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
-        int childCount = layout.getChildCount();
-        for (int i = childCount - 2; i >= 0; i--) {
-            if (layout.getChildAt(i) instanceof InstallCard)
-                layout.removeViewAt(i);
+        for (File file : findFiles()) {
+            if (!fileCards.containsKey(file.getAbsolutePath())) {
+                fileCards.put(file.getAbsolutePath(), addInstallCard(file));
+            }
         }
-        for (File file : findFiles())
-            addInstallCard(file);
     }
 
-    private void addInstallCard(File file) {
+    private InstallCard addInstallCard(File file) {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
         InstallCard card = new InstallCard(getContext());
         card.setDeleteListener(this);
@@ -336,6 +340,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         card.setLayoutParams(params);
         card.setVisibility(View.VISIBLE);
         layout.addView(card, layout.getChildCount() - 1);
+        return card;
     }
 
     private File[] findFiles() {
@@ -407,7 +412,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         Log.e("DL", "I AM SUCCESSFUL. ONCE");
         if (prefs.getBoolean("checkMissing", false)) {
             prefs.edit().remove("checkMissing").apply();
-            new FileValidator(this).execute(filePath);
+            hashSuccess(true);
         }
     }
 
@@ -435,7 +440,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onRefresh() {
-        loadInstallCards();
+//        loadInstallCards();
         downloader.new TagUpdater().execute();
     }
 }

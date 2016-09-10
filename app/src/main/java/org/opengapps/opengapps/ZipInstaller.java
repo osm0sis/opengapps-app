@@ -61,7 +61,6 @@ class ZipInstaller {
     public static boolean canReboot(Context context) {
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(BuildConfig.APPLICATION_ID, 0);
-            PermissionInfo permissionInfo = context.getPackageManager().getPermissionInfo("android.permission.RECOVERY", 0);
             int result = info.flags & PermissionInfo.PROTECTION_FLAG_PRIVILEGED;
             return result != 0 || Shell.SU.available();
         } catch (PackageManager.NameNotFoundException e) {

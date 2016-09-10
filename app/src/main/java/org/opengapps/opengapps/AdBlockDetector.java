@@ -2,11 +2,15 @@ package org.opengapps.opengapps;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.util.Xml;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class AdBlockDetector {
     private AdBlockDetector() {
@@ -14,11 +18,35 @@ public class AdBlockDetector {
     }
 
     public static boolean hasAdBlockEnabled(Context context) {
+        parseXml(context);
         return checkHostsFile() || checkForPackages(context);
     }
 
+    private static String[] parseXml(Context context) {
+        ArrayList<String> content = new ArrayList<>();
+        try {
+            final XmlPullParser parser = Xml.newPullParser();
+            boolean rightTag = false;
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(context.getResources().openRawResource(R.raw.evil_apps), null);
+            parser.nextTag();
+
+            while (parser.next() != XmlPullParser.END_DOCUMENT) {
+                if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("app"))
+                    rightTag = true;
+                else if (parser.getEventType() == XmlPullParser.END_TAG && parser.getName().equals("app"))
+                    rightTag = false;
+                else if (parser.getEventType() == XmlPullParser.TEXT && rightTag)
+                    content.add(parser.getText());
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return content.toArray(new String[0]);
+    }
+
     private static boolean checkForPackages(Context context) {
-        String[] adBlockers = context.getResources().getStringArray(R.array.adBlockers);
+        String[] adBlockers = parseXml(context);
         for (String blocker : adBlockers) {
             if (checkForPackage(context, blocker))
                 return true;

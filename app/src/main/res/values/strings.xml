@@ -24,13 +24,6 @@
         <item>nano</item>
         <item>pico</item>
     </string-array>
-    <string-array name="adBlockers" tools:ignore="MissingTranslation">
-        <item>tw.fatminmin.xposed.minminguard</item> <!--https://github.com/chiehmin/MinMinGuard-->
-        <item>eu.faircode.netguard</item> <!-- https://github.com/M66B/NetGuard -->
-        <item>com.adguard.android</item> <!-- https://adguard.com/en/adguard-android/overview.html -->
-        <item>com.seven.adclear</item> <!-- https://www.seven.com/android-adblocker-download.php -->
-        <item>com.savageorgiev.blockthis</item> <!-- https://github.com/ggsava/block-this -->
-    </string-array>
     <string name="label_download">Download</string>
     <string name="label_architecture">Architecture</string>
     <string name="label_android" translatable="false">Android</string>
@@ -118,4 +111,8 @@
     <string name="label_support_forum">Support Forum</string>
     <string name="url_support_forum" translatable="false">http://forum.xda-developers.com/android/software/Open-GApps-t3098071</string>
     <string name="url_download_update" translatable="false">http://opengapps.org/app</string>
+    <string name="label_download_md5">Download MD5</string>
+    <string name="explanation_download_md5">Download the MD5-Checksum to avoid download-failures</string>
+    <string name="explanation_download_versionlog">Download the versionlog to see the new APKs in the GApps-Package</string>
+    <string name="label_download_versionlog">Download Versionlog</string>
 </resources>
