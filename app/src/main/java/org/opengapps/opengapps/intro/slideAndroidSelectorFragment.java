@@ -1,14 +1,9 @@
 package org.opengapps.opengapps.intro;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-
 import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.SelectionValidator;
 
 public class slideAndroidSelectorFragment extends GappsSelectionFragment {
-
 
     public slideAndroidSelectorFragment() {
         super(R.string.label_android, R.string.slide_android_description, "selection_android", R.array.android_versions);
@@ -16,8 +11,17 @@ public class slideAndroidSelectorFragment extends GappsSelectionFragment {
 
     @Override
     protected boolean isValid(String selection) {
-        SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
-        String arch = prefs.getString("selection_arch", "");
+        String arch = GappsSelectionFragment.selectionArch;
         return SelectionValidator.isValidArchAnd(arch, selection);
+    }
+
+    @Override
+    public String getSelection() {
+        return GappsSelectionFragment.selectionAnd;
+    }
+
+    @Override
+    public void setSelection(String selection) {
+        GappsSelectionFragment.selectionAnd = selection;
     }
 }

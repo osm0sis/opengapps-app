@@ -63,8 +63,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     public static void setLastFile(Context context, boolean fileExists) {
         SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
         String architecture = prefs.getString("selection_arch", "arm").toLowerCase();
-        String android = prefs.getString("selection_android", null).toLowerCase();
-        String variant = prefs.getString("selection_variant", null).toLowerCase();
+        String android = prefs.getString("selection_android", "").toLowerCase();
+        String variant = prefs.getString("selection_variant", "").toLowerCase();
         String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + getLastDownloadedTag(context);
         File f = new File(path, title + ".zip");
@@ -242,14 +242,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     public boolean fileExists() {
         return !getLastDownloadedTag(downloadFragment.getContext()).equals("");
-    }
-
-    private static String convertHashToString(byte[] md5Bytes) {
-        String returnVal = "";
-        for (byte md5Byte : md5Bytes) {
-            returnVal += Integer.toString((md5Byte & 0xff) + 0x100, 16).substring(1);
-        }
-        return returnVal.toUpperCase();
     }
 
     public static String getDownloadedFile(Context context) {

@@ -73,8 +73,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
             onDeleteFile();
         }
-
-
         isRestored = true;
     }
 
@@ -269,7 +267,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadButton.setText(getString(R.string.label_update));
             downloadButton.setEnabled(true);
             downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-//            installCard.setVisibility(View.VISIBLE);
         } else {
             header.setText(getString(R.string.label_download_package));
             header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
@@ -283,7 +280,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadButton.setText(getString(R.string.label_download));
             downloadButton.setEnabled(true);
             downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-//            installCard.setVisibility(View.INVISIBLE);
         }
         restoreDownloadProgress();
     }

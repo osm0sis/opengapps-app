@@ -81,6 +81,8 @@ public class AppIntroActivity extends AppIntro2 {
                 if (!termsAccepted)
                     setNextPageSwipeLock(true);
             }
+            if (newFragment instanceof GappsSelectionFragment)
+                ((GappsSelectionFragment) newFragment).onStepVisible();
         }
     }
 
@@ -171,11 +173,12 @@ public class AppIntroActivity extends AppIntro2 {
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
-        GappsSelectionFragment fragment = (GappsSelectionFragment) currentFragment;
-        fragment.saveSelection();
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("firstStart", false);
+        editor.putString("selection_android", GappsSelectionFragment.selectionAnd);
+        editor.putString("selection_variant", GappsSelectionFragment.selectionVariant);
+        editor.putString("selection_arch", GappsSelectionFragment.selectionArch);
         editor.apply();
         finish();
     }

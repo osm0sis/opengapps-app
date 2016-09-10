@@ -19,11 +19,14 @@ import com.github.fcannizzaro.materialstepper.AbstractStep;
 import org.opengapps.opengapps.R;
 
 
-public abstract class GappsSelectionFragment extends AbstractStep implements SharedPreferences.OnSharedPreferenceChangeListener, RadioGroup.OnCheckedChangeListener {
+public abstract class GappsSelectionFragment extends AbstractStep implements RadioGroup.OnCheckedChangeListener {
     private final int title;
     private final int description;
     private final String key;
     private final int stringArray;
+    public static String selectionArch = "";
+    public static String selectionAnd = "";
+    public static String selectionVariant = "";
     private RadioGroup group;
     private SparseArray<RadioButton> buttons;
     private SharedPreferences prefs;
@@ -76,14 +79,17 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Sha
         }
         loadRadioBoxes();
         prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
-        prefs.registerOnSharedPreferenceChangeListener(this);
     }
 
     protected abstract boolean isValid(String selection);
 
     private void loadRadioBoxes() {
         SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
-        String selection = prefs.getString(key, null);
+        String defaultSelection;
+        if (getSelection().equals(""))
+            defaultSelection = prefs.getString(key, null);
+        else
+            defaultSelection = getSelection();
         String[] items = getResources().getStringArray(stringArray);
         if (getView() != null)
             group = (RadioGroup) getView().findViewById(R.id.arch_radio_group);
@@ -92,7 +98,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Sha
             RadioButton radioButton = new RadioButton(getActivity());
             radioButton.setText(item);
 //            radioButton.setTextColor(Color.parseColor("#ffffff"));
-            if (selection.toLowerCase().equals(item.toLowerCase()))
+            if (defaultSelection.toLowerCase().equals(item.toLowerCase()))
                 radioButton.setChecked(true);
             if (!isValid(item))
                 radioButton.setEnabled(false);
@@ -101,27 +107,29 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Sha
             buttons.put(id, radioButton);
             group.addView(radioButton);
         }
+        checkIfValid();
         group.setOnCheckedChangeListener(this);
     }
 
-    public void saveSelection() {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(key, buttons.get(group.getCheckedRadioButtonId()).getText().toString());
-        editor.apply();
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (prefs.getBoolean("firstStart", true))
-            if (!s.equals(key)) {
-                group.removeAllViews();
-                loadRadioBoxes();
+    private void checkIfValid() {
+        RadioButton selectedButton = buttons.get(group.getCheckedRadioButtonId());
+        if (selectedButton.isChecked() && !selectedButton.isEnabled())
+            for (int i = 0; i < buttons.size(); i++) {
+                int key = buttons.keyAt(i);
+                // get the object by the key.
+                RadioButton button = buttons.get(key);
+                if (button.isEnabled())
+                    button.setChecked(true);
             }
     }
 
+    public abstract String getSelection();
+
+    public abstract void setSelection(String selection);
+
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        saveSelection();
+        setSelection(buttons.get(group.getCheckedRadioButtonId()).getText().toString());
     }
 
 
