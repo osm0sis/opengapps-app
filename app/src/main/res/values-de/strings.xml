@@ -65,4 +65,7 @@
     <string name="label_support_forum">Support Forum</string>
     <string name="label_download_md5">MD5-Checksumme herunterladen</string>
     <string name="explanation_download_md5">MD5-Checksumme herunterladen um Downloadfehler zu vermeiden</string>
+    <string name="ms_prev">Vorheriges</string>
+    <string name="ms_next">Nächstes</string>
+    <string name="ms_end">Fertig</string>
 </resources>

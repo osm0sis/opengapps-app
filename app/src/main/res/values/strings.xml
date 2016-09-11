@@ -115,4 +115,7 @@
     <string name="explanation_download_md5">Download the MD5-Checksum to avoid download-failures</string>
     <string name="explanation_download_versionlog">Download the versionlog to see the new APKs in the GApps-Package</string>
     <string name="label_download_versionlog">Download Versionlog</string>
+    <string name="ms_prev">Previous</string>
+    <string name="ms_next">Next</string>
+    <string name="ms_end">Complete</string>
 </resources>
