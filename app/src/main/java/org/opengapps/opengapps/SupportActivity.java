@@ -28,6 +28,7 @@ public class SupportActivity extends AppCompatActivity {
         initButtons();
     }
 
+
     private void initButtons() {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override

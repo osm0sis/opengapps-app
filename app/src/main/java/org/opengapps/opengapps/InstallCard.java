@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -48,15 +49,20 @@ public class InstallCard extends CardView {
 
         Button installButton = (Button) findViewById(R.id.install_button);
         if (!ZipInstaller.canReboot(getContext())) {
-            installButton.setEnabled(false);
             installButton.setTextColor(Color.parseColor("#757575"));
-        }
-        installButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new ZipInstaller(getContext()).installZip(gappsFile);
-            }
-        });
+            installButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getContext(), "You cant install", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else
+            installButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new ZipInstaller(getContext()).installZip(gappsFile);
+                }
+            });
     }
 
     private void removeFiles() {

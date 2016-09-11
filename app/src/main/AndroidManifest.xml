@@ -19,7 +19,11 @@
         tools:replace="android:theme">
         <activity
             android:name=".Stepper"
-            android:label="DEMO" />
+            android:parentActivityName=".NavigationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".NavigationActivity" />
+        </activity>
         <activity
             android:name=".intro.AppIntroActivity"
             android:label="AppIntro"

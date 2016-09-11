@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.github.fcannizzaro.materialstepper.AbstractStep;
+import com.github.fcannizzaro.materialstepper.style.DotStepper;
 import com.github.fcannizzaro.materialstepper.style.TabStepper;
 
 import org.opengapps.opengapps.intro.GappsSelectionFragment;
@@ -12,19 +13,40 @@ import org.opengapps.opengapps.intro.slideAndroidSelectorFragment;
 import org.opengapps.opengapps.intro.slideArchSelectorFragment;
 import org.opengapps.opengapps.intro.slideVariantSelectionFragment;
 
-public class Stepper extends TabStepper {
+public class Stepper extends DotStepper {
     private int i = 1;
+    private int currentStep = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setPreviousVisible();
         setTitle(getString(R.string.pref_header_gapps_selection));
-        setAlternativeTab(false);
-        setLinear(true);
         addStep(createFragment(new slideArchSelectorFragment()));
         addStep(createFragment(new slideAndroidSelectorFragment()));
         addStep(createFragment(new slideVariantSelectionFragment()));
         super.onCreate(savedInstanceState);
+        setSupportActionBar(getToolbar());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        super.onNavigateUp();
+        GappsSelectionFragment.selectionArch = "";
+        GappsSelectionFragment.selectionVariant = "";
+        GappsSelectionFragment.selectionAnd = "";
+        return true;
+    }
+
+    @Override
+    public void onNext() {
+        super.onNext();
+        currentStep++;
+    }
+
+    @Override
+    public void onPrevious() {
+        super.onPrevious();
+        currentStep--;
     }
 
     @Override
@@ -44,10 +66,10 @@ public class Stepper extends TabStepper {
 
     @Override
     public void onBackPressed() {
-        GappsSelectionFragment.selectionArch = "";
-        GappsSelectionFragment.selectionVariant = "";
-        GappsSelectionFragment.selectionAnd = "";
-        super.onBackPressed();
+        if (currentStep == 1)
+            onNavigateUp();
+        else
+            onPrevious();
     }
 
     private AbstractStep createFragment(AbstractStep fragment) {
