@@ -1,6 +1,7 @@
 package org.opengapps.opengapps.download;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
 import org.opengapps.opengapps.DownloadFragment;
 
@@ -11,27 +12,31 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.Scanner;
 
-public class FileValidator extends AsyncTask<String , Void, Boolean>{
+public class FileValidator extends AsyncTask<String, Void, Boolean> {
     private final DownloadFragment downloadFragment;
 
-    public FileValidator(DownloadFragment downloadFragment){
+    public FileValidator(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
+        downloadFragment.getContext().getFilesDir();
+        File f = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
+        String expectedHash = getMD5(f);
+        String actualHash = fileToMD5(params[0]);
+        return expectedHash.equalsIgnoreCase(actualHash);
+    }
+
+    public static String getMD5(File file) {
         try {
-            downloadFragment.getContext().getFilesDir();
-            File f = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
-            Scanner scanner = new Scanner(f);
+            Scanner scanner = new Scanner(file);
             String expectedHash = scanner.nextLine();
             expectedHash = expectedHash.substring(0, expectedHash.indexOf(" "));
-            String actualHash = fileToMD5(params[0]);
-            return expectedHash.equalsIgnoreCase(actualHash);
+            return expectedHash;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return "FILE NOT FOUND";
         }
-        return null;
     }
 
     @Override
@@ -51,7 +56,7 @@ public class FileValidator extends AsyncTask<String , Void, Boolean>{
                 if (numRead > 0)
                     digest.update(buffer, 0, numRead);
             }
-            byte [] md5Bytes = digest.digest();
+            byte[] md5Bytes = digest.digest();
             return convertHashToString(md5Bytes);
         } catch (Exception e) {
             return null;
@@ -59,7 +64,8 @@ public class FileValidator extends AsyncTask<String , Void, Boolean>{
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (Exception ignored) { }
+                } catch (Exception ignored) {
+                }
             }
         }
     }

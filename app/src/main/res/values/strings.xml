@@ -118,4 +118,8 @@
     <string name="ms_prev">Previous</string>
     <string name="ms_next">Next</string>
     <string name="ms_end">Complete</string>
+    <string name="label_md5_checksum">MD5-Checksum</string>
+    <string name="label_copy_checksum">Copy Checksum</string>
+    <string name="file_not_found">File not found</string>
+    <string name="label_versionlog">Versionlog</string>
 </resources>
