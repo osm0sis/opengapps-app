@@ -72,4 +72,9 @@
     <string name="label_copy_checksum">Prüfsumme kopieren</string>
     <string name="file_not_found">Datei nicht gefunden</string>
     <string name="label_versionlog">Versionshinweise</string>
+    <string name="label_show_md5">Prüfsumme anzeigen</string>
+    <string name="label_show_versionlog">Versionshinweise anzeigen</string>
+    <string name="label_tos">Nutzungsbedingungen</string>
+    <string name="label_download_versionlog">Versionshinweise herunterladen</string>
+    <string name="label_share">Teilen</string>
 </resources>
