@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -151,16 +152,16 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.label_versionlog)
                 .setView(view)
-                .setPositiveButton(R.string.ms_end, null)
+                .setPositiveButton(R.string.label_close, null)
                 .show();
     }
 
     private void showMD5() {
         final String md5sum = FileValidator.getMD5(md5File).toUpperCase(Locale.getDefault());
-        new AlertDialog.Builder(getContext())
+        final AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setTitle(R.string.label_md5_checksum)
                 .setMessage(md5sum)
-                .setPositiveButton(R.string.label_copy_checksum, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.label_copy_checksum, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -168,8 +169,15 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                         clipboard.setPrimaryClip(clip);
                     }
                 })
-                .setNegativeButton(R.string.ms_end, null)
-                .show();
+                .setPositiveButton(R.string.label_close, null)
+                .create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(Color.parseColor("#000000"));
+            }
+        });
+        dialog.show();
     }
 
     private void shareGappsFile() {
@@ -179,5 +187,20 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
         sendIntent.setType("application/zip");
         getContext().startActivity(sendIntent);
+    }
+
+    public void checkMD5() {
+        findViewById(R.id.md5Progress).setVisibility(VISIBLE);
+        new FileValidator(this).execute(gappsFile.getAbsolutePath(), md5File.getAbsolutePath());
+    }
+
+    public void hashSuccess(Boolean matches) {
+        findViewById(R.id.md5Progress).setVisibility(INVISIBLE);
+        if (matches)
+            findViewById(R.id.md5_success).setVisibility(VISIBLE);
+        else
+            findViewById(R.id.md5_failure).setVisibility(VISIBLE);
+        if (deleteListener != null)
+            deleteListener.hashSuccess(matches);
     }
 }

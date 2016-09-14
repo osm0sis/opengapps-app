@@ -1,9 +1,11 @@
 package org.opengapps.opengapps.download;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import org.opengapps.opengapps.DownloadFragment;
+import org.opengapps.opengapps.InstallCard;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,16 +15,18 @@ import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class FileValidator extends AsyncTask<String, Void, Boolean> {
-    private final DownloadFragment downloadFragment;
+    private final InstallCard installCard;
+    private Context context;
 
-    public FileValidator(DownloadFragment downloadFragment) {
-        this.downloadFragment = downloadFragment;
+    public FileValidator(InstallCard installCard) {
+        this.installCard = installCard;
+        this.context = installCard.getContext();
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
-        downloadFragment.getContext().getFilesDir();
-        File f = new File(downloadFragment.getContext().getFilesDir(), "gapps.md5");
+        context.getFilesDir();
+        File f = new File(params[1]);
         String expectedHash = getMD5(f);
         String actualHash = fileToMD5(params[0]);
         return expectedHash.equalsIgnoreCase(actualHash);
@@ -41,7 +45,7 @@ public class FileValidator extends AsyncTask<String, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
-        downloadFragment.hashSuccess(aBoolean);
+        installCard.hashSuccess(aBoolean);
     }
 
     private static String fileToMD5(String filePath) {

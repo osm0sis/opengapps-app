@@ -293,7 +293,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             initSelections();
         if (!prefs.getBoolean("firstStart", true)) {
             if (s.equals("selection_android") || s.equals("selection_arch") || s.equals("selection_variant")) {
-                clearAll();
+                updateSelection();
             }
         }
         if (s.equals("firstStart")) {
@@ -305,7 +305,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     /**
      * Clears all settings to give the user a fresh start
      */
-    private void clearAll() {
+    private void updateSelection() {
         SharedPreferences.Editor editor = prefs.edit();
         String lastDL = Downloader.getLastDownloadedTag(getContext());
         if (lastDL.equals(""))
@@ -405,10 +405,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void downloadSuccessful(String filePath) {
         initDownloadButton();
-        Log.e("DL", "I AM SUCCESSFUL. ONCE");
+        loadInstallCards();
         if (prefs.getBoolean("checkMissing", false)) {
             prefs.edit().remove("checkMissing").apply();
-            hashSuccess(true);
+            fileCards.get(filePath).checkMD5();
         }
     }
 

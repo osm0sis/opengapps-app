@@ -122,7 +122,8 @@
     <string name="label_copy_checksum">Copy Checksum</string>
     <string name="file_not_found">File not found</string>
     <string name="label_versionlog">Versionlog</string>
-    <string name="label_show_md5">Show Checksum</string>
+    <string name="label_show_md5">Show MD5-Checksum</string>
     <string name="label_show_versionlog">Show Versionlog</string>
     <string name="label_share">Share</string>
+    <string name="label_close">Close</string>
 </resources>
