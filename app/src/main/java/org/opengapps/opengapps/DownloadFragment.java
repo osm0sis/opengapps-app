@@ -357,6 +357,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         lastTag = downloader.getTag();
         prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
         refreshLayout.setRefreshing(false);
+        downloadCard.onTagUpdated();
         TextView version = (TextView) getView().findViewById(R.id.newest_version);
         version.setText(convertDate(lastTag));
         if (Downloader.getLastDownloadedTag(getContext()).equals(lastTag))
@@ -429,5 +430,18 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onRefresh() {
 //        loadInstallCards();
         downloader.new TagUpdater().execute();
+    }
+
+    public void showAd() {
+        if (downloadAd.isLoaded())
+            downloadAd.show();
+    }
+
+    public Downloader getDownloader() {
+        return downloader;
+    }
+
+    public void setDownloader(Downloader downloader) {
+        this.downloader = downloader;
     }
 }

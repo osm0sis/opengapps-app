@@ -4,7 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -32,6 +34,15 @@ public class PermissionCard extends CardView {
             context = ((ContextWrapper) context).getBaseContext();
         }
         return null;
+    }
+
+    public void init(){
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED)
+            setVisibility(View.GONE);
+        else {
+            setVisibility(View.VISIBLE);
+        }
     }
 
     private void initPermissionButton() {
