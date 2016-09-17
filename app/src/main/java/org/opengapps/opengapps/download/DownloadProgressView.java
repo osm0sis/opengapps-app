@@ -59,10 +59,10 @@ public class DownloadProgressView extends LinearLayout {
 
         downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 
-        downloadedSizeView = (TextView) findViewById(R.id.downloadedSize);
-        totalSizeView = (TextView) findViewById(R.id.totalSize);
+        downloadedSizeView = (TextView) findViewById(R.id.downloaded_size);
+        totalSizeView = (TextView) findViewById(R.id.total_size);
         percentageView = (TextView) findViewById(R.id.percentage);
-        downloadProgressBar = (ProgressBar) findViewById(R.id.downloadProgressBar);
+        downloadProgressBar = (ProgressBar) findViewById(R.id.download_progress_bar);
 
         downloadedSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
         totalSizeView.setTextColor(ColorStateList.valueOf(percentageColor));

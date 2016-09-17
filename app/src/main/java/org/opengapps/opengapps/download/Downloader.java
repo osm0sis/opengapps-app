@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
-
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.DownloadFragment;
@@ -92,7 +91,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     @Override
     protected void onPostExecute(Long id) {
         if (downloadFragment != null) {
-            DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progressView);
+            DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
             progress.show(id, downloadFragment);
             downloadFragment.downloadStarted(id, tag);
         }

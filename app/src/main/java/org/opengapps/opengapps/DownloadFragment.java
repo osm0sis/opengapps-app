@@ -151,7 +151,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void restoreDownloadProgress() {
         Long id = prefs.getLong("running_download_id", 0);
         if (id != 0) {
-            DownloadProgressView progress = (DownloadProgressView) getView().findViewById(R.id.progressView);
+            DownloadProgressView progress = (DownloadProgressView) getView().findViewById(R.id.progress_view);
             progress.show(id, this);
         }
     }

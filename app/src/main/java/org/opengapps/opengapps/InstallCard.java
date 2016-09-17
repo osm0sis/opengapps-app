@@ -68,7 +68,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             }
         });
 
-        ImageButton menuButton = (ImageButton) findViewById(R.id.menuButton);
+        ImageButton menuButton = (ImageButton) findViewById(R.id.menu_button);
         menuButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,13 +196,13 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             return;
         checked = true;
         if (md5Exists) {
-            findViewById(R.id.md5Progress).setVisibility(VISIBLE);
+            findViewById(R.id.md5_progress).setVisibility(VISIBLE);
             new FileValidator(this).execute(gappsFile.getAbsolutePath(), md5File.getAbsolutePath());
         }
     }
 
     public void hashSuccess(Boolean matches) {
-        findViewById(R.id.md5Progress).setVisibility(INVISIBLE);
+        findViewById(R.id.md5_progress).setVisibility(INVISIBLE);
         if (matches)
             findViewById(R.id.md5_success).setVisibility(VISIBLE);
         else
