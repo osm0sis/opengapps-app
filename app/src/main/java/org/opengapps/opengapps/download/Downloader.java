@@ -128,7 +128,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             logSelections();
             tag = s;
             if (downloadFragment != null && downloadFragment.isVisible())
-                downloadFragment.OnTagUpdated();
+                downloadFragment.onTagUpdated();
         }
     }
 

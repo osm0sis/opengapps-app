@@ -125,7 +125,8 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        downloadFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (downloadFragment.isAdded())
+            downloadFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

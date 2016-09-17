@@ -1,11 +1,8 @@
 package org.opengapps.opengapps;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -14,13 +11,10 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
@@ -28,16 +22,15 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import org.opengapps.opengapps.card.DownloadCard;
 import org.opengapps.opengapps.card.InstallCard;
+import org.opengapps.opengapps.card.PermissionCard;
 import org.opengapps.opengapps.download.DownloadProgressView;
 import org.opengapps.opengapps.download.Downloader;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -47,6 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener, SwipeRefreshLayout.OnRefreshListener {
     private Downloader downloader;
     private SharedPreferences prefs;
+    private DownloadCard downloadCard;
     private InterstitialAd downloadAd;
     private SwipeRefreshLayout refreshLayout;
     private boolean downloaderLoaded = false;
@@ -95,6 +89,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onStart() {
         super.onStart();
+        downloadCard.init(this);
         if (!prefs.getBoolean("firstStart", true) && !downloaderLoaded) {
             initDownloader(isRestored);
             downloaderLoaded = true;
@@ -127,8 +122,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
         prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        initButtons();
-        initSelections();
+
+        downloadCard = (DownloadCard) getView().findViewById(R.id.download_card);
 
         if (!prefs.getBoolean("firstStart", true))
             initPermissionCard();
@@ -149,14 +144,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         downloadAd.loadAd(request);
     }
 
-    private void restoreDownloadProgress() {
-        Long id = prefs.getLong("running_download_id", 0);
-        if (id != 0) {
-            DownloadProgressView progress = (DownloadProgressView) getView().findViewById(R.id.progress_view);
-            progress.show(id, this);
-        }
-    }
-
     private void initDownloader(boolean isRestored) {
         downloader = new Downloader(this);
         if (!isRestored) {
@@ -164,37 +151,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             refreshLayout.setRefreshing(true);
         } else {
             downloader.setTag(lastTag);
-            OnTagUpdated();
+            onTagUpdated();
         }
     }
 
     private void initPermissionCard() {
-        CardView permissionCard = (CardView) getView().findViewById(R.id.permission_card);
-        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED)
-            permissionCard.setVisibility(View.GONE);
-        else {
-            permissionCard.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * Creates onClickListeners for all buttons
-     */
-    private void initButtons() {
-        initDownloadButton();
-        initCustomizeButton();
-    }
-
-    private void initCustomizeButton() {
-        Button customize = (Button) getView().findViewById(R.id.change_button);
-        customize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getContext(), Stepper.class);
-                startActivity(i);
-            }
-        });
+        PermissionCard permissionCard = (PermissionCard) getView().findViewById(R.id.permission_card);
+        permissionCard.init();
     }
 
     @Override
@@ -206,82 +169,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         }
     }
 
-
-    /**
-     * Create OnClickListner for DownloadButton
-     */
-    private void initDownloadButton() {
-        Button downloadButton = (Button) getView().findViewById(R.id.download_button);
-        downloadButton.setText(getString(R.string.label_download));
-        downloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (downloadAd.isLoaded())
-                    downloadAd.show();
-                downloader.execute();
-            }
-        });
-    }
-
-
-
-    /**
-     * Sets up all the spinners, fills them with entries and initializes the validation
-     */
-    private void initSelections() {
-        if (isAdded()) {
-            TextView arch_selection = (TextView) getView().findViewById(R.id.selected_architecture);
-            TextView android_selection = (TextView) getView().findViewById(R.id.selected_android);
-            TextView variant_selection = (TextView) getView().findViewById(R.id.selected_variant);
-
-
-            arch_selection.setText(prefs.getString("selection_arch", null));
-            android_selection.setText(prefs.getString("selection_android", null));
-            variant_selection.setText(prefs.getString("selection_variant", null));
-        }
-    }
-
-    /**
-     * Is responsible for changing the UI when a new Version gets available
-     *
-     * @param updateAvailable true if a new Version is available
-     */
-    private void setNewVersionAvailable(boolean updateAvailable) {
-        CardView card = (CardView) getView().findViewById(R.id.download_card);
-        TextView header = (TextView) getView().findViewById(R.id.headline_download);
-        Button downloadButton = (Button) getView().findViewById(R.id.download_button);
-
-        card.setVisibility(View.VISIBLE);
-        if (updateAvailable) {
-            header.setText(getString(R.string.update_available));
-            header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-            downloadButton.setText(getString(R.string.label_update));
-            downloadButton.setEnabled(true);
-            downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        } else {
-            header.setText(getString(R.string.label_download_package));
-            header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-            downloadButton.setEnabled(false);
-            downloadButton.setTextColor(Color.parseColor("#757575"));
-        }
-        boolean unset = Downloader.getLastDownloadedTag(getContext()).equals("");
-        if (unset && prefs.getString("running_download_tag", "unset").equals("unset")) {
-            header.setText(getString(R.string.label_download_package));
-            header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-            downloadButton.setText(getString(R.string.label_download));
-            downloadButton.setEnabled(true);
-            downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        }
-        restoreDownloadProgress();
-    }
-
     /**
      * Mostly handles special cases like change of GApps-Selection and firstRun-Behaviour
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s.contains("selection") || s.contains("last_downloaded"))
-            initSelections();
+            downloadCard.initSelections();
         if (!prefs.getBoolean("firstStart", true)) {
             if (s.equals("selection_android") || s.equals("selection_arch") || s.equals("selection_variant")) {
                 updateSelection();
@@ -289,7 +183,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         }
         if (s.equals("firstStart")) {
             initDownloader(isRestored);
-            setNewVersionAvailable(false);
+            downloadCard.setState(DownloadCard.DownloadCardState.NORMAL);
         }
     }
 
@@ -353,32 +247,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         return (int) (dp * scale + 0.5f);
     }
 
-    public void OnTagUpdated() {
+    public void onTagUpdated() {
         lastTag = downloader.getTag();
         prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
         refreshLayout.setRefreshing(false);
-        downloadCard.onTagUpdated();
-        TextView version = (TextView) getView().findViewById(R.id.newest_version);
-        version.setText(convertDate(lastTag));
-        if (Downloader.getLastDownloadedTag(getContext()).equals(lastTag))
-            setNewVersionAvailable(false);
-        else
-            setNewVersionAvailable(true);
+        downloadCard.onTagUpdated(lastTag);
 
-    }
-
-    private String convertDate(String tag) {
-        if (tag == null || tag.equals(""))
-            return "";
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Date date;
-        try {
-            date = sdf.parse(tag);
-        } catch (ParseException e) {
-            return "";
-        }
-        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
-        return dateFormat.format(date);
     }
 
     public void downloadStarted(long id, String tag) {
@@ -388,7 +262,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void downloadFailed(int reason) {
-        initDownloadButton();
         downloader = new Downloader(this);
         prefs.edit().putLong("running_download_id", 0).apply();
         prefs.edit().putString("running_download_tag", null).apply();
@@ -396,7 +269,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void downloadSuccessful(String filePath) {
-        initDownloadButton();
         loadInstallCards();
         if (prefs.getBoolean("checkMissing", false)) {
             prefs.edit().remove("checkMissing").apply();
@@ -406,7 +278,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void downloadCancelled() {
-        initDownloadButton();
         downloader = new Downloader(this);
         downloader.new TagUpdater();
         prefs.edit().putLong("running_download_id", 0).apply();
@@ -418,7 +289,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             String tag = prefs.getString("running_download_tag", "failed");
             if (!tag.equals("failed")) // dirty hack :(
                 prefs.edit().putString("last_downloaded_tag", tag).apply();
-            setNewVersionAvailable(false);
+            onTagUpdated();
         } else {
             Toast.makeText(getContext(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
@@ -439,9 +310,5 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     public Downloader getDownloader() {
         return downloader;
-    }
-
-    public void setDownloader(Downloader downloader) {
-        this.downloader = downloader;
     }
 }

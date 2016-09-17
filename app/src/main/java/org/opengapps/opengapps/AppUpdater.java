@@ -4,9 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
     @Override
     protected void onPostExecute(UpdateStatus updateAvailable) {
         if (updateAvailable == UpdateStatus.optional) {
-            if (TextUtils.isEmpty(context.getPackageManager().getInstallerPackageName(BuildConfig.APPLICATION_ID))) {
+            if (!isAppInstalled("com.android.vending")) {
                 new AlertDialog.Builder(context)
                         .setTitle("App-Update available")
                         .setMessage("You may wanna update bro")
@@ -64,6 +64,15 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
             Toast.makeText(context, "You have to update in order to continue using the app", Toast.LENGTH_LONG).show();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.url_download_update)));
             context.startActivity(i);
+        }
+    }
+
+    private boolean isAppInstalled(String packageName) {
+        try {
+            context.getPackageManager().getApplicationInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 

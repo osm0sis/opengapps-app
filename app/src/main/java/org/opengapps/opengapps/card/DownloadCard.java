@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,16 +30,14 @@ public class DownloadCard extends CardView {
 
     public DownloadCard(Context context, AttributeSet attrs) {
         super(context, attrs);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.download_card, this, true);
         prefs = getContext().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-    }
-
-    private void init(DownloadFragment fragment) {
+    public void init(DownloadFragment fragment) {
         this.fragment = fragment;
+        setState(DownloadCardState.DISABLED);
         initButtons();
         initSelections();
         restoreDownloadProgress();
@@ -75,17 +74,15 @@ public class DownloadCard extends CardView {
             setState(DownloadCardState.NORMAL);
     }
 
-    private void initSelections() {
-        if (isAttachedToWindow()) {
-            TextView arch_selection = (TextView) findViewById(R.id.selected_architecture);
-            TextView android_selection = (TextView) findViewById(R.id.selected_android);
-            TextView variant_selection = (TextView) findViewById(R.id.selected_variant);
+    public void initSelections() {
+        TextView arch_selection = (TextView) findViewById(R.id.selected_architecture);
+        TextView android_selection = (TextView) findViewById(R.id.selected_android);
+        TextView variant_selection = (TextView) findViewById(R.id.selected_variant);
 
 
-            arch_selection.setText(prefs.getString("selection_arch", null));
-            android_selection.setText(prefs.getString("selection_android", null));
-            variant_selection.setText(prefs.getString("selection_variant", null));
-        }
+        arch_selection.setText(prefs.getString("selection_arch", null));
+        android_selection.setText(prefs.getString("selection_android", null));
+        variant_selection.setText(prefs.getString("selection_variant", null));
     }
 
     private void initDownloadButton() {
@@ -104,7 +101,7 @@ public class DownloadCard extends CardView {
         Long id = prefs.getLong("running_download_id", 0);
         if (id != 0) {
             DownloadProgressView progress = (DownloadProgressView) findViewById(R.id.progress_view);
-            progress.show(id, (DownloadProgressView.DownloadStatusListener) fragment);
+            progress.show(id, fragment);
         }
     }
 
@@ -132,7 +129,7 @@ public class DownloadCard extends CardView {
                 header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                 downloadButton.setEnabled(false);
                 downloadButton.setTextColor(Color.parseColor("#757575"));
-                downloadButton.setText(getString(R.string.label_update));
+                downloadButton.setText(getString(R.string.label_download));
                 break;
         }
     }
