@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.github.fcannizzaro.materialstepper.AbstractStep;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.R;
 
@@ -32,8 +33,24 @@ public class slideTermsOfUse extends AbstractStep {
         declineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getContext());
+                Bundle params = new Bundle(1);
+                params.putString(FirebaseAnalytics.Param.VALUE, "decline");
+                analytics.logEvent("terms_of_service", params);
                 getActivity().setResult(1);
                 getActivity().finish();
+            }
+        });
+
+        Button acceptButton = (Button) getView().findViewById(R.id.accept_button);
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getContext());
+                Bundle params = new Bundle(1);
+                params.putString(FirebaseAnalytics.Param.VALUE, "accept");
+                analytics.logEvent("terms_of_service", params);
+                ((AppIntroActivity)getActivity()).onTermsAccepted((Button) v);
             }
         });
     }

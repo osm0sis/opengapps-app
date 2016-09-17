@@ -134,10 +134,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     private void logSelections() {
         for (String entry : new String[]{"selection_arch", "selection_android", "selection_variant"}) {
-            Bundle bundle = new Bundle(2);
-            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, entry);
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, prefs.getString(entry, "null"));
-            analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+            Bundle params = new Bundle(1);
+            params.putString(FirebaseAnalytics.Param.VALUE, prefs.getString(entry, "null"));
+            analytics.logEvent(entry, params);
         }
     }
 

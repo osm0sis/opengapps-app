@@ -3,7 +3,7 @@ package org.opengapps.opengapps.download;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import org.opengapps.opengapps.InstallCard;
+import org.opengapps.opengapps.card.InstallCard;
 
 import java.io.File;
 import java.io.FileInputStream;

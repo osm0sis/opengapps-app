@@ -11,7 +11,6 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,6 +28,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import org.opengapps.opengapps.card.InstallCard;
 import org.opengapps.opengapps.download.DownloadProgressView;
 import org.opengapps.opengapps.download.Downloader;
 
@@ -114,7 +114,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
 
         refreshLayout.setOnRefreshListener(this);
-        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getContext());
+        FirebaseAnalytics.getInstance(getContext());
         downloadAd = new InterstitialAd(getContext());
         downloadAd.setAdUnitId(getString(R.string.download_interstitial));
         requestAd();
@@ -130,7 +130,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initButtons();
         initSelections();
 
-        initPermissionCard();
+        if (!prefs.getBoolean("firstStart", true))
+            initPermissionCard();
         loadInstallCards();
     }
 
@@ -168,13 +169,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private void initPermissionCard() {
-        CardView permssionCard = (CardView) getView().findViewById(R.id.permission_card);
+        CardView permissionCard = (CardView) getView().findViewById(R.id.permission_card);
         int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED)
-            permssionCard.setVisibility(View.GONE);
+            permissionCard.setVisibility(View.GONE);
         else {
-            permssionCard.setVisibility(View.VISIBLE);
-            initPermissionButton();
+            permissionCard.setVisibility(View.VISIBLE);
         }
     }
 
@@ -193,16 +193,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), Stepper.class);
                 startActivity(i);
-            }
-        });
-    }
-
-    private void initPermissionButton() {
-        Button permissionButton = (Button) getView().findViewById(R.id.grant_permission_button);
-        permissionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             }
         });
     }
@@ -232,6 +222,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             }
         });
     }
+
+
 
     /**
      * Sets up all the spinners, fills them with entries and initializes the validation
@@ -356,7 +348,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     }
 
-    private int dpToPx(int dp) {
+    private int dpToPx(@SuppressWarnings("SameParameterValue") int dp) {
         final float scale = getContext().getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }

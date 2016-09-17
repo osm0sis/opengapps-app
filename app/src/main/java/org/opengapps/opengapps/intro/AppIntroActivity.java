@@ -17,7 +17,6 @@ import android.widget.Button;
 
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.R;
 
@@ -63,26 +62,19 @@ public class AppIntroActivity extends AppIntro2 {
                     setNextPageSwipeLock(false);
             }
             if (newFragment.getClass().equals(slideTermsOfUse.class)) {
-                final Button termButton = (Button) findViewById(R.id.accept_button);
-                termButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        termButton.setText(R.string.label_accepted);
-                        setNextPageSwipeLock(false);
-                        view.setEnabled(false);
-                        termsAccepted = true;
-                        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(getApplicationContext());
-                        Bundle bundle = new Bundle(1);
-                        bundle.putBoolean("terms_accepted", true);
-                        analytics.logEvent("terms_of_service", bundle);
-                    }
-                });
                 if (!termsAccepted)
                     setNextPageSwipeLock(true);
             }
             if (newFragment instanceof GappsSelectionFragment)
                 ((GappsSelectionFragment) newFragment).onStepVisible();
         }
+    }
+
+    public void onTermsAccepted(Button termButton){
+        termButton.setText(R.string.label_accepted);
+        setNextPageSwipeLock(false);
+        termButton.setEnabled(false);
+        termsAccepted = true;
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

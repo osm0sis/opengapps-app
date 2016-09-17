@@ -1,4 +1,4 @@
-package org.opengapps.opengapps;
+package org.opengapps.opengapps.card;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
@@ -22,6 +22,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.opengapps.opengapps.BuildConfig;
+import org.opengapps.opengapps.DownloadFragment;
+import org.opengapps.opengapps.R;
+import org.opengapps.opengapps.ZipInstaller;
 import org.opengapps.opengapps.download.FileValidator;
 
 import java.io.File;

@@ -11,22 +11,19 @@
 
         <LinearLayout
             android:id="@+id/main_layout"
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <org.opengapps.opengapps.card.PermissionCard
                 android:id="@+id/permission_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 ads:cardBackgroundColor="@color/colorPrimaryDark"
-                ads:cardCornerRadius="0dp">
-
-                <include layout="@layout/permission_card" />
-            </android.support.v7.widget.CardView>
+                ads:cardCornerRadius="0dp"/>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/download_card"

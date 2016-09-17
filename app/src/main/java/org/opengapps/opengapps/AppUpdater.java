@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -50,13 +51,15 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
 
     @Override
     protected void onPostExecute(UpdateStatus updateAvailable) {
-        if (updateAvailable == UpdateStatus.optional)
-            new AlertDialog.Builder(context)
-                    .setTitle("App-Update available")
-                    .setMessage("You may wanna update bro")
-                    .setPositiveButton("Yes", null)
-                    .show();
-        else if(updateAvailable == UpdateStatus.forced){
+        if (updateAvailable == UpdateStatus.optional) {
+            if (TextUtils.isEmpty(context.getPackageManager().getInstallerPackageName(BuildConfig.APPLICATION_ID))) {
+                new AlertDialog.Builder(context)
+                        .setTitle("App-Update available")
+                        .setMessage("You may wanna update bro")
+                        .setPositiveButton("Yes", null)
+                        .show();
+            }
+        } else if (updateAvailable == UpdateStatus.forced) {
             NavigationActivity.forcedUpdate = true;
             Toast.makeText(context, "You have to update in order to continue using the app", Toast.LENGTH_LONG).show();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.url_download_update)));

@@ -18,16 +18,16 @@ import eu.chainfire.libsuperuser.Shell;
 
 import static android.content.Context.POWER_SERVICE;
 
-class ZipInstaller {
+public class ZipInstaller {
     private final Context context;
     private final SharedPreferences prefs;
 
-    ZipInstaller(Context context) {
+    public ZipInstaller(Context context) {
         this.context = context;
         prefs = context.getSharedPreferences(context.getString(R.string.pref_name), Context.MODE_PRIVATE);
     }
 
-    void installZip(File file) {
+    public void installZip(File file) {
         if (Shell.SU.available()) {
             try {
                 File f = new File(context.getFilesDir(), "openrecoveryscript");
