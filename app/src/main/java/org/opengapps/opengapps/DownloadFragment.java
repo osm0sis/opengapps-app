@@ -67,7 +67,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             initDownloader(isRestored);
         }
         if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
-            onDeleteFile();
+//            onDeleteFile();
         }
         isRestored = true;
     }
