@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -17,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +31,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.download.DownloadProgressView;
 import org.opengapps.opengapps.download.Downloader;
-import org.opengapps.opengapps.download.FileValidator;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -66,7 +63,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onResume() {
         super.onResume();
-        initPermissionCard();
         if (downloader == null) {
             initDownloader(isRestored);
         }
@@ -134,6 +130,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initButtons();
         initSelections();
 
+        initPermissionCard();
         loadInstallCards();
     }
 
@@ -144,7 +141,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                     .addTestDevice("F98ACBE481522BAE0A91AC208FDF938F")
                     .addTestDevice("CAAA7C86D5955208EF75484D93E09948")
-                    .addTestDevice(Settings.Secure.getString(getContext().getContentResolver(), "android_id"))
                     .build();
         else
             request = new AdRequest.Builder()
@@ -213,8 +209,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (!prefs.getBoolean("firstStart", true))
+        SharedPreferences preferences = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+        if (!preferences.getBoolean("firstStart", true)) {
             initPermissionCard();
+            loadInstallCards();
+        }
     }
 
 
@@ -379,7 +378,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (tag == null || tag.equals(""))
             return "";
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Date date = null;
+        Date date;
         try {
             date = sdf.parse(tag);
         } catch (ParseException e) {

@@ -12,6 +12,7 @@ import org.opengapps.opengapps.R;
 
 import eu.chainfire.libsuperuser.Shell;
 
+@SuppressWarnings("ConstantConditions")
 public class RequestRootFragment extends Fragment {
     @Nullable
     @Override

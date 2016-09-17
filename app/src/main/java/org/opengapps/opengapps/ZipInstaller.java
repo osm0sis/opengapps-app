@@ -34,8 +34,6 @@ class ZipInstaller {
                 FileWriter fileWriter = new FileWriter(f, false);
                 if (prefs.getBoolean("wipe_cache", false))
                     fileWriter.append("\nwipe cache");
-                if (prefs.getBoolean("wipe_data", false))
-                    fileWriter.append("\nwipe data");
                 fileWriter.append("\ninstall ").append(file.getAbsolutePath());
                 fileWriter.close();
                 String command = "cp " + f.getAbsolutePath() + " /cache/recovery/openrecoveryscript";
@@ -54,14 +52,20 @@ class ZipInstaller {
         }
     }
 
-    void installZip(){
+    void installZip() {
         installZip(new File(Downloader.getDownloadedFile(context)));
     }
 
     public static boolean canReboot(Context context) {
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(BuildConfig.APPLICATION_ID, 0);
-            int result = info.flags & PermissionInfo.PROTECTION_FLAG_PRIVILEGED;
+            int result;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                result = info.flags & PermissionInfo.PROTECTION_FLAG_PRIVILEGED;
+            } else {
+                //noinspection deprecation
+                result = info.flags & PermissionInfo.PROTECTION_FLAG_SYSTEM;
+            }
             return result != 0 || Shell.SU.available();
         } catch (PackageManager.NameNotFoundException e) {
             return false;

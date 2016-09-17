@@ -19,6 +19,7 @@ import com.github.fcannizzaro.materialstepper.AbstractStep;
 import org.opengapps.opengapps.R;
 
 
+@SuppressWarnings("ConstantConditions")
 public abstract class GappsSelectionFragment extends AbstractStep implements RadioGroup.OnCheckedChangeListener {
     private final int title;
     private final int description;
@@ -55,11 +56,6 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.appintro_set_variant, container, false);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override

@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Open GApps</string>
     <string name="action_settings">Instellingen</string>
-    <string name="app_copyright">placeholderEDITME</string>
     <string name="autoinstall_root_disclaimer">Automatische Installatie werkt enkel als OpenGApps als systeemapplicatie is geinstalleerd of met root</string>
     <string name="click_show_more">Klik voor meer info</string>
     <string name="download_started">Download gestart</string>
@@ -14,7 +13,6 @@
     <string name="label_blog">Blog</string>
     <string name="label_cancel">Annuleren</string>
     <string name="label_change_selection">Verander selectie</string>
-    <string name="label_copyright">Copyright</string>
     <string name="label_design">Artwork</string>
     <string name="label_donate">Doneer</string>
     <string name="label_download">Download</string>
@@ -27,7 +25,6 @@
     <string name="label_no">Nee</string>
     <string name="label_permission_denied">Toestemming geweigerd</string>
     <string name="label_producer">Producent</string>
-    <string name="label_refresh">Verversen</string>
     <string name="label_report_bug">Fout melden</string>
     <string name="label_support">Ondersteuning</string>
     <string name="label_support_chat">Chat hulp</string>
@@ -42,7 +39,6 @@
     <string name="navigation_drawer_close">Navigatie sluiten</string>
     <string name="navigation_drawer_open">Navigatie openen</string>
     <string name="new_folder">Nieuwe map</string>
-    <string name="package_updated">Pakket geüpgraded</string>
     <string name="permission_granted">Toestemming verkregen! Dank!</string>
     <string name="pref_header_gapps_selection">GApps-Selectie</string>
     <string name="slide_android_description">U kunt hier de Android versie selecteren</string>

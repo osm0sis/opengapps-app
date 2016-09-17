@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +22,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.psdev.licensesdialog.LicensesDialog;
-import de.psdev.licensesdialog.licenses.MITLicense;
 
 public class AboutActivity extends AppCompatActivity {
     private boolean playGAppsActive = false;
@@ -122,7 +120,6 @@ public class AboutActivity extends AppCompatActivity {
 
     private void initCopyrightButton() {
         LinearLayout copyright = (LinearLayout) findViewById(R.id.copyright);
-        final AppCompatActivity ac = this;
         copyright.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -47,7 +47,7 @@ public class AdBlockDetector {
 
     private static boolean checkForPackages(Context context) {
         String[] adBlockers = parseXml(context);
-        for (String blocker : adBlockers) {
+        for (String blocker : adBlockers != null ? adBlockers : new String[0]) {
             if (checkForPackage(context, blocker))
                 return true;
         }

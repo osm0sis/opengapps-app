@@ -1,7 +1,6 @@
 package org.opengapps.opengapps.intro;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 
 import org.opengapps.opengapps.R;
 

@@ -43,10 +43,8 @@
     <string name="summary_wifi_only">Download over WiFi only</string>
     <string name="label_download_dir">Download Directory</string>
     <string name="label_wipe_cache">Wipe Cache/Dalvik</string>
-    <string name="label_refresh">Refresh</string>
     <string name="update_available">Update available!</string>
     <string name="label_update">Update</string>
-    <string name="package_updated">Package updated</string>
     <string name="label_cancel">Cancel</string>
     <string name="download_interstitial" translatable="false">ca-app-pub-9489060368971640/9426486679</string>
     <string name="label_permission_denied">Permission denied</string>
@@ -74,8 +72,6 @@
     <string name="label_donate">Donate</string>
     <string name="label_producer">Producer</string>
     <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016  - All Rights Reserved</string>
-    <string name="label_copyright">Copyright</string>
-    <string name="app_copyright">this is just for now a placeholder</string>
     <string name="label_adblock_detected">Adblocker Detected</string>
     <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead</string>
     <string name="label_change_selection">Change Selection</string>
@@ -97,7 +93,6 @@
     <string name="label_install_package">Install package</string>
     <string name="label_delete">Delete</string>
     <string name="url_main_dev" translatable="false">https://github.com/beatbrot/</string>
-    <string name="url_producer" translatable="false">https://github.com/mfonville</string>
     <string name="appintro_introslide_title">Welcome to the official OpenGApps.org App</string>
     <string name="appintro_storageperm_title">File Storage Permission</string>
     <string name="appintro_storageperm_explain">To download an Open GApps package, you have to grant the app permission to your File Storage</string>

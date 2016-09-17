@@ -14,10 +14,8 @@
     <string name="summary_wifi_only">Nur über WLAN herunterladen</string>
     <string name="label_download_dir">Download-Ordner</string>
     <string name="label_wipe_cache">Cache/Dalvik löschen</string>
-    <string name="label_refresh">Aktualisieren</string>
     <string name="update_available">Update verfügbar!</string>
     <string name="label_update">Update</string>
-    <string name="package_updated">Paket aktualisiert</string>
     <string name="label_cancel">Abbrechen</string>
     <string name="label_permission_denied">Berechtigung verweigert</string>
     <string name="explanation_permission_denied">Damit OpenGApps korrekt funktioniert, muss die Speicher-Berechtigung gewährt werden. Eigentlich logisch, oder?</string>
@@ -36,10 +34,8 @@
     <string name="label_blog">Blog</string>
     <string name="label_donate">Spenden</string>
     <string name="label_producer">Produzent</string>
-    <string name="label_copyright">Copyright</string>
     <string name="label_adblock_detected">Werbeblocker erkannt</string>
     <string name="explanation_adblock_detected">Werbeblocker gefunden?! Werbung kann frustrierend sein, hält aber Projekte und deren Entwickler am Leben! Bitte überlegen sie, den Werbeblocker zu deaktiveren oder uns zu spenden</string>
-    <string name="app_copyright">Platzhalter REPLACEME EDITME</string>
     <string name="slide_variant_description">Stuff bout Variants EDITME</string>
     <string name="slide_arch_description">Funny stuff about architectures! EDITME</string>
     <string name="slide_android_description">You can select the android version here. EDITME</string>

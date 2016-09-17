@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.github.fcannizzaro.materialstepper.AbstractStep;
 import com.github.fcannizzaro.materialstepper.style.DotStepper;
-import com.github.fcannizzaro.materialstepper.style.TabStepper;
 
 import org.opengapps.opengapps.intro.GappsSelectionFragment;
 import org.opengapps.opengapps.intro.slideAndroidSelectorFragment;
@@ -25,6 +24,7 @@ public class Stepper extends DotStepper {
         addStep(createFragment(new slideVariantSelectionFragment()));
         super.onCreate(savedInstanceState);
         setSupportActionBar(getToolbar());
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

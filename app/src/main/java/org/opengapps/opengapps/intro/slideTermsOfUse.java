@@ -12,6 +12,7 @@ import com.github.fcannizzaro.materialstepper.AbstractStep;
 import org.opengapps.opengapps.R;
 
 
+@SuppressWarnings("ConstantConditions")
 public class slideTermsOfUse extends AbstractStep {
     @Override
     public String name() {

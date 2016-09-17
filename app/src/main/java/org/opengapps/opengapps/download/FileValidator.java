@@ -2,9 +2,7 @@ package org.opengapps.opengapps.download;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 
-import org.opengapps.opengapps.DownloadFragment;
 import org.opengapps.opengapps.InstallCard;
 
 import java.io.File;

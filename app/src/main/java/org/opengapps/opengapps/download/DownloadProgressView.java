@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.MessageQueue;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,8 +20,6 @@ import android.widget.TextView;
 
 import org.opengapps.opengapps.R;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 /**

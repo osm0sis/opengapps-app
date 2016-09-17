@@ -1,5 +1,6 @@
 package org.opengapps.opengapps;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -17,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +33,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
     private File gappsFile;
     private File md5File;
     private File versionLogFile;
+    private boolean checked = false;
     private boolean md5Exists;
     private boolean versionLogExists;
     private DownloadFragment deleteListener;
@@ -145,7 +146,8 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         } catch (FileNotFoundException e) {
             content = getResources().getString(R.string.file_not_found);
         }
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.versionlog_dialog, null);
+        //Passing null to the inflater is allowed when using AlertDialogs
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(getContext()).inflate(R.layout.versionlog_dialog, null);
         TextView text = (TextView) view.findViewById(R.id.versionlog_text);
         text.setText(content);
 
@@ -190,8 +192,13 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
     }
 
     public void checkMD5() {
-        findViewById(R.id.md5Progress).setVisibility(VISIBLE);
-        new FileValidator(this).execute(gappsFile.getAbsolutePath(), md5File.getAbsolutePath());
+        if (checked)
+            return;
+        checked = true;
+        if (md5Exists) {
+            findViewById(R.id.md5Progress).setVisibility(VISIBLE);
+            new FileValidator(this).execute(gappsFile.getAbsolutePath(), md5File.getAbsolutePath());
+        }
     }
 
     public void hashSuccess(Boolean matches) {

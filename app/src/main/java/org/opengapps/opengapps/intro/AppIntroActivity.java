@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -121,6 +120,7 @@ public class AppIntroActivity extends AppIntro2 {
             arch = Build.SUPPORTED_32_BIT_ABIS[0];
             x64 = Build.SUPPORTED_64_BIT_ABIS.length > 0;
         } else {
+            //noinspection deprecation
             arch = Build.CPU_ABI;
             x64 = false;
         }
