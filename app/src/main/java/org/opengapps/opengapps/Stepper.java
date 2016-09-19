@@ -11,6 +11,7 @@ import org.opengapps.opengapps.intro.GappsSelectionFragment;
 import org.opengapps.opengapps.intro.slideAndroidSelectorFragment;
 import org.opengapps.opengapps.intro.slideArchSelectorFragment;
 import org.opengapps.opengapps.intro.slideVariantSelectionFragment;
+import org.opengapps.opengapps.prefs.Preferences;
 
 public class Stepper extends DotStepper {
     private int i = 1;
@@ -51,7 +52,7 @@ public class Stepper extends DotStepper {
 
     @Override
     public void onComplete() {
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("firstStart", false);
         editor.putString("selection_android", GappsSelectionFragment.selectionAnd);

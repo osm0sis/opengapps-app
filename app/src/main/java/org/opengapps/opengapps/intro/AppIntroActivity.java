@@ -19,6 +19,7 @@ import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
 
 import org.opengapps.opengapps.R;
+import org.opengapps.opengapps.prefs.Preferences;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -103,7 +104,7 @@ public class AppIntroActivity extends AppIntro2 {
     }
 
     private void setInitialSettings() {
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         String arch;
@@ -165,7 +166,7 @@ public class AppIntroActivity extends AppIntro2 {
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("firstStart", false);
         editor.putString("selection_android", GappsSelectionFragment.selectionAnd);

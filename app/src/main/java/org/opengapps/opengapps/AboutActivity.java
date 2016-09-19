@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.opengapps.opengapps.prefs.Preferences;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,7 +57,7 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void initEasterEggFoundButton() {
-        boolean found = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE).getBoolean("eastereggFound", false);
+        boolean found = getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getBoolean("eastereggFound", false);
         if (found) {
             TextView easterEggFound = (TextView) findViewById(R.id.found_indicator);
             easterEggFound.setText(R.string.label_yes);
@@ -159,7 +161,7 @@ public class AboutActivity extends AppCompatActivity {
 
     private void intitSecretButton() {
         final ImageView logoLarge = (ImageView) findViewById(R.id.logo_large);
-        final SharedPreferences prefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+        final SharedPreferences prefs = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         logoLarge.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.github.fcannizzaro.materialstepper.AbstractStep;
 
 import org.opengapps.opengapps.R;
+import org.opengapps.opengapps.prefs.Preferences;
 
 
 @SuppressWarnings("ConstantConditions")
@@ -74,13 +75,13 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
         }
         loadRadioBoxes();
-        prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
     }
 
     protected abstract boolean isValid(String selection);
 
     private void loadRadioBoxes() {
-        SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         String defaultSelection;
         if (getSelection().equals(""))
             defaultSelection = prefs.getString(key, null);

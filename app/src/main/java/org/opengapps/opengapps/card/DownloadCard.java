@@ -19,6 +19,7 @@ import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.Stepper;
 import org.opengapps.opengapps.download.DownloadProgressView;
 import org.opengapps.opengapps.download.Downloader;
+import org.opengapps.opengapps.prefs.Preferences;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,12 +33,13 @@ public class DownloadCard extends CardView {
         super(context, attrs);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.download_card, this, true);
-        prefs = getContext().getSharedPreferences(getString(R.string.pref_name), Context.MODE_PRIVATE);
+        prefs = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
     }
 
     public void init(DownloadFragment fragment) {
         this.fragment = fragment;
-        setState(DownloadCardState.DISABLED);
+        if (!DownloadFragment.isRestored)
+            setState(DownloadCardState.DISABLED);
         initButtons();
         initSelections();
         restoreDownloadProgress();

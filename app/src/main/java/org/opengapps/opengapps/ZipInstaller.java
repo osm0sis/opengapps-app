@@ -9,6 +9,7 @@ import android.os.PowerManager;
 import android.widget.Toast;
 
 import org.opengapps.opengapps.download.Downloader;
+import org.opengapps.opengapps.prefs.Preferences;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,7 +25,7 @@ public class ZipInstaller {
 
     public ZipInstaller(Context context) {
         this.context = context;
-        prefs = context.getSharedPreferences(context.getString(R.string.pref_name), Context.MODE_PRIVATE);
+        prefs = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
     }
 
     public void installZip(File file) {
@@ -39,7 +40,6 @@ public class ZipInstaller {
                 String command = "cp " + f.getAbsolutePath() + " /cache/recovery/openrecoveryscript";
                 Shell.SU.run(command);
                 Shell.SU.run("reboot recovery");
-
             } catch (IOException ignored) {
             }
         } else {

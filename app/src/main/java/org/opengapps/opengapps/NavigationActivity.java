@@ -59,15 +59,15 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        final boolean isFirstStart = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE).getBoolean("firstStart", true);
-        if (!isFirstStart && AppUpdater.checkAllowed(getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE))) {
+        final boolean isFirstStart = getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getBoolean("firstStart", true);
+        if (!isFirstStart && AppUpdater.checkAllowed(getSharedPreferences(Preferences.prefName, MODE_PRIVATE))) {
             new AppUpdater().execute(this);
         }
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 //  Initialize SharedPreferences
-                SharedPreferences getPrefs = getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+                SharedPreferences getPrefs = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
 
                 //  Create a new boolean and preference and set it to true
                 //  If the activity has never started before...

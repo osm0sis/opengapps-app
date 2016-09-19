@@ -16,6 +16,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.DownloadFragment;
 import org.opengapps.opengapps.R;
+import org.opengapps.opengapps.prefs.Preferences;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -35,6 +36,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 @SuppressWarnings("ConstantConditions")
 public class Downloader extends AsyncTask<Void, Void, Long> {
+    private final static String downloadUrl = "https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip";
+    private final static String feedUrl = "https://github.com/opengapps/%arch/releases.atom";
+
     private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
     private static File lastFile;
@@ -48,19 +52,19 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
         analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
-        prefs = downloadFragment.getContext().getSharedPreferences(downloadFragment.getString(R.string.pref_name), MODE_PRIVATE);
+        prefs = downloadFragment.getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         this.architecture = prefs.getString("selection_arch", "arm");
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
         feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
-        urlString = downloadFragment.getString(R.string.feed_url).replace("%arch", architecture);
-        baseUrl = downloadFragment.getString(R.string.download_url);
+        urlString = feedUrl.replace("%arch", architecture);
+        baseUrl = downloadUrl;
         setLastFile(downloadFragment.getContext(), true);
     }
 
     public static void setLastFile(Context context, boolean fileExists) {
-        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         String architecture = prefs.getString("selection_arch", "arm").toLowerCase();
         String android = prefs.getString("selection_android", "").toLowerCase();
         String variant = prefs.getString("selection_variant", "").toLowerCase();
@@ -243,7 +247,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     public static String getDownloadedFile(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         String architecture = prefs.getString("selection_arch", null).toLowerCase();
         String android = prefs.getString("selection_android", null).toLowerCase();
         String variant = prefs.getString("selection_variant", null).toLowerCase();
@@ -254,7 +258,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     public static String getLastDownloadedTag(Context context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.pref_name), MODE_PRIVATE);
+            SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
             final String architecture = prefs.getString("selection_arch", null).toLowerCase();
             final String selection_android = prefs.getString("selection_android", null).toLowerCase();
             final String variant = prefs.getString("selection_variant", null).toLowerCase();

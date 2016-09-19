@@ -11,6 +11,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import org.opengapps.opengapps.card.InstallCard;
 import org.opengapps.opengapps.card.PermissionCard;
 import org.opengapps.opengapps.download.DownloadProgressView;
 import org.opengapps.opengapps.download.Downloader;
+import org.opengapps.opengapps.prefs.Preferences;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -38,6 +40,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 @SuppressWarnings("ConstantConditions")
 public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener, SwipeRefreshLayout.OnRefreshListener {
+    private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
+
     private Downloader downloader;
     private SharedPreferences prefs;
     private DownloadCard downloadCard;
@@ -45,24 +49,18 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private SwipeRefreshLayout refreshLayout;
     private boolean downloaderLoaded = false;
     private static HashMap<String, InstallCard> fileCards = new HashMap<>();
-    private static boolean isRestored = false;
+    public static boolean isRestored = false;
     private static String lastTag = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+        prefs = getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (downloader == null) {
-            initDownloader(isRestored);
-        }
-        if (!downloader.fileExists() && prefs.getLong("running_download_id", 0) == 0) {
-//            onDeleteFile();
-        }
         isRestored = true;
     }
 
@@ -89,7 +87,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onStart() {
         super.onStart();
-        downloadCard.init(this);
         if (!prefs.getBoolean("firstStart", true) && !downloaderLoaded) {
             initDownloader(isRestored);
             downloaderLoaded = true;
@@ -111,7 +108,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         refreshLayout.setOnRefreshListener(this);
         FirebaseAnalytics.getInstance(getContext());
         downloadAd = new InterstitialAd(getContext());
-        downloadAd.setAdUnitId(getString(R.string.download_interstitial));
+        downloadAd.setAdUnitId(interstitialAdId);
         requestAd();
         downloadAd.setAdListener(new AdListener() {
             @Override
@@ -120,10 +117,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             }
         });
 
-        prefs = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+        prefs = getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         downloadCard = (DownloadCard) getView().findViewById(R.id.download_card);
+        downloadCard.init(this);
 
         if (!prefs.getBoolean("firstStart", true))
             initPermissionCard();
@@ -162,24 +160,19 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        SharedPreferences preferences = getContext().getSharedPreferences(getString(R.string.pref_name), MODE_PRIVATE);
+        SharedPreferences preferences = getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         if (!preferences.getBoolean("firstStart", true)) {
             initPermissionCard();
             loadInstallCards();
         }
     }
 
-    /**
-     * Mostly handles special cases like change of GApps-Selection and firstRun-Behaviour
-     */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (s.contains("selection") || s.contains("last_downloaded"))
+        if (s.contains("selection")) {
             downloadCard.initSelections();
-        if (!prefs.getBoolean("firstStart", true)) {
-            if (s.equals("selection_android") || s.equals("selection_arch") || s.equals("selection_variant")) {
+            if (!prefs.getBoolean("firstStart", true))
                 updateSelection();
-            }
         }
         if (s.equals("firstStart")) {
             initDownloader(isRestored);
@@ -193,7 +186,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void updateSelection() {
         SharedPreferences.Editor editor = prefs.edit();
         String lastDL = Downloader.getLastDownloadedTag(getContext());
-        if (lastDL.equals(""))
+        if (TextUtils.isEmpty(lastDL))
             editor.remove("last_downloaded_tag").apply();
         else
             editor.putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
@@ -205,12 +198,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void loadInstallCards() {
         for (File file : findFiles()) {
             if (!fileCards.containsKey(file.getAbsolutePath())) {
-                fileCards.put(file.getAbsolutePath(), addInstallCard(file));
+                fileCards.put(file.getAbsolutePath(), createAndAddInstallCard(file));
             }
         }
     }
 
-    private InstallCard addInstallCard(File file) {
+    private InstallCard createAndAddInstallCard(File file) {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
         InstallCard card = new InstallCard(getContext());
         card.setDeleteListener(this);
@@ -299,7 +292,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onRefresh() {
-//        loadInstallCards();
+        loadInstallCards();
         downloader.new TagUpdater().execute();
     }
 

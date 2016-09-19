@@ -28,11 +28,8 @@
     <string name="label_architecture">Architecture</string>
     <string name="label_android" translatable="false">Android</string>
     <string name="label_variant">Variant</string>
-    <string name="download_url" translatable="false">https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip</string>
-    <string name="feed_url" translatable="false">https://github.com/opengapps/%arch/releases.atom</string>
     <string name="invalid_combo">Invalid combination</string>
     <string name="pref_header_gapps_selection">GApps-Selection</string>
-    <string name="pref_name" translatable="false">org.opengapps.opengapps_preferences</string>
     <string name="permission_granted">Permission granted! Thanks!</string>
     <string name="slide_android_description">You can select the Android version here. lol</string>
     <string name="slide_arch_description">Funny stuff about architectures!</string>
@@ -46,7 +43,6 @@
     <string name="update_available">Update available!</string>
     <string name="label_update">Update</string>
     <string name="label_cancel">Cancel</string>
-    <string name="download_interstitial" translatable="false">ca-app-pub-9489060368971640/9426486679</string>
     <string name="label_permission_denied">Permission denied</string>
     <string name="explanation_permission_denied">In order to work correctly you have to grant OpenGApps the permission to your external storage. Makes sense, doesn\'t it?</string>
     <string name="label_grant_permission">Grant Permission</string>
@@ -76,7 +72,6 @@
     <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead</string>
     <string name="label_change_selection">Change Selection</string>
     <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
-    <string name="url_app_version" translatable="false">http://192.168.178.26:8000/version.info</string>
     <string name="download_started">Download started</string>
     <string name="label_wiki">Open GApps Wiki</string>
     <string name="url_wiki" translatable="false">https://github.com/opengapps/opengapps/wiki</string>

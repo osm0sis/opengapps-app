@@ -12,6 +12,7 @@ import android.view.View;
 import org.opengapps.opengapps.R;
 
 public class Preferences extends AppCompatActivity {
+    public final static String prefName = "org.opengapps.opengapps_preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
