@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private final static String feedUrl = "https://github.com/opengapps/%arch/releases.atom";
 
     private final DownloadFragment downloadFragment;
+    private FragmentManager manager;
     private String architecture, android, variant, tag;
     private static File lastFile;
     private File feedFile;
@@ -51,6 +53,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
+        manager = downloadFragment.getFragmentManager();
         analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
         prefs = downloadFragment.getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
@@ -94,10 +97,11 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     @Override
     protected void onPostExecute(Long id) {
-        if (downloadFragment != null) {
-            DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
+        DownloadFragment fragment = (DownloadFragment) manager.findFragmentByTag(DownloadFragment.TAG);
+        if (fragment != null) {
+            DownloadProgressView progress = (DownloadProgressView) fragment.getView().findViewById(R.id.progress_view);
             progress.show(id, downloadFragment);
-            downloadFragment.downloadStarted(id, tag);
+            fragment.downloadStarted(id, tag);
         }
         prefs.edit().putBoolean("checkMissing", true).apply();
     }
@@ -118,22 +122,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     public static void setLastFile(File lastFile) {
         Downloader.lastFile = lastFile;
-    }
-
-    public class TagUpdater extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... voids) {
-            refreshFeed();
-            return parseFeed();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            logSelections();
-            tag = s;
-            if (downloadFragment != null && downloadFragment.isVisible())
-                downloadFragment.onTagUpdated();
-        }
     }
 
     private void logSelections() {
@@ -283,5 +271,21 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             }
         }
         return "";
+    }
+
+    public class TagUpdater extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            refreshFeed();
+            return parseFeed();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            logSelections();
+            tag = s;
+            if (downloadFragment != null && downloadFragment.isVisible())
+                downloadFragment.onTagUpdated();
+        }
     }
 }

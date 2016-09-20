@@ -187,9 +187,12 @@ public class NavigationActivity extends AppCompatActivity
 
 
     private void showFragment(Fragment fragment) {
+        String tag = null;
+        if(fragment instanceof DownloadFragment)
+            tag = DownloadFragment.TAG;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.replaceme, fragment).commit();
+        transaction.replace(R.id.replaceme, fragment, tag).commit();
         fragmentManager.executePendingTransactions();
     }
 

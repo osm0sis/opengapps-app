@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -41,6 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
 @SuppressWarnings("ConstantConditions")
 public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener, SwipeRefreshLayout.OnRefreshListener {
     private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
+    public final static String TAG = "downloadFragment";
 
     private Downloader downloader;
     private SharedPreferences prefs;
@@ -61,6 +61,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onResume() {
         super.onResume();
+        loadInstallCards();
         isRestored = true;
     }
 
@@ -125,7 +126,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
         if (!prefs.getBoolean("firstStart", true))
             initPermissionCard();
-        loadInstallCards();
     }
 
     private void requestAd() {
@@ -206,14 +206,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private InstallCard createAndAddInstallCard(File file) {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
         InstallCard card = new InstallCard(getContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), 0);
         card.setDeleteListener(this);
         card.setFile(file);
-        card.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) card.getLayoutParams();
-        params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), 0);
-        card.setLayoutParams(params);
         card.setVisibility(View.VISIBLE);
-        layout.addView(card, layout.getChildCount() - 1);
+        layout.addView(card, layout.getChildCount() - 1, params);
         return card;
     }
 
@@ -225,7 +223,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         FilenameFilter filter = new FilenameFilter() {
             @Override
             public boolean accept(File file, String name) {
-                return name.startsWith("open_gapps-") && name.endsWith(".zip");
+                boolean nameFits = name.startsWith("open_gapps-") && name.endsWith(".zip");
+                boolean isCurrentDownload = name.contains(prefs.getString("selection_arch", "unset").toLowerCase()) && name.contains(prefs.getString("selection_android", "unset")) && name.contains(prefs.getString("selection_variant", "unset").toLowerCase()) && name.contains(prefs.getString("running_download_tag", "unset"));
+                return nameFits && !isCurrentDownload;
             }
         };
 
@@ -265,7 +265,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         loadInstallCards();
         if (prefs.getBoolean("checkMissing", false)) {
             prefs.edit().remove("checkMissing").apply();
-            fileCards.get(filePath).checkMD5();
+            InstallCard fileCard = fileCards.get(filePath);
+            if (fileCard != null)
+                fileCard.checkMD5();
         }
     }
 
@@ -299,6 +301,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void showAd() {
         if (downloadAd.isLoaded())
             downloadAd.show();
+    }
+
+    public InstallCard getInstallCard(String path) {
+        return fileCards.get(path);
     }
 
     public Downloader getDownloader() {

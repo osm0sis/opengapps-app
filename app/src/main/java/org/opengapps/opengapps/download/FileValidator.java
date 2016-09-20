@@ -1,8 +1,9 @@
 package org.opengapps.opengapps.download;
 
-import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentManager;
 
+import org.opengapps.opengapps.DownloadFragment;
 import org.opengapps.opengapps.card.InstallCard;
 
 import java.io.File;
@@ -13,17 +14,16 @@ import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class FileValidator extends AsyncTask<String, Void, Boolean> {
-    private final InstallCard installCard;
-    private Context context;
+    private String filePath;
+    private FragmentManager fragmentManager;
 
     public FileValidator(InstallCard installCard) {
-        this.installCard = installCard;
-        this.context = installCard.getContext();
+        fragmentManager = installCard.getActivity().getSupportFragmentManager();
+        filePath = installCard.getGappsFile().getAbsolutePath();
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
-        context.getFilesDir();
         File f = new File(params[1]);
         String expectedHash = getMD5(f);
         String actualHash = fileToMD5(params[0]);
@@ -43,7 +43,12 @@ public class FileValidator extends AsyncTask<String, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
-        installCard.hashSuccess(aBoolean);
+        DownloadFragment fragment = (DownloadFragment) fragmentManager.findFragmentByTag(DownloadFragment.TAG);
+        if (fragment != null && fragment.isAdded()) {
+            InstallCard card = fragment.getInstallCard(filePath);
+            if (card != null && card.isAttachedToWindow())
+                card.hashSuccess(aBoolean);
+        }
     }
 
     private static String fileToMD5(String filePath) {

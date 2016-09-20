@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
@@ -213,5 +215,20 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             findViewById(R.id.md5_failure).setVisibility(VISIBLE);
         if (deleteListener != null)
             deleteListener.hashSuccess(matches);
+    }
+
+    public File getGappsFile() {
+        return gappsFile;
+    }
+
+    public AppCompatActivity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof AppCompatActivity) {
+                return (AppCompatActivity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
     }
 }

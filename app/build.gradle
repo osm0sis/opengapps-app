@@ -22,6 +22,12 @@ android {
         }
         debug {
         }
+        staging {
+            initWith(debug)
+            minifyEnabled true
+            shrinkResources true
+
+        }
     }
 }
 
