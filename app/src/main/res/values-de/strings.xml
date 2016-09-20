@@ -18,7 +18,7 @@
     <string name="label_update">Update</string>
     <string name="label_cancel">Abbrechen</string>
     <string name="label_permission_denied">Berechtigung verweigert</string>
-    <string name="explanation_permission_denied">Damit OpenGApps korrekt funktioniert, muss die Speicher-Berechtigung gewährt werden. Eigentlich logisch, oder?</string>
+    <string name="explanation_permission_denied">Damit Open GApps korrekt funktioniert, muss die Speicher-Berechtigung gewährt werden. Eigentlich logisch, oder?</string>
     <string name="label_grant_permission">Berechtigung erteilen</string>
     <string name="title_activity_about">Über</string>
     <string name="navigation_drawer_close">Öfnne Navigation</string>
@@ -45,7 +45,7 @@
     <string name="label_support_chat">Support Chat</string>
     <string name="label_report_bug">Fehler melden</string>
     <string name="label_support">Support</string>
-    <string name="label_easteregg_found">Easteregg gefunden</string>
+    <string name="label_easteregg_found">Easter egg gefunden</string>
     <string name="label_no">Nein</string>
     <string name="label_yes">Ja</string>
     <string name="label_download_package">Paket herunterladen</string>
@@ -53,7 +53,7 @@
     <string name="label_delete">Löschen</string>
     <string name="appintro_introslide_title">Willkommen bei der offiziellen OpenGApps.org App</string>
     <string name="appintro_storageperm_title">Dateizugriff-Berechtigung</string>
-    <string name="appintro_storageperm_explain">Um ein OpenGApps-Paket herunterzuladen, muss die Berechtigung für den Speicher erteilt werden</string>
+    <string name="appintro_storageperm_explain">Um ein Open GApps-Paket herunterzuladen, muss die Berechtigung für den Speicher erteilt werden</string>
     <string name="appintro_root_title">Root Berechtigung</string>
     <string name="label_accept">Akzeptieren</string>
     <string name="label_accepted">Akzeptiert</string>

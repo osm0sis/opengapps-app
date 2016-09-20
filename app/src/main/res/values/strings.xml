@@ -44,7 +44,7 @@
     <string name="label_update">Update</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_permission_denied">Permission denied</string>
-    <string name="explanation_permission_denied">In order to work correctly you have to grant OpenGApps the permission to your external storage. Makes sense, doesn\'t it?</string>
+    <string name="explanation_permission_denied">In order to work correctly you have to grant Open GApps the permission to your external storage. Makes sense, doesn\'t it?</string>
     <string name="label_grant_permission">Grant Permission</string>
     <string name="title_activity_about">About</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -80,11 +80,11 @@
     <string name="label_report_bug">Report Bug</string>
     <string name="url_report_bug" translatable="false">https://github.com/opengapps/opengapps-app-support/issues</string>
     <string name="label_support">Support</string>
-    <string name="label_easteregg_found">Easteregg found</string>
+    <string name="label_easteregg_found">Easter egg found</string>
     <string name="label_no">No</string>
     <string name="label_yes">Yes</string>
     <string name="label_website" translatable="false">OpenGApps.org</string>
-    <string name="label_download_package">Download package</string>
+    <string name="label_download_package">Download Package</string>
     <string name="label_install_package">Install package</string>
     <string name="label_delete">Delete</string>
     <string name="url_main_dev" translatable="false">https://github.com/beatbrot/</string>
@@ -102,18 +102,18 @@
     <string name="url_support_forum" translatable="false">http://forum.xda-developers.com/android/software/Open-GApps-t3098071</string>
     <string name="url_download_update" translatable="false">http://opengapps.org/app</string>
     <string name="label_download_md5">Download MD5</string>
-    <string name="explanation_download_md5">Download the MD5-Checksum to avoid download-failures</string>
-    <string name="explanation_download_versionlog">Download the versionlog to see the new APKs in the GApps-Package</string>
-    <string name="label_download_versionlog">Download Versionlog</string>
+    <string name="explanation_download_md5">Download MD5-Checksum to verify package integrity</string>
+    <string name="explanation_download_versionlog">Download VersionLog to inspect package\'s content</string>
+    <string name="label_download_versionlog">Download VersionLog</string>
     <string name="ms_prev">Previous</string>
     <string name="ms_next">Next</string>
     <string name="ms_end">Complete</string>
     <string name="label_md5_checksum">MD5-Checksum</string>
     <string name="label_copy_checksum">Copy Checksum</string>
     <string name="file_not_found">File not found</string>
-    <string name="label_versionlog">Versionlog</string>
+    <string name="label_versionlog">VersionLog</string>
     <string name="label_show_md5">Show MD5-Checksum</string>
-    <string name="label_show_versionlog">Show Versionlog</string>
+    <string name="label_show_versionlog">Show VersionLog</string>
     <string name="label_share">Share</string>
     <string name="label_close">Close</string>
 </resources>
