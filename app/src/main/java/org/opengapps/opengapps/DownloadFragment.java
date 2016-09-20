@@ -1,13 +1,13 @@
 package org.opengapps.opengapps;
 
 import android.Manifest;
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -39,23 +39,22 @@ import static android.content.Context.MODE_PRIVATE;
 
 @SuppressWarnings("ConstantConditions")
 public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener, SwipeRefreshLayout.OnRefreshListener {
-    private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
     public final static String TAG = "downloadFragment";
-
+    private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
+    public static boolean isRestored = false;
+    private static HashMap<String, InstallCard> fileCards = new HashMap<>();
+    private static String lastTag = "";
     private Downloader downloader;
     private SharedPreferences prefs;
     private DownloadCard downloadCard;
     private InterstitialAd downloadAd;
     private SwipeRefreshLayout refreshLayout;
     private boolean downloaderLoaded = false;
-    private static HashMap<String, InstallCard> fileCards = new HashMap<>();
-    public static boolean isRestored = false;
-    private static String lastTag = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             }
             fileCards.remove(gappsFile.getAbsolutePath());
         }
-        prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
+        prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getActivity())).apply();
         initDownloader(false);
     }
 
@@ -104,11 +103,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         refreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.dl_refresher);
-        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
 
         refreshLayout.setOnRefreshListener(this);
-        FirebaseAnalytics.getInstance(getContext());
-        downloadAd = new InterstitialAd(getContext());
+        FirebaseAnalytics.getInstance(getActivity());
+        downloadAd = new InterstitialAd(getActivity());
         downloadAd.setAdUnitId(interstitialAdId);
         requestAd();
         downloadAd.setAdListener(new AdListener() {
@@ -118,7 +117,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             }
         });
 
-        prefs = getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         downloadCard = (DownloadCard) getView().findViewById(R.id.download_card);
@@ -160,7 +159,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        SharedPreferences preferences = getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        SharedPreferences preferences = getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         if (!preferences.getBoolean("firstStart", true)) {
             initPermissionCard();
             loadInstallCards();
@@ -185,12 +184,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      */
     private void updateSelection() {
         SharedPreferences.Editor editor = prefs.edit();
-        String lastDL = Downloader.getLastDownloadedTag(getContext());
+        String lastDL = Downloader.getLastDownloadedTag(getActivity());
         if (TextUtils.isEmpty(lastDL))
             editor.remove("last_downloaded_tag").apply();
         else
-            editor.putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
-        Downloader.setLastFile(getContext(), false);
+            editor.putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getActivity())).apply();
+        Downloader.setLastFile(getActivity(), false);
         lastTag = "";
         initDownloader(false);
     }
@@ -205,7 +204,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     private InstallCard createAndAddInstallCard(File file) {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
-        InstallCard card = new InstallCard(getContext());
+        InstallCard card = new InstallCard(getActivity());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), 0);
         card.setDeleteListener(this);
@@ -216,7 +215,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private File[] findFiles() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
             return new File[]{};
         File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
 
@@ -224,8 +223,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             @Override
             public boolean accept(File file, String name) {
                 boolean nameFits = name.startsWith("open_gapps-") && name.endsWith(".zip");
-                boolean isCurrentDownload = name.contains(prefs.getString("selection_arch", "unset").toLowerCase()) && name.contains(prefs.getString("selection_android", "unset")) && name.contains(prefs.getString("selection_variant", "unset").toLowerCase()) && name.contains(prefs.getString("running_download_tag", "unset"));
-                return nameFits && !isCurrentDownload;
+                return nameFits;
             }
         };
 
@@ -236,13 +234,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private int dpToPx(@SuppressWarnings("SameParameterValue") int dp) {
-        final float scale = getContext().getResources().getDisplayMetrics().density;
+        final float scale = getActivity().getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }
 
     public void onTagUpdated() {
         lastTag = downloader.getTag();
-        prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getContext())).apply();
+        prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getActivity())).apply();
         refreshLayout.setRefreshing(false);
         downloadCard.onTagUpdated(lastTag);
 
@@ -286,7 +284,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 prefs.edit().putString("last_downloaded_tag", tag).apply();
             onTagUpdated();
         } else {
-            Toast.makeText(getContext(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
         loadInstallCards();
         downloadCancelled();

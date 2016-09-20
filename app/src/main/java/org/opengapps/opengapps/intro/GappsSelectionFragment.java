@@ -94,7 +94,6 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         for (String item : items) {
             RadioButton radioButton = new RadioButton(getActivity());
             radioButton.setText(item);
-//            radioButton.setTextColor(Color.parseColor("#ffffff"));
             if (defaultSelection.toLowerCase().equals(item.toLowerCase())) {
                 radioButton.setChecked(true);
                 setSelection(defaultSelection);

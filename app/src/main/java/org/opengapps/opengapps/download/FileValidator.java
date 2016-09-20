@@ -1,7 +1,7 @@
 package org.opengapps.opengapps.download;
 
+import android.app.FragmentManager;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentManager;
 
 import org.opengapps.opengapps.DownloadFragment;
 import org.opengapps.opengapps.card.InstallCard;
@@ -18,7 +18,7 @@ public class FileValidator extends AsyncTask<String, Void, Boolean> {
     private FragmentManager fragmentManager;
 
     public FileValidator(InstallCard installCard) {
-        fragmentManager = installCard.getActivity().getSupportFragmentManager();
+        fragmentManager = installCard.getActivity().getFragmentManager();
         filePath = installCard.getGappsFile().getAbsolutePath();
     }
 

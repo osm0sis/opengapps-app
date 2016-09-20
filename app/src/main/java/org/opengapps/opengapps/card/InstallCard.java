@@ -1,6 +1,7 @@
 package org.opengapps.opengapps.card;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -11,7 +12,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
@@ -221,11 +221,11 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         return gappsFile;
     }
 
-    public AppCompatActivity getActivity() {
+    public Activity getActivity() {
         Context context = getContext();
         while (context instanceof ContextWrapper) {
-            if (context instanceof AppCompatActivity) {
-                return (AppCompatActivity) context;
+            if (context instanceof Activity) {
+                return (Activity) context;
             }
             context = ((ContextWrapper) context).getBaseContext();
         }
