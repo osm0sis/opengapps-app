@@ -2,6 +2,7 @@ package org.opengapps.opengapps.download;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -31,6 +32,7 @@ import java.util.Arrays;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -41,6 +43,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
+    private FragmentManager manager;
     private static File lastFile;
     private File feedFile;
     private String urlString;
@@ -51,16 +54,17 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
-        analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
-        prefs = downloadFragment.getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
-        downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        manager = downloadFragment.getFragmentManager();
+        analytics = FirebaseAnalytics.getInstance(downloadFragment.getActivity());
+        prefs = downloadFragment.getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        downloadManager = (DownloadManager) downloadFragment.getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
         this.architecture = prefs.getString("selection_arch", "arm");
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
-        feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
+        feedFile = new File(downloadFragment.getActivity().getFilesDir(), "gapps_feed.xml");
         urlString = feedUrl.replace("%arch", architecture);
         baseUrl = downloadUrl;
-        setLastFile(downloadFragment.getContext(), true);
+        setLastFile(downloadFragment.getActivity(), true);
     }
 
     public static void setLastFile(Context context, boolean fileExists) {
@@ -81,7 +85,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     protected void onPreExecute() {
         super.onPreExecute();
         if (downloadFragment != null)
-            Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
+            Toast.makeText(downloadFragment.getActivity(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -94,10 +98,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     @Override
     protected void onPostExecute(Long id) {
-        if (downloadFragment != null) {
-            DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
-            progress.show(id, downloadFragment);
-            downloadFragment.downloadStarted(id, tag);
+        DownloadFragment fragment = (DownloadFragment) manager.findFragmentByTag(DownloadFragment.TAG);
+
+        if (fragment != null) {
+            DownloadProgressView progress = (DownloadProgressView) fragment.getView().findViewById(R.id.progress_view);
+            progress.show(id, fragment);
+            fragment.downloadStarted(id, tag);
         }
         prefs.edit().putBoolean("checkMissing", true).apply();
     }
@@ -184,7 +190,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
 
             FileWriter fileWriter = new FileWriter(feedFile, false);
-            fileWriter.write(response.body().string());
+            ResponseBody body = response.body();
+            fileWriter.write(body.string());
+            body.close();
             fileWriter.close();
         } catch (IOException ignored) {
         }
@@ -243,7 +251,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
 
     public boolean fileExists() {
-        return !getLastDownloadedTag(downloadFragment.getContext()).equals("");
+        return !getLastDownloadedTag(downloadFragment.getActivity()).equals("");
     }
 
     public static String getDownloadedFile(Context context) {

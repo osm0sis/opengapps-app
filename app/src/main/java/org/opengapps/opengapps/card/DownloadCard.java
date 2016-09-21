@@ -111,6 +111,8 @@ public class DownloadCard extends CardView {
         TextView header = (TextView) findViewById(R.id.headline_download);
         Button downloadButton = (Button) findViewById(R.id.download_button);
 
+        initDownloadButton();
+
         switch (state) {
             case NORMAL:
                 header.setText(getString(R.string.label_download_package));

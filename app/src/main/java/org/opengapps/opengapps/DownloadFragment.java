@@ -42,7 +42,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public final static String TAG = "downloadFragment";
     private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
     public static boolean isRestored = false;
-    private static HashMap<String, InstallCard> fileCards = new HashMap<>();
+    private HashMap<String, InstallCard> fileCards = new HashMap<>();
     private static String lastTag = "";
     private Downloader downloader;
     private SharedPreferences prefs;
@@ -203,15 +203,25 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private InstallCard createAndAddInstallCard(File file) {
-        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+        InstallCard card = createInstallCard(file);
+        addInstallCard(card);
+        return card;
+    }
+
+    private InstallCard createInstallCard(File file) {
         InstallCard card = new InstallCard(getActivity());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), 0);
         card.setDeleteListener(this);
         card.setFile(file);
         card.setVisibility(View.VISIBLE);
-        layout.addView(card, layout.getChildCount() - 1, params);
         return card;
+    }
+
+    private void addInstallCard(InstallCard installCard) {
+        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), 0);
+        installCard.setVisibility(View.VISIBLE);
+        layout.addView(installCard, layout.getChildCount() - 1, params);
     }
 
     private File[] findFiles() {
@@ -286,7 +296,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         } else {
             Toast.makeText(getActivity(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
-        loadInstallCards();
         downloadCancelled();
     }
 
