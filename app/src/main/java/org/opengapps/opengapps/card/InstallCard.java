@@ -231,4 +231,8 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         }
         return null;
     }
+
+    public boolean exists(){
+        return gappsFile.exists();
+    }
 }

@@ -61,6 +61,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onResume() {
         super.onResume();
         loadInstallCards();
+        Downloader.deleteOldFiles(getActivity());
         isRestored = true;
     }
 
@@ -195,6 +196,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private void loadInstallCards() {
+        for (InstallCard card : fileCards.values()) {
+            if (!card.exists()) {
+                ((LinearLayout) getView().findViewById(R.id.main_layout)).removeView(card);
+                onDeleteFile(card.getGappsFile());
+                fileCards.remove(card.getGappsFile().getAbsolutePath());
+            }
+        }
         for (File file : findFiles()) {
             if (!fileCards.containsKey(file.getAbsolutePath())) {
                 fileCards.put(file.getAbsolutePath(), createAndAddInstallCard(file));
@@ -240,7 +248,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         File[] files = downloadDir.listFiles(filter);
         Arrays.sort(files);
         return files;
-
     }
 
     private int dpToPx(@SuppressWarnings("SameParameterValue") int dp) {
@@ -271,6 +278,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void downloadSuccessful(String filePath) {
         loadInstallCards();
+        if (prefs.getBoolean("download_delete_old_files", true))
+            Downloader.deleteOldFiles(getActivity());
         if (prefs.getBoolean("checkMissing", false)) {
             prefs.edit().remove("checkMissing").apply();
             InstallCard fileCard = fileCards.get(filePath);

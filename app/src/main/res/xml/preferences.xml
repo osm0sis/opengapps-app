@@ -13,6 +13,11 @@
             android:title="@string/label_download_dir" />
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="download_delete_old_files"
+            android:summary="Delete the old files if dl a new one"
+            android:title="Only keep newest version" />
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="download_md5"
             android:summary="@string/explanation_download_md5"
             android:title="@string/label_download_md5" />
@@ -23,7 +28,6 @@
             android:title="@string/label_download_versionlog" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Flashing">
-
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="wipe_cache"

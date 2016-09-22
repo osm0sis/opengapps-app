@@ -81,6 +81,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             lastFile = null;
     }
 
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -124,6 +125,28 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     public static void setLastFile(File lastFile) {
         Downloader.lastFile = lastFile;
+    }
+
+    public static void deleteOldFiles(Context context) {
+        final SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+            return;
+        File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
+        FilenameFilter filter = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                boolean nameFits = name.startsWith("open_gapps-") && name.endsWith(".zip");
+                boolean isCurrentSelection = name.contains(prefs.getString("selection_android", "unset")) && name.contains(prefs.getString("selection_arch", "unset").toLowerCase()) && name.contains(prefs.getString("selection_variant", "unset"));
+                return nameFits && isCurrentSelection;
+            }
+        };
+
+        File[] files = downloadDir.listFiles(filter);
+        Arrays.sort(files);
+        for (int i = 0; i < files.length - 1; i++) {
+            //noinspection ResultOfMethodCallIgnored
+            files[i].delete();
+        }
     }
 
     public class TagUpdater extends AsyncTask<Void, Void, String> {
@@ -199,10 +222,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private long doDownload(Uri uri) {
-        if (lastFile != null) {
-            //noinspection ResultOfMethodCallIgnored
-            lastFile.delete();
-        }
         DownloadManager.Request request = new DownloadManager.Request(uri);
         String title = "open_gapps" + "-" + architecture.toLowerCase() + "-" + android.toLowerCase() + "-" + variant.toLowerCase() + "-" + tag.toLowerCase();
         request.setTitle(title);
