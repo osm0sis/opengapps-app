@@ -59,9 +59,8 @@ public class NavigationActivity extends Activity
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         final boolean isFirstStart = getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getBoolean("firstStart", true);
-        if (!isFirstStart && AppUpdater.checkAllowed(getSharedPreferences(Preferences.prefName, MODE_PRIVATE))) {
+        if (!isFirstStart && AppUpdater.checkAllowed(getSharedPreferences(Preferences.prefName, MODE_PRIVATE)))
             new AppUpdater().execute(this);
-        }
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -192,7 +191,6 @@ public class NavigationActivity extends Activity
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.replaceme, fragment, tag).commit();
-        fragmentManager.executePendingTransactions();
     }
 
 }

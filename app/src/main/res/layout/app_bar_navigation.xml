@@ -27,8 +27,6 @@
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 
-    <!--<include layout="@layout/content_navigation" />-->
-
     <FrameLayout
         android:id="@+id/replaceme"
         android:layout_width="match_parent"
