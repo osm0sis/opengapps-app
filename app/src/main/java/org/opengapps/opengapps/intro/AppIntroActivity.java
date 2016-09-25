@@ -68,13 +68,17 @@ public class AppIntroActivity extends AppIntro2 {
             }
             if (newFragment instanceof GappsSelectionFragment)
                 ((GappsSelectionFragment) newFragment).onStepVisible();
+            if (oldFragment instanceof GappsSelectionFragment)
+                ((GappsSelectionFragment) oldFragment).saveSelections();
         }
     }
 
-    public void onTermsAccepted(Button termButton){
+    public void onTermsAccepted(Button termButton) {
         termButton.setText(R.string.label_accepted);
         setNextPageSwipeLock(false);
         termButton.setEnabled(false);
+
+        onNextPressed();
         termsAccepted = true;
     }
 
@@ -104,63 +108,9 @@ public class AppIntroActivity extends AppIntro2 {
     }
 
     private void setInitialSettings() {
-        SharedPreferences sharedPref = getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
-        String arch;
-        boolean x64;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            arch = Build.SUPPORTED_32_BIT_ABIS[0];
-            x64 = Build.SUPPORTED_64_BIT_ABIS.length > 0;
-        } else {
-            //noinspection deprecation
-            arch = Build.CPU_ABI;
-            x64 = false;
-        }
-        if (!sharedPref.contains("selection_arch")) {
-            String[] architectures = getResources().getStringArray(R.array.architectures);
-            if (arch.contains("arm")) {
-                if (!x64) {
-                    editor.putString("selection_arch", architectures[0]); //arm
-                } else {
-                    editor.putString("selection_arch", architectures[1]); //arm64
-                }
-            } else if (arch.contains("86")) {
-                if (!x64)
-                    editor.putString("selection_arch", architectures[2]); //x86
-                else
-                    editor.putString("selection_arch", architectures[3]); //x86x64
-            } else
-                editor.putString("selection_arch", architectures[0]); //Default to arm
-        }
-
-        if (!sharedPref.contains("selection_android")) {
-            String[] androidVersion = getResources().getStringArray(R.array.android_versions);
-            switch (Build.VERSION.SDK_INT) {
-                case 19:
-                    editor.putString("selection_android", androidVersion[0]);//KitKat-Device
-                    break;
-                case 21:
-                    editor.putString("selection_android", androidVersion[1]);//Lollipop-5.0-Device
-                    break;
-                case 22:
-                    editor.putString("selection_android", androidVersion[2]);//Lollipop-5.1-Device
-                    break;
-                case 23:
-                    editor.putString("selection_android", androidVersion[3]);//Marshmallow-Device
-                    break;
-                case 24:
-                    editor.putString("selection_android", androidVersion[4]);//Nougat-Device
-                    break;
-                default:
-                    editor.putString("selection_android", androidVersion[androidVersion.length - 1]); //Default to latest
-            }
-        }
-
-        if (!sharedPref.contains("selection_variant"))
-            editor.putString("selection_variant", "stock");
-
-        editor.apply();
+        GappsSelectionFragment.selectionArch = PackageGuesser.getArch(getBaseContext());
+        GappsSelectionFragment.selectionAnd = PackageGuesser.getAndroidVersion(getBaseContext());
+        GappsSelectionFragment.selectionVariant = PackageGuesser.getVariant(getBaseContext());
     }
 
 
@@ -173,6 +123,7 @@ public class AppIntroActivity extends AppIntro2 {
         editor.putString("selection_variant", GappsSelectionFragment.selectionVariant);
         editor.putString("selection_arch", GappsSelectionFragment.selectionArch);
         editor.apply();
+        setResult(2);
         finish();
     }
 

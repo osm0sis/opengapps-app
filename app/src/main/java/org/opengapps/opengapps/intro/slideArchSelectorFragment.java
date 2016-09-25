@@ -1,6 +1,7 @@
 package org.opengapps.opengapps.intro;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 
 import org.opengapps.opengapps.R;
 
@@ -27,4 +28,8 @@ public class slideArchSelectorFragment extends GappsSelectionFragment {
         GappsSelectionFragment.selectionArch = selection;
     }
 
+    @Override
+    public String getGuessedSelection(Context context) {
+        return PackageGuesser.getArch(getContext());
+    }
 }

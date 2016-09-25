@@ -27,11 +27,11 @@ import org.opengapps.opengapps.prefs.Preferences;
 public class NavigationActivity extends Activity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public final static int EXIT_CODE = 1;
+    public static boolean forcedUpdate = false;
     private DownloadFragment downloadFragment;
     private Toolbar toolbar;
     private NavigationView navigationView;
-    public final static int EXIT_CODE = 1;
-    public static boolean forcedUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +119,9 @@ public class NavigationActivity extends Activity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EXIT_CODE && resultCode == 1)
             finish();
+        else if (requestCode == EXIT_CODE && resultCode == 2)
+            if (downloadFragment != null && downloadFragment.isVisible())
+                downloadFragment.initDownloader(false);
     }
 
     @Override

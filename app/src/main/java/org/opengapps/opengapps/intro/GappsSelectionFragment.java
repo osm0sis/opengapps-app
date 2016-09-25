@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +24,15 @@ import org.opengapps.opengapps.prefs.Preferences;
 
 @SuppressWarnings("ConstantConditions")
 public abstract class GappsSelectionFragment extends AbstractStep implements RadioGroup.OnCheckedChangeListener {
+    public static String selectionArch = "";
+    public static String selectionAnd = "";
+    public static String selectionVariant = "";
     private final int title;
     private final int description;
     private final String key;
     private final int stringArray;
-    public static String selectionArch = "";
-    public static String selectionAnd = "";
-    public static String selectionVariant = "";
     private RadioGroup group;
     private SparseArray<RadioButton> buttons;
-    private SharedPreferences prefs;
 
     public GappsSelectionFragment(int title, int description, String key, int stringArray) {
         this.title = title;
@@ -47,6 +48,8 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             loadRadioBoxes();
         }
     }
+
+    public abstract String getGuessedSelection(Context context);
 
     @Override
     public String name() {
@@ -75,7 +78,6 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
         }
         loadRadioBoxes();
-        prefs = getActivity().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
     }
 
     protected abstract boolean isValid(String selection);
@@ -94,6 +96,10 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         for (String item : items) {
             RadioButton radioButton = new RadioButton(getActivity());
             radioButton.setText(item);
+            if (getGuessedSelection(getContext()).toLowerCase().equals(item.toLowerCase()) && !(this instanceof slideVariantSelectionFragment)) {
+                Spanned spanned = Html.fromHtml(radioButton.getText() + " <i>(detected)</i>");
+                radioButton.setText(spanned);
+            }
             if (defaultSelection.toLowerCase().equals(item.toLowerCase())) {
                 radioButton.setChecked(true);
                 setSelection(defaultSelection);
@@ -111,7 +117,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
 
     private void checkIfValid() {
         RadioButton selectedButton = buttons.get(group.getCheckedRadioButtonId());
-        if (selectedButton.isChecked() && !selectedButton.isEnabled())
+        if (selectedButton != null && selectedButton.isChecked() && !selectedButton.isEnabled())
             for (int i = 0; i < buttons.size(); i++) {
                 int key = buttons.keyAt(i);
                 // get the object by the key.
@@ -127,8 +133,13 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        setSelection(buttons.get(group.getCheckedRadioButtonId()).getText().toString());
+        String text = buttons.get(group.getCheckedRadioButtonId()).getText().toString();
+        if (text.contains(" "))
+            text = text.substring(0, text.indexOf(" "));
+        setSelection(text);
     }
 
-
+    public void saveSelections() {
+        onCheckedChanged(null, 0);
+    }
 }

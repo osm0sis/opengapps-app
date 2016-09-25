@@ -51,6 +51,7 @@ public class slideTermsOfUse extends AbstractStep {
                 params.putString(FirebaseAnalytics.Param.VALUE, "accept");
                 analytics.logEvent("terms_of_service", params);
                 ((AppIntroActivity)getActivity()).onTermsAccepted((Button) v);
+                onNext();
             }
         });
     }

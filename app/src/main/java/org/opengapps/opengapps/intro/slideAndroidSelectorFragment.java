@@ -1,5 +1,7 @@
 package org.opengapps.opengapps.intro;
 
+import android.content.Context;
+
 import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.SelectionValidator;
 
@@ -22,6 +24,12 @@ public class slideAndroidSelectorFragment extends GappsSelectionFragment {
 
     @Override
     public void setSelection(String selection) {
+        selection = selection.replace(" <i>(detected)</i>", "");
         GappsSelectionFragment.selectionAnd = selection;
+    }
+
+    @Override
+    public String getGuessedSelection(Context context) {
+        return PackageGuesser.getAndroidVersion(context);
     }
 }

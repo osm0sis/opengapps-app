@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.card.DownloadCard;
 import org.opengapps.opengapps.card.InstallCard;
@@ -42,8 +41,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public final static String TAG = "downloadFragment";
     private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
     public static boolean isRestored = false;
-    private HashMap<String, InstallCard> fileCards = new HashMap<>();
     private static String lastTag = "";
+    private HashMap<String, InstallCard> fileCards = new HashMap<>();
     private Downloader downloader;
     private SharedPreferences prefs;
     private DownloadCard downloadCard;
@@ -107,7 +106,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
 
         refreshLayout.setOnRefreshListener(this);
-        FirebaseAnalytics.getInstance(getActivity());
         downloadAd = new InterstitialAd(getActivity());
         downloadAd.setAdUnitId(interstitialAdId);
         requestAd();
@@ -142,7 +140,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         downloadAd.loadAd(request);
     }
 
-    private void initDownloader(boolean isRestored) {
+    public void initDownloader(boolean isRestored) {
         downloader = new Downloader(this);
         if (!isRestored) {
             downloader.new TagUpdater().execute();

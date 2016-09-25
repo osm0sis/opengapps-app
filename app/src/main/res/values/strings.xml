@@ -8,11 +8,11 @@
         <item>x86_64</item>
     </string-array>
     <string-array name="android_versions" tools:ignore="MissingTranslation">
-        <item>4.4</item>
-        <item>5.0</item>
-        <item>5.1</item>
-        <item>6.0</item>
         <item>7.0</item>
+        <item>6.0</item>
+        <item>5.1</item>
+        <item>5.0</item>
+        <item>4.4</item>
     </string-array>
     <string-array name="opengapps_variant" tools:ignore="MissingTranslation">
         <item>aroma</item>

@@ -37,10 +37,10 @@
                 android:layout_height="170dp"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_opengapps_large"
                 app:layout_constraintLeft_toLeftOf="@+id/content_about"
                 app:layout_constraintRight_toRightOf="@+id/content_about"
-                app:layout_constraintTop_toTopOf="@+id/content_about"
-                app:srcCompat="@drawable/ic_opengapps_large" />
+                app:layout_constraintTop_toTopOf="@+id/content_about" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/about_card"
@@ -53,6 +53,7 @@
 
                 <include layout="@layout/content_about" />
             </android.support.v7.widget.CardView>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
