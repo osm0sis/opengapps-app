@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
+import com.github.paolorotolo.appintro.AppIntroViewPager;
 
 import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.prefs.Preferences;
@@ -77,9 +78,9 @@ public class AppIntroActivity extends AppIntro2 {
         termButton.setText(R.string.label_accepted);
         setNextPageSwipeLock(false);
         termButton.setEnabled(false);
-
-        onNextPressed();
         termsAccepted = true;
+        AppIntroViewPager pager = getPager();
+        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

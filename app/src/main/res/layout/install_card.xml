@@ -85,7 +85,7 @@
             android:id="@+id/md5_failure"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="Decline"
+            android:contentDescription="@string/label_decline"
             android:src="@drawable/ic_cross"
             android:visibility="invisible" />
 

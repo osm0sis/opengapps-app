@@ -7,6 +7,7 @@ import android.os.Build;
 import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.prefs.Preferences;
 
+@SuppressWarnings("WeakerAccess")
 class PackageGuesser {
     private PackageGuesser() {
     }

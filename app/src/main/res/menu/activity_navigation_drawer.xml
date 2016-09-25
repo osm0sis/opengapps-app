@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/gimmeid"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_download"
             android:icon="@drawable/ic_download"
             android:title="@string/label_download_install" />
     </group>
-    <group android:checkableBehavior="none">
+    <group
+        android:id="@+id/neededid"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_customize"

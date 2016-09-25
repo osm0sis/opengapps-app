@@ -6,15 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.fcannizzaro.materialstepper.AbstractStep;
+import com.github.paolorotolo.appintro.ISlidePolicy;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.opengapps.R;
 
 
 @SuppressWarnings("ConstantConditions")
-public class slideTermsOfUse extends AbstractStep {
+public class slideTermsOfUse extends AbstractStep implements ISlidePolicy {
+    private boolean isAccepted = false;
+
     @Override
     public String name() {
         return getArguments().getString("title", "NOT FOUND");
@@ -50,9 +54,19 @@ public class slideTermsOfUse extends AbstractStep {
                 Bundle params = new Bundle(1);
                 params.putString(FirebaseAnalytics.Param.VALUE, "accept");
                 analytics.logEvent("terms_of_service", params);
+                isAccepted = true;
                 ((AppIntroActivity)getActivity()).onTermsAccepted((Button) v);
-                onNext();
             }
         });
+    }
+
+    @Override
+    public boolean isPolicyRespected() {
+        return isAccepted;
+    }
+
+    @Override
+    public void onUserIllegallyRequestedNextPage() {
+        Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
     }
 }
