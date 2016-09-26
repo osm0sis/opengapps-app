@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +16,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.Button;
 
-import com.github.paolorotolo.appintro.AppIntro2;
+import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
 import com.github.paolorotolo.appintro.AppIntroViewPager;
 
@@ -25,7 +26,7 @@ import org.opengapps.opengapps.prefs.Preferences;
 import eu.chainfire.libsuperuser.Shell;
 
 
-public class AppIntroActivity extends AppIntro2 {
+public class AppIntroActivity extends AppIntro {
     private Button permButton;
     private boolean termsAccepted = false;
 
@@ -33,6 +34,8 @@ public class AppIntroActivity extends AppIntro2 {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        showSkipButton(false);
+        setSeparatorColor(Color.parseColor("#ffffff"));
         setInitialSettings();
         skipButtonEnabled = false;
         int primaryDarkColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);

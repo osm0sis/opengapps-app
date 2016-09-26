@@ -24,7 +24,7 @@ public class slideAndroidSelectorFragment extends GappsSelectionFragment {
 
     @Override
     public void setSelection(String selection) {
-        selection = selection.replace(" <i>(detected)</i>", "");
+        selection = selection.replace(" <i>(" + getString(R.string.detected) + ")</i>", "");
         GappsSelectionFragment.selectionAnd = selection;
     }
 

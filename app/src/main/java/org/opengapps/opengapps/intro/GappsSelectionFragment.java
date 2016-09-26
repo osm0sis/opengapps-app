@@ -97,7 +97,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             RadioButton radioButton = new RadioButton(getActivity());
             radioButton.setText(item);
             if (getGuessedSelection(getContext()).toLowerCase().equals(item.toLowerCase()) && !(this instanceof slideVariantSelectionFragment)) {
-                Spanned spanned = Html.fromHtml(radioButton.getText() + " <i>(detected)</i>");
+                Spanned spanned = Html.fromHtml(radioButton.getText() + " <i>(" + getString(R.string.detected) + ")</i>");
                 radioButton.setText(spanned);
             }
             if (defaultSelection.toLowerCase().equals(item.toLowerCase())) {

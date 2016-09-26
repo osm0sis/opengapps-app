@@ -74,4 +74,5 @@
     <string name="label_download_versionlog">Versionshinweise herunterladen</string>
     <string name="label_share">Teilen</string>
     <string name="label_close">Schließen</string>
+    <string name="detected">erkannt</string>
 </resources>

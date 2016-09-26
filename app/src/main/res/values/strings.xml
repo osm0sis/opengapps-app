@@ -116,4 +116,5 @@
     <string name="label_show_versionlog">Show VersionLog</string>
     <string name="label_share">Share</string>
     <string name="label_close">Close</string>
+    <string name="detected">detected</string>
 </resources>
