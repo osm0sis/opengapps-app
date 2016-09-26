@@ -9,6 +9,7 @@
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,8 +18,8 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <provider
-            android:authorities="org.opengapps.opengapps.provider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="org.opengapps.opengapps.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
