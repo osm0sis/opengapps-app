@@ -1,17 +1,16 @@
 package org.opengapps.opengapps.prefs;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import org.opengapps.opengapps.R;
 
-public class Preferences extends Activity {
+public class Preferences extends AppCompatActivity {
     public final static String prefName = "org.opengapps.opengapps_preferences";
 
     @Override
@@ -27,12 +26,9 @@ public class Preferences extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @SuppressWarnings("WeakerAccess")
