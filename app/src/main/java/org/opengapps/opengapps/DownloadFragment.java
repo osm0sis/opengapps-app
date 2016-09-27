@@ -2,6 +2,7 @@ package org.opengapps.opengapps;
 
 import android.Manifest;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +46,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private HashMap<String, InstallCard> fileCards = new HashMap<>();
     private Downloader downloader;
     private SharedPreferences prefs;
+    private Context globalContext;
     private DownloadCard downloadCard;
     private InterstitialAd downloadAd;
     private SwipeRefreshLayout refreshLayout;
@@ -54,6 +55,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        globalContext = getActivity().getApplicationContext();
         prefs = getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
     }
 
@@ -143,10 +145,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     public void initDownloader(boolean isRestored) {
         downloader = new Downloader(this);
-        StackTraceElement[] traces = Thread.currentThread().getStackTrace();
-        Log.d(TAG, "currentStackTrazze: ");
-        for (StackTraceElement e : traces)
-            Log.d(TAG, e.toString());
         if (!isRestored || TextUtils.isEmpty(lastTag)) {
             refreshLayout.setRefreshing(true);
             downloader.new TagUpdater().execute();
@@ -187,12 +185,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
      */
     private void updateSelection() {
         SharedPreferences.Editor editor = prefs.edit();
-        String lastDL = Downloader.getLastDownloadedTag(getActivity());
+        String lastDL = Downloader.getLastDownloadedTag(globalContext);
         if (TextUtils.isEmpty(lastDL))
             editor.remove("last_downloaded_tag").apply();
         else
-            editor.putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getActivity())).apply();
-        Downloader.setLastFile(getActivity(), false);
+            editor.putString("last_downloaded_tag", lastDL).apply();
+        Downloader.setLastFile(globalContext, false);
         lastTag = "";
         initDownloader(false);
     }

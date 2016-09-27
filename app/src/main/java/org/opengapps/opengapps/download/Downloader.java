@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
@@ -283,7 +284,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         return path + "/" + "open_gapps" + "-" + architecture + "-" + android + "-" + variant + "-" + tag + ".zip";
     }
 
-    public static String getLastDownloadedTag(Context context) {
+    public static String getLastDownloadedTag(@NonNull Context context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
             final String architecture = prefs.getString("selection_arch", null).toLowerCase();
