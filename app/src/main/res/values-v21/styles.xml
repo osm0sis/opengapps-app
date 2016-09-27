@@ -8,6 +8,8 @@
 
     <style name="SpecialNavD" parent="AppTheme">
         <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">#1A00796B</item>
     </style>

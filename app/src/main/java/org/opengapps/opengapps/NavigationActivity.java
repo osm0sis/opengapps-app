@@ -76,7 +76,7 @@ public class NavigationActivity extends Activity
 
                     //  Launch app intro
                     Intent i = new Intent(getApplicationContext(), AppIntroActivity.class);
-                    startActivityForResult(i, EXIT_CODE);
+                    startActivity(i);
 
                     //  Make a new preferences editor
                     SharedPreferences.Editor e = getPrefs.edit();

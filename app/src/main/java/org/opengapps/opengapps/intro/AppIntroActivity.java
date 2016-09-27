@@ -127,7 +127,6 @@ public class AppIntroActivity extends AppIntro {
         editor.putString("selection_variant", GappsSelectionFragment.selectionVariant);
         editor.putString("selection_arch", GappsSelectionFragment.selectionArch);
         editor.apply();
-        setResult(2);
         finish();
     }
 

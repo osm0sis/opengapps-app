@@ -1,17 +1,17 @@
 package org.opengapps.opengapps.prefs;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.opengapps.opengapps.R;
 
-public class Preferences extends AppCompatActivity {
+public class Preferences extends Activity {
     public final static String prefName = "org.opengapps.opengapps_preferences";
 
     @Override

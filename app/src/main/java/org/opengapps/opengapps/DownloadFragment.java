@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,9 +143,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     public void initDownloader(boolean isRestored) {
         downloader = new Downloader(this);
-        if (!isRestored) {
-            downloader.new TagUpdater().execute();
+        StackTraceElement[] traces = Thread.currentThread().getStackTrace();
+        Log.d(TAG, "currentStackTrazze: ");
+        for (StackTraceElement e : traces)
+            Log.d(TAG, e.toString());
+        if (!isRestored || TextUtils.isEmpty(lastTag)) {
             refreshLayout.setRefreshing(true);
+            downloader.new TagUpdater().execute();
         } else {
             downloader.setTag(lastTag);
             onTagUpdated();
@@ -152,8 +157,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private void initPermissionCard() {
-        PermissionCard permissionCard = (PermissionCard) getView().findViewById(R.id.permission_card);
-        permissionCard.init();
+        ((PermissionCard) getView().findViewById(R.id.permission_card)).init();
     }
 
     @Override
