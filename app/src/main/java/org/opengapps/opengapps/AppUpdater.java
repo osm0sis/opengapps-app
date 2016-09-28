@@ -2,6 +2,7 @@ package org.opengapps.opengapps;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -55,25 +56,35 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
 
     @Override
     protected void onPostExecute(UpdateStatus updateAvailable) {
-        //Todo - update strings!
         if (updateAvailable == UpdateStatus.optional) {
             if (!isAppInstalled("com.android.vending")) {
                 new AlertDialog.Builder(context)
-                        .setTitle("App-Update available")
-                        .setMessage("You may wanna update bro")
-                        .setPositiveButton("Yes", null)
+                        .setTitle(R.string.title_optional_app_update)
+                        .setMessage(R.string.explanation_optional_app_update)
+                        .setPositiveButton(R.string.label_update, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                openUpdateSite();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel_label, null)
                         .show();
             }
         } else if (updateAvailable == UpdateStatus.forced) {
             NavigationActivity.forcedUpdate = true;
-            Toast.makeText(context, "You have to update in order to continue using the app", Toast.LENGTH_LONG).show();
-            try {
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
-            } catch (android.content.ActivityNotFoundException anfe) {
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.url_download_update))));
-            }
+            Toast.makeText(context, R.string.explanation_forced_update, Toast.LENGTH_LONG).show();
+            openUpdateSite();
         }
     }
+
+    private void openUpdateSite() {
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.url_download_update))));
+        }
+    }
+
 
     private boolean isAppInstalled(String packageName) {
         try {

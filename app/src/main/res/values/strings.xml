@@ -120,7 +120,10 @@
     <string name="label_new">new</string>
     <string name="only_newest_version">Only keep the newest Version</string>
     <string name="explanation_newest_version">Delete all previous Versions of a GApps-Package if a new one was downloaded successfully</string>
-    <string name="explanation_wipe_dalvic">Cache as well as Dalvik-Cache gets wiped on installation of a new package. This leads to a much longer boot-time</string>
+    <string name="explanation_wipe_dalvik">Cache as well as Dalvik-Cache gets wiped on installation of a new package. This leads to a much longer boot-time</string>
     <string name="label_checksum_valid">The checksum is valid</string>
     <string name="label_checksum_invalid">The checksum is invalid</string>
+    <string name="title_optional_app_update">App-Update available</string>
+    <string name="explanation_optional_app_update">An update for the app is available</string>
+    <string name="explanation_forced_update">You have to update in order to continue using the app</string>
 </resources>

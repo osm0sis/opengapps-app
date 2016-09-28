@@ -36,7 +36,7 @@
             android:defaultValue="false"
             android:dependency="root_mode"
             android:key="wipe_cache"
-            android:summary="@string/explanation_wipe_dalvic"
+            android:summary="@string/explanation_wipe_dalvik"
             android:title="@string/label_wipe_cache" />
     </PreferenceCategory>
 </PreferenceScreen>

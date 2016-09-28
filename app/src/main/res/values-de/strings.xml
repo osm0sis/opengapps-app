@@ -78,7 +78,8 @@
     <string name="label_new">neu</string>
     <string name="only_newest_version">Nur das aktuellste Paket behalten</string>
     <string name="explanation_newest_version">Alle vorherigen Versionen eines GApps-Packetes löschen wenn eine neue erfolgreich heruntergeladen wurde</string>
-    <string name="explanation_wipe_dalvic">Der Cache/Dalvik-Cache wird bei der installation gelöscht. Dadurch dauert der erste Boot viel länger</string>
+    <string name="explanation_wipe_dalvik">Der Cache/Dalvik-Cache wird bei der installation gelöscht. Dadurch dauert der erste Boot viel länger</string>
     <string name="label_checksum_valid">Die Prüfsumme ist korrekt</string>
     <string name="label_checksum_invalid">Die Prüfsumme ist falsch</string>
+    <string name="title_optional_app_update"></string>
 </resources>
