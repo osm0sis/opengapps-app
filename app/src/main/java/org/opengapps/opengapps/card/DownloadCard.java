@@ -118,7 +118,7 @@ public class DownloadCard extends CardView {
         this.state = state;
         TextView version = (TextView) findViewById(R.id.newest_version);
         Button downloadButton = (Button) findViewById(R.id.download_button);
-        downloadButton.setText(getString(R.string.label_download));
+        initDownloadButton();
 
         switch (state) {
             case NORMAL:

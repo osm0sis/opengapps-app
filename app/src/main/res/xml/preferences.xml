@@ -14,8 +14,8 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="download_delete_old_files"
-            android:summary="Delete the old files if dl a new one"
-            android:title="Only keep newest version" />
+            android:summary="@string/explanation_newest_version"
+            android:title="@string/only_newest_version" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="download_md5"
@@ -31,6 +31,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="wipe_cache"
+            android:summary="@string/explanation_wipe_dalvic"
             android:title="@string/label_wipe_cache" />
     </PreferenceCategory>
 </PreferenceScreen>

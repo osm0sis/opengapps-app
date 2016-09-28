@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -63,26 +64,31 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
     }
 
     private void initButtons() {
-        Button deleteButton = (Button) findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(new OnClickListener() {
+        initDeleteButton();
+        initMenuButton();
+        initInstallButton();
+        initMd5Button();
+    }
+
+    private void initMd5Button() {
+        View success = findViewById(R.id.md5_success);
+        success.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (gappsFile != null) {
-                    removeFiles();
-                    deleteListener.onDeleteFile(gappsFile);
-                }
+            public void onClick(View v) {
+                Snackbar.make(getRootView(), getResources().getString(R.string.label_checksum_valid), Snackbar.LENGTH_SHORT).show();
             }
         });
 
-        ImageButton menuButton = (ImageButton) findViewById(R.id.menu_button);
-        menuButton.setOnClickListener(new OnClickListener() {
+        View failure = findViewById(R.id.md5_failure);
+        failure.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showPopup(view);
+            public void onClick(View v) {
+                Snackbar.make(getRootView(), getResources().getString(R.string.label_checksum_invalid), Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
 
-
+    private void initInstallButton() {
         Button installButton = (Button) findViewById(R.id.install_button);
         if (!ZipInstaller.canReboot(getContext())) {
             installButton.setTextColor(Color.parseColor("#757575"));
@@ -99,6 +105,29 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                     new ZipInstaller(getContext()).installZip(gappsFile);
                 }
             });
+    }
+
+    private void initMenuButton() {
+        ImageButton menuButton = (ImageButton) findViewById(R.id.menu_button);
+        menuButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopup(view);
+            }
+        });
+    }
+
+    private void initDeleteButton() {
+        Button deleteButton = (Button) findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (gappsFile != null) {
+                    removeFiles();
+                    deleteListener.onDeleteFile(gappsFile);
+                }
+            }
+        });
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -232,7 +261,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         return null;
     }
 
-    public boolean exists(){
+    public boolean exists() {
         return gappsFile.exists();
     }
 }

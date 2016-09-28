@@ -77,7 +77,7 @@
             android:id="@+id/md5_success"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/label_accepted"
+            android:contentDescription="@string/label_checksum_valid"
             android:src="@drawable/ic_checkmark"
             android:visibility="invisible" />
 
