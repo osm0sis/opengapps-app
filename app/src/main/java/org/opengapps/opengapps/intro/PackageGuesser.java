@@ -7,6 +7,10 @@ import android.os.Build;
 import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.prefs.Preferences;
 
+import java.io.File;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 @SuppressWarnings("WeakerAccess")
 class PackageGuesser {
     private PackageGuesser() {
@@ -58,10 +62,22 @@ class PackageGuesser {
     }
 
     public static String getVariant(Context context) {
-        return "stock";
-    }
-
-    private SharedPreferences getPrefs(Context context) {
-        return context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
+        File propFile = new File("/system/etc/g.prop");
+        try {
+            Scanner scanner = new Scanner(propFile);
+            Pattern pattern = Pattern.compile("ro\\.addon\\.open_type=.*");
+            String line = "";
+            String currentLine;
+            while (scanner.hasNext()) {
+                currentLine = scanner.nextLine();
+                if (pattern.matcher(currentLine).matches()) {
+                    line = currentLine;
+                    break;
+                }
+            }
+            return line.trim().substring(line.indexOf('=') + 1, line.trim().length());
+        } catch (Exception e) {
+            return "stock";
+        }
     }
 }
