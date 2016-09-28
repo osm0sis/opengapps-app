@@ -73,7 +73,6 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     private void initMd5Button() {
         View success = findViewById(R.id.md5_success);
-        success.setVisibility(VISIBLE);
         success.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

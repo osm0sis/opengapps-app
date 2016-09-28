@@ -1,9 +1,11 @@
 package org.opengapps.opengapps.card;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -72,7 +74,7 @@ public class DownloadCard extends CardView {
         String lastDownloadedTag = Downloader.getLastDownloadedTag(context);
 
         TextView version = (TextView) findViewById(R.id.newest_version);
-        Spanned spanned = Html.fromHtml(convertDate(lastAvailableTag) + "</b>");
+        Spanned spanned = Html.fromHtml("<b>" + convertDate(lastAvailableTag) + "</b>");
         version.setText(spanned);
 
         if (lastDownloadedTag.equals(lastAvailableTag))
@@ -120,6 +122,8 @@ public class DownloadCard extends CardView {
         Button downloadButton = (Button) findViewById(R.id.download_button);
         initDownloadButton();
 
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+            state = State.DISABLED;
         switch (state) {
             case NORMAL:
                 downloadButton.setEnabled(true);
