@@ -55,7 +55,7 @@
     <string name="url_donate" translatable="false">http://opengapps.org/donate/</string>
     <string name="new_folder">New Folder</string>
     <string name="label_download_install">Install</string>
-    <string name="autoinstall_root_disclaimer">Automatic Install only works only if OpenGApps installed as system app or with root</string>
+    <string name="autoinstall_root_disclaimer">Automatic Install only works only if Open GApps is installed as system app or with root permission</string>
     <string name="main_dev">Main Developer</string>
     <string name="dev" translatable="false">Christoph Loy</string>
     <string name="label_design">Artwork</string>
@@ -74,9 +74,11 @@
     <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
     <string name="download_started">Download started</string>
     <string name="label_wiki">Open GApps Wiki</string>
-    <string name="url_wiki" translatable="false">https://github.com/opengapps/opengapps/wiki</string>
+    <string name="url_wiki" translatable="false">http://opengapps.org/wiki</string>
+    <string name="label_support_forum">Support Forum</string>
+    <string name="url_support_forum" translatable="false">http://opengapps.org/xda</string>
     <string name="label_support_chat">Support Chat</string>
-    <string name="url_support_chat" translatable="false">https://gitter.im/opengapps/general</string>
+    <string name="url_support_chat" translatable="false">http://opengapps.org/gitter</string>
     <string name="label_report_bug">Report Bug</string>
     <string name="url_report_bug" translatable="false">https://github.com/opengapps/opengapps-app-support/issues</string>
     <string name="label_support">Support</string>
@@ -98,12 +100,10 @@
     <string name="label_accept">Accept</string>
     <string name="label_accepted">Accepted</string>
     <string name="label_decline">Decline</string>
-    <string name="label_support_forum">Support Forum</string>
-    <string name="url_support_forum" translatable="false">http://forum.xda-developers.com/android/software/Open-GApps-t3098071</string>
     <string name="url_download_update" translatable="false">http://opengapps.org/app</string>
     <string name="label_download_md5">Download MD5</string>
     <string name="explanation_download_md5">Download MD5-Checksum to verify package integrity</string>
-    <string name="explanation_download_versionlog">Download VersionLog to inspect package\'s content</string>
+    <string name="explanation_download_versionlog">Download VersionLog to list package content</string>
     <string name="label_download_versionlog">Download VersionLog</string>
     <string name="ms_prev">Previous</string>
     <string name="ms_next">Next</string>
