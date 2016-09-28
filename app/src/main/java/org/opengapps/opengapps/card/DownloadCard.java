@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -27,19 +29,23 @@ import java.util.Date;
 
 public class DownloadCard extends CardView {
     private SharedPreferences prefs;
+    private State state;
     private DownloadFragment fragment;
+    private Context context;
 
     public DownloadCard(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
+        state = State.NORMAL;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.download_card, this, true);
-        prefs = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
+        prefs = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
     }
 
     public void init(DownloadFragment fragment) {
         this.fragment = fragment;
         if (!DownloadFragment.isRestored)
-            setState(DownloadCardState.DISABLED);
+            setState(State.DISABLED);
         initButtons();
         initSelections();
         restoreDownloadProgress();
@@ -56,24 +62,25 @@ public class DownloadCard extends CardView {
         customize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), Stepper.class);
-                getContext().startActivity(i);
+                Intent i = new Intent(context, Stepper.class);
+                context.startActivity(i);
             }
         });
     }
 
     public void onTagUpdated(String lastAvailableTag) {
-        String lastDownloadedTag = Downloader.getLastDownloadedTag(getContext());
+        String lastDownloadedTag = Downloader.getLastDownloadedTag(context);
 
         TextView version = (TextView) findViewById(R.id.newest_version);
-        version.setText(convertDate(lastAvailableTag));
+        Spanned spanned = Html.fromHtml(convertDate(lastAvailableTag) + "</b>");
+        version.setText(spanned);
 
         if (lastDownloadedTag.equals(lastAvailableTag))
-            setState(DownloadCardState.DISABLED);
-        else if (!TextUtils.isEmpty(lastDownloadedTag))
-            setState(DownloadCardState.UPDATEABLE);
-        else
-            setState(DownloadCardState.NORMAL);
+            setState(State.DISABLED);
+        else if (!TextUtils.isEmpty(lastDownloadedTag)) {
+            setState(State.UPDATEABLE);
+        } else
+            setState(State.NORMAL);
     }
 
     public void initSelections() {
@@ -107,33 +114,25 @@ public class DownloadCard extends CardView {
         }
     }
 
-    public void setState(DownloadCardState state) {
-        TextView header = (TextView) findViewById(R.id.headline_download);
+    public void setState(State state) {
+        this.state = state;
+        TextView version = (TextView) findViewById(R.id.newest_version);
         Button downloadButton = (Button) findViewById(R.id.download_button);
-
-        initDownloadButton();
+        downloadButton.setText(getString(R.string.label_download));
 
         switch (state) {
             case NORMAL:
-                header.setText(getString(R.string.label_download_package));
-                header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                downloadButton.setText(getString(R.string.label_download));
                 downloadButton.setEnabled(true);
-                downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 break;
             case UPDATEABLE:
-                header.setText(getString(R.string.update_available));
-                header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-                downloadButton.setText(getString(R.string.label_update));
+                version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>"));
                 downloadButton.setEnabled(true);
-                downloadButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 break;
             case DISABLED:
-                header.setText(getString(R.string.label_download_package));
-                header.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                 downloadButton.setEnabled(false);
                 downloadButton.setTextColor(Color.parseColor("#757575"));
-                downloadButton.setText(getString(R.string.label_download));
                 break;
         }
     }
@@ -149,7 +148,7 @@ public class DownloadCard extends CardView {
         } catch (ParseException e) {
             return "";
         }
-        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
+        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         return dateFormat.format(date);
     }
 
@@ -157,7 +156,7 @@ public class DownloadCard extends CardView {
         return getResources().getString(id);
     }
 
-    public enum DownloadCardState {
+    public enum State {
         NORMAL, UPDATEABLE, DISABLED
     }
 }

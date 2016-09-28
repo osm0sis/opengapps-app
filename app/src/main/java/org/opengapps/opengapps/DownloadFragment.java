@@ -176,7 +176,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         }
         if (s.equals("firstStart")) {
             initDownloader(isRestored);
-            downloadCard.setState(DownloadCard.DownloadCardState.NORMAL);
+            downloadCard.setState(DownloadCard.State.NORMAL);
         }
     }
 

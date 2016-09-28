@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="0dp"
-            app:navigationContentDescription="Einstellungen"
+            app:navigationContentDescription="@string/action_settings"
             app:navigationIcon="?attr/homeAsUpIndicator"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:title="@string/action_settings" />
