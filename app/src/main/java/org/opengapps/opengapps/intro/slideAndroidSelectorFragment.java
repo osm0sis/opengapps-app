@@ -7,6 +7,8 @@ import org.opengapps.opengapps.SelectionValidator;
 
 public class slideAndroidSelectorFragment extends GappsSelectionFragment {
 
+    //TODO - use texts by Maarten
+    //TODO - Android -> Android-version
     public slideAndroidSelectorFragment() {
         super(R.string.label_android, R.string.slide_android_description, "selection_android", R.array.android_versions);
     }

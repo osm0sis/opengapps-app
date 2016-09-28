@@ -27,9 +27,14 @@
             android:summary="@string/explanation_download_versionlog"
             android:title="@string/label_download_versionlog" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Flashing">
+    <PreferenceCategory android:title="@string/label_install">
+        <org.opengapps.opengapps.prefs.RootPreference
+            android:defaultValue="false"
+            android:key="root_mode"
+            android:title="RootMode" />
         <CheckBoxPreference
             android:defaultValue="false"
+            android:dependency="root_mode"
             android:key="wipe_cache"
             android:summary="@string/explanation_wipe_dalvic"
             android:title="@string/label_wipe_cache" />

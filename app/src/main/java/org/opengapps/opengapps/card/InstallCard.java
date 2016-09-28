@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -24,6 +23,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.tooltip.Tooltip;
 
 import org.opengapps.opengapps.BuildConfig;
 import org.opengapps.opengapps.DownloadFragment;
@@ -72,10 +73,15 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     private void initMd5Button() {
         View success = findViewById(R.id.md5_success);
+        success.setVisibility(VISIBLE);
         success.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(getRootView(), getResources().getString(R.string.label_checksum_valid), Snackbar.LENGTH_SHORT).show();
+                new Tooltip.Builder(v)
+                        .setText(R.string.label_checksum_valid)
+                        .setCancelable(true)
+                        .setDismissOnClick(true)
+                        .show();
             }
         });
 
@@ -83,7 +89,11 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         failure.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(getRootView(), getResources().getString(R.string.label_checksum_invalid), Snackbar.LENGTH_SHORT).show();
+                new Tooltip.Builder(v)
+                        .setText(R.string.label_checksum_invalid)
+                        .setCancelable(true)
+                        .setDismissOnClick(true)
+                        .show();
             }
         });
     }

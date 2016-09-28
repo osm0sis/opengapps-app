@@ -48,6 +48,7 @@ dependencies {
     compile 'net.rdrei.android.dirchooser:library:3.2@aar' //licensed
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.1' //licsensed
     compile 'com.github.fcannizzaro:material-stepper:1.2.2' //licensed
+    compile 'com.github.vihtarb:tooltip:0.1.8' //not licensed
 
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
 }

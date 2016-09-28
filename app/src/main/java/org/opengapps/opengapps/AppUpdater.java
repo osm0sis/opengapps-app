@@ -18,7 +18,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus> {
-    private final static String versionInfoUrl = "http://192.168.178.26:8000/version.info";
+    private final static String versionInfoUrl = "http://opengapps.org/app/version.txt";
 
     private OkHttpClient client;
     private Context context;
@@ -55,6 +55,7 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
 
     @Override
     protected void onPostExecute(UpdateStatus updateAvailable) {
+        //Todo - update strings!
         if (updateAvailable == UpdateStatus.optional) {
             if (!isAppInstalled("com.android.vending")) {
                 new AlertDialog.Builder(context)

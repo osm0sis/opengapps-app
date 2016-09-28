@@ -1,5 +1,6 @@
 package org.opengapps.opengapps.intro;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import org.opengapps.opengapps.R;
+import org.opengapps.opengapps.prefs.Preferences;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -31,7 +33,9 @@ public class RequestRootFragment extends Fragment {
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Shell.SU.run("ls");
+                if (Shell.SU.run("") != null) {
+                    getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).edit().putBoolean("root_mode", true).apply();
+                }
             }
         });
     }
