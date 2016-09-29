@@ -148,11 +148,24 @@ public class DownloadProgressView extends LinearLayout {
         showDownloadProgress();
     }
 
+    public void begin() {
+        View parentView = (View) getParent();
+        Button downloadButton = (Button) parentView.findViewById(R.id.download_button);
+        setVisibility(VISIBLE);
+        downloadProgressBar.setIndeterminate(true);
+        downloadProgressBar.setProgress(0);
+        downloadedSizeView.setText("");
+        downloadButton.setText(getResources().getString(R.string.label_cancel));
+        downloadButton.setEnabled(false);
+        totalSizeView.setText("");
+    }
+
     private void showDownloadProgress() {
         setVisibility(View.VISIBLE);
         View parentView = (View) getParent();
         Button downloadButton = (Button) parentView.findViewById(R.id.download_button);
         downloadButton.setText(getResources().getString(R.string.label_cancel));
+        downloadButton.setEnabled(true);
         downloadButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

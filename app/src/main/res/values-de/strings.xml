@@ -81,5 +81,4 @@
     <string name="explanation_wipe_dalvik">Der Cache/Dalvik-Cache wird bei der installation gelöscht. Dadurch dauert der erste Boot viel länger</string>
     <string name="label_checksum_valid">Die Prüfsumme ist korrekt</string>
     <string name="label_checksum_invalid">Die Prüfsumme ist falsch</string>
-    <string name="title_optional_app_update"></string>
 </resources>
