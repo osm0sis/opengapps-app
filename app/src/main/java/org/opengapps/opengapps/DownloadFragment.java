@@ -274,9 +274,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void downloadFailed(int reason) {
-        downloader = new Downloader(this);
-        prefs.edit().putLong("running_download_id", 0).apply();
-        prefs.edit().putString("running_download_tag", null).apply();
+        downloadFinished();
     }
 
     @Override
@@ -311,7 +309,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 prefs.edit().putString("last_downloaded_tag", tag).apply();
             onTagUpdated();
         } else {
-            Toast.makeText(getActivity(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.label_checksum_invalid, Toast.LENGTH_LONG).show();
         }
         downloadFinished();
     }

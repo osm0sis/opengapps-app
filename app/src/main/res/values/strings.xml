@@ -126,4 +126,5 @@
     <string name="title_optional_app_update">App-Update available</string>
     <string name="explanation_optional_app_update">An update for the app is available</string>
     <string name="explanation_forced_update">You have to update in order to continue using the app</string>
+    <string name="label_root_is_need_for_rootmode">Your device needs to be rooted in order to activate rootmode</string>
 </resources>
