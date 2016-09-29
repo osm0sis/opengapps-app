@@ -1,14 +1,15 @@
 package org.opengapps.opengapps.intro;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Html;
 import android.text.Spanned;
@@ -16,9 +17,11 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.fcannizzaro.materialstepper.AbstractStep;
 
@@ -33,17 +36,18 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
     public static String selectionVariant = "";
     private final int title;
     private final int description;
-    private final int moreInfo;
+    private final int link;
+    private static boolean hintShown = false;
     private ColorStateList style;
     private final String key;
     private final int stringArray;
     private RadioGroup group;
     private SparseArray<RadioButton> buttons;
 
-    public GappsSelectionFragment(int title, int description, int moreInfo, String key, int stringArray) {
+    public GappsSelectionFragment(int title, int description, int link, String key, int stringArray) {
         this.title = title;
         this.description = description;
-        this.moreInfo = moreInfo;
+        this.link = link;
         this.key = key;
         this.stringArray = stringArray;
     }
@@ -69,13 +73,12 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         style = new ColorStateList(
                 new int[][]{
 
-                        new int[]{android.R.attr.state_enabled}, //enabled
-                        new int[android.R.attr.state_checked]
+                        new int[]{-android.R.attr.state_checked}, //unchecked
+                        new int[]{android.R.attr.state_checked} //checked
                 },
                 new int[]{
-                        Color.parseColor("#757575") //disabled
-                        , ContextCompat.getColor(getContext(), R.color.colorAccent),//enabled
-                        Color.parseColor("#ffffff") //selected
+                        Color.parseColor("#E8E8E8") //unchecked
+                        , ContextCompat.getColor(getContext(), R.color.colorAccent)//checked
                 }
         );
         return inflater.inflate(R.layout.appintro_set_variant, container, false);
@@ -105,11 +108,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         getView().findViewById(R.id.more_info_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle(title)
-                        .setMessage(moreInfo)
-                        .setPositiveButton(android.R.string.ok, null)
-                        .show();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(link))));
             }
         });
     }
@@ -171,9 +170,13 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        Button button = buttons.get(group.getCheckedRadioButtonId());
         String text = buttons.get(group.getCheckedRadioButtonId()).getText().toString();
-        if (text.contains(" "))
+        if (text.contains(" ")) {
             text = text.substring(0, text.indexOf(" "));
+        }
+        if (text.equals(getGuessedSelection(getContext())) && button.isPressed())
+            Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
         setSelection(text);
     }
 
