@@ -77,7 +77,7 @@ class PackageGuesser {
             }
             return line.trim().substring(line.indexOf('=') + 1, line.trim().length());
         } catch (Exception e) {
-            return "stock";
+            return "";
         }
     }
 }

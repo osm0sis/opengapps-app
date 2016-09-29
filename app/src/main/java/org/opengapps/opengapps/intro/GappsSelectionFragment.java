@@ -2,10 +2,14 @@ package org.opengapps.opengapps.intro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.SparseArray;
@@ -29,14 +33,17 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
     public static String selectionVariant = "";
     private final int title;
     private final int description;
+    private final int moreInfo;
+    private ColorStateList style;
     private final String key;
     private final int stringArray;
     private RadioGroup group;
     private SparseArray<RadioButton> buttons;
 
-    public GappsSelectionFragment(int title, int description, String key, int stringArray) {
+    public GappsSelectionFragment(int title, int description, int moreInfo, String key, int stringArray) {
         this.title = title;
         this.description = description;
+        this.moreInfo = moreInfo;
         this.key = key;
         this.stringArray = stringArray;
     }
@@ -59,17 +66,31 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        style = new ColorStateList(
+                new int[][]{
+
+                        new int[]{android.R.attr.state_enabled}, //enabled
+                        new int[android.R.attr.state_checked]
+                },
+                new int[]{
+                        Color.parseColor("#757575") //disabled
+                        , ContextCompat.getColor(getContext(), R.color.colorAccent),//enabled
+                        Color.parseColor("#ffffff") //selected
+                }
+        );
         return inflater.inflate(R.layout.appintro_set_variant, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initButtons();
         Bundle b = getArguments();
         TextView header = (TextView) getView().findViewById(R.id.headline_intro_gapps);
         header.setText(getString(title));
         TextView descriptionView = (TextView) getView().findViewById(R.id.description_intro_gapps);
-        descriptionView.setText(getString(description));
+        Spanned spanned = Html.fromHtml(getString(description));
+        descriptionView.setText(spanned);
         if (b != null && b.containsKey("position")) {
             header.setVisibility(View.GONE);
             descriptionView.setVisibility(View.GONE);
@@ -78,6 +99,19 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
         }
         loadRadioBoxes();
+    }
+
+    private void initButtons() {
+        getView().findViewById(R.id.more_info_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(title)
+                        .setMessage(moreInfo)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            }
+        });
     }
 
     protected abstract boolean isValid(String selection);
@@ -94,10 +128,14 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             group = (RadioGroup) getView().findViewById(R.id.arch_radio_group);
         buttons = new SparseArray<>(items.length);
         for (String item : items) {
-            RadioButton radioButton = new RadioButton(getActivity());
+            AppCompatRadioButton radioButton = new AppCompatRadioButton(getActivity());
             radioButton.setText(item);
+            if (getArguments() == null) {
+                radioButton.setSupportButtonTintList(style);
+                radioButton.setTextColor(Color.parseColor("#E0E0E0"));
+            }
             if (getGuessedSelection(getContext()).toLowerCase().equals(item.toLowerCase())) {
-                Spanned spanned = Html.fromHtml(radioButton.getText() + " <i>(" + getString(R.string.detected) + ")</i>");
+                Spanned spanned = Html.fromHtml(radioButton.getText() + " <i color='red'>(" + getString(R.string.detected) + ")</i>");
                 radioButton.setText(spanned);
             }
             if (defaultSelection.toLowerCase().equals(item.toLowerCase())) {

@@ -10,7 +10,7 @@ public class slideArchSelectorFragment extends GappsSelectionFragment {
 //TODO - ARCH -> CPU-Architecture
 
     public slideArchSelectorFragment() {
-        super(R.string.label_architecture, R.string.slide_arch_description, "selection_arch", R.array.architectures);
+        super(R.string.label_architecture, R.string.slide_arch_description, R.string.arch_moreinfo, "selection_arch", R.array.architectures);
     }
 
     @Override

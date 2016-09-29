@@ -13,6 +13,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
@@ -114,7 +115,8 @@ public class AppIntroActivity extends AppIntro {
     private void setInitialSettings() {
         GappsSelectionFragment.selectionArch = PackageGuesser.getArch(getBaseContext());
         GappsSelectionFragment.selectionAnd = PackageGuesser.getAndroidVersion(getBaseContext());
-        GappsSelectionFragment.selectionVariant = PackageGuesser.getVariant(getBaseContext());
+        String guessedVariant = PackageGuesser.getVariant(getBaseContext());
+        GappsSelectionFragment.selectionVariant = TextUtils.isEmpty(guessedVariant) ? guessedVariant : "stock";
     }
 
 

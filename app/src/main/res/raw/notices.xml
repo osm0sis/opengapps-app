@@ -26,7 +26,7 @@
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
-        <name>Android-DirectoryChooser</name>
+        <name>Andrxoid-DirectoryChooser</name>
         <url>https://github.com/passy/Android-DirectoryChooser</url>
         <copyright>Copyright 2013-2015 Pascal Hartig</copyright>
         <license>Apache Software License 2.0</license>
@@ -41,6 +41,12 @@
         <name>Material Stepper</name>
         <url>https://github.com/fcannizzaro/material-stepper</url>
         <copyright>Copyright (c) 2015 Francesco Saverio Cannizzaro</copyright>
+        <license>MIT License</license>
+    </notice>
+    <notice>
+        <name>Tooltip</name>
+        <url>https://github.com/ViHtarb/Tooltip</url>
+        <copyright>Copyright (c) 2016. Viнt@rь</copyright>
         <license>MIT License</license>
     </notice>
 </notices>
