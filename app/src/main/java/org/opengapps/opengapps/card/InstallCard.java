@@ -155,6 +155,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         versionLogExists = versionLogFile.exists();
         TextView fileName = (TextView) findViewById(R.id.newest_version);
         fileName.setText(file.getName());
+        checkMD5();
     }
 
     private void showPopup(View view) {
@@ -239,7 +240,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         if (checked)
             return;
         checked = true;
-        if (md5Exists) {
+        if (md5File.exists()) {
             findViewById(R.id.md5_progress).setVisibility(VISIBLE);
             new FileValidator(this).execute(gappsFile.getAbsolutePath(), md5File.getAbsolutePath());
         }

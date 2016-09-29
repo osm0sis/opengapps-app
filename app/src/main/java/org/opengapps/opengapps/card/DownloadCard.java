@@ -130,7 +130,8 @@ public class DownloadCard extends CardView {
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 break;
             case UPDATEABLE:
-                version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>"));
+                if (!TextUtils.isEmpty(version.getText()))
+                    version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>"));
                 downloadButton.setEnabled(true);
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 break;
