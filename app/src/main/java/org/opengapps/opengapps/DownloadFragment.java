@@ -241,7 +241,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             @Override
             public boolean accept(File file, String name) {
                 boolean nameFits = name.startsWith("open_gapps-") && name.endsWith(".zip");
-                return nameFits;
+                boolean downloadRunning = !(prefs.getString("running_download_tag", "unSeT").equals("unSeT") || prefs.getString("running_download_tag", "unSeT").equals(""));
+                boolean runningDownload = name.contains(prefs.getString("selection_arch", "unset").toLowerCase()) &&
+                        name.contains(prefs.getString("selection_android", "unset")) && name.contains(prefs.getString("selection_variant", "unset"))
+                        && name.contains(prefs.getString("running_download_tag", "unset"));
+                return !(nameFits && downloadRunning && runningDownload) && nameFits;
             }
         };
 
@@ -290,6 +294,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void downloadCancelled() {
+        downloadFinished();
+    }
+
+    public void downloadFinished() {
         downloader = new Downloader(this);
         downloader.new TagUpdater();
         prefs.edit().putLong("running_download_id", 0).apply();
@@ -305,7 +313,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         } else {
             Toast.makeText(getActivity(), "CHECKSUM DOES NOT MATCH", Toast.LENGTH_LONG).show();
         }
-        downloadCancelled();
+        downloadFinished();
     }
 
     @Override
