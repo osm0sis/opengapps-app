@@ -31,7 +31,8 @@
         <org.opengapps.opengapps.prefs.RootPreference
             android:defaultValue="false"
             android:key="root_mode"
-            android:title="RootMode" />
+            android:summary="@string/summary_root_mode"
+            android:title="@string/label_root_mode" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:dependency="root_mode"

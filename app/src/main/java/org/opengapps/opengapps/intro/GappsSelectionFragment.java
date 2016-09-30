@@ -36,6 +36,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
     public static String selectionVariant = "";
     private final int title;
     private final int description;
+    private final int smallDesc;
     private final int link;
     private static boolean hintShown = false;
     private ColorStateList style;
@@ -44,9 +45,10 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
     private RadioGroup group;
     private SparseArray<RadioButton> buttons;
 
-    public GappsSelectionFragment(int title, int description, int link, String key, int stringArray) {
+    public GappsSelectionFragment(int title, int description, int smallDesc, int link, String key, int stringArray) {
         this.title = title;
         this.description = description;
+        this.smallDesc = smallDesc;
         this.link = link;
         this.key = key;
         this.stringArray = stringArray;
@@ -176,7 +178,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             text = text.substring(0, text.indexOf(" "));
         }
         if (text.equals(getGuessedSelection(getContext())) && button.isPressed())
-            Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(smallDesc), Toast.LENGTH_SHORT).show();
         setSelection(text);
     }
 

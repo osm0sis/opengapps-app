@@ -29,7 +29,7 @@ public class ZipInstaller {
     }
 
     public void installZip(File file) {
-        if (Shell.SU.available()) {
+        if (prefs.getBoolean("root_mode", false) && Shell.SU.available()) {
             try {
                 File f = new File(context.getFilesDir(), "openrecoveryscript");
                 FileWriter fileWriter = new FileWriter(f, false);

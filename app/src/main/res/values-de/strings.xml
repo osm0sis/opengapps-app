@@ -3,7 +3,7 @@
     <string name="app_name">Open GApps</string>
     <string name="action_settings">Einstellungen</string>
     <string name="invalid_combo">Ungültige Wahl</string>
-    <string name="label_architecture">Architektur</string>
+    <string name="label_architecture">CPU-Architektur</string>
     <string name="label_download">Herunterladen</string>
     <string name="label_variant">Variante</string>
     <string name="pref_header_gapps_selection">GApps-Auswahl</string>
@@ -36,8 +36,6 @@
     <string name="label_producer">Produzent</string>
     <string name="label_adblock_detected">Werbeblocker erkannt</string>
     <string name="explanation_adblock_detected">Werbeblocker gefunden?! Werbung kann frustrierend sein, hält aber Projekte und deren Entwickler am Leben! Bitte überlegen sie, den Werbeblocker zu deaktiveren oder uns zu spenden</string>
-    <string name="slide_variant_description">Stuff bout Variants EDITME</string>
-    <string name="slide_android_description">You can select the android version here. EDITME</string>
     <string name="label_change_selection">Auswahl ändern</string>
     <string name="download_started">Download gestartet</string>
     <string name="label_wiki">Open GApps Wiki</string>
@@ -75,9 +73,16 @@
     <string name="label_close">Schließen</string>
     <string name="detected">erkannt</string>
     <string name="label_new">neu</string>
-    <string name="only_newest_version">Nur das aktuellste Paket behalten</string>
+    <string name="only_newest_version">Automatisch veraltete Pakete löschen</string>
     <string name="explanation_newest_version">Alle vorherigen Versionen eines GApps-Packetes löschen wenn eine neue erfolgreich heruntergeladen wurde</string>
-    <string name="explanation_wipe_dalvik">Der Cache/Dalvik-Cache wird bei der installation gelöscht. Dadurch dauert der erste Boot viel länger</string>
     <string name="label_checksum_valid">Die Prüfsumme ist korrekt</string>
     <string name="label_checksum_invalid">Die Prüfsumme ist falsch</string>
+    <string name="appintro_label_architecture">CPU-Architektur</string>
+    <string name="appintro_label_android">Android Version</string>
+    <string name="appintro_label_variant">Packet-Variante</string>
+    <string name="slide_android_description">Bitte wähle die Android-Version für dein Open GApps-Paket</string>
+    <string name="slide_variant_description">Bitte wähle die Paket-Variante für dein Open GApps-Paket</string>
+    <string name="label_root_mode">Root-Rechte verwenden</string>
+    <string name="summary_root_mode">Erteile Root-Zugriff um automatische Installation und Cache-Bereinigung zu aktivieren</string>
+    <string name="explanation_wipe_dalvik">Erneute App-Optimierung bei nächsten Boot erzwingen. Benötigt mehr Zeit aber hilft um potentielle Probleme zu vermeiden</string>
 </resources>

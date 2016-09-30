@@ -31,9 +31,9 @@
     <string name="invalid_combo">Invalid combination</string>
     <string name="pref_header_gapps_selection">GApps-Selection</string>
     <string name="permission_granted">Permission granted! Thanks!</string>
-    <string name="slide_android_description">You can select the Android version here. lol</string>
-    <string name="slide_arch_description">Please select the architecture you’d to use for your Open GApps package.&lt;br&gt; &lt;small&gt;The app automatically detects the architecture of your device.&lt;/small&gt;</string>
-    <string name="slide_variant_description">Stuff bout Variants</string>
+    <string name="slide_android_description">Please select the Android version you’d like to use for your Open GApps package</string>
+    <string name="slide_arch_description">Please select the architecture you’d to use for your Open GApps package.&lt;br&gt; &lt;small&gt;&lt;/small&gt;</string>
+    <string name="slide_variant_description">Please select the Package variant you’d like to use for your Open GApps package.</string>
     <string name="label_install">Install</string>
     <string name="label_version">Version</string>
     <string name="label_wifi_only">WiFi only</string>
@@ -118,9 +118,9 @@
     <string name="label_close">Close</string>
     <string name="detected">detected</string>
     <string name="label_new">new</string>
-    <string name="only_newest_version">Only keep the newest Version</string>
+    <string name="only_newest_version">Automatically clean-up downloads</string>
     <string name="explanation_newest_version">Delete all previous Versions of a GApps-Package if a new one was downloaded successfully</string>
-    <string name="explanation_wipe_dalvik">Cache as well as Dalvik-Cache gets wiped on installation of a new package. This leads to a much longer boot-time</string>
+    <string name="explanation_wipe_dalvik">Forces re-optimization of cache at next boot. Takes more time, but helps to prevent potential issues.</string>
     <string name="label_checksum_valid">The checksum is valid</string>
     <string name="label_checksum_invalid">The checksum is invalid</string>
     <string name="title_optional_app_update">App-Update available</string>
@@ -131,4 +131,11 @@
     <string name="android_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-android-versions</string>
     <string name="variant_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki/Package-Comparison</string>
     <string name="slide_arch_hint">The app automatically detects the architecture of your device</string>
+    <string name="slide_android_hint">The app automatically detects the android-version of your device</string>
+    <string name="slide_variant_hint">The app automatically detects the variant installed on your device</string>
+    <string name="appintro_label_architecture">CPU Architecture</string>
+    <string name="appintro_label_android">Android Version</string>
+    <string name="appintro_label_variant">Package Variant</string>
+    <string name="label_root_mode">Use Root-Permissions</string>
+    <string name="summary_root_mode">Grant root access to enable install-mode and the wipe cache/dalvik setting</string>
 </resources>
