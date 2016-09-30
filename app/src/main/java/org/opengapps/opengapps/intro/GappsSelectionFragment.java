@@ -121,7 +121,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         SharedPreferences prefs = getActivity().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         String defaultSelection;
         if (getSelection().equals(""))
-            defaultSelection = prefs.getString(key, null);
+            defaultSelection = prefs.getString(key, "");
         else
             defaultSelection = getSelection();
         String[] items = getResources().getStringArray(stringArray);
