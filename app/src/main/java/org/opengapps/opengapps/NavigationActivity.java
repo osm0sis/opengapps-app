@@ -94,7 +94,7 @@ public class NavigationActivity extends Activity
         downloadFragment = new DownloadFragment();
         if (savedInstanceState == null)
             showFragment(downloadFragment);
-        toolbar.setTitle(getString(R.string.label_download_install));
+        toolbar.setTitle(getString(R.string.label_install));
         navigationView.setCheckedItem(R.id.nav_download);
 
         if (AdBlockDetector.hasAdBlockEnabled(this))
@@ -158,7 +158,7 @@ public class NavigationActivity extends Activity
 
         if (id == R.id.nav_download) {
             showFragment(downloadFragment);
-            toolbar.setTitle(getString(R.string.label_download_install));
+            toolbar.setTitle(getString(R.string.label_install));
         } else if (id == R.id.nav_settings) {
             Intent i = new Intent(this, Preferences.class);
             startActivity(i);
