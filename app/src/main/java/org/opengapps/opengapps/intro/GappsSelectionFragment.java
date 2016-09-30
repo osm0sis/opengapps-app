@@ -98,11 +98,11 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         descriptionView.setText(spanned);
         if (b != null && b.containsKey("position")) {
             header.setVisibility(View.GONE);
-            descriptionView.setVisibility(View.GONE);
-        } else {
-            ConstraintLayout layout = (ConstraintLayout) getView().findViewById(R.id.constraint_selection);
-            layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+//            descriptionView.setVisibility(View.GONE);
         }
+        ConstraintLayout layout = (ConstraintLayout) getView().findViewById(R.id.constraint_selection);
+        layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+
         loadRadioBoxes();
     }
 
@@ -131,10 +131,8 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         for (String item : items) {
             AppCompatRadioButton radioButton = new AppCompatRadioButton(getActivity());
             radioButton.setText(item);
-            if (getArguments() == null) {
-                radioButton.setSupportButtonTintList(style);
-                radioButton.setTextColor(Color.parseColor("#E0E0E0"));
-            }
+            radioButton.setSupportButtonTintList(style);
+            radioButton.setTextColor(Color.parseColor("#E0E0E0"));
             if (getGuessedSelection(getContext()).toLowerCase().equals(item.toLowerCase())) {
                 Spanned spanned = Html.fromHtml(radioButton.getText() + " <i color='red'>(" + getString(R.string.detected) + ")</i>");
                 radioButton.setText(spanned);

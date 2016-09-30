@@ -32,7 +32,7 @@
     <string name="pref_header_gapps_selection">GApps-Selection</string>
     <string name="permission_granted">Permission granted! Thanks!</string>
     <string name="slide_android_description">Please select the Android version you’d like to use for your Open GApps package</string>
-    <string name="slide_arch_description">Please select the architecture you’d to use for your Open GApps package.&lt;br&gt; &lt;small&gt;&lt;/small&gt;</string>
+    <string name="slide_arch_description">Please select the architecture you’d to use for your Open GApps package</string>
     <string name="slide_variant_description">Please select the Package variant you’d like to use for your Open GApps package.</string>
     <string name="label_install">Install</string>
     <string name="label_version">Version</string>
@@ -126,7 +126,7 @@
     <string name="title_optional_app_update">App-Update available</string>
     <string name="explanation_optional_app_update">An update for the app is available</string>
     <string name="explanation_forced_update">You have to update in order to continue using the app</string>
-    <string name="label_root_is_need_for_rootmode">Your device needs to be rooted in order to activate rootmode</string>
+    <string name="label_root_is_need_for_rootmode">Your device needs to be rooted in order to activate</string>
     <string name="arch_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-platforms</string>
     <string name="android_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-android-versions</string>
     <string name="variant_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki/Package-Comparison</string>

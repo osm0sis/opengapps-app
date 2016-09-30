@@ -3,7 +3,7 @@
     <string name="app_name">Open GApps</string>
     <string name="action_settings">Einstellungen</string>
     <string name="invalid_combo">Ungültige Wahl</string>
-    <string name="label_architecture">CPU-Architektur</string>
+    <string name="label_architecture">Architektur</string>
     <string name="label_download">Herunterladen</string>
     <string name="label_variant">Variante</string>
     <string name="pref_header_gapps_selection">GApps-Auswahl</string>
