@@ -9,12 +9,12 @@
             <string name="appintro_label_variant">Pakketvariant</string>
             <string name="label_tos">Gebruiksvoorwaarden</string>
         <!--DESCRIPTIONS-->
-            <string name="appintro_storageperm_explain">Om een Open GApps-pakket te kunnen downloaden, dient u ons toestemming te geven tot uw Bestandssysteem</string>
+            <string name="appintro_storageperm_explain">Om een Open GApps-pakket te kunnen downloaden, dient u de app toestemming te geven tot uw Bestandssysteem</string>
             <string name="slide_arch_description">Selecteer a.u.b. de architectuur die u wilt gebruiken voor uw Open GApps pakket</string>
             <string name="slide_android_description">Selecteer a.u.b. de Android versie die u wilt gebruiken voor uw Open GApps pakket</string>
             <string name="slide_variant_description">Selecteer a.u.b. de pakket variant die u wilt gebruiken voor uw Open GApps pakket</string>
             <string name="appintro_root_explanation">De app biedt een geïntegreerde installatie-modus om direct een gedownload pakket te installeren. Deze installatie-modus vereist <i>root rechten</i>. Als u dit wenst te gebruiken, dient u ons root rechten te verlenen. \nDeze stap is optioneel.</string>
-            <string name="appintro_terms_explain">De kant-en-klaar pakketten van OpenGApps.org worden enkel aangeboden als een gunst en zonder enige vorm van garantie, op voorwaarde dat deze enkel gebruikt mogen worden voor persoonlijk gebruik, en niet verder verspreid worden aan het publiek dan via OpenGApps.org. \n \n Let op dat Open GApps uw geen licentie verstrekt voor Google’s APKs in het pakket. De Open GApps pakketten bieden slechts een gemakkelijke methode om APKs op je apparaat te laden. Het is uw eigen verantwoordelijkheid om de benodigde toestemmingen door bijvoorbeeld een OHA-gelicenseerd apparaat met voorgeïnstalleerde Google Apps te kopen en/of de applicaties van Google’s Play Store te betrekken.</string>
+            <string name="appintro_terms_explain">De kant-en-klaar pakketten van OpenGApps.org worden enkel aangeboden als een gunst en zonder enige vorm van garantie, op voorwaarde dat deze enkel gebruikt mogen worden voor persoonlijk gebruik, en niet verder verspreid worden aan het publiek dan via OpenGApps.org. \n \n Let op dat Open GApps u geen licentie verstrekt voor Google’s APKs in het pakket. De Open GApps pakketten bieden slechts een gemakkelijke methode om APKs op je apparaat te laden. Het is uw eigen verantwoordelijkheid om de benodigde toestemmingen door bijvoorbeeld een OHA-gelicenseerd apparaat met voorgeïnstalleerde Google Apps te kopen en/of de applicaties van Google’s Play Store te betrekken.</string>
         <!--HINTS-->
             <string name="slide_arch_hint">De app herkent automatisch de architectuur van uw apparaat</string>
             <string name="slide_android_hint">De app herkent automatisch de Android versie van uw apparaat</string>
@@ -69,7 +69,7 @@
             <string name="ms_next">Volgende</string>
             <string name="ms_end">Klaar</string>
         <!--EXPLANATION-->
-            <string name="explanation_permission_denied">Om goed te kunnen functioneren dien je OpenGApps toestemming te geven je opslag te gebruiken. Logisch, toch?</string>
+            <string name="explanation_permission_denied">Om goed te kunnen functioneren dient u OpenGApps toestemming te geven uw bestandssysteem te gebruiken. Logisch, toch?</string>
             <string name="explanation_adblock_detected">Adblocker gedetecteerd!? Advertenties kunnen vervelend zijn, maar houden dit project en de ontwikkelaars in leven! Wilt u a.u.b. de adblocker uitschakelen of anders een donatie schenken?</string>
 
     <!--______DOWNLOAD/INSTALL______-->
@@ -98,7 +98,7 @@
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Update voor de app beschikbaar</string>
             <string name="explanation_forced_update">U moet updaten om de app te kunnen blijven gebruiken</string>
-            <string name="label_root_is_need_for_rootmode">Om dit te activeren heeft uw root-rechten nodig</string>
+            <string name="label_root_is_need_for_rootmode">Om dit te activeren heeft u root-rechten nodig</string>
             <string name="autoinstall_root_disclaimer">Automatische Installatie werkt enkel als OpenGApps als systeemapplicatie is geïnstalleerd of met root</string>
 
     <!--______SUPPORT______-->
