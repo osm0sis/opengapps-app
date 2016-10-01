@@ -154,14 +154,14 @@
             <string name="arch_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-platforms</string>
             <string name="android_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-android-versions</string>
             <string name="variant_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki/Package-Comparison</string>
-            <string name="url_download_update" translatable="false">http://opengapps.org/app</string>
+            <string name="url_download_update" translatable="false">http://opengapps.org/app/</string>
             <string name="url_main_dev" translatable="false">https://github.com/beatbrot/</string>
-            <string name="url_report_bug" translatable="false">https://github.com/opengapps/opengapps-app-support/issues</string>
-            <string name="url_support_chat" translatable="false">http://opengapps.org/gitter</string>
-            <string name="url_support_forum" translatable="false">http://opengapps.org/xda</string>
+            <string name="url_report_bug" translatable="false">https://github.com/opengapps/opengapps-app-support/issues/</string>
+            <string name="url_support_chat" translatable="false">http://opengapps.org/gitter/</string>
+            <string name="url_support_forum" translatable="false">http://opengapps.org/xda/</string>
             <string name="url_wiki" translatable="false">http://opengapps.org/wiki</string>
             <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
-            <string name="github_link" translatable="false">https://github.com/opengapps/opengapps</string>
+            <string name="github_link" translatable="false">https://github.com/opengapps/opengapps/</string>
             <string name="link_yeti" translatable="false">http://www.yeti-designs.com/</string>
             <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
             <string name="url_donate" translatable="false">http://opengapps.org/donate/</string>
