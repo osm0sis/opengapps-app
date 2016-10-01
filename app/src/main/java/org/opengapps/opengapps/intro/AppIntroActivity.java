@@ -22,9 +22,8 @@ import com.github.paolorotolo.appintro.AppIntro2Fragment;
 import com.github.paolorotolo.appintro.AppIntroViewPager;
 
 import org.opengapps.opengapps.R;
+import org.opengapps.opengapps.ZipInstaller;
 import org.opengapps.opengapps.prefs.Preferences;
-
-import eu.chainfire.libsuperuser.Shell;
 
 
 public class AppIntroActivity extends AppIntro {
@@ -49,7 +48,7 @@ public class AppIntroActivity extends AppIntro {
             }
         }
 
-        if (Shell.SU.available())
+        if (ZipInstaller.hasRoot())
             addSlide(new RequestRootFragment());
 
         addSlide(new slideArchSelectorFragment());

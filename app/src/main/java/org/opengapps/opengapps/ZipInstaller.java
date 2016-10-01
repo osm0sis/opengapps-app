@@ -29,7 +29,7 @@ public class ZipInstaller {
     }
 
     public void installZip(File file) {
-        if (prefs.getBoolean("root_mode", false) && Shell.SU.available()) {
+        if (prefs.getBoolean("root_mode", false) && ZipInstaller.hasRoot()) {
             try {
                 File f = new File(context.getFilesDir(), "openrecoveryscript");
                 FileWriter fileWriter = new FileWriter(f, false);
@@ -66,9 +66,18 @@ public class ZipInstaller {
                 //noinspection deprecation
                 result = info.flags & PermissionInfo.PROTECTION_FLAG_SYSTEM;
             }
-            return result != 0 || Shell.SU.available();
+            return result != 0 || ZipInstaller.hasRoot();
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    public static boolean hasRoot() {
+        String[] paths = {"/system/app/Superuser.apk", "/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/system/sd/xbin/su",
+                "/system/bin/failsafe/su", "/data/local/su", "/su/bin/su"};
+        for (String path : paths) {
+            if (new File(path).exists()) return true;
+        }
+        return false;
     }
 }

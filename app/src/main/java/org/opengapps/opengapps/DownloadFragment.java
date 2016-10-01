@@ -63,7 +63,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onResume() {
         super.onResume();
         loadInstallCards();
-        Downloader.deleteOldFiles(getActivity());
         isRestored = true;
     }
 
@@ -241,11 +240,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             @Override
             public boolean accept(File file, String name) {
                 boolean nameFits = name.startsWith("open_gapps-") && name.endsWith(".zip");
-                boolean downloadRunning = !(prefs.getString("running_download_tag", "unSeT").equals("unSeT") || prefs.getString("running_download_tag", "unSeT").equals(""));
                 boolean runningDownload = name.contains(prefs.getString("selection_arch", "unset").toLowerCase()) &&
-                        name.contains(prefs.getString("selection_android", "unset")) && name.contains(prefs.getString("selection_variant", "unset"))
-                        && name.contains(prefs.getString("running_download_tag", "unset"));
-                return !(nameFits && downloadRunning && runningDownload) && nameFits;
+                        name.contains(prefs.getString("selection_android", "unset")) && name.contains(prefs.getString("selection_variant", "unset"));
+                if (runningDownload)
+                    return nameFits && !Downloader.runningDownload(getActivity(), name);
+                return nameFits;
             }
         };
 

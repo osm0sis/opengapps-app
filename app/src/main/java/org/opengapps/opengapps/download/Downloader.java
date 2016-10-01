@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -118,12 +119,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         return tag;
     }
 
-    public static void deleteLastFile() {
-        if (lastFile != null)
-            //noinspection ResultOfMethodCallIgnored
-            lastFile.delete();
-    }
-
     public static void setLastFile(File lastFile) {
         Downloader.lastFile = lastFile;
     }
@@ -146,8 +141,17 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         Arrays.sort(files);
         for (int i = 0; i < files.length - 1; i++) {
             //noinspection ResultOfMethodCallIgnored
-            files[i].delete();
+            deletePackage(files[i]);
         }
+    }
+
+    private static void deletePackage(File gappsFile) {
+        File md5File = new File(gappsFile.getAbsolutePath() + ".md5");
+        String versionLog = gappsFile.getAbsolutePath().substring(0, gappsFile.getAbsolutePath().length() - 4) + ".versionlog.txt";
+        File versionlogFile = new File(versionLog);
+        md5File.delete();
+        versionlogFile.delete();
+        gappsFile.delete();
     }
 
     public class TagUpdater extends AsyncTask<Void, Void, String> {
@@ -181,6 +185,17 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         url = url.replace("%variant", variant);
         url = url.replace("%android", android);
         return Uri.parse(url);
+    }
+
+    public static boolean runningDownload(Context context, String expectedName) {
+        DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Query query = new DownloadManager.Query();
+        Cursor c = manager.query(query.setFilterByStatus(7));
+        if(c.moveToFirst()){
+            String title = c.getString(c.getColumnIndex(DownloadManager.COLUMN_TITLE));
+            return expectedName.contains(title);
+        }
+        return false;
     }
 
     private String parseFeed() {
