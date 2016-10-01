@@ -12,12 +12,12 @@
             <string name="appintro_storageperm_explain">To download an Open GApps package, you have to grant the app permission to your File Storage</string>
             <string name="slide_arch_description">Please select the architecture you’d like to use for your Open GApps package</string>
             <string name="slide_android_description">Please select the Android version you’d like to use for your Open GApps package</string>
-            <string name="slide_variant_description">Please select the Package variant you’d like to use for your Open GApps package.</string>
+            <string name="slide_variant_description">Please select the package variant you’d like to use for your Open GApps package.</string>
             <string name="appintro_root_explanation">The app offers an integrated install-mode to directly install a downloaded package. This install-mode requires &lt;i&gt;root access&lt;/i&gt;. If you want to use it, you need to grant us root permission. \nThis step is completely optional.</string>
             <string name="appintro_terms_explain">The pre-built packages from OpenGApps.org are provided ONLY as courtesy by OpenGApps.org without warranty of ANY kind, under the terms that they can be freely used for personal use only, and are not allowed to be mirrored to the public other than OpenGApps.org. \n \n Take note that Open GApps does not provide you with any license for Google’s APKs included in the package. The Open GApps packages merely provide a convenient way to sideload APKs to your device. It is your own responsibility to obtain the proper permissions by e.g. buying an OHA-licensed device with pre-installed Google Apps and/or acquiring the applications from Google’s Play Store.</string>
         <!--HINTS-->
             <string name="slide_arch_hint">The app automatically detects the architecture of your device</string>
-            <string name="slide_android_hint">The app automatically detects the android-version of your device</string>
+            <string name="slide_android_hint">The app automatically detects the Android version of your device</string>
             <string name="slide_variant_hint">The app automatically detects the variant installed on your device</string>
         <!--VARIOUS-->
             <string name="detected">detected</string>
@@ -33,10 +33,10 @@
             <string name="label_download_md5">Download MD5</string>
             <string name="only_newest_version">Automatically clean-up downloads</string>
             <string name="label_download_versionlog">Download VersionLog</string>
-            <string name="label_root_mode">Use Root-Permissions</string>
+            <string name="label_root_mode">Use Root Permission</string>
         <!--SUMMARIES-->
             <string name="summary_wifi_only">Download over WiFi only</string>
-            <string name="explanation_newest_version">Delete all previous Versions of a GApps-Package if a new one was downloaded successfully</string>
+            <string name="explanation_newest_version">Delete outdated version if a new similar variant has been downloaded</string>
             <string name="explanation_download_md5">Download MD5-Checksum to verify package integrity</string>
             <string name="explanation_download_versionlog">Download VersionLog to list package content</string>
             <string name="summary_root_mode">Grant root access to enable install-mode and the wipe cache/dalvik setting</string>
@@ -64,7 +64,10 @@
             <string name="label_accepted">Accepted</string>
             <string name="label_decline">Decline</string>
             <string name="label_delete">Delete</string>
-            <string name="title_optional_app_update">App-Update available</string>
+            <string name="title_optional_app_update">App update available</string>
+            <string name="ms_prev">Previous</string>
+            <string name="ms_next">Next</string>
+            <string name="ms_end">Complete</string>
         <!--EXPLANATION-->
             <string name="explanation_permission_denied">In order to work correctly you have to grant Open GApps the permission to your external storage. Makes sense, doesn\'t it?</string>
             <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead</string>

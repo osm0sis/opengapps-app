@@ -1,18 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--______APP INTRO______-->
         <!--TITLES-->
-            <string name="appintro_introslide_title">Welkom bij de officiele OpenGApps.org App</string>
+            <string name="appintro_introslide_title">Welkom bij de officiële OpenGApps.org App</string>
             <string name="appintro_storageperm_title">Bestandssysteem Rechten</string>
             <string name="appintro_root_title">Root Rechten</string>
+            <string name="appintro_label_android">Androidversie</string>
+            <string name="appintro_label_architecture">CPU-Architectuur</string>
+            <string name="appintro_label_variant">Pakketvariant</string>
             <string name="label_tos">Gebruiksvoorwaarden</string>
         <!--DESCRIPTIONS-->
-            <string name="appintro_storageperm_explain">Om een Open GApps-pakket te kunnen downloaden, dient u ons toesteming te geven tot uw Bestandssysteem</string>
-            <string name="slide_android_description">U kunt hier de Android versie selecteren</string>
-            <string name="slide_variant_description">Stuff bout Variants EDITME</string>
+            <string name="appintro_storageperm_explain">Om een Open GApps-pakket te kunnen downloaden, dient u ons toestemming te geven tot uw Bestandssysteem</string>
+            <string name="slide_arch_description">Selecteer a.u.b. de architectuur die u wilt gebruiken voor uw Open GApps pakket</string>
+            <string name="slide_android_description">Selecteer a.u.b. de Android versie die u wilt gebruiken voor uw Open GApps pakket</string>
+            <string name="slide_variant_description">Selecteer a.u.b. de pakket variant die u wilt gebruiken voor uw Open GApps pakket</string>
             <string name="appintro_root_explanation">De app biedt een geïntegreerde installatie-modus om direct een gedownload pakket te installeren. Deze installatie-modus vereist <i>root rechten</i>. Als u dit wenst te gebruiken, dient u ons root rechten te verlenen. \nDeze stap is optioneel.</string>
-            <string name="appintro_terms_explain">De kant-en-klaar pakketten van OpenGApps.org worden enkel aangeboden als een gunst en zonder enige vorm van garantie, op voorwaarde dat deze enkel gebruikt mogen worden voor persoonlijk gebruik, en niet verder verspreid worden aan het publiek dan via OpenGApps.org. \n \n Let op dat Open GApps uw geen licentie verstrekt voor Google’s APKs in het pakket. De Open GApps pakketten bieden slechts een gemakkelijke methode om APKs op je apparaat te laden. Het is uw eigen verantwoordelijkheid om de benodigde toestemmingen door bijvoorbeeld een OHA-gelicenseerd apparaat met voor-geïnstalleerde Google Apps te kopen en/of de applicaties van Google’s Play Store te betrekken.</string>
+            <string name="appintro_terms_explain">De kant-en-klaar pakketten van OpenGApps.org worden enkel aangeboden als een gunst en zonder enige vorm van garantie, op voorwaarde dat deze enkel gebruikt mogen worden voor persoonlijk gebruik, en niet verder verspreid worden aan het publiek dan via OpenGApps.org. \n \n Let op dat Open GApps uw geen licentie verstrekt voor Google’s APKs in het pakket. De Open GApps pakketten bieden slechts een gemakkelijke methode om APKs op je apparaat te laden. Het is uw eigen verantwoordelijkheid om de benodigde toestemmingen door bijvoorbeeld een OHA-gelicenseerd apparaat met voorgeïnstalleerde Google Apps te kopen en/of de applicaties van Google’s Play Store te betrekken.</string>
         <!--HINTS-->
+            <string name="slide_arch_hint">De app herkent automatisch de architectuur van uw apparaat</string>
+            <string name="slide_android_hint">De app herkent automatisch de Android versie van uw apparaat</string>
+            <string name="slide_variant_hint">De app herkent automatisch de variant die al geïnstalleerd is op uw apparaat</string>
         <!--VARIOUS-->
+            <string name="detected">gedetecteerd</string>
 
     <!--______PREFERENCES______-->
         <!--LABELS-->
@@ -23,11 +31,16 @@
             <string name="label_download_dir">Downloadmap</string>
             <string name="label_wipe_cache">Cache/Dalvik wissen</string>
             <string name="label_download_md5">Download MD5</string>
+            <string name="only_newest_version">Automatisch downloads opschonen</string>
             <string name="label_download_versionlog">Download VersieLog</string>
+            <string name="label_root_mode">Gebruik Root Rechten</string>
         <!--SUMMARIES-->
             <string name="summary_wifi_only">Enkel over Wifi downloaden</string>
+            <string name="explanation_newest_version">Verwijder verouderde versie als een nieuwe gelijke variant gedownload is</string>
             <string name="explanation_download_md5">Download MD5-Checksum om pakketintegriteit te verifiëren</string>
-            <string name="explanation_download_versionlog">Download VersionLog om de pakketinhoud te inspecteren</string>
+            <string name="explanation_download_versionlog">Download VersieLog om de pakketinhoud te tonen</string>
+            <string name="summary_root_mode">Geef root toegang voor het gebruik van installatie-modus en de wipe cache/dalvik optie</string>
+            <string name="explanation_wipe_dalvik">Heroptimaliseert eenmalig de cache bij het opstarten. Kost meer tijd, maar voorkomt mogelijke problemen.</string>
 
     <!--______Nav-Drawer______-->
         <string name="label_links">Links</string>
@@ -51,6 +64,7 @@
             <string name="label_accepted">Geaccepteerd</string>
             <string name="label_decline">Weigeren</string>
             <string name="label_delete">Verwijderen</string>
+            <string name="title_optional_app_update">App update beschikbaar</string>
             <string name="ms_prev">Vorige</string>
             <string name="ms_next">Volgende</string>
             <string name="ms_end">Klaar</string>
@@ -77,8 +91,15 @@
             <string name="label_show_md5">Toon MD5-Checksum</string>
             <string name="label_show_versionlog">Toon VersieLog</string>
             <string name="label_share">Delen</string>
+            <string name="label_new">nieuw</string>
+            <string name="label_checksum_valid">De checksum is correct</string>
+            <string name="label_checksum_invalid">De checksum is ongeldig</string>
+
         <!--EXPLANATION-->
-            <string name="autoinstall_root_disclaimer">Automatische Installatie werkt enkel als OpenGApps als systeemapplicatie is geinstalleerd of met root</string>
+            <string name="explanation_optional_app_update">Update voor de app beschikbaar</string>
+            <string name="explanation_forced_update">U moet updaten om de app te kunnen blijven gebruiken</string>
+            <string name="label_root_is_need_for_rootmode">Om dit te activeren heeft uw root-rechten nodig</string>
+            <string name="autoinstall_root_disclaimer">Automatische Installatie werkt enkel als OpenGApps als systeemapplicatie is geïnstalleerd of met root</string>
 
     <!--______SUPPORT______-->
         <string name="label_support">Ondersteuning</string>
