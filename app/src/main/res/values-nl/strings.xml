@@ -104,7 +104,7 @@
     <!--______SUPPORT______-->
         <string name="label_support">Ondersteuning</string>
         <string name="label_wiki">Open GApps Wiki</string>
-        <string name="label_support_forum">Support Forum</string>
+        <string name="label_support_forum">Ondersteuningsforum</string>
         <string name="label_support_chat">Chat hulp</string>
         <string name="label_report_bug">Fout melden</string>
 
