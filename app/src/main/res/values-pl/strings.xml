@@ -1,20 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--______APP INTRO______-->
         <!--TITLES-->
-            <string name="appintro_introslide_title">Witaj w oficjalnym OpenGApps.org App</string>
-            <string name="appintro_storageperm_title">Zezwolenie korzystania z systemu plików</string>
+            <string name="appintro_introslide_title">Witaj w oficjalnej aplikacji OpenGApps.org</string>
+            <string name="appintro_storageperm_title">Zezwolenie dostępu do plików systemowych</string>
             <string name="appintro_root_title">Zezwolenie Root</string>
             <string name="appintro_label_architecture">Architektura CPU</string>
             <string name="appintro_label_android">Wersja Android</string>
             <string name="appintro_label_variant">Wariant Pakietu</string>
             <string name="label_tos">Warunki korzystania</string>
         <!--DESCRIPTIONS-->
-            <string name="appintro_storageperm_explain">Aby pobrać pakiet Open GApps, należy przyznać aplikacji zezwolenie na korzystanie z Twojego Systemu Plików</string>
-            <string name="slide_arch_description">Proszę wybrać archtekturę, którą chcesz użyć do korzystania z pakietu Open GApps</string>
-            <string name="slide_android_description">Proszę wybrać wersję Android, którą chcesz użyć do korzystania z pakietu Open GApps</string>
-            <string name="slide_variant_description">Proszę wybrać wariant pakietu, który chcesz użyć do korzystania z pakietu Open GApps.</string>
-            <string name="appintro_root_explanation">Aplikacja oferuje zintegrowany install-mode do bezpośredniej instlacji ściągniętego pakietu. Install-mode wymaga <i>root access</i>. Jeżeli chcesz tego użyć, musisz przyznać zezwolenie root. \nTen krok jest całkowicie opcjonalny.</string>
-            <string name="appintro_terms_explain">Wstępnie zbudowane pakiety OpenGApps.org są udostępnione JEDYNIE grzecznościowo przez OpenGApps.org bez JAKIEJKOLWIEK gwarancji, na warunkach, że mogą one zostać użyte dobrowolnie wyłącznie do użytku osobistego, oraz nie mogą one być rozprzestrzeniane do publiczności inaczej niż przez OpenGApps.org. \n \n Należy pamiętać, że Open GApps nie zapewnia żadnej licencji dla APK Google zawartych w pakiecie. Pakiety Open GApps jedynie zapewniają wygodny sposób na sideload APK do urządzenia. Uzyskanie odpowiednich uprawnień jest odpowiedzialnością własną użykownika, np. poprzez zakup licencjonowanego OHA urządzenia z fabrycznie zainstalowanymi Google Apps i/lub nabycie aplikacji z Google Play Store.</string>
+            <string name="appintro_storageperm_explain">Aby pobrać pakiet Open GApps, należy przyznać aplikacji zezwolenie na dostęp do plików systemowych</string>
+            <string name="slide_arch_description">Proszę wybrać archtekturę, którą chcesz użyć do pakietu Open GApps</string>
+            <string name="slide_android_description">Proszę wybrać wersję Android, którą chcesz użyć do pakietu Open GApps</string>
+            <string name="slide_variant_description">Proszę wybrać wariant pakietu Open GApps</string>
+            <string name="appintro_root_explanation">Aplikacja oferuje zintegrowany tryb instalacji do bezpośredniej instlacji pobranego pakietu. Tryb instalacji wymaga <i>root access</i>. Jeżeli chcesz tego użyć, musisz przyznać zezwolenie root. \nTen krok jest całkowicie opcjonalny.</string>
+            <string name="appintro_terms_explain">Wstępnie zbudowane pakiety OpenGApps.org są udostępnione JEDYNIE grzecznościowo przez OpenGApps.org bez JAKIEJKOLWIEK gwarancji, na warunkach, że mogą one zostać użyte dobrowolnie wyłącznie do użytku osobistego, oraz nie mogą one być rozprzestrzeniane dla publiczności poprzez inne źródła niż OpenGApps.org. \n \n Należy pamiętać, że Open GApps nie zapewnia żadnej licencji dla APK Google zawartych w pakiecie. Pakiety Open GApps jedynie zapewniają wygodny sposób na sideload APK do urządzenia. Uzyskanie odpowiednich uprawnień jest odpowiedzialnością własną użykownika, np. poprzez zakup licencjonowanego OHA urządzenia z fabrycznie zainstalowanymi Google Apps i/lub nabycie aplikacji z Google Play Store.</string>
         <!--HINTS-->
             <string name="slide_arch_hint">Aplikacja automatycznie wykrywa architekturę urządzenia</string>
             <string name="slide_android_hint">Aplikacja automatycznie wykrywa wersję Androida urządzenia</string>
@@ -25,22 +25,22 @@
     <!--______PREFERENCES______-->
         <!--LABELS-->
             <string name="new_folder">Nowy Folder</string>
-            <string name="pref_header_gapps_selection">Selekcja GApps</string>
+            <string name="pref_header_gapps_selection">Wybór GApps</string>
             <string name="action_settings">Ustawienia</string>
             <string name="label_wifi_only">Tylko WiFi</string>
-            <string name="label_download_dir">Pobierz katalog</string>
+            <string name="label_download_dir">Katalog pobierania</string>
             <string name="label_wipe_cache">Wyczyść Cache/Dalvik</string>
             <string name="label_download_md5">Pobierz MD5</string>
             <string name="only_newest_version">Automatyczne czyszczenie pobranych plików</string>
             <string name="label_download_versionlog">Pobierz VersionLog</string>
             <string name="label_root_mode">Użyj Zezwolenia Root</string>
         <!--SUMMARIES-->
-            <string name="summary_wifi_only">Pobierz tylko przez WiFi</string>
-            <string name="explanation_newest_version">Usuń nieaktualną wersję jeżeli nowy, podobny wariant został pobrany</string>
+            <string name="summary_wifi_only">Pobieraj tylko przez WiFi</string>
+            <string name="explanation_newest_version">Usuń nieaktualną wersję jeżeli nowszy, podobny wariant został pobrany</string>
             <string name="explanation_download_md5">Pobierz MD5-Checksum w celu sprawdzenia integralności pakietu</string>
             <string name="explanation_download_versionlog">Pobierz VersionLog w celu ukazania składu pakietu</string>
-            <string name="summary_root_mode">Udziel zezwolenia root w celu umożliwienia install-mode oraz wyczyszczenia ustawienia cache/dalvik</string>
-            <string name="explanation_wipe_dalvik">Wymusza ponowną optymalkizację cache przy ponownym uruchomieniu. Zajmuje więcej czasu, ale pomaga uniknąć potencjalnych problemów.</string>
+            <string name="summary_root_mode">Udziel zezwolenia root w celu umożliwienia trybu instalacji oraz wyczyszczenia ustawienia cache/dalvik</string>
+            <string name="explanation_wipe_dalvik">Wymusza ponowną optymalizację cache przy ponownym uruchomieniu. Zajmuje więcej czasu, ale pomaga uniknąć potencjalnych problemów.</string>
 
     <!--______Nav-Drawer______-->
         <string name="label_links">Linki</string>
@@ -92,12 +92,12 @@
             <string name="label_show_versionlog">Pokaż VersionLog</string>
             <string name="label_share">Podziel się</string>
             <string name="label_new">nowy</string>
-            <string name="label_checksum_valid">Suma kontrolna jest poprawna</string>
-            <string name="label_checksum_invalid">Suma kontrolna nie jest poprawna</string>
+            <string name="label_checksum_valid">Checksum jest poprawny</string>
+            <string name="label_checksum_invalid">Checksum nie jest poprawny</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Aktualizacja aplikacji jest dostępna</string>
-            <string name="explanation_forced_update">Musisz zaktualizować celem dalszego użycia aplikacji</string>
-            <string name="label_root_is_need_for_rootmode">Urządzenie musi być (rooted) w celu aktywowania</string>
+            <string name="explanation_forced_update">Musisz zaktualizować w celu dalszego użycia aplikacji</string>
+            <string name="label_root_is_need_for_rootmode">Urządzenie musi posiadać root w celu aktywowania</string>
             <string name="autoinstall_root_disclaimer">Automatyczna instalacja działa tylko gdy Open GApps jest zainstalowany jako aplikacja systemowa lub z zezwoleniem root</string>
 
 
@@ -111,10 +111,10 @@
     <!--______ABOUT______-->
         <string name="title_activity_about">Informacja o</string>
         <string name="label_version">Wersja</string>
-        <string name="main_dev">Główny Deweloper</string>
+        <string name="main_dev">Główny Programista</string>
         <string name="label_design">Artwork</string>
         <string name="label_producer">Producent</string>
-        <string name="label_easteregg_found">Easter egg znaleziony</string>
+        <string name="label_easteregg_found">Sekret znaleziony</string>
         <string name="used_libs">Biblioteka</string>
         <string name="click_show_more">Kliknij aby zobaczyć więcej</string>
 </resources>
