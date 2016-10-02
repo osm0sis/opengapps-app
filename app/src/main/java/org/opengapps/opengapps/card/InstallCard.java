@@ -79,6 +79,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                 new Tooltip.Builder(v)
                         .setText(R.string.label_checksum_valid)
                         .setCancelable(true)
+                        .setTextColor(Color.parseColor("#ffffff"))
                         .setDismissOnClick(true)
                         .show();
             }
@@ -91,6 +92,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                 new Tooltip.Builder(v)
                         .setText(R.string.label_checksum_invalid)
                         .setCancelable(true)
+                        .setTextColor(Color.parseColor("#ffffff"))
                         .setDismissOnClick(true)
                         .show();
             }

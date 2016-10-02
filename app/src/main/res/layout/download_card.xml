@@ -14,6 +14,7 @@
         android:text="@string/label_download_package"
         android:textSize="@dimen/font_size_headline"
         android:textStyle="normal|bold"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
