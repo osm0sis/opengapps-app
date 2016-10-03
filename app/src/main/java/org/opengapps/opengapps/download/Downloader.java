@@ -44,6 +44,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class Downloader extends AsyncTask<Void, Void, Long> {
     private final static String downloadUrl = "https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip";
     private final static String feedUrl = "https://github.com/opengapps/%arch/releases.atom";
+    private final static String subDir = "/OpenGApps/";
+    public final static String defaultDownloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + subDir;
 
     private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
@@ -76,7 +78,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         String architecture = prefs.getString("selection_arch", "arm").toLowerCase();
         String android = prefs.getString("selection_android", "").toLowerCase();
         String variant = prefs.getString("selection_variant", "").toLowerCase();
-        String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/");
+        String path = prefs.getString("download_dir", defaultDownloadDir);
         String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + getLastDownloadedTag(context);
         File f = new File(path, title + ".zip");
         if (fileExists && f.exists())
@@ -129,7 +131,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         final SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
             return;
-        File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/"));
+        File downloadDir = new File(prefs.getString("download_dir", defaultDownloadDir));
         FilenameFilter filter = new FilenameFilter() {
             @Override
             public boolean accept(File file, String name) {
@@ -245,10 +247,10 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         request.setTitle(title);
         if (prefs.getBoolean("download_wifi_only", true))
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-        File path = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/"));
+        File path = new File(prefs.getString("download_dir", defaultDownloadDir));
         File gappsPackage = new File(path, title + ".zip");
         if (prefs.getBoolean("download_md5", true))
-            downloadMD5(uri.toString(), new File(path, title + ".zip" + ".md5"));
+            downloadMD5(uri.toString(), new File(gappsPackage.getAbsolutePath() + ".md5"));
         if (prefs.getBoolean("download_versionlog", false))
             downloadVersionLog(uri.toString(), new File(path, title + ".versionlog.txt"));
         lastFile = gappsPackage;
@@ -301,7 +303,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         String android = prefs.getString("selection_android", null).toLowerCase();
         String variant = prefs.getString("selection_variant", null).toLowerCase();
         String tag = prefs.getString("last_downloaded_tag", null).toLowerCase();
-        String path = prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/");
+        String path = prefs.getString("download_dir", defaultDownloadDir);
         return path + "/" + "open_gapps" + "-" + architecture + "-" + android + "-" + variant + "-" + tag + ".zip";
     }
 
@@ -320,7 +322,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             };
 
 
-            File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/"));
+            File downloadDir = new File(prefs.getString("download_dir", defaultDownloadDir));
             File[] files = downloadDir.listFiles(filter);
             if (files == null || files.length == 0)
                 return "";

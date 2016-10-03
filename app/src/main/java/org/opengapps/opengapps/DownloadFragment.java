@@ -234,7 +234,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private File[] findFiles() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
             return new File[]{};
-        File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/"));
+        File downloadDir = new File(prefs.getString("download_dir", Downloader.defaultDownloadDir));
 
         FilenameFilter filter = new FilenameFilter() {
             @Override

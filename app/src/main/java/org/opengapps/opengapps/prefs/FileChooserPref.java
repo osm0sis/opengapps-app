@@ -13,6 +13,7 @@ import net.rdrei.android.dirchooser.DirectoryChooserConfig;
 import net.rdrei.android.dirchooser.DirectoryChooserFragment;
 
 import org.opengapps.opengapps.R;
+import org.opengapps.opengapps.download.Downloader;
 
 public class FileChooserPref extends Preference implements DirectoryChooserFragment.OnFragmentInteractionListener {
     private DirectoryChooserFragment dialog;
@@ -24,7 +25,7 @@ public class FileChooserPref extends Preference implements DirectoryChooserFragm
     @Override
     protected void onAttachedToActivity() {
         super.onAttachedToActivity();
-        setSummary(getPersistedString(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/"));
+        setSummary(getPersistedString(Downloader.defaultDownloadDir));
     }
 
     @Override

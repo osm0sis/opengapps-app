@@ -1,6 +1,5 @@
 package org.opengapps.opengapps;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,12 +64,11 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void initMainDevButton() {
-        final Activity thisFrag = this;
         LinearLayout mainDev = (LinearLayout) findViewById(R.id.main_dev_button);
         mainDev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText edit = new EditText(thisFrag);
+                final EditText edit = new EditText(AboutActivity.this);
                 DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -80,21 +78,21 @@ public class AboutActivity extends AppCompatActivity {
                             Pattern p = Pattern.compile("(mii*\\s){2}(mii*)", Pattern.CASE_INSENSITIVE);
                             Matcher matcher = p.matcher(input);
                             if (matcher.matches())
-                                Toast.makeText(thisFrag, "Meh❤", Toast.LENGTH_LONG).show();
+                                Toast.makeText(AboutActivity.this, "Meh❤", Toast.LENGTH_LONG).show();
                         }
                         if (input.trim().toLowerCase().startsWith("ha")) {
                             Pattern p = Pattern.compile("Haa*sii*", Pattern.CASE_INSENSITIVE);
                             Matcher matcher = p.matcher(input);
                             if (matcher.matches())
-                                Toast.makeText(thisFrag, "Maauusiiii❤", Toast.LENGTH_LONG).show();
+                                Toast.makeText(AboutActivity.this, "Maauusiiii❤", Toast.LENGTH_LONG).show();
                         }
                         if (input.contains("Chris") && input.contains("Cross"))
-                            Toast.makeText(thisFrag, "Mein Engel❤︎", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AboutActivity.this, "Mein Engel❤︎", Toast.LENGTH_LONG).show();
                     }
                 };
                 if (gfCount == 5) {
                     edit.setHint("Enter secret word");
-                    new AlertDialog.Builder(thisFrag)
+                    new AlertDialog.Builder(AboutActivity.this)
                             .setTitle("This is only meant for my loved one, glad you found it")
                             .setView(edit)
                             .setPositiveButton(android.R.string.ok, listener)
@@ -146,12 +144,11 @@ public class AboutActivity extends AppCompatActivity {
 
     private void initLicenseButton() {
         LinearLayout license = (LinearLayout) findViewById(R.id.licenses);
-        final Activity thisAc = this;
         license.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new Handler().postDelayed(new ButtonDisabler(view), 3000);
-                new LicensesDialog.Builder(thisAc)
+                new LicensesDialog.Builder(AboutActivity.this)
                         .setNotices(R.raw.notices)
                         .build()
                         .show();
