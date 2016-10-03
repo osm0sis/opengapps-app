@@ -32,7 +32,7 @@ import org.opengapps.opengapps.prefs.Preferences;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -43,7 +43,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
     public static boolean isRestored = false;
     private static String lastTag = "";
-    private HashMap<String, InstallCard> fileCards = new HashMap<>();
+    private ConcurrentHashMap<String, InstallCard> fileCards = new ConcurrentHashMap<>();
     private Downloader downloader;
     private SharedPreferences prefs;
     private Context globalContext;
@@ -234,7 +234,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private File[] findFiles() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
             return new File[]{};
-        File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
+        File downloadDir = new File(prefs.getString("download_dir", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/"));
 
         FilenameFilter filter = new FilenameFilter() {
             @Override
@@ -249,7 +249,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         };
 
         File[] files = downloadDir.listFiles(filter);
-        Arrays.sort(files);
+        if (files != null)
+            Arrays.sort(files);
+        else
+            files = new File[0];
         return files;
     }
 
@@ -259,10 +262,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     public void onTagUpdated() {
-        lastTag = downloader.getTag();
+        if (downloader != null)
+            lastTag = downloader.getTag();
         prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getActivity())).apply();
         refreshLayout.setRefreshing(false);
-        downloadCard.onTagUpdated(lastTag);
+        if (downloader != null)
+            downloadCard.onTagUpdated(lastTag);
 
     }
 

@@ -24,7 +24,7 @@ public class FileChooserPref extends Preference implements DirectoryChooserFragm
     @Override
     protected void onAttachedToActivity() {
         super.onAttachedToActivity();
-        setSummary(getPersistedString(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
+        setSummary(getPersistedString(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/OpenGApps/"));
     }
 
     @Override
