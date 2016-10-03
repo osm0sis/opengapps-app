@@ -175,12 +175,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             initDownloader(isRestored);
             downloadCard.setState(DownloadCard.State.NORMAL);
         } else if (s.equals("download_dir")) {
-            LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
-            for (InstallCard card : fileCards.values())
-                if (card != null)
-                    layout.removeView(card);
-            fileCards = new ConcurrentHashMap<>(0);
-            loadInstallCards();
+            InstallCard.invalidate = true;
         }
     }
 
@@ -201,12 +196,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     private void loadInstallCards() {
         for (InstallCard card : fileCards.values()) {
-            if (!card.exists()) {
+            if (!card.exists() || InstallCard.invalidate) {
                 ((LinearLayout) getView().findViewById(R.id.main_layout)).removeView(card);
                 onDeleteFile(card.getGappsFile());
                 fileCards.remove(card.getGappsFile().getAbsolutePath());
             }
         }
+        InstallCard.invalidate = false;
         for (File file : findFiles()) {
             if (!fileCards.containsKey(file.getAbsolutePath())) {
                 fileCards.put(file.getAbsolutePath(), createAndAddInstallCard(file));

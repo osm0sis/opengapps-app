@@ -38,6 +38,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickListener {
+    public static boolean invalidate = false;
     private File gappsFile;
     private File md5File;
     private File versionLogFile;
