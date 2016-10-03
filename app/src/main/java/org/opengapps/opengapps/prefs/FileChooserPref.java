@@ -34,7 +34,7 @@ public class FileChooserPref extends Preference implements DirectoryChooserFragm
     @Override
     protected void onClick() {
         final DirectoryChooserConfig config = DirectoryChooserConfig.builder()
-                .initialDirectory(Environment.getExternalStorageDirectory().getAbsolutePath())
+                .initialDirectory(getPersistedString(Downloader.defaultDownloadDir))
                 .newDirectoryName(getContext().getString(R.string.new_folder))
                 .allowNewDirectoryNameModification(true)
                 .allowReadOnlyDirectory(false)
