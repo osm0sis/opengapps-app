@@ -14,7 +14,7 @@ public class SelectionValidator {
     }
 
     public static boolean isValidArchAnd(String arch, String android) {
-        if (android.equals("7.0"))
+        if (android.equals("7.1"))
             return false;
         return !(arch.contains("64") && android.equals("4.4"));
     }
