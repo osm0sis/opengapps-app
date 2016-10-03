@@ -58,8 +58,7 @@ public class FileChooserPref extends Preference implements DirectoryChooserFragm
     @Override
     public void onSelectDirectory(@NonNull String path) {
         persistString(path);
-        File f = new File(path);
-        setSummary(f.getPath());
+        setSummary(path);
         dialog.dismiss();
         dialog = null;
     }

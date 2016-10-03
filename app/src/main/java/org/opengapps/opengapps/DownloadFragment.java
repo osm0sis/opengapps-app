@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -172,10 +171,16 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadCard.initSelections();
             if (!prefs.getBoolean("firstStart", true))
                 updateSelection();
-        }
-        if (s.equals("firstStart")) {
+        } else if (s.equals("firstStart")) {
             initDownloader(isRestored);
             downloadCard.setState(DownloadCard.State.NORMAL);
+        } else if (s.equals("download_dir")) {
+            LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+            for (InstallCard card : fileCards.values())
+                if (card != null)
+                    layout.removeView(card);
+            fileCards = new ConcurrentHashMap<>(0);
+            loadInstallCards();
         }
     }
 

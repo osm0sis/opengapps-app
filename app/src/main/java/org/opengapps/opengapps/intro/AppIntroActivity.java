@@ -35,9 +35,9 @@ public class AppIntroActivity extends AppIntro {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         showSkipButton(false);
+        showBackButtonWithDone = true;
         setSeparatorColor(Color.parseColor("#ffffff"));
         setInitialSettings();
-        skipButtonEnabled = false;
         int primaryDarkColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
         addSlide(AppIntro2Fragment.newInstance(getString(R.string.app_name), getString(R.string.appintro_introslide_title), R.drawable.ic_opengapps_large, primaryDarkColor));
         addSlide(new slideTermsOfUse());
