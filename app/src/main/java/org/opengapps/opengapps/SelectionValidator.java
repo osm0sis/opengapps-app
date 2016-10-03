@@ -3,7 +3,8 @@ package org.opengapps.opengapps;
 @SuppressWarnings({"SimplifiableIfStatement", "WeakerAccess"})
 public class SelectionValidator {
 
-    private SelectionValidator(){}
+    private SelectionValidator() {
+    }
 
     public static boolean isValid(String arch, String android, String variant) {
         if (arch.equals("x86") && android.equals("4.4") && (variant.equals("stock") || variant.equals("full")))
@@ -13,6 +14,8 @@ public class SelectionValidator {
     }
 
     public static boolean isValidArchAnd(String arch, String android) {
+        if (android.equals("7.0"))
+            return false;
         return !(arch.contains("64") && android.equals("4.4"));
     }
 

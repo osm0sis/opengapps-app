@@ -45,17 +45,19 @@ class PackageGuesser {
         String[] androidVersion = context.getResources().getStringArray(R.array.android_versions);
         switch (Build.VERSION.SDK_INT) {
             case 19:
-                return androidVersion[4];//KitKat-Device
+                return androidVersion[5];//KitKat-Device
             case 21:
-                return androidVersion[3];//Lollipop-5.0-Device
+                return androidVersion[4];//Lollipop-5.0-Device
             case 22:
-                return androidVersion[2];//Lollipop-5.1-Device
+                return androidVersion[3];//Lollipop-5.1-Device
             case 23:
-                return androidVersion[1];//Marshmallow-Device
+                return androidVersion[2];//Marshmallow-Device
             case 24:
-                return androidVersion[0];//Nougat-Device
+                return androidVersion[1];//Nougat-Device
+            case 25:
+                return androidVersion[0];//Nougat-MR1-Device (hello pixel)
             default:
-                return androidVersion[0]; //Default to latest
+                return androidVersion[1]; //Default to nougat
         }
     }
 
