@@ -31,6 +31,7 @@ import org.opengapps.opengapps.prefs.Preferences;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -251,7 +252,18 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
         File[] files = downloadDir.listFiles(filter);
         if (files != null)
-            Arrays.sort(files);
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File o1, File o2) {
+                    if(o1.lastModified()>o2.lastModified())
+                        return 1;
+                    else if(o1.lastModified() < o2.lastModified())
+                        return -1;
+                    else{
+                        return o1.compareTo(o2);
+                    }
+                }
+            });
         else
             files = new File[0];
         return files;
