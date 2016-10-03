@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+<!--AUTHORS: @mfonville, @yeti12-->
     <!--______APP INTRO______-->
         <!--TITLES-->
             <string name="appintro_introslide_title">Witaj w oficjalnej aplikacji OpenGApps.org</string>
