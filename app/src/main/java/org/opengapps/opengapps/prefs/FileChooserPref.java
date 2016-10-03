@@ -15,6 +15,8 @@ import net.rdrei.android.dirchooser.DirectoryChooserFragment;
 import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.download.Downloader;
 
+import java.io.File;
+
 public class FileChooserPref extends Preference implements DirectoryChooserFragment.OnFragmentInteractionListener {
     private DirectoryChooserFragment dialog;
 
@@ -25,7 +27,8 @@ public class FileChooserPref extends Preference implements DirectoryChooserFragm
     @Override
     protected void onAttachedToActivity() {
         super.onAttachedToActivity();
-        setSummary(getPersistedString(Downloader.defaultDownloadDir));
+        File f = new File(getPersistedString(Downloader.defaultDownloadDir));
+        setSummary(getPersistedString(f.getPath()));
     }
 
     @Override
