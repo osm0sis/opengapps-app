@@ -169,6 +169,7 @@ public class DownloadProgressView extends LinearLayout {
         downloadButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.setEnabled(false);
                 if (downloadManager != null) {
                     downloadManager.remove(downloadID);
                     try {

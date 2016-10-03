@@ -226,7 +226,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void addInstallCard(InstallCard installCard) {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), 0);
+        params.setMargins(dpToPx(getActivity(), 8), dpToPx(getActivity(), 8), dpToPx(getActivity(), 8), 0);
         installCard.setVisibility(View.VISIBLE);
         layout.addView(installCard, layout.getChildCount() - 1, params);
     }
@@ -256,8 +256,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         return files;
     }
 
-    private int dpToPx(@SuppressWarnings("SameParameterValue") int dp) {
-        final float scale = getActivity().getResources().getDisplayMetrics().density;
+    public static int dpToPx(Context context, int dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }
 

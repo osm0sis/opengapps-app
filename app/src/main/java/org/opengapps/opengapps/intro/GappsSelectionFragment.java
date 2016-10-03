@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.github.fcannizzaro.materialstepper.AbstractStep;
 
+import org.opengapps.opengapps.DownloadFragment;
 import org.opengapps.opengapps.R;
 import org.opengapps.opengapps.prefs.Preferences;
 
@@ -98,7 +99,10 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         descriptionView.setText(spanned);
         if (b != null && b.containsKey("position")) {
             header.setVisibility(View.GONE);
-//            descriptionView.setVisibility(View.GONE);
+            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) ((View) descriptionView.getParent()).getLayoutParams();
+            layoutParams.setMargins(0, 0, 0, DownloadFragment.dpToPx(getActivity(), 50));
+            layoutParams.setMarginStart(DownloadFragment.dpToPx(getActivity(), 24));
+            layoutParams.setMarginEnd(DownloadFragment.dpToPx(getActivity(), 24));
         }
         ConstraintLayout layout = (ConstraintLayout) getView().findViewById(R.id.constraint_selection);
         layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));

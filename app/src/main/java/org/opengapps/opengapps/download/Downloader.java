@@ -25,10 +25,12 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import okhttp3.OkHttpClient;
@@ -277,9 +279,13 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
                     .url(uri)
                     .build();
             Response response = client.newCall(request).execute();
-            FileWriter fileWriter = new FileWriter(file, false);
-            fileWriter.write(response.body().string());
-            fileWriter.close();
+            InputStream inputStream = response.body().byteStream();
+            FileOutputStream fos = new FileOutputStream(file);
+            int inByte;
+            while ((inByte = inputStream.read()) != -1)
+                fos.write(inByte);
+            inputStream.close();
+            fos.close();
         } catch (Exception ignored) {
         }
     }
