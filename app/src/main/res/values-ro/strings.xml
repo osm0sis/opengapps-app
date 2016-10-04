@@ -63,7 +63,7 @@
             <string name="navigation_drawer_close">Închide navigator</string>
             <string name="label_accept">Accept</string>
             <string name="label_accepted">Acceptat</string>
-            <string name="label_decline">Respinge</string>
+            <string name="label_decline">Refuz</string>
             <string name="label_delete">Şterge</string>
             <string name="title_optional_app_update">Actualizare disponibilă</string>
             <string name="ms_prev">Anterior</string>
