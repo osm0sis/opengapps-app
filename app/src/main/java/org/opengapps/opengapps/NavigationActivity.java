@@ -15,6 +15,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -24,7 +25,7 @@ import org.opengapps.opengapps.intro.AppIntroActivity;
 import org.opengapps.opengapps.prefs.Preferences;
 
 @SuppressWarnings("WrongConstant")
-public class NavigationActivity extends Activity
+public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public final static int EXIT_CODE = 1;

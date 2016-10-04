@@ -310,9 +310,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     public static String getLastDownloadedTag(@NonNull Context context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
-            final String architecture = prefs.getString("selection_arch", null).toLowerCase();
-            final String selection_android = prefs.getString("selection_android", null).toLowerCase();
-            final String variant = prefs.getString("selection_variant", null).toLowerCase();
+            final String architecture = prefs.getString("selection_arch", "").toLowerCase();
+            final String selection_android = prefs.getString("selection_android", "").toLowerCase();
+            final String variant = prefs.getString("selection_variant", "").toLowerCase();
             final String filterString = "open_gapps" + "-" + architecture + "-" + selection_android + "-" + variant + "-";
             FilenameFilter filter = new FilenameFilter() {
                 @Override
