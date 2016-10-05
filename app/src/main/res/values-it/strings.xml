@@ -2,24 +2,24 @@
 <!--AUTHORS: @rapperskull-->
     <!--______APP INTRO______-->
         <!--TITLES-->
-            <string name="appintro_introslide_title">Benvenuto nell\'App ufficiale di OpenGApps.org</string>
+            <string name="appintro_introslide_title">Benvenuto nell’App ufficiale di OpenGApps.org</string>
             <string name="appintro_storageperm_title">Permessi di Archiviazione</string>
             <string name="appintro_root_title">Permessi di Root</string>
             <string name="appintro_label_architecture">Architettura CPU</string>
             <string name="appintro_label_android">Versione di Android</string>
             <string name="appintro_label_variant">Variante del Pacchetto</string>
-            <string name="label_tos">Termini d\'Uso</string>
+            <string name="label_tos">Termini d’Uso</string>
         <!--DESCRIPTIONS-->
-            <string name="appintro_storageperm_explain">Per scaricare un pacchetto Open GApps, devi concedere all\'applicazione i permessi di Archiviazione</string>
-            <string name="slide_arch_description">Per favore seleziona l\'architettura da utilizzare per il tuo pacchetto Open GApps</string>
+            <string name="appintro_storageperm_explain">Per scaricare un pacchetto Open GApps, devi concedere all’applicazione i permessi di Archiviazione</string>
+            <string name="slide_arch_description">Per favore seleziona l’architettura da utilizzare per il tuo pacchetto Open GApps</string>
             <string name="slide_android_description">Per favore seleziona la versione di Android da utilizzare per il tuo pacchetto Open GApps</string>
             <string name="slide_variant_description">Per favore seleziona la variante da utilizzare per il tuo pacchetto Open GApps</string>
-            <string name="appintro_root_explanation">Questa app offre una modalità di installazione integrata per installare direttamente un pacchetto scaricato. Questa modalità richiede l\'<i>accesso root</i>. Se vuoi usarla, devi concederci i permessi di root. \nQuesto passo è completamente opzionale.</string>
+            <string name="appintro_root_explanation">Questa app offre una modalità di installazione integrata per installare direttamente un pacchetto scaricato. Questa modalità richiede l’<i>accesso root</i>. Se vuoi usarla, devi concederci i permessi di root. \nQuesto passo è completamente opzionale.</string>
             <string name="appintro_terms_explain">I pacchetti precompilati da OpenGApps.org sono forniti SOLO per gentile concessione di OpenGApps.org senza garanzia di ALCUN tipo, a condizione che vengano usati liberamente solo per uso personale, e non è permesso distribuire copie al pubblico se non attraverso OpenGApps.org. \n \n Tieni a mente che Open GApps non ti fornisce alcuna licenza per gli APK di Google inclusi nel pacchetto. I pacchetti Open GApps forniscono soltanto un modo veloce per caricare manualmente gli APK sul tuo dispositivo. È tua responsabilità ottenere le autorizzazioni necessarie, per esempio comprando un dispositivo con licenza OHA con le Google Apps preinstallate e/o scaricare le applicazioni dal Play Store di Google.</string>
         <!--HINTS-->
-            <string name="slide_arch_hint">L\'app rileva automaticamente l\'architettura del tuo dispositivo</string>
-            <string name="slide_android_hint">L\'app rileva automaticamente la versione di Android del tuo dispositivo</string>
-            <string name="slide_variant_hint">L\'app rileva automaticamente la variante installata sul tuo dispositivo</string>
+            <string name="slide_arch_hint">L’app rileva automaticamente l’architettura del tuo dispositivo</string>
+            <string name="slide_android_hint">L’app rileva automaticamente la versione di Android del tuo dispositivo</string>
+            <string name="slide_variant_hint">L’app rileva automaticamente la variante installata sul tuo dispositivo</string>
         <!--VARIOUS-->
             <string name="detected">rilevato</string>
 
@@ -38,9 +38,9 @@
         <!--SUMMARIES-->
             <string name="summary_wifi_only">Scarica solo tramite WiFi</string>
             <string name="explanation_newest_version">Cancella vecchie versioni se una nuova variante simile è stata scaricata</string>
-            <string name="explanation_download_md5">Scarica il Checksum MD5 per verificare l\'integrità del pacchetto</string>
+            <string name="explanation_download_md5">Scarica il Checksum MD5 per verificare l’integrità del pacchetto</string>
             <string name="explanation_download_versionlog">Scarica il Log di Versione per mostrare il contenuto del pacchetto</string>
-            <string name="summary_root_mode">Concedi l\'accesso root per abilitare la modalità di installazione e il wipe della cache/dalvik</string>
+            <string name="summary_root_mode">Concedi l’accesso root per abilitare la modalità di installazione e il wipe della cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Forza re-ottimizzazione della cache al prossimo avvio. Impiega più tempo, ma aiuta a prevenire eventuali problemi.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
             <string name="confirm_label">Conferma</string>
@@ -80,7 +80,7 @@
             <string name="ms_next">Successivo</string>
             <string name="ms_end">Completa</string>
         <!--EXPLANATION-->
-            <string name="explanation_permission_denied">Per funzionare correttamente devi garantire a Open GApps l\'accesso all\'archivio esterno. Ha senso, no?</string>
+            <string name="explanation_permission_denied">Per funzionare correttamente devi garantire a Open GApps l’accesso all’archivio esterno. Ha senso, no?</string>
             <string name="explanation_adblock_detected">Adblocker rilevato!? Le pubblicità possono essere fastidiose, ma tengono vivi il progetto e i suoi sviluppatori! Per favore considera la possibilità di disabilitare il tuo adblocker oppure di donare</string>
 
     <!--______DOWNLOAD/INSTALL______-->
@@ -106,10 +106,10 @@
             <string name="label_checksum_valid">Il checksum è valido</string>
             <string name="label_checksum_invalid">Il checksum non è valido</string>
         <!--EXPLANATION-->
-            <string name="explanation_optional_app_update">Un aggiornamento dell\'app è disponibile</string>
-            <string name="explanation_forced_update">Devi aggiornare per continuare ad usare l\'app</string>
+            <string name="explanation_optional_app_update">Un aggiornamento dell’app è disponibile</string>
+            <string name="explanation_forced_update">Devi aggiornare per continuare ad usare l’app</string>
             <string name="label_root_is_need_for_rootmode">Il tuo dispositivo deve essere rootato per poterlo attivare</string>
-            <string name="autoinstall_root_disclaimer">L\'Installazione Automatica funziona solo se Open GApps è installata come app di sistema o con i permessi di root</string>
+            <string name="autoinstall_root_disclaimer">L’Installazione Automatica funziona solo se Open GApps è installata come app di sistema o con i permessi di root</string>
 
 
     <!--______SUPPORT______-->
