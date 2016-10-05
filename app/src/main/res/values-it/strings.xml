@@ -43,7 +43,6 @@
             <string name="summary_root_mode">Concedi l\'accesso root per abilitare la modalità di installazione e il wipe della cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Forza re-ottimizzazione della cache al prossimo avvio. Impiega più tempo, ma aiuta a prevenire eventuali problemi.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="cancel_label">Anulla</string>
             <string name="confirm_label">Conferma</string>
             <string name="selected_folder_label">Seleziona Directory:</string>
             <string name="create_folder_label">Crea Directory</string>
