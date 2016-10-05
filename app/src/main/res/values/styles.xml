@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -39,5 +38,4 @@
     <style name="ItalicRadiobutton">
         <item name="android:textStyle">italic</item>
     </style>
-
 </resources>
