@@ -144,8 +144,14 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     public void initDownloader(boolean isRestored) {
         downloader = new Downloader(this);
+        refreshLayout.setProgressViewOffset(false, 100, 150); //TODO - finetune pixels
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+            }
+        });
         if (!isRestored || TextUtils.isEmpty(lastTag)) {
-            refreshLayout.setRefreshing(true);
             downloader.new TagUpdater().execute();
         } else {
             downloader.setTag(lastTag);
@@ -255,11 +261,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             Arrays.sort(files, new Comparator<File>() {
                 @Override
                 public int compare(File o1, File o2) {
-                    if(o1.lastModified()>o2.lastModified())
+                    if (o1.lastModified() > o2.lastModified())
                         return 1;
-                    else if(o1.lastModified() < o2.lastModified())
+                    else if (o1.lastModified() < o2.lastModified())
                         return -1;
-                    else{
+                    else {
                         return o1.compareTo(o2);
                     }
                 }
@@ -278,9 +284,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (downloader != null)
             lastTag = downloader.getTag();
         prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getActivity())).apply();
-        refreshLayout.setRefreshing(false);
-        if (downloader != null)
+        if (downloader != null) {
             downloadCard.onTagUpdated(lastTag);
+        }
+        refreshLayout.setRefreshing(false);
 
     }
 

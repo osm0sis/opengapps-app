@@ -1,42 +1,47 @@
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dl_refresher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="50dp">
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/dl_refresher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/main_layout"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:animateLayoutChanges="true"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <org.opengapps.opengapps.card.PermissionCard
-                android:id="@+id/permission_card"
+            <LinearLayout
+                android:id="@+id/main_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                ads:cardBackgroundColor="@color/colorPrimaryDark"
-                ads:cardCornerRadius="0dp" />
+                android:layout_marginTop="6dp"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical">
 
-            <org.opengapps.opengapps.card.DownloadCard
-                android:id="@+id/download_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:visibility="visible" />
+                <org.opengapps.opengapps.card.PermissionCard
+                    android:id="@+id/permission_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    ads:cardBackgroundColor="@color/colorPrimaryDark"
+                    ads:cardCornerRadius="0dp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-        </LinearLayout>
-    </ScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+                <org.opengapps.opengapps.card.DownloadCard
+                    android:id="@+id/download_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="visible" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
