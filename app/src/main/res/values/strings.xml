@@ -43,7 +43,6 @@
             <string name="summary_root_mode">Grant root access to enable install-mode and the wipe cache/dalvik setting</string>
             <string name="explanation_wipe_dalvik">Forces re-optimization of cache at next boot. Takes more time, but helps to prevent potential issues.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="cancel_label">@string/label_cancel</string>
             <string name="confirm_label">Confirm</string>
             <string name="selected_folder_label">Selected folder:</string>
             <string name="create_folder_label">Create folder</string>
@@ -112,7 +111,6 @@
             <string name="label_root_is_need_for_rootmode">Your device needs to be rooted in order to activate</string>
             <string name="autoinstall_root_disclaimer">Automatic Install only works only if Open GApps is installed as system app or with root permission</string>
 
-
     <!--______SUPPORT______-->
         <string name="label_support">Support</string>
         <string name="label_wiki">Open GApps Wiki</string>
@@ -132,7 +130,6 @@
             <string name="click_show_more">Click to show more</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
             <string name="notices_title">Notices</string>
-            <string name="notices_close">@string/label_close</string>
 
     <!--______UNTRANSLATEABLE STRINGS______-->
         <!--ARRAYS-->
@@ -182,4 +179,8 @@
             <string name="link_yeti" translatable="false">http://www.yeti-designs.com/</string>
             <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
             <string name="url_donate" translatable="false">http://opengapps.org/donate/</string>
+        <!--FILECHOOSER (EXTERNAL LIBRARY)-->
+            <string name="cancel_label">@string/label_cancel</string>
+        <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
+            <string name="notices_close">@string/label_close</string>
 </resources>
