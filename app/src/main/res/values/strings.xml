@@ -42,6 +42,17 @@
             <string name="explanation_download_versionlog">Download VersionLog to list package content</string>
             <string name="summary_root_mode">Grant root access to enable install-mode and the wipe cache/dalvik setting</string>
             <string name="explanation_wipe_dalvik">Forces re-optimization of cache at next boot. Takes more time, but helps to prevent potential issues.</string>
+        <!--FILECHOOSER (EXTERNAL LIBRARY)-->
+            <string name="cancel_label">Cancel</string>
+            <string name="confirm_label">Confirm</string>
+            <string name="selected_folder_label">Selected folder:</string>
+            <string name="create_folder_label">Create folder</string>
+            <string name="create_folder_msg">Create new folder with name "%1$s"?</string>
+            <string name="create_folder_success">Created new folder</string>
+            <string name="create_folder_error_no_write_access">Cannot write to this folder</string>
+            <string name="create_folder_error_already_exists">Folder already exists</string>
+            <string name="create_folder_error">Could not create folder</string>
+            <string name="up_label">Up</string>
 
     <!--______Nav-Drawer______-->
         <string name="label_links">Links</string>

@@ -42,6 +42,17 @@
             <string name="explanation_download_versionlog">Télécharger le log de la version afin d’afficher le contenu du package</string>
             <string name="summary_root_mode">Accorder les droits d’utilisateur root afin d’activer le mode d’installation intégré et l’option "Effacer Cache/Dalvik"</string>
             <string name="explanation_wipe_dalvik">Force la réoptimisation du cache au prochain redémarrage. Cela peut prendre plus de temps, mais contribue à éviter de potentielles difficultés techniques.</string>
+    <!--FILECHOOSER (EXTERNAL LIBRARY)-->
+            <string name="cancel_label">Annuler</string>
+            <string name="confirm_label">Valider</string>
+            <string name="create_folder_error">Impossible de créer le dossier</string>
+            <string name="create_folder_error_already_exists">Le dossier existe déjà</string>
+            <string name="create_folder_error_no_write_access">Impossible d\'écrire dans ce dossier</string>
+            <string name="create_folder_label">Créer un dossier</string>
+            <string name="create_folder_msg">Créer le dossier &quot;%1$s&quot; ?</string>
+            <string name="create_folder_success">Créer un nouveau dossier</string>
+            <string name="selected_folder_label">Dossier séléctionné :\u00A0</string>
+            <string name="up_label">Dossier supérieur</string>
 
     <!--______Nav-Drawer______-->
         <string name="label_links">Liens</string>

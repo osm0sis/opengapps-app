@@ -31,16 +31,20 @@
 
         <activity
             android:name=".Stepper"
-            android:parentActivityName=".NavigationActivity">
+            android:configChanges="orientation|keyboardHidden"
+            android:parentActivityName=".NavigationActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".NavigationActivity" />
         </activity>
         <activity
             android:name=".intro.AppIntroActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="AppIntro"
             android:launchMode="singleInstance"
-            android:parentActivityName=".NavigationActivity">
+            android:parentActivityName=".NavigationActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".NavigationActivity" />

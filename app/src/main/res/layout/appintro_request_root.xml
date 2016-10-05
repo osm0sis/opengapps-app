@@ -42,7 +42,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38" />
+        app:layout_constraintVertical_bias="0.26" />
 
     <Button
         android:id="@+id/permission_button"
@@ -50,20 +50,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         android:text="@string/label_grant_permission"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_image" />
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        android:layout_marginBottom="24dp" />
 
 
     <TextView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="@string/appintro_root_explanation"
         android:textAlignment="center"
@@ -71,7 +70,9 @@
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permission_button"
-        tools:text="Description" />
+        tools:text="Description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="88dp"
+        android:id="@+id/textView" />
 
 </android.support.constraint.ConstraintLayout>

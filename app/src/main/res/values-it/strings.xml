@@ -42,6 +42,17 @@
             <string name="explanation_download_versionlog">Scarica il Log di Versione per mostrare il contenuto del pacchetto</string>
             <string name="summary_root_mode">Concedi l\'accesso root per abilitare la modalità di installazione e il wipe della cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Forza re-ottimizzazione della cache al prossimo avvio. Impiega più tempo, ma aiuta a prevenire eventuali problemi.</string>
+        <!--FILECHOOSER (EXTERNAL LIBRARY)-->
+            <string name="cancel_label">Anulla</string>
+            <string name="confirm_label">Conferma</string>
+            <string name="selected_folder_label">Seleziona Directory:</string>
+            <string name="create_folder_label">Crea Directory</string>
+            <string name="create_folder_msg">Creare una nuova Directory con il nome "%1$s"?</string>
+            <string name="create_folder_success">Nuova Directory Creata</string>
+            <string name="create_folder_error_no_write_access">Non si può scrivere in questa Directory</string>
+            <string name="create_folder_error_already_exists">La Directory esiste già</string>
+            <string name="create_folder_error">Impossibile creare la Directory</string>
+            <string name="up_label">Su</string>
 
     <!--______Nav-Drawer______-->
         <string name="label_links">Link</string>
