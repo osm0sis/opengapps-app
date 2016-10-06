@@ -89,7 +89,7 @@
             <string name="label_architecture">Architectuur</string>
             <string name="label_variant">Variant</string>
             <string name="invalid_combo">Ongeldige combinatie</string>
-            <string name="label_install">Installeren</string>
+            <string name="label_install">Installeer</string>
             <string name="label_update">Updaten</string>
             <string name="label_change_selection">Verander selectie</string>
             <string name="download_started">Download gestart</string>
