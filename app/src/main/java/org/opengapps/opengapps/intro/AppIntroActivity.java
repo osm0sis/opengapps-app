@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
@@ -35,7 +36,6 @@ public class AppIntroActivity extends AppIntro {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         showSkipButton(false);
-        showBackButtonWithDone = true;
         setSeparatorColor(Color.parseColor("#ffffff"));
         setInitialSettings();
         int primaryDarkColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
@@ -123,11 +123,11 @@ public class AppIntroActivity extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         SharedPreferences sharedPref = getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("firstStart", false);
         editor.putString("selection_android", GappsSelectionFragment.selectionAnd);
         editor.putString("selection_variant", GappsSelectionFragment.selectionVariant);
         editor.putString("selection_arch", GappsSelectionFragment.selectionArch);
         editor.apply();
+        editor.putBoolean("firstStart", false).apply();
         finish();
     }
 

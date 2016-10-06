@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -163,6 +164,16 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         protected String doInBackground(Void... voids) {
             refreshFeed();
             return parseFeed();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+            Log.e("showwme", "onPreExecute: ");
+            for (StackTraceElement element : stackTrace) {
+                Log.d("showwme", element.toString());
+            }
         }
 
         @Override

@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,12 +175,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        Log.e(TAG, "onSharedPreferenceChanged: " + s);
         if (s.contains("selection")) {
             downloadCard.initSelections();
             if (!prefs.getBoolean("firstStart", true))
                 updateSelection();
         } else if (s.equals("firstStart")) {
-            initDownloader(isRestored);
             downloadCard.setState(DownloadCard.State.NORMAL);
         } else if (s.equals("download_dir")) {
             InstallCard.invalidate = true;
