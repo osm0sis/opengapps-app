@@ -87,15 +87,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         initDownloader(false);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!prefs.getBoolean("firstStart", true) && !downloaderLoaded) {
-            initDownloader(isRestored);
-            downloaderLoaded = true;
-        }
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -127,6 +118,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
         if (!prefs.getBoolean("firstStart", true))
             initPermissionCard();
+        if (!prefs.getBoolean("firstStart", true) && !downloaderLoaded) {
+            initDownloader(isRestored);
+            downloaderLoaded = true;
+        }
     }
 
     private void requestAd() {
@@ -182,6 +177,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             if (!prefs.getBoolean("firstStart", true))
                 updateSelection();
         } else if (s.equals("firstStart")) {
+            initDownloader(isRestored);
+            downloaderLoaded = true;
             downloadCard.setState(DownloadCard.State.NORMAL);
         } else if (s.equals("download_dir")) {
             InstallCard.invalidate = true;
