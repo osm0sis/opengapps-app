@@ -135,6 +135,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             request = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                     .addTestDevice("F98ACBE481522BAE0A91AC208FDF938F")
+                    .addTestDevice("33ADDADB3757E9C80F232D44DE94EB9E")
                     .addTestDevice("CAAA7C86D5955208EF75484D93E09948")
                     .build();
         else
