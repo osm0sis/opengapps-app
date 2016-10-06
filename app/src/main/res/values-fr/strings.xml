@@ -105,7 +105,7 @@
             <string name="label_new">nouveau</string>
             <string name="label_checksum_valid">L’empreinte (Checksum) est valide</string>
             <string name="label_checksum_invalid">L’empreinte (Checksum) est incorrecte</string>
-
+            <string name="label_starting_download">Lancement du téléchargement...</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Une mise à jour de l’application est disponible</string>
             <string name="explanation_forced_update">Une mise à jour est nécessaire si vous voulez continuer à utiliser l’application</string>

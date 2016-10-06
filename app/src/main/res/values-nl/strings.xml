@@ -105,6 +105,7 @@
             <string name="label_new">nieuw</string>
             <string name="label_checksum_valid">De checksum is correct</string>
             <string name="label_checksum_invalid">De checksum is ongeldig</string>
+            <string name="label_starting_download">Download gestart...</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Update voor de app beschikbaar</string>
             <string name="explanation_forced_update">U moet updaten om de app te kunnen blijven gebruiken</string>
