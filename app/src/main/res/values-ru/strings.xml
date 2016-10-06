@@ -105,6 +105,7 @@
             <string name="label_new">новый</string>
             <string name="label_checksum_valid">Контрольная сумма верна</string>
             <string name="label_checksum_invalid">Контрольная сумма неверна</string>
+            <string name="label_starting_download">Начинается загрузка...</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Доступна новая версия приложения</string>
             <string name="explanation_forced_update">Вам нужно обновить приложение для дальнейшего использования</string>
