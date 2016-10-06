@@ -25,6 +25,8 @@
 
     <!--______PREFERENCES______-->
         <!--LABELS-->
+            <string name="pref_header_install">Installazione</string>
+            <string name="pref_header_download">Download</string>
             <string name="new_folder">Nuova Cartella</string>
             <string name="pref_header_gapps_selection">Seleziona GApps</string>
             <string name="action_settings">Impostazioni</string>

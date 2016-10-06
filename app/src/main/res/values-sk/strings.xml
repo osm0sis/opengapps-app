@@ -25,6 +25,8 @@
 
     <!--______PREFERENCES______-->
         <!--LABELS-->
+            <string name="pref_header_install">Inštalácia</string>
+            <string name="pref_header_download">Stiahnutie</string>
             <string name="new_folder">Nový priečinok</string>
             <string name="pref_header_gapps_selection">Výber GApps</string>
             <string name="action_settings">Nastavenia</string>

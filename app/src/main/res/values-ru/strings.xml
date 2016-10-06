@@ -25,6 +25,8 @@
 
     <!--______PREFERENCES______-->
         <!--LABELS-->
+            <string name="pref_header_install">Установка</string>
+            <string name="pref_header_download">Загрузка</string>
             <string name="new_folder">Новая папка</string>
             <string name="pref_header_gapps_selection">GApps-Выбор</string>
             <string name="action_settings">Настройки</string>
