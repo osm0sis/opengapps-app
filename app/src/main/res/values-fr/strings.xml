@@ -25,8 +25,8 @@
 
     <!--______PREFERENCES______-->
         <!--LABELS-->
-            <!--<string name="pref_header_install">Install (noun variant, not used in English)</string>-->
-            <!--<string name="pref_header_download">Download (noun variant, not used in English)</string>-->
+            <string name="pref_header_install">Installation</string>
+            <string name="pref_header_download">Téléchargement</string>
             <string name="new_folder">Nouveau dossier</string>
             <string name="pref_header_gapps_selection">Sélection GApps</string>
             <string name="action_settings">Configuration</string>
