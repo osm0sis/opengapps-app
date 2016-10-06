@@ -96,7 +96,7 @@
             <string name="label_download_package">Stiahnuť balík</string>
             <string name="label_install_package">Inštalačný balík</string>
             <string name="label_md5_checksum">Kontrolný súčet MD5</string>
-            <string name="label_copy_checksum">Skopírovať kontrolný súčet</string>
+            <string name="label_copy_checksum">Skopírovať</string>
             <string name="file_not_found">Súbor sa nenašiel</string>
             <string name="label_versionlog">Záznamy verzie</string>
             <string name="label_show_md5">Ukázať kontrolný súčet MD5</string>
