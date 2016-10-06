@@ -29,7 +29,7 @@ import java.util.Locale;
 public class DownloadProgressView extends LinearLayout {
 
     private final ProgressBar downloadProgressBar;
-    private final TextView downloadedSizeView, totalSizeView, percentageView;
+    private final TextView downloadedSizeView, totalSizeView, percentageView, startingDownload, backslash;
     private final DownloadManager downloadManager;
     private final Context context;
     private int downloadedSizeColor, totalSizeColor, percentageColor;
@@ -63,6 +63,8 @@ public class DownloadProgressView extends LinearLayout {
         totalSizeView = (TextView) findViewById(R.id.total_size);
         percentageView = (TextView) findViewById(R.id.percentage);
         downloadProgressBar = (ProgressBar) findViewById(R.id.download_progress_bar);
+        startingDownload = (TextView) findViewById(R.id.download_starting);
+        backslash = (TextView) findViewById(R.id.backslash);
 
         downloadedSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
         totalSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
@@ -144,6 +146,8 @@ public class DownloadProgressView extends LinearLayout {
      */
     public void show(long downloadID, DownloadStatusListener downloadStatusListener) {
         this.downloadID = downloadID;
+        backslash.setText("/");
+        startingDownload.setVisibility(GONE);
         listener = downloadStatusListener;
         showDownloadProgress();
     }
@@ -152,12 +156,16 @@ public class DownloadProgressView extends LinearLayout {
         View parentView = (View) getParent();
         Button downloadButton = (Button) parentView.findViewById(R.id.download_button);
         setVisibility(VISIBLE);
+        startingDownload.setVisibility(VISIBLE);
+
         downloadProgressBar.setIndeterminate(true);
         downloadProgressBar.setProgress(0);
         downloadedSizeView.setText("");
+        backslash.setText("");
+        percentageView.setText("");
+        totalSizeView.setText("");
         downloadButton.setText(getResources().getString(R.string.label_cancel));
         downloadButton.setEnabled(false);
-        totalSizeView.setText("");
     }
 
     private void showDownloadProgress() {

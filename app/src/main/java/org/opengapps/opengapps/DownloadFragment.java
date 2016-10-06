@@ -322,6 +322,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     public void downloadFinished() {
         downloader = new Downloader(this);
+        refreshLayout.setRefreshing(true);
         onRefresh();
         prefs.edit().putLong("running_download_id", 0).apply();
         prefs.edit().putString("running_download_tag", null).apply();

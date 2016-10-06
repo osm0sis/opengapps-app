@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:ignore="HardcodedText" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        android:layout_marginRight="24dp"
         android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
@@ -18,6 +18,14 @@
             android:orientation="horizontal"
             android:paddingLeft="5dp"
             android:paddingRight="5dp">
+
+            <TextView
+                android:id="@+id/download_starting"
+                android:layout_width="wrap_content"
+                android:text="@string/label_starting_download"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/downloaded_size"
@@ -29,6 +37,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/backslash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"

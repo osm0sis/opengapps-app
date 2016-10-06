@@ -169,11 +169,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-            Log.e("showwme", "onPreExecute: ");
-            for (StackTraceElement element : stackTrace) {
-                Log.d("showwme", element.toString());
-            }
         }
 
         @Override

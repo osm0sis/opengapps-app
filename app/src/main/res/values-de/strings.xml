@@ -105,7 +105,8 @@
             <string name="label_new">neu</string>
             <string name="label_checksum_valid">Die Prüfsumme ist korrekt</string>
             <string name="label_checksum_invalid">Die Prüfsumme ist falsch</string>
-        <!--EXPLANATION-->
+            <string name="label_starting_download">Starte Download</string>
+    <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Eine Aktualisierung für die App ist verfügbar</string>
             <string name="explanation_forced_update">Um die App weiter zu benutzen, muss sie aktualisiert werden</string>
             <string name="label_root_is_need_for_rootmode">Zum Aktivieren werden Root-Rechte benötigt</string>
