@@ -143,6 +143,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         };
 
         File[] files = downloadDir.listFiles(filter);
+        if (files == null || files.length == 0)
+            return;
         Arrays.sort(files);
         for (int i = 0; i < files.length - 1; i++) {
             //noinspection ResultOfMethodCallIgnored

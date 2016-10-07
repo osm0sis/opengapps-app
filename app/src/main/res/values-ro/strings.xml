@@ -107,7 +107,7 @@
             <string name="label_new">nou</string>
             <string name="label_checksum_valid">Checksum-ul este valid</string>
             <string name="label_checksum_invalid">Checksum-ul este invalid</string>
-            <string name="label_starting_download">Se începe descărcarea...</string>
+            <string name="label_starting_download">Se începe descărcarea&#8230;</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">O actualizare a aplicaţiei este disponibilă</string>
             <string name="explanation_forced_update">Trebuie sa faceţi actualizarea pentru a continua să utilizaţi aplicaţia</string>

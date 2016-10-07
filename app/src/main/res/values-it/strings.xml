@@ -107,7 +107,7 @@
             <string name="label_new">nuovo</string>
             <string name="label_checksum_valid">Il checksum è valido</string>
             <string name="label_checksum_invalid">Il checksum non è valido</string>
-            <string name="label_starting_download">Avvio download...</string>
+            <string name="label_starting_download">Avvio download&#8230;</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Un aggiornamento dell’app è disponibile</string>
             <string name="explanation_forced_update">Devi aggiornare per continuare ad usare l’app</string>

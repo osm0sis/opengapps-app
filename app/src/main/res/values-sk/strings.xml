@@ -107,7 +107,7 @@
             <string name="label_new">nové</string>
             <string name="label_checksum_valid">Kontrolný súčet je platný</string>
             <string name="label_checksum_invalid">Kontrolný súčet je neplatný</string>
-            <string name="label_starting_download">Sťahovanie sa spúšťa...</string>
+            <string name="label_starting_download">Sťahovanie sa spúšťa&#8230;</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">K dispozícii je aktualizácia aplikácie</string>
             <string name="explanation_forced_update">Aby ste mohli pokračovať v používaní tejto aplikácie, musíte aktualizovať</string>
