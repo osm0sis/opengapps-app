@@ -103,7 +103,7 @@
             <string name="label_versionlog">VersionLog</string>
             <string name="label_show_md5">Arată MD5-Checksum</string>
             <string name="label_show_versionlog">Arată VersionLog</string>
-            <string name="label_share">Împărtăşeşte</string>
+            <string name="label_share">Distribuie</string>
             <string name="label_new">nou</string>
             <string name="label_checksum_valid">Checksum-ul este valid</string>
             <string name="label_checksum_invalid">Checksum-ul este invalid</string>
