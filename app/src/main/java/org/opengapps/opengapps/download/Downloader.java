@@ -227,7 +227,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
     private void refreshFeed() {
@@ -238,6 +238,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
                     .build();
 
             Response response = client.newCall(request).execute();
+            if (!response.isSuccessful() || response.isRedirect()) {
+
+            }
 
 
             FileWriter fileWriter = new FileWriter(feedFile, false);

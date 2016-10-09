@@ -185,7 +185,7 @@
     <string name="link_yeti" translatable="false">http://www.yeti-designs.com/</string>
     <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
     <string name="url_donate" translatable="false">http://opengapps.org/donate/</string>
-    <string name="url_producer" translatable="false">https://github.com/mfonville   </string>
+    <string name="url_producer" translatable="false">https://github.com/mfonville/</string>
     <!--FILECHOOSER (EXTERNAL LIBRARY)-->
     <string name="cancel_label">@string/label_cancel</string>
     <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
