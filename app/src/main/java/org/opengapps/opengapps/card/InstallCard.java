@@ -1,5 +1,6 @@
 package org.opengapps.opengapps.card;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
@@ -8,8 +9,10 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -276,5 +279,9 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     public boolean exists() {
         return gappsFile.exists();
+    }
+
+    public static void cleanUp(File file) {
+
     }
 }

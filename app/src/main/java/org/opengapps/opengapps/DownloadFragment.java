@@ -97,6 +97,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        cleanUp();
         refreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.dl_refresher);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
 
@@ -282,6 +283,33 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         return (int) (dp * scale + 0.5f);
     }
 
+    private void cleanUp() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+                return;
+        File downloadDir = new File(prefs.getString("download_dir", Downloader.defaultDownloadDir));
+
+        FilenameFilter filter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.startsWith("open_gapps-") && (name.endsWith(".zip.md5") || name.endsWith(".versionlog.txt"));
+            }
+        };
+        File[] files = downloadDir.listFiles(filter);
+        for (File file : files) {
+            if (file.getName().endsWith(".md5")) {
+                File gappsFile = new File(file.getAbsolutePath().substring(0, (int) (file.getAbsolutePath().length() - 4)));
+                if (!gappsFile.exists())
+                    file.delete();
+            } else if (file.getName().endsWith(".versionlog.txt")) {
+                File versionlogFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - 15) + ".zip");
+                if (!versionlogFile.exists())
+                    file.delete();
+            }
+        }
+
+    }
+
     public void onTagUpdated() {
         if (downloader != null)
             lastTag = downloader.getTag();
@@ -322,6 +350,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     public void downloadFinished() {
+        cleanUp();
         downloader = new Downloader(this);
         refreshLayout.setRefreshing(true);
         onRefresh();

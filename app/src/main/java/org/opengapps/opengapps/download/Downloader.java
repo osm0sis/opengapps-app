@@ -231,7 +231,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             } catch (XmlPullParserException | IOException e) {
                 return "";
             }
-            String[] entryArray = (String[]) entries.toArray(new String[entries.size()]);
+            String[] entryArray = entries.toArray(new String[entries.size()]);
             Arrays.sort(entryArray);
             return entryArray[entryArray.length - 1];
         } catch (Exception e) {
