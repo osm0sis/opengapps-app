@@ -103,8 +103,6 @@ public class DownloadCard extends CardView {
             @Override
             public void onClick(View view) {
                 fragment.showAd();
-                DownloadProgressView progress = (DownloadProgressView) getRootView().findViewById(R.id.progress_view);
-                progress.begin();
                 fragment.getDownloader().execute();
             }
         });

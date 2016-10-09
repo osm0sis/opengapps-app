@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -32,7 +31,9 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -51,6 +52,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
     private FragmentManager manager;
+    private boolean errorOccured = false;
     private static File lastFile;
     private File feedFile;
     private String urlString;
@@ -92,12 +94,19 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if (downloadFragment != null)
-            Toast.makeText(downloadFragment.getActivity(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
+        if (downloadFragment != null) {
+            if (!errorOccured) {
+                DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
+                progress.begin();
+            } else
+                Toast.makeText(downloadFragment.getActivity(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     protected Long doInBackground(Void... voids) {
+        if (errorOccured)
+            return (long) -1;
         if (tag == null)
             tag = parseFeed();
         Uri uri = generateUri();
@@ -106,6 +115,10 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     @Override
     protected void onPostExecute(Long id) {
+        if (id == -1) {
+            checkAndHandleError();
+            return;
+        }
         DownloadFragment fragment = (DownloadFragment) manager.findFragmentByTag(DownloadFragment.TAG);
 
         if (fragment != null) {
@@ -161,26 +174,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         gappsFile.delete();
     }
 
-    public class TagUpdater extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... voids) {
-            refreshFeed();
-            return parseFeed();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            logSelections();
-            tag = s;
-            if (downloadFragment != null && downloadFragment.isVisible())
-                downloadFragment.onTagUpdated();
-        }
-    }
 
     private void logSelections() {
         for (String entry : new String[]{"selection_arch", "selection_android", "selection_variant"}) {
@@ -214,20 +207,45 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(false);
-            XmlPullParser xpp = factory.newPullParser();
-            xpp.setInput(new FileReader(feedFile));
-            int eventType = xpp.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_TAG && xpp.getName().equals("link") && xpp.getAttributeValue(0).equals("alternate")) {
-                    String href = xpp.getAttributeValue(null, "href");
-                    return href.substring(href.lastIndexOf('/') + 1);
+            XmlPullParser parser = factory.newPullParser();
+            parser.setInput(new FileReader(feedFile));
+
+            List<String> entries = new ArrayList<>(5);
+            try {
+                boolean firstEntryFound = false;
+                parser.next();
+                parser.require(XmlPullParser.START_TAG, null, "feed");
+                while (parser.next() != XmlPullParser.END_DOCUMENT) {
+                    if (parser.getEventType() != XmlPullParser.START_TAG)
+                        continue;
+                    String name = parser.getName();
+                    if (name.equals("entry"))
+                        firstEntryFound = true;
+                    if (firstEntryFound && name.equals("id")) {
+                        parser.next();
+                        String text = parser.getText().substring(parser.getText().lastIndexOf('/') + 1);
+                        if (text.matches("[0-9]+"))
+                            entries.add(parser.getText().substring(parser.getText().lastIndexOf('/') + 1));
+                    }
                 }
-                eventType = xpp.next();
+            } catch (XmlPullParserException | IOException e) {
+                return "";
             }
-        } catch (XmlPullParserException | IOException e) {
+            String[] entryArray = (String[]) entries.toArray(new String[entries.size()]);
+            Arrays.sort(entryArray);
+            return entryArray[entryArray.length - 1];
+        } catch (Exception e) {
             e.printStackTrace();
+            return "";
         }
-        return "";
+    }
+
+    private boolean checkAndHandleError() {
+        if (errorOccured && downloadFragment != null && downloadFragment.getActivity() != null) {
+            Toast.makeText(downloadFragment.getActivity(), "Connecting to server failed", Toast.LENGTH_SHORT).show();
+//            downloadFragment.downloadCancelled();
+        }
+        return errorOccured;
     }
 
     private void refreshFeed() {
@@ -239,7 +257,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
             Response response = client.newCall(request).execute();
             if (!response.isSuccessful() || response.isRedirect()) {
-
+                errorOccured = true;
             }
 
 
@@ -249,6 +267,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             body.close();
             fileWriter.close();
         } catch (IOException ignored) {
+            errorOccured = true;
         }
     }
 
@@ -347,5 +366,35 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             }
         }
         return "";
+    }
+
+    public class
+    TagUpdater extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            refreshFeed();
+            String feed = parseFeed();
+            if (errorOccured) {
+                return "";
+            }
+            return feed;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            errorOccured = false;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (errorOccured) {
+                checkAndHandleError();
+            } else
+                logSelections();
+            tag = s;
+            if (downloadFragment != null && downloadFragment.isVisible())
+                downloadFragment.onTagUpdated();
+        }
     }
 }
