@@ -33,12 +33,14 @@ class PackageGuesser {
                 return architectures[1]; //arm64
             }
         } else if (arch.contains("86")) {
-            if (!x64)
+            if (!x64) {
                 return architectures[2]; //x86
-            else
+            } else {
                 return architectures[3]; //x86x64
-        } else
+            }
+        } else {
             return architectures[0]; //Default to arm
+        }
     }
 
     public static String getAndroidVersion(Context context) {

@@ -46,8 +46,9 @@ public class FileValidator extends AsyncTask<String, Void, Boolean> {
         DownloadFragment fragment = (DownloadFragment) fragmentManager.findFragmentByTag(DownloadFragment.TAG);
         if (fragment != null && fragment.isAdded()) {
             InstallCard card = fragment.getInstallCard(filePath);
-            if (card != null && card.isAttachedToWindow())
+            if (card != null && card.isAttachedToWindow()) {
                 card.hashSuccess(aBoolean);
+            }
         }
     }
 
@@ -60,8 +61,9 @@ public class FileValidator extends AsyncTask<String, Void, Boolean> {
             int numRead = 0;
             while (numRead != -1) {
                 numRead = inputStream.read(buffer);
-                if (numRead > 0)
+                if (numRead > 0) {
                     digest.update(buffer, 0, numRead);
+                }
             }
             byte[] md5Bytes = digest.digest();
             return convertHashToString(md5Bytes);

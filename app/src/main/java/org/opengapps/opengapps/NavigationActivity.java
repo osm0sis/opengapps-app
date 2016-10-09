@@ -1,6 +1,5 @@
 package org.opengapps.opengapps;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -60,8 +59,9 @@ public class NavigationActivity extends AppCompatActivity
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         final boolean isFirstStart = getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getBoolean("firstStart", true);
-        if (!isFirstStart && AppUpdater.checkAllowed(getSharedPreferences(Preferences.prefName, MODE_PRIVATE)))
+        if (!isFirstStart && AppUpdater.checkAllowed(getSharedPreferences(Preferences.prefName, MODE_PRIVATE))) {
             new AppUpdater().execute(this);
+        }
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,7 +73,7 @@ public class NavigationActivity extends AppCompatActivity
                 if (isFirstStart) {
                     //Open Nav-Drawer
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    drawer.openDrawer(Gravity.LEFT, false);
+                    drawer.openDrawer(Gravity.START, false);
 
                     //  Launch app intro
                     Intent i = new Intent(getApplicationContext(), AppIntroActivity.class);
@@ -93,13 +93,15 @@ public class NavigationActivity extends AppCompatActivity
         // Start the thread
         t.start();
         downloadFragment = new DownloadFragment();
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             showFragment(downloadFragment);
+        }
         toolbar.setTitle(getString(R.string.pref_header_install));
         navigationView.setCheckedItem(R.id.nav_download);
 
-        if (AdBlockDetector.hasAdBlockEnabled(this))
+        if (AdBlockDetector.hasAdBlockEnabled(this)) {
             showAdBlockDialog();
+        }
     }
 
     private void showAdBlockDialog() {
@@ -118,17 +120,20 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == EXIT_CODE && resultCode == 1)
+        if (requestCode == EXIT_CODE && resultCode == 1) {
             finish();
-        else if (requestCode == EXIT_CODE && resultCode == 2)
-            if (downloadFragment != null && downloadFragment.isVisible())
+        } else if (requestCode == EXIT_CODE && resultCode == 2) {
+            if (downloadFragment != null && downloadFragment.isVisible()) {
                 downloadFragment.initDownloader(false);
+            }
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (downloadFragment.isAdded())
+        if (downloadFragment.isAdded()) {
             downloadFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override
@@ -190,8 +195,9 @@ public class NavigationActivity extends AppCompatActivity
 
     private void showFragment(Fragment fragment) {
         String tag = null;
-        if (fragment instanceof DownloadFragment)
+        if (fragment instanceof DownloadFragment) {
             tag = DownloadFragment.TAG;
+        }
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.replaceme, fragment, tag).commit();

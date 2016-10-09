@@ -35,7 +35,4 @@
         <item name="android:textColor">#ffff</item>
     </style>
 
-    <style name="ItalicRadiobutton">
-        <item name="android:textStyle">italic</item>
-    </style>
 </resources>

@@ -16,7 +16,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
@@ -48,8 +47,9 @@ public class AppIntroActivity extends AppIntro {
             }
         }
 
-        if (ZipInstaller.hasRoot())
+        if (ZipInstaller.hasRoot()) {
             addSlide(new RequestRootFragment());
+        }
 
         addSlide(new slideArchSelectorFragment());
         addSlide(new slideAndroidSelectorFragment());
@@ -63,17 +63,21 @@ public class AppIntroActivity extends AppIntro {
                 setupPermissionButton();
 
                 setNextPageSwipeLock(true);
-                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     setNextPageSwipeLock(false);
+                }
             }
             if (newFragment.getClass().equals(slideTermsOfUse.class)) {
-                if (!termsAccepted)
+                if (!termsAccepted) {
                     setNextPageSwipeLock(true);
+                }
             }
-            if (newFragment instanceof GappsSelectionFragment)
+            if (newFragment instanceof GappsSelectionFragment) {
                 ((GappsSelectionFragment) newFragment).onStepVisible();
-            if (oldFragment instanceof GappsSelectionFragment)
+            }
+            if (oldFragment instanceof GappsSelectionFragment) {
                 ((GappsSelectionFragment) oldFragment).saveSelections();
+            }
         }
     }
 
@@ -102,10 +106,11 @@ public class AppIntroActivity extends AppIntro {
                 @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onClick(View view) {
-                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                         setNextPageSwipeLock(false);
-                    else
+                    } else {
                         requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                    }
                 }
             });
         }

@@ -95,7 +95,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         TextView header = (TextView) getView().findViewById(R.id.headline_intro_gapps);
         header.setText(getString(title));
         TextView descriptionView = (TextView) getView().findViewById(R.id.description_intro_gapps);
-        Spanned spanned = Html.fromHtml(getString(description));
+        @SuppressWarnings("deprecation") Spanned spanned = Html.fromHtml(getString(description));
         descriptionView.setText(spanned);
         if (b != null && b.containsKey("position")) {
             header.setVisibility(View.GONE);
@@ -124,13 +124,15 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
     private void loadRadioBoxes() {
         SharedPreferences prefs = getActivity().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         String defaultSelection;
-        if (getSelection().equals(""))
+        if (getSelection().equals("")) {
             defaultSelection = prefs.getString(key, "");
-        else
+        } else {
             defaultSelection = getSelection();
+        }
         String[] items = getResources().getStringArray(stringArray);
-        if (getView() != null)
+        if (getView() != null) {
             group = (RadioGroup) getView().findViewById(R.id.arch_radio_group);
+        }
         buttons = new SparseArray<>(items.length);
         for (String item : items) {
             AppCompatRadioButton radioButton = new AppCompatRadioButton(getActivity());
@@ -138,6 +140,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             radioButton.setSupportButtonTintList(style);
             radioButton.setTextColor(Color.parseColor("#E0E0E0"));
             if (getGuessedSelection(getContext()).toLowerCase().equals(item.toLowerCase())) {
+                //noinspection deprecation
                 Spanned spanned = Html.fromHtml(radioButton.getText() + " <i color='red'>(" + getString(R.string.detected) + ")</i>");
                 radioButton.setText(spanned);
             }
@@ -145,8 +148,9 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
                 radioButton.setChecked(true);
                 setSelection(defaultSelection);
             }
-            if (!isValid(item))
+            if (!isValid(item)) {
                 radioButton.setEnabled(false);
+            }
             int id = View.generateViewId();
             radioButton.setId(id);
             buttons.put(id, radioButton);
@@ -158,14 +162,16 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
 
     private void checkIfValid() {
         RadioButton selectedButton = buttons.get(group.getCheckedRadioButtonId());
-        if (selectedButton != null && selectedButton.isChecked() && !selectedButton.isEnabled())
+        if (selectedButton != null && selectedButton.isChecked() && !selectedButton.isEnabled()) {
             for (int i = 0; i < buttons.size(); i++) {
                 int key = buttons.keyAt(i);
                 // get the object by the key.
                 RadioButton button = buttons.get(key);
-                if (button.isEnabled())
+                if (button.isEnabled()) {
                     button.setChecked(true);
+                }
             }
+        }
     }
 
     public abstract String getSelection();
@@ -179,8 +185,9 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
         if (text.contains(" ")) {
             text = text.substring(0, text.indexOf(" "));
         }
-        if (text.equals(getGuessedSelection(getContext())) && button.isPressed())
+        if (text.equals(getGuessedSelection(getContext())) && button.isPressed()) {
             Toast.makeText(getContext(), getString(smallDesc), Toast.LENGTH_SHORT).show();
+        }
         setSelection(text);
     }
 

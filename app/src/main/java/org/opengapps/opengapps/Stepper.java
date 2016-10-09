@@ -67,21 +67,23 @@ public class Stepper extends DotStepper {
 
     @Override
     public void onBackPressed() {
-        if (currentStep == 1)
+        if (currentStep == 1) {
             onNavigateUp();
-        else
+        } else {
             onPrevious();
+        }
     }
 
     private AbstractStep createFragment(AbstractStep fragment) {
         Bundle b = new Bundle();
         b.putInt("position", i++);
-        if (fragment instanceof slideArchSelectorFragment)
+        if (fragment instanceof slideArchSelectorFragment) {
             b.putString("title", getString(R.string.label_architecture));
-        else if (fragment instanceof slideAndroidSelectorFragment)
+        } else if (fragment instanceof slideAndroidSelectorFragment) {
             b.putString("title", getString(R.string.label_android));
-        else if (fragment instanceof slideVariantSelectionFragment)
+        } else if (fragment instanceof slideVariantSelectionFragment) {
             b.putString("title", getString(R.string.label_variant));
+        }
         fragment.setArguments(b);
         return fragment;
     }

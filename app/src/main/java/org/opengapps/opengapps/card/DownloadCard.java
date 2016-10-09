@@ -31,6 +31,7 @@ import java.util.Date;
 
 public class DownloadCard extends CardView {
     private SharedPreferences prefs;
+    @SuppressWarnings("unused")
     private State state;
     private DownloadFragment fragment;
     private Context context;
@@ -46,8 +47,9 @@ public class DownloadCard extends CardView {
 
     public void init(DownloadFragment fragment) {
         this.fragment = fragment;
-        if (!DownloadFragment.isRestored)
+        if (!DownloadFragment.isRestored) {
             setState(State.DISABLED);
+        }
         initButtons();
         initSelections();
         restoreDownloadProgress();
@@ -74,15 +76,17 @@ public class DownloadCard extends CardView {
         String lastDownloadedTag = Downloader.getLastDownloadedTag(context);
 
         TextView version = (TextView) findViewById(R.id.newest_version);
+        //noinspection deprecation,
         Spanned spanned = Html.fromHtml("<b>" + convertDate(lastAvailableTag) + "</b>");
         version.setText(spanned);
 
-        if (lastDownloadedTag.equals(lastAvailableTag))
+        if (lastDownloadedTag.equals(lastAvailableTag)) {
             setState(State.DISABLED);
-        else if (!TextUtils.isEmpty(lastDownloadedTag)) {
+        } else if (!TextUtils.isEmpty(lastDownloadedTag)) {
             setState(State.UPDATEABLE);
-        } else
+        } else {
             setState(State.NORMAL);
+        }
     }
 
     public void initSelections() {
@@ -122,8 +126,9 @@ public class DownloadCard extends CardView {
         Button downloadButton = (Button) findViewById(R.id.download_button);
         initDownloadButton();
 
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             state = State.DISABLED;
+        }
         switch (state) {
             case NORMAL:
                 downloadButton.setEnabled(true);
@@ -131,7 +136,11 @@ public class DownloadCard extends CardView {
                 break;
             case UPDATEABLE:
                 if (!TextUtils.isEmpty(version.getText()))
+                    //noinspection deprecation
+                {
+                    //noinspection deprecation
                     version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>"));
+                }
                 downloadButton.setEnabled(true);
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 break;
@@ -144,8 +153,9 @@ public class DownloadCard extends CardView {
 
 
     private String convertDate(String tag) {
-        if (tag == null || tag.equals(""))
+        if (tag == null || tag.equals("")) {
             return "";
+        }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Date date;
         try {

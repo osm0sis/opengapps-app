@@ -53,7 +53,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private String architecture, android, variant, tag;
     private FragmentManager manager;
     private boolean errorOccured = false;
-    private static File lastFile;
     private File feedFile;
     private String urlString;
     private String baseUrl;
@@ -73,10 +72,10 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         feedFile = new File(downloadFragment.getActivity().getFilesDir(), "gapps_feed.xml");
         urlString = feedUrl.replace("%arch", architecture);
         baseUrl = downloadUrl;
-        setLastFile(downloadFragment.getActivity(), true);
+        setLastFile(downloadFragment.getActivity());
     }
 
-    public static void setLastFile(Context context, boolean fileExists) {
+    public static void setLastFile(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         String architecture = prefs.getString("selection_arch", "arm").toLowerCase();
         String android = prefs.getString("selection_android", "").toLowerCase();
@@ -84,10 +83,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         String path = prefs.getString("download_dir", defaultDownloadDir);
         String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + getLastDownloadedTag(context);
         File f = new File(path, title + ".zip");
-        if (fileExists && f.exists())
-            lastFile = f;
-        if (!fileExists)
-            lastFile = null;
     }
 
 
@@ -98,17 +93,20 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             if (!errorOccured) {
                 DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
                 progress.begin();
-            } else
+            } else {
                 Toast.makeText(downloadFragment.getActivity(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     @Override
     protected Long doInBackground(Void... voids) {
-        if (errorOccured)
-            return (long) -1;
-        if (tag == null)
+        if (errorOccured) {
+            return -1L;
+        }
+        if (tag == null) {
             tag = parseFeed();
+        }
         Uri uri = generateUri();
         return doDownload(uri);
     }
@@ -137,14 +135,11 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         return tag;
     }
 
-    public static void setLastFile(File lastFile) {
-        Downloader.lastFile = lastFile;
-    }
-
     public static void deleteOldFiles(Context context) {
         final SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             return;
+        }
         File downloadDir = new File(prefs.getString("download_dir", defaultDownloadDir));
         FilenameFilter filter = new FilenameFilter() {
             @Override
@@ -156,8 +151,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         };
 
         File[] files = downloadDir.listFiles(filter);
-        if (files == null || files.length == 0)
+        if (files == null || files.length == 0) {
             return;
+        }
         Arrays.sort(files);
         for (int i = 0; i < files.length - 1; i++) {
             //noinspection ResultOfMethodCallIgnored
@@ -216,16 +212,19 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
                 parser.next();
                 parser.require(XmlPullParser.START_TAG, null, "feed");
                 while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                    if (parser.getEventType() != XmlPullParser.START_TAG)
+                    if (parser.getEventType() != XmlPullParser.START_TAG) {
                         continue;
+                    }
                     String name = parser.getName();
-                    if (name.equals("entry"))
+                    if (name.equals("entry")) {
                         firstEntryFound = true;
+                    }
                     if (firstEntryFound && name.equals("id")) {
                         parser.next();
                         String text = parser.getText().substring(parser.getText().lastIndexOf('/') + 1);
-                        if (text.matches("[0-9]+"))
+                        if (text.matches("[0-9]+")) {
                             entries.add(parser.getText().substring(parser.getText().lastIndexOf('/') + 1));
+                        }
                     }
                 }
             } catch (XmlPullParserException | IOException e) {
@@ -240,12 +239,11 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
     }
 
-    private boolean checkAndHandleError() {
+    private void checkAndHandleError() {
         if (errorOccured && downloadFragment != null && downloadFragment.getActivity() != null) {
             Toast.makeText(downloadFragment.getActivity(), "Connecting to server failed", Toast.LENGTH_SHORT).show();
 //            downloadFragment.downloadCancelled();
         }
-        return errorOccured;
     }
 
     private void refreshFeed() {
@@ -275,15 +273,17 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         DownloadManager.Request request = new DownloadManager.Request(uri);
         String title = "open_gapps" + "-" + architecture.toLowerCase() + "-" + android.toLowerCase() + "-" + variant.toLowerCase() + "-" + tag.toLowerCase();
         request.setTitle(title);
-        if (prefs.getBoolean("download_wifi_only", true))
+        if (prefs.getBoolean("download_wifi_only", true)) {
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+        }
         File path = new File(prefs.getString("download_dir", defaultDownloadDir));
         File gappsPackage = new File(path, title + ".zip");
-        if (prefs.getBoolean("download_md5", true))
+        if (prefs.getBoolean("download_md5", true)) {
             downloadMD5(uri.toString(), new File(gappsPackage.getAbsolutePath() + ".md5"));
-        if (prefs.getBoolean("download_versionlog", false))
+        }
+        if (prefs.getBoolean("download_versionlog", false)) {
             downloadVersionLog(uri.toString(), new File(path, title + ".versionlog.txt"));
-        lastFile = gappsPackage;
+        }
         request.setDestinationUri(Uri.fromFile(gappsPackage));
         return downloadManager.enqueue(request);
     }
@@ -314,18 +314,15 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             InputStream inputStream = response.body().byteStream();
             FileOutputStream fos = new FileOutputStream(file);
             int inByte;
-            while ((inByte = inputStream.read()) != -1)
+            while ((inByte = inputStream.read()) != -1) {
                 fos.write(inByte);
+            }
             inputStream.close();
             fos.close();
         } catch (Exception ignored) {
         }
     }
 
-
-    public boolean fileExists() {
-        return !getLastDownloadedTag(downloadFragment.getActivity()).equals("");
-    }
 
     public static String getDownloadedFile(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
@@ -354,8 +351,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
             File downloadDir = new File(prefs.getString("download_dir", defaultDownloadDir));
             File[] files = downloadDir.listFiles(filter);
-            if (files == null || files.length == 0)
+            if (files == null || files.length == 0) {
                 return "";
+            }
             Arrays.sort(files);
             if (files.length >= 1) {
                 String tag = files[files.length - 1].getName();
@@ -390,11 +388,13 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         protected void onPostExecute(String s) {
             if (errorOccured) {
                 checkAndHandleError();
-            } else
+            } else {
                 logSelections();
+            }
             tag = s;
-            if (downloadFragment != null && downloadFragment.isVisible())
+            if (downloadFragment != null && downloadFragment.isVisible()) {
                 downloadFragment.onTagUpdated();
+            }
         }
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Environment;
 import android.preference.Preference;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -39,8 +38,9 @@ public class FileChooserPref extends Preference implements DirectoryChooserFragm
                 .allowNewDirectoryNameModification(true)
                 .allowReadOnlyDirectory(false)
                 .build();
-        if (dialog == null)
+        if (dialog == null) {
             dialog = DirectoryChooserFragment.newInstance(config);
+        }
         dialog.setDirectoryChooserListener(this);
         FragmentManager fragmentManager = ((Activity) getContext()).getFragmentManager();
         dialog.show(fragmentManager, null);

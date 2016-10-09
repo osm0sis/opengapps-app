@@ -38,9 +38,9 @@ public class PermissionCard extends CardView {
 
     public void init(){
         int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED)
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
             setVisibility(View.GONE);
-        else {
+        } else {
             setVisibility(View.VISIBLE);
         }
     }
@@ -51,8 +51,9 @@ public class PermissionCard extends CardView {
             @Override
             public void onClick(View view) {
                 Activity activity = getActivity();
-                if (activity != null)
+                if (activity != null) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                }
             }
         });
     }

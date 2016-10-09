@@ -31,7 +31,6 @@ public class DownloadProgressView extends LinearLayout {
     private final ProgressBar downloadProgressBar;
     private final TextView downloadedSizeView, totalSizeView, percentageView, startingDownload, backslash;
     private final DownloadManager downloadManager;
-    private final Context context;
     private int downloadedSizeColor, totalSizeColor, percentageColor;
     private long downloadID;
     private boolean downloading;
@@ -39,7 +38,7 @@ public class DownloadProgressView extends LinearLayout {
 
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
+        Context context1 = context;
 
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DownloadProgressView, 0, 0);
 
@@ -214,10 +213,11 @@ public class DownloadProgressView extends LinearLayout {
                                     downloading = true;
                                     downloadProgressBar.setIndeterminate(false);
                                     downloadedSizeView.setText(String.format(Locale.US, "%.0fMB", ((bytes_downloaded * 1.0) / 1024L / 1024L)));
-                                    if (bytes_total != -1)
+                                    if (bytes_total != -1) {
                                         totalSizeView.setText(String.format(Locale.US, "%.0fMB", ((bytes_total * 1.0) / 1024L / 1024L)));
-                                    else
+                                    } else {
                                         totalSizeView.setText("??");
+                                    }
                                     percentageView.setText((int) download_percentage + "%");
                                     downloadProgressBar.setProgress((int) download_percentage);
                                 } else if (status == DownloadManager.STATUS_FAILED) {

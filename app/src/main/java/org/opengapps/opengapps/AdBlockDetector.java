@@ -32,12 +32,15 @@ public class AdBlockDetector {
             parser.nextTag();
 
             while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("app"))
+                if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("app")) {
                     rightTag = true;
-                else if (parser.getEventType() == XmlPullParser.END_TAG && parser.getName().equals("app"))
-                    rightTag = false;
-                else if (parser.getEventType() == XmlPullParser.TEXT && rightTag)
+                } else if (parser.getEventType() == XmlPullParser.END_TAG && parser.getName().equals("app")) {
+                    {
+                        rightTag = false;
+                    }
+                } else if (parser.getEventType() == XmlPullParser.TEXT && rightTag) {
                     content.add(parser.getText());
+                }
             }
         } catch (Exception e) {
             return null;
@@ -48,8 +51,9 @@ public class AdBlockDetector {
     private static boolean checkForPackages(Context context) {
         String[] adBlockers = parseXml(context);
         for (String blocker : adBlockers != null ? adBlockers : new String[0]) {
-            if (checkForPackage(context, blocker))
+            if (checkForPackage(context, blocker)) {
                 return true;
+            }
         }
         return false;
     }

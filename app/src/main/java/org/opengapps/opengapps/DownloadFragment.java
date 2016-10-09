@@ -74,9 +74,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     public void onDeleteFile(@Nullable File gappsFile) {
-        if (gappsFile == null)
+        if (gappsFile == null) {
             loadInstallCards();
-        else {
+        } else {
             InstallCard card = fileCards.get(gappsFile.getAbsolutePath());
             if (card != null) {
                 LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
@@ -118,8 +118,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         downloadCard = (DownloadCard) getView().findViewById(R.id.download_card);
         downloadCard.init(this);
 
-        if (!prefs.getBoolean("firstStart", true))
+        if (!prefs.getBoolean("firstStart", true)) {
             initPermissionCard();
+        }
         if (!prefs.getBoolean("firstStart", true) && !downloaderLoaded) {
             initDownloader(isRestored);
             downloaderLoaded = true;
@@ -128,16 +129,17 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     private void requestAd() {
         AdRequest request;
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG) {
             request = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                     .addTestDevice("F98ACBE481522BAE0A91AC208FDF938F")
                     .addTestDevice("33ADDADB3757E9C80F232D44DE94EB9E")
                     .addTestDevice("CAAA7C86D5955208EF75484D93E09948")
                     .build();
-        else
+        } else {
             request = new AdRequest.Builder()
                     .build();
+        }
         downloadAd.loadAd(request);
     }
 
@@ -176,8 +178,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         Log.e(TAG, "onSharedPreferenceChanged: " + s);
         if (s.contains("selection")) {
             downloadCard.initSelections();
-            if (!prefs.getBoolean("firstStart", true))
+            if (!prefs.getBoolean("firstStart", true)) {
                 updateSelection();
+            }
         } else if (s.equals("firstStart")) {
             initDownloader(isRestored);
             downloaderLoaded = true;
@@ -193,11 +196,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void updateSelection() {
         SharedPreferences.Editor editor = prefs.edit();
         String lastDL = Downloader.getLastDownloadedTag(globalContext);
-        if (TextUtils.isEmpty(lastDL))
+        if (TextUtils.isEmpty(lastDL)) {
             editor.remove("last_downloaded_tag").apply();
-        else
+        } else {
             editor.putString("last_downloaded_tag", lastDL).apply();
-        Downloader.setLastFile(globalContext, false);
+        }
+        Downloader.setLastFile(globalContext);
         lastTag = "";
         initDownloader(false);
     }
@@ -242,8 +246,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     private File[] findFiles() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 return new File[]{};
+            }
         }
         File downloadDir = new File(prefs.getString("download_dir", Downloader.defaultDownloadDir));
 
@@ -253,28 +258,30 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 boolean nameFits = name.startsWith("open_gapps-") && name.endsWith(".zip");
                 boolean runningDownload = name.contains(prefs.getString("selection_arch", "unset").toLowerCase()) &&
                         name.contains(prefs.getString("selection_android", "unset")) && name.contains(prefs.getString("selection_variant", "unset"));
-                if (runningDownload)
+                if (runningDownload) {
                     return nameFits && !Downloader.runningDownload(getActivity(), name);
+                }
                 return nameFits;
             }
         };
 
         File[] files = downloadDir.listFiles(filter);
-        if (files != null)
+        if (files != null) {
             Arrays.sort(files, new Comparator<File>() {
                 @Override
                 public int compare(File o1, File o2) {
-                    if (o1.lastModified() > o2.lastModified())
+                    if (o1.lastModified() > o2.lastModified()) {
                         return 1;
-                    else if (o1.lastModified() < o2.lastModified())
+                    } else if (o1.lastModified() < o2.lastModified()) {
                         return -1;
-                    else {
+                    } else {
                         return o1.compareTo(o2);
                     }
                 }
             });
-        else
+        } else {
             files = new File[0];
+        }
         return files;
     }
 
@@ -284,9 +291,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private void cleanUp() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 return;
+            }
+        }
         File downloadDir = new File(prefs.getString("download_dir", Downloader.defaultDownloadDir));
 
         FilenameFilter filter = new FilenameFilter() {
@@ -298,21 +307,26 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         File[] files = downloadDir.listFiles(filter);
         for (File file : files) {
             if (file.getName().endsWith(".md5")) {
-                File gappsFile = new File(file.getAbsolutePath().substring(0, (int) (file.getAbsolutePath().length() - 4)));
-                if (!gappsFile.exists())
+                File gappsFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - 4));
+                if (!gappsFile.exists()) {
                     file.delete();
+                    Log.d(TAG, "cleanUp: orphaned file \"" + file.getName() + "\" found. Deleting.");
+                }
             } else if (file.getName().endsWith(".versionlog.txt")) {
                 File versionlogFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - 15) + ".zip");
-                if (!versionlogFile.exists())
+                if (!versionlogFile.exists()) {
                     file.delete();
+                    Log.d(TAG, "cleanUp: orphaned file \"" + file.getName() + "\" found. Deleting.");
+                }
             }
         }
 
     }
 
     public void onTagUpdated() {
-        if (downloader != null)
+        if (downloader != null) {
             lastTag = downloader.getTag();
+        }
         prefs.edit().putString("last_downloaded_tag", Downloader.getLastDownloadedTag(getActivity())).apply();
         if (downloader != null) {
             downloadCard.onTagUpdated(lastTag);
@@ -334,13 +348,15 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void downloadSuccessful(String filePath) {
         loadInstallCards();
-        if (prefs.getBoolean("download_delete_old_files", true))
+        if (prefs.getBoolean("download_delete_old_files", true)) {
             Downloader.deleteOldFiles(getActivity());
+        }
         if (prefs.getBoolean("checkMissing", false)) {
             prefs.edit().remove("checkMissing").apply();
             InstallCard fileCard = fileCards.get(filePath);
-            if (fileCard != null)
+            if (fileCard != null) {
                 fileCard.checkMD5();
+            }
         }
     }
 
@@ -362,7 +378,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (match) {
             String tag = prefs.getString("running_download_tag", "failed");
             if (!tag.equals("failed")) // dirty hack :(
+            {
                 prefs.edit().putString("last_downloaded_tag", tag).apply();
+            }
             onTagUpdated();
         } else {
             Toast.makeText(getActivity(), R.string.label_checksum_invalid, Toast.LENGTH_LONG).show();
@@ -377,8 +395,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     public void showAd() {
-        if (downloadAd.isLoaded())
+        if (downloadAd.isLoaded()) {
             downloadAd.show();
+        }
     }
 
     public InstallCard getInstallCard(String path) {

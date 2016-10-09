@@ -7,15 +7,17 @@ public class SelectionValidator {
     }
 
     public static boolean isValid(String arch, String android, String variant) {
-        if (arch.equals("x86") && android.equals("4.4") && (variant.equals("stock") || variant.equals("full")))
+        if (arch.equals("x86") && android.equals("4.4") && (variant.equals("stock") || variant.equals("full"))) {
             return false;
-        else
+        } else {
             return isValidArchAnd(arch, android) && isValidArchVar(arch, variant) && isValidAndVar(android, variant);
+        }
     }
 
     public static boolean isValidArchAnd(String arch, String android) {
-        if (android.equals("7.1"))
+        if (android.equals("7.1")) {
             return false;
+        }
         return !(arch.contains("64") && android.equals("4.4"));
     }
 

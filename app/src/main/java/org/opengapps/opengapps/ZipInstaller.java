@@ -33,8 +33,9 @@ public class ZipInstaller {
             try {
                 File f = new File(context.getFilesDir(), "openrecoveryscript");
                 FileWriter fileWriter = new FileWriter(f, false);
-                if (prefs.getBoolean("wipe_cache", false))
+                if (prefs.getBoolean("wipe_cache", false)) {
                     fileWriter.append("\nwipe cache");
+                }
                 fileWriter.append("\ninstall ").append(file.getAbsolutePath());
                 fileWriter.close();
                 String command = "cp " + f.getAbsolutePath() + " /cache/recovery/openrecoveryscript";
@@ -76,7 +77,9 @@ public class ZipInstaller {
         String[] paths = {"/system/app/Superuser.apk", "/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/system/sd/xbin/su",
                 "/system/bin/failsafe/su", "/data/local/su", "/su/bin/su"};
         for (String path : paths) {
-            if (new File(path).exists()) return true;
+            if (new File(path).exists()) {
+                return true;
+            }
         }
         return false;
     }

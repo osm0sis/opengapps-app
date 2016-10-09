@@ -17,15 +17,11 @@ public class RootPreference extends SwitchPreference implements Preference.OnPre
     }
 
     @Override
-    protected void onClick() {
-        super.onClick();
-    }
-
-    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         boolean success = !((Boolean) newValue) || Shell.SU.run("") != null;
-        if (!success)
+        if (!success) {
             Toast.makeText(getContext(), R.string.label_root_is_need_for_rootmode, Toast.LENGTH_SHORT).show();
+        }
         return success;
     }
 }

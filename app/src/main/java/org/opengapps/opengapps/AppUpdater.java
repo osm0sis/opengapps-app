@@ -43,12 +43,13 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
                 SharedPreferences preferences = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
                 preferences.edit().putLong("checkAgain", currentTime + result[1]).apply();
             }
-            if (result[2] > BuildConfig.VERSION_CODE)
+            if (result[2] > BuildConfig.VERSION_CODE) {
                 return UpdateStatus.forced;
-            else if (result[0] > BuildConfig.VERSION_CODE)
+            } else if (result[0] > BuildConfig.VERSION_CODE) {
                 return UpdateStatus.optional;
-            else
+            } else {
                 return UpdateStatus.none;
+            }
         } catch (IOException e) {
             return UpdateStatus.none;
         }
@@ -86,7 +87,7 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
     }
 
 
-    private boolean isAppInstalled(String packageName) {
+    private boolean isAppInstalled(@SuppressWarnings("SameParameterValue") String packageName) {
         try {
             context.getPackageManager().getApplicationInfo(packageName, 0);
             return true;
@@ -104,12 +105,13 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
         String[] splittedString = fileContent.split("[\\r\\n]+");
 
         for (String line : splittedString) {
-            if (line.startsWith("version="))
+            if (line.startsWith("version=")) {
                 result[0] = Integer.parseInt(line.substring(line.indexOf('=') + 1));
-            else if (line.startsWith("checkAgain="))
+            } else if (line.startsWith("checkAgain=")) {
                 result[1] = Integer.parseInt(line.substring(line.indexOf('=') + 1));
-            else if (line.startsWith("minVersion="))
+            } else if (line.startsWith("minVersion=")) {
                 result[2] = Integer.parseInt(line.substring(line.indexOf('=') + 1));
+            }
         }
         return result;
     }

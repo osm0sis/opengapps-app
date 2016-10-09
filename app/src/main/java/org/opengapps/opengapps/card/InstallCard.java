@@ -1,6 +1,5 @@
 package org.opengapps.opengapps.card;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
@@ -9,10 +8,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -113,13 +110,14 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                     Toast.makeText(getContext(), getResources().getString(R.string.autoinstall_root_disclaimer), Toast.LENGTH_SHORT).show();
                 }
             });
-        } else
+        } else {
             installButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     new ZipInstaller(getContext()).installZip(gappsFile);
                 }
             });
+        }
     }
 
     private void initMenuButton() {
@@ -169,10 +167,12 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         MenuInflater inflater = popup.getMenuInflater();
         popup.setOnMenuItemClickListener(this);
         inflater.inflate(R.menu.install_card_menu, popup.getMenu());
-        if (!md5Exists)
+        if (!md5Exists) {
             popup.getMenu().findItem(R.id.menu_show_md5).setVisible(false);
-        if (!versionLogExists)
+        }
+        if (!versionLogExists) {
             popup.getMenu().findItem(R.id.menu_show_versionlog).setVisible(false);
+        }
         popup.show();
     }
 
@@ -243,8 +243,9 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
     }
 
     public void checkMD5() {
-        if (checked)
+        if (checked) {
             return;
+        }
         checked = true;
         if (md5File.exists()) {
             findViewById(R.id.md5_progress).setVisibility(VISIBLE);
@@ -254,12 +255,14 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     public void hashSuccess(Boolean matches) {
         findViewById(R.id.md5_progress).setVisibility(INVISIBLE);
-        if (matches)
+        if (matches) {
             findViewById(R.id.md5_success).setVisibility(VISIBLE);
-        else
+        } else {
             findViewById(R.id.md5_failure).setVisibility(VISIBLE);
-        if (deleteListener != null)
+        }
+        if (deleteListener != null) {
             deleteListener.hashSuccess(matches);
+        }
     }
 
     public File getGappsFile() {
@@ -281,7 +284,4 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         return gappsFile.exists();
     }
 
-    public static void cleanUp(File file) {
-
-    }
 }

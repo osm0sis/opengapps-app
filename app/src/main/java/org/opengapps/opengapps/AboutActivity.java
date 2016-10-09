@@ -77,17 +77,20 @@ public class AboutActivity extends AppCompatActivity {
                         if (input.trim().toUpperCase().startsWith("MI")) {
                             Pattern p = Pattern.compile("(mii*\\s){2}(mii*)", Pattern.CASE_INSENSITIVE);
                             Matcher matcher = p.matcher(input);
-                            if (matcher.matches())
+                            if (matcher.matches()) {
                                 Toast.makeText(AboutActivity.this, "Meh❤", Toast.LENGTH_LONG).show();
+                            }
                         }
                         if (input.trim().toLowerCase().startsWith("ha")) {
                             Pattern p = Pattern.compile("Haa*sii*", Pattern.CASE_INSENSITIVE);
                             Matcher matcher = p.matcher(input);
-                            if (matcher.matches())
+                            if (matcher.matches()) {
                                 Toast.makeText(AboutActivity.this, "Maauusiiii❤", Toast.LENGTH_LONG).show();
+                            }
                         }
-                        if (input.contains("Chris") && input.contains("Cross"))
+                        if (input.contains("Chris") && input.contains("Cross")) {
                             Toast.makeText(AboutActivity.this, "Mein Engel❤︎", Toast.LENGTH_LONG).show();
+                        }
                     }
                 };
                 if (gfCount == 5) {
@@ -97,9 +100,9 @@ public class AboutActivity extends AppCompatActivity {
                             .setView(edit)
                             .setPositiveButton(android.R.string.ok, listener)
                             .show();
-                } else if (gfCount >= 1)
+                } else if (gfCount >= 1) {
                     gfCount++;
-                else {
+                } else {
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_main_dev)));
                     startActivity(i);
                 }
@@ -164,10 +167,11 @@ public class AboutActivity extends AppCompatActivity {
             public boolean onLongClick(View view) {
                 prefs.edit().putBoolean("eastereggFound", true).apply();
                 initEasterEggFoundButton();
-                if (playGAppsActive)
+                if (playGAppsActive) {
                     logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_opengapps_large));
-                else
+                } else {
                     logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_playgapps_large));
+                }
                 playGAppsActive = !playGAppsActive;
                 return true;
             }
