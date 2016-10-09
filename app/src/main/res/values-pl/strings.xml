@@ -87,6 +87,7 @@
 
     <!--______DOWNLOAD/INSTALL______-->
         <!--LABELS-->
+            <string name="label_download_error">połączenie z serwerem nie powiodło się</string>
             <string name="label_download">Pobierz</string>
             <string name="label_architecture">Architektura</string>
             <string name="label_variant">Wariant</string>

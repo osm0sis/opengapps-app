@@ -241,8 +241,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
 
     private void checkAndHandleError() {
         if (errorOccured && downloadFragment != null && downloadFragment.getActivity() != null) {
-            Toast.makeText(downloadFragment.getActivity(), "Connecting to server failed", Toast.LENGTH_SHORT).show();
-//            downloadFragment.downloadCancelled();
+            Toast.makeText(downloadFragment.getActivity(), R.string.label_download_error, Toast.LENGTH_SHORT).show();
         }
     }
 

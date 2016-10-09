@@ -87,6 +87,7 @@
 
     <!--______DOWNLOAD/INSTALL______-->
         <!--LABELS-->
+            <string name="label_download_error">Conexiunea la server a eşuat</string>
             <string name="label_download">Descarcă</string>
             <string name="label_architecture">Arhitectură</string>
             <string name="label_variant">Variantă</string>

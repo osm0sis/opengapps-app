@@ -87,6 +87,7 @@
 
     <!--______DOWNLOAD/INSTALL______-->
         <!--LABELS-->
+    <!-- TODO needs label_download_error -->
             <string name="label_download">Скачать</string>
             <string name="label_architecture">Архитектура</string>
             <string name="label_variant">Вариант</string>

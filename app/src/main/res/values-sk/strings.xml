@@ -87,6 +87,7 @@
 
     <!--______DOWNLOAD/INSTALL______-->
         <!--LABELS-->
+            <string name="label_download_error">Nepodarilo sa pripojiť k serveru</string>
             <string name="label_download">Stiahnuť</string>
             <string name="label_architecture">Architektúra</string>
             <string name="label_variant">Variant</string>

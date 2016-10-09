@@ -87,6 +87,7 @@
 
     <!--______DOWNLOAD/INSTALL______-->
         <!--LABELS-->
+            <string name="label_download_error">Verbinding met de server mislukt</string>
             <string name="label_download">Download</string>
             <string name="label_architecture">Architectuur</string>
             <string name="label_variant">Variant</string>
