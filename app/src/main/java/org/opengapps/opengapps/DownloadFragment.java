@@ -43,6 +43,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener, SwipeRefreshLayout.OnRefreshListener {
     public final static String TAG = "downloadFragment";
     private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
+    private final static String md5FileExtension = ".md5";
+    private final static String versionlogFileExtension = ".versionlog.txt";
     public static boolean isRestored = false;
     private static String lastTag = "";
     private ConcurrentHashMap<String, InstallCard> fileCards = new ConcurrentHashMap<>();
@@ -301,19 +303,20 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         FilenameFilter filter = new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.startsWith("open_gapps-") && (name.endsWith(".zip.md5") || name.endsWith(".versionlog.txt"));
+                return name.startsWith("open_gapps-") && (name.endsWith(md5FileExtension) || name.endsWith(versionlogFileExtension));
             }
         };
         File[] files = downloadDir.listFiles(filter);
         for (File file : files) {
-            if (file.getName().endsWith(".md5")) {
-                File gappsFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - 4));
+            if (file.getName().endsWith(md5FileExtension)) {
+                File gappsFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - md5FileExtension.length()));
                 if (!gappsFile.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
                     file.delete();
                     Log.d(TAG, "cleanUp: orphaned file \"" + file.getName() + "\" found. Deleting.");
                 }
-            } else if (file.getName().endsWith(".versionlog.txt")) {
-                File versionlogFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - 15) + ".zip");
+            } else if (file.getName().endsWith(versionlogFileExtension)) {
+                File versionlogFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - versionlogFileExtension.length()) + ".zip");
                 if (!versionlogFile.exists()) {
                     file.delete();
                     Log.d(TAG, "cleanUp: orphaned file \"" + file.getName() + "\" found. Deleting.");
