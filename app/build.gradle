@@ -23,6 +23,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             minifyEnabled true
             shrinkResources true
+            lintOptions {
+                disable 'MissingTranslation'
+            }
         }
 //        debug{}
     }
