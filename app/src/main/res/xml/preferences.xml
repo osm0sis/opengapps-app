@@ -7,7 +7,7 @@
             android:key="download_wifi_only"
             android:summary="@string/summary_wifi_only"
             android:title="@string/label_wifi_only" />
-        <org.opengapps.opengapps.prefs.FileChooserPref
+        <org.opengapps.app.prefs.FileChooserPref
             android:defaultValue="/sdcard/Download"
             android:key="download_dir"
             android:title="@string/label_download_dir" />
@@ -28,7 +28,7 @@
             android:title="@string/label_download_versionlog" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_header_install">
-        <org.opengapps.opengapps.prefs.RootPreference
+        <org.opengapps.app.prefs.RootPreference
             android:defaultValue="false"
             android:key="root_mode"
             android:summary="@string/summary_root_mode"

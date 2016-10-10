@@ -154,7 +154,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headline_download" />
 
-    <org.opengapps.opengapps.download.DownloadProgressView
+    <org.opengapps.app.download.DownloadProgressView
         android:id="@+id/progress_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

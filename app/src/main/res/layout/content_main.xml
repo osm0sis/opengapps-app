@@ -21,7 +21,7 @@
                 android:animateLayoutChanges="true"
                 android:orientation="vertical">
 
-                <org.opengapps.opengapps.card.PermissionCard
+                <org.opengapps.app.card.PermissionCard
                     android:id="@+id/permission_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                     ads:cardBackgroundColor="@color/colorPrimaryDark"
                     ads:cardCornerRadius="0dp" />
 
-                <org.opengapps.opengapps.card.DownloadCard
+                <org.opengapps.app.card.DownloadCard
                     android:id="@+id/download_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

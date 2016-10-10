@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.opengapps.opengapps">
+    package="org.opengapps.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECOVERY" />
@@ -21,7 +21,7 @@
         tools:replace="android:theme">
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="org.opengapps.opengapps.provider"
+            android:authorities="org.opengapps.app.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -39,34 +39,34 @@
                 android:value=".NavigationActivity" />
         </activity>
         <activity
-            android:name=".intro.AppIntroActivity"
+            android:name="org.opengapps.app.intro.AppIntroActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="AppIntro"
             android:launchMode="singleInstance"
-            android:parentActivityName=".NavigationActivity"
+            android:parentActivityName="org.opengapps.app.NavigationActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavigationActivity" />
+                android:value="org.opengapps.app.NavigationActivity" />
         </activity>
         <activity
-            android:name=".prefs.Preferences"
+            android:name="org.opengapps.app.prefs.Preferences"
             android:label="@string/action_settings"
-            android:parentActivityName=".NavigationActivity">
+            android:parentActivityName="org.opengapps.app.NavigationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavigationActivity" />
+                android:value="org.opengapps.app.NavigationActivity" />
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name="org.opengapps.app.AboutActivity"
             android:label="@string/title_activity_about"
-            android:parentActivityName=".NavigationActivity">
+            android:parentActivityName="org.opengapps.app.NavigationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavigationActivity" />
+                android:value="org.opengapps.app.NavigationActivity" />
         </activity>
         <activity
-            android:name=".NavigationActivity"
+            android:name="org.opengapps.app.NavigationActivity"
             android:label="@string/app_name"
             android:theme="@style/SpecialNavD">
             <intent-filter>
@@ -81,12 +81,12 @@
             android:theme="@style/MyTheme"
             tools:replace="android:theme" />
         <activity
-            android:name=".SupportActivity"
+            android:name="org.opengapps.app.SupportActivity"
             android:label="@string/label_support"
-            android:parentActivityName=".NavigationActivity">
+            android:parentActivityName="org.opengapps.app.NavigationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavigationActivity" />
+                android:value="org.opengapps.app.NavigationActivity" />
         </activity>
     </application>
 

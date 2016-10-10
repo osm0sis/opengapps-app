@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:downloadFragment="org.opengapps.opengapps.SupportActivity">
+    tools:downloadFragment="org.opengapps.app.SupportActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

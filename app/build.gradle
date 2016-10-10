@@ -10,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.opengapps.opengapps"
+        applicationId "org.opengapps.app"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
