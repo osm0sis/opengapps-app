@@ -152,8 +152,8 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     public void setFile(File file) {
         gappsFile = file;
-        md5File = new File(gappsFile.getAbsolutePath() + ".md5");
-        String versionLog = gappsFile.getAbsolutePath().substring(0, gappsFile.getAbsolutePath().length() - 4) + ".versionlog.txt";
+        md5File = new File(gappsFile.getAbsolutePath() + DownloadFragment.md5FileExtension);
+        String versionLog = gappsFile.getAbsolutePath().substring(0, gappsFile.getAbsolutePath().length() - ".zip".length()) + DownloadFragment.versionlogFileExtension;
         versionLogFile = new File(versionLog);
         md5Exists = md5File.exists();
         versionLogExists = versionLogFile.exists();

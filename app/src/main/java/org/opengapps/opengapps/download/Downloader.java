@@ -162,8 +162,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private static void deletePackage(File gappsFile) {
-        File md5File = new File(gappsFile.getAbsolutePath() + ".md5");
-        String versionLog = gappsFile.getAbsolutePath().substring(0, gappsFile.getAbsolutePath().length() - 4) + ".versionlog.txt";
+        File md5File = new File(gappsFile.getAbsolutePath() + DownloadFragment.md5FileExtension);
+        String versionLog = gappsFile.getAbsolutePath().substring(0, gappsFile.getAbsolutePath().length() - ".zip".length()) + DownloadFragment.versionlogFileExtension;
         File versionlogFile = new File(versionLog);
         md5File.delete();
         versionlogFile.delete();
@@ -278,17 +278,17 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         File path = new File(prefs.getString("download_dir", defaultDownloadDir));
         File gappsPackage = new File(path, title + ".zip");
         if (prefs.getBoolean("download_md5", true)) {
-            downloadMD5(uri.toString(), new File(gappsPackage.getAbsolutePath() + ".md5"));
+            downloadMD5(uri.toString(), new File(gappsPackage.getAbsolutePath() + DownloadFragment.md5FileExtension));
         }
         if (prefs.getBoolean("download_versionlog", false)) {
-            downloadVersionLog(uri.toString(), new File(path, title + ".versionlog.txt"));
+            downloadVersionLog(uri.toString(), new File(path, title + DownloadFragment.versionlogFileExtension));
         }
         request.setDestinationUri(Uri.fromFile(gappsPackage));
         return downloadManager.enqueue(request);
     }
 
     private void downloadVersionLog(String uri, File file) {
-        uri = uri.substring(0, uri.length() - 4) + ".versionlog.txt";
+        uri = uri.substring(0, uri.length() - ".zip".length()) + DownloadFragment.versionlogFileExtension;
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
@@ -303,7 +303,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private void downloadMD5(String uri, File file) {
-        uri += ".md5";
+        uri += DownloadFragment.md5FileExtension;
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()

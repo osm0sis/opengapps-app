@@ -43,8 +43,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class DownloadFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, DownloadProgressView.DownloadStatusListener, SwipeRefreshLayout.OnRefreshListener {
     public final static String TAG = "downloadFragment";
     private final static String interstitialAdId = "ca-app-pub-9489060368971640/9426486679";
-    private final static String md5FileExtension = ".md5";
-    private final static String versionlogFileExtension = ".versionlog.txt";
+    public final static String md5FileExtension = ".md5";
+    public final static String versionlogFileExtension = ".versionlog.txt";
     public static boolean isRestored = false;
     private static String lastTag = "";
     private ConcurrentHashMap<String, InstallCard> fileCards = new ConcurrentHashMap<>();
