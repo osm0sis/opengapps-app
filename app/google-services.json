@@ -36,6 +36,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636830569701:android:3a8efcd0cd327c5e",
+        "android_client_info": {
+          "package_name": "org.opengapps.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636830569701-p1cf182tid397rda4u1io8lj9tr6lsmr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD5RozX89A9lQ9GjfN45ETX-nz8Lkx2cg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"
