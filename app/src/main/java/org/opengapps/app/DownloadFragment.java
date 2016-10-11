@@ -307,6 +307,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             }
         };
         File[] files = downloadDir.listFiles(filter);
+        if (files == null) {
+            return;
+        }
         for (File file : files) {
             if (file.getName().endsWith(md5FileExtension)) {
                 File gappsFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - md5FileExtension.length()));
