@@ -283,6 +283,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         if (prefs.getBoolean("download_versionlog", false)) {
             downloadVersionLog(uri.toString(), new File(path, title + DownloadFragment.versionlogFileExtension));
         }
+        gappsPackage = new File(gappsPackage + ".tmp");
         request.setDestinationUri(Uri.fromFile(gappsPackage));
         return downloadManager.enqueue(request);
     }

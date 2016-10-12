@@ -134,8 +134,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (BuildConfig.DEBUG) {
             request = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("F98ACBE481522BAE0A91AC208FDF938F")
-                    .addTestDevice("33ADDADB3757E9C80F232D44DE94EB9E")
+                    .addTestDevice("FD3ACD8C90A01E155D99775579EC45A9")
                     .addTestDevice("CAAA7C86D5955208EF75484D93E09948")
                     .build();
         } else {
@@ -313,14 +312,16 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         for (File file : files) {
             if (file.getName().endsWith(md5FileExtension)) {
                 File gappsFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - md5FileExtension.length()));
-                if (!gappsFile.exists()) {
+                File tmpGappsFile = new File(gappsFile.getAbsolutePath() + ".tmp");
+                if (!gappsFile.exists() && !tmpGappsFile.exists()) {
                     //noinspection ResultOfMethodCallIgnored
                     file.delete();
                     Log.d(TAG, "cleanUp: orphaned file \"" + file.getName() + "\" found. Deleting.");
                 }
             } else if (file.getName().endsWith(versionlogFileExtension)) {
-                File versionlogFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - versionlogFileExtension.length()) + ".zip");
-                if (!versionlogFile.exists()) {
+                File gappsFile = new File(file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - versionlogFileExtension.length()) + ".zip");
+                File tmpGappsFile = new File(gappsFile.getAbsolutePath() + ".tmp");
+                if (!gappsFile.exists() && !tmpGappsFile.exists()) {
                     file.delete();
                     Log.d(TAG, "cleanUp: orphaned file \"" + file.getName() + "\" found. Deleting.");
                 }
@@ -353,6 +354,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void downloadSuccessful(String filePath) {
+        File gapps = new File(filePath);
+        if (gapps.exists()) {
+            gapps.renameTo(new File(filePath.substring(0, filePath.length() - ".tmp".length())));
+        }
         loadInstallCards();
         if (prefs.getBoolean("download_delete_old_files", true)) {
             Downloader.deleteOldFiles(getActivity());
