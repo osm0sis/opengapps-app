@@ -167,6 +167,19 @@ public class DownloadProgressView extends LinearLayout {
         downloadButton.setEnabled(false);
     }
 
+    public boolean isDownloading() {
+        DownloadManager.Query query = new DownloadManager.Query();
+        query.setFilterById(downloadID);
+        Cursor c = downloadManager.query(query);
+        if (c.moveToFirst()) {
+            int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
+            if (status == DownloadManager.STATUS_PAUSED || status == DownloadManager.STATUS_PENDING || status == DownloadManager.STATUS_RUNNING) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void showDownloadProgress() {
         setVisibility(View.VISIBLE);
         View parentView = (View) getParent();

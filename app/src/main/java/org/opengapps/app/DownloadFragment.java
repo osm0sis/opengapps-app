@@ -338,8 +338,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (downloader != null) {
             downloadCard.onTagUpdated(lastTag);
         }
-        refreshLayout.setRefreshing(false);
-
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     public void downloadStarted(long id, String tag) {

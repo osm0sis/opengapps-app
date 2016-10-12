@@ -72,6 +72,10 @@ public class DownloadCard extends CardView {
         });
     }
 
+    private boolean isDownloading() {
+        return ((DownloadProgressView) findViewById(R.id.progress_view)).isDownloading();
+    }
+
     public void onTagUpdated(String lastAvailableTag) {
         String lastDownloadedTag = Downloader.getLastDownloadedTag(context);
 
@@ -80,12 +84,14 @@ public class DownloadCard extends CardView {
         Spanned spanned = Html.fromHtml("<b>" + convertDate(lastAvailableTag) + "</b>");
         version.setText(spanned);
 
-        if (lastDownloadedTag.equals(lastAvailableTag)) {
-            setState(State.DISABLED);
-        } else if (!TextUtils.isEmpty(lastDownloadedTag)) {
-            setState(State.UPDATEABLE);
-        } else {
-            setState(State.NORMAL);
+        if (!isDownloading()) {
+            if (lastDownloadedTag.equals(lastAvailableTag)) {
+                setState(State.DISABLED);
+            } else if (!TextUtils.isEmpty(lastDownloadedTag)) {
+                setState(State.UPDATEABLE);
+            } else {
+                setState(State.NORMAL);
+            }
         }
     }
 
@@ -136,7 +142,7 @@ public class DownloadCard extends CardView {
                 break;
             case UPDATEABLE:
                 if (!TextUtils.isEmpty(version.getText()))
-                    //noinspection deprecation
+                //noinspection deprecation
                 {
                     //noinspection deprecation
                     version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>"));
