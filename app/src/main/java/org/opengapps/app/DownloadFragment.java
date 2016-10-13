@@ -247,7 +247,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     private File[] findFiles() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            if (getContext() == null || ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 return new File[]{};
             }
         }
