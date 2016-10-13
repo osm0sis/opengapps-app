@@ -176,7 +176,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        Log.e(TAG, "onSharedPreferenceChanged: " + s);
+        Log.d(TAG, "onSharedPreferenceChanged: " + s);
         if (s.contains("selection")) {
             downloadCard.initSelections();
             if (!prefs.getBoolean("firstStart", true)) {

@@ -1,7 +1,9 @@
 package org.opengapps.app.intro;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,11 +18,13 @@ import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
 import com.github.paolorotolo.appintro.AppIntroViewPager;
 
+import org.opengapps.app.NavigationActivity;
 import org.opengapps.app.R;
 import org.opengapps.app.ZipInstaller;
 import org.opengapps.app.prefs.Preferences;
@@ -133,7 +137,10 @@ public class AppIntroActivity extends AppIntro {
         editor.putString("selection_arch", GappsSelectionFragment.selectionArch);
         editor.apply();
         editor.putBoolean("firstStart", false).apply();
-        finish();
+        isTaskRoot();
+        Intent i = new Intent(getBaseContext(), NavigationActivity.class);
+        startActivity(i);
+//        finish();
     }
 
     @Override
