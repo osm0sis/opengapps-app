@@ -137,10 +137,9 @@ public class AppIntroActivity extends AppIntro {
         editor.putString("selection_arch", GappsSelectionFragment.selectionArch);
         editor.apply();
         editor.putBoolean("firstStart", false).apply();
-        isTaskRoot();
         Intent i = new Intent(getBaseContext(), NavigationActivity.class);
         startActivity(i);
-//        finish();
+        finish();
     }
 
     @Override

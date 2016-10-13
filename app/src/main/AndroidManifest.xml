@@ -41,7 +41,7 @@
         <activity
             android:name="org.opengapps.app.intro.AppIntroActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="AppIntro"
+            android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:parentActivityName="org.opengapps.app.NavigationActivity"
             android:screenOrientation="portrait">
@@ -68,6 +68,7 @@
         <activity
             android:name="org.opengapps.app.NavigationActivity"
             android:label="@string/app_name"
+            android:launchMode="singleInstance"
             android:theme="@style/SpecialNavD">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
