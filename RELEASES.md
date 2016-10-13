@@ -1,6 +1,7 @@
 ## Release and testing procedure
 If ready to release a new version, apply the following steps:
 * Update the versionname, if necessary/appropiate
+* Increase the versioncode by 1, to differentiate it from testing builds
 * Tag the versioncode in git preceded by a 'v' e.g.: `v1`
 * Build the release APK, upload it to the website and Play Store
 * Upload the `app/build/outputs/mapping/release/mapping.txt` to Firebase
