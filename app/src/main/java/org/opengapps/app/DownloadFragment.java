@@ -363,7 +363,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             gapps.renameTo(new File(filePath.substring(0, filePath.length() - ".tmp".length())));
         }
         loadInstallCards();
-        if (prefs.getBoolean("download_delete_old_files", true)) {
+        if (getActivity() != null && prefs.getBoolean("download_delete_old_files", true)) {
             Downloader.deleteOldFiles(getActivity());
         }
         if (prefs.getBoolean("checkMissing", false)) {
