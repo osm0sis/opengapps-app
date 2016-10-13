@@ -1,7 +1,6 @@
 package org.opengapps.app.intro;
 
 import android.Manifest;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +17,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
@@ -138,6 +136,7 @@ public class AppIntroActivity extends AppIntro {
         editor.apply();
         editor.putBoolean("firstStart", false).apply();
         Intent i = new Intent(getBaseContext(), NavigationActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
         startActivity(i);
         finish();
     }
