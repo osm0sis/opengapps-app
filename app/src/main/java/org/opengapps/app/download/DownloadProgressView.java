@@ -245,7 +245,7 @@ public class DownloadProgressView extends LinearLayout {
                                     synchronized (Looper.getMainLooper()) {
                                         downloading = false;
                                         setVisibility(View.GONE);
-                                        listener.downloadSuccessful(filePath.substring(7));
+                                        listener.downloadSuccessful(filePath.substring("file://".length()));
                                     }
                                 } else {
                                     downloading = true;

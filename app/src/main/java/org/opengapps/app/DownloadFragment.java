@@ -208,6 +208,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     private void loadInstallCards() {
+        if (getActivity() == null)
+            return;
         for (InstallCard card : fileCards.values()) {
             if (!card.exists() || InstallCard.invalidate) {
                 ((LinearLayout) getView().findViewById(R.id.main_layout)).removeView(card);
