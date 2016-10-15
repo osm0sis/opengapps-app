@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class SupportActivity extends AppCompatActivity {
@@ -40,14 +39,11 @@ public class SupportActivity extends AppCompatActivity {
             }
         };
 
-        LinearLayout wiki = (LinearLayout) findViewById(R.id.wiki_button);
-        LinearLayout supportChat = (LinearLayout) findViewById(R.id.chat_button);
-        LinearLayout reportBug = (LinearLayout) findViewById(R.id.bugreport_button);
-        LinearLayout supportForum = (LinearLayout) findViewById(R.id.support_forum_button);
-
-        supportForum.setOnClickListener(listener);
-        wiki.setOnClickListener(listener);
-        supportChat.setOnClickListener(listener);
-        reportBug.setOnClickListener(listener);
+        findViewById(R.id.translate_button).setOnClickListener(listener);
+        findViewById(R.id.support_us_button).setOnClickListener(listener);
+        findViewById(R.id.wiki_button).setOnClickListener(listener);
+        findViewById(R.id.chat_button).setOnClickListener(listener);
+        findViewById(R.id.bugreport_button).setOnClickListener(listener);
+        findViewById(R.id.support_forum_button).setOnClickListener(listener);
     }
 }

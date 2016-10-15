@@ -180,9 +180,6 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_blog) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_blog)));
             startActivity(i);
-        } else if (id == R.id.nav_donate) {
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_donate)));
-            startActivity(i);
         } else if (id == R.id.nav_opengapps) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_opengapps)));
             startActivity(i);

@@ -116,6 +116,8 @@
             <string name="autoinstall_root_disclaimer">Automatische Installatie werkt enkel als OpenGApps als systeemapplicatie is geïnstalleerd of met root</string>
 
     <!--______SUPPORT______-->
+        <string name="label_app">App</string>
+        <string name="label_translate">Vertaling</string>
         <string name="label_support">Ondersteuning</string>
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Ondersteuningsforum</string>

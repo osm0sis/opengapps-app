@@ -116,6 +116,8 @@
             <string name="autoinstall_root_disclaimer">Le mode d’installation automatique ne fonctionne que si Open GApps est installé en tant qu’application système ou si les droits d’utilisateur root sont accordés</string>
 
     <!--______SUPPORT______-->
+        <string name="label_app">Application</string>
+        <string name="label_translate">Traduction</string>
         <string name="label_support">Support</string>
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Forum de support</string>

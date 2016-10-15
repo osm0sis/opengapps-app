@@ -117,6 +117,8 @@
 
 
     <!--______SUPPORT______-->
+        <string name="label_app">Aplicație</string>
+        <string name="label_translate">Traducere</string>
         <string name="label_support">Suport</string>
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Forum pentru suport</string>

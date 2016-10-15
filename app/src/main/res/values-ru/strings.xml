@@ -116,6 +116,8 @@
             <string name="autoinstall_root_disclaimer">Автоматическая установка работает, только если Open GApps установлено как системное приложение или с правами администратора</string>
 
     <!--______SUPPORT______-->
+        <string name="label_app">Приложение</string>
+        <string name="label_translate">Перевод</string>
         <string name="label_support">Поддержка</string>
         <string name="label_wiki">Открыть GApps Wiki</string>
         <string name="label_support_forum">Форум поддержки</string>

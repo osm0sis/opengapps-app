@@ -116,6 +116,8 @@
             <string name="autoinstall_root_disclaimer">Das Automatische Installieren funktioniert nur als System-App oder mit Root</string>
 
     <!--______SUPPORT______-->
+        <string name="label_app">App</string>
+        <string name="label_translate">Übersetzung</string>
         <string name="label_support">Support</string>
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Support Forum</string>

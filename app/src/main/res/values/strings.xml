@@ -116,6 +116,8 @@
     <string name="autoinstall_root_disclaimer">Automatic Install only works only if Open GApps is installed as system app or with root permission</string>
 
     <!--______SUPPORT______-->
+    <string name="label_app">App</string>
+    <string name="label_translate">Translate</string>
     <string name="label_support">Support</string>
     <string name="label_wiki">Open GApps Wiki</string>
     <string name="label_support_forum">Support Forum</string>
@@ -187,6 +189,7 @@
     <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
     <string name="url_donate" translatable="false">http://opengapps.org/donate/</string>
     <string name="url_producer" translatable="false">https://github.com/mfonville/</string>
+    <string name="url_translate">https://github.com/opengapps/opengapps-app-support</string>
     <!--FILECHOOSER (EXTERNAL LIBRARY)-->
     <string name="cancel_label" translatable="false">@string/label_cancel</string>
     <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
