@@ -309,8 +309,8 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:contentDescription="@string/label_donate"
-                            android:src="@drawable/ic_donate" />
+                            android:contentDescription="@string/label_support_us"
+                            android:src="@drawable/ic_support_us" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -324,7 +324,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/label_donate"
+                                android:text="@string/label_support_us"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                                 android:textStyle="normal|bold" />
 
@@ -332,7 +332,7 @@
                                 android:id="@+id/support_url_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/url_donate"
+                                android:text="@string/url_support_us"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                 tools:ignore="DuplicateIds" />
                         </LinearLayout>

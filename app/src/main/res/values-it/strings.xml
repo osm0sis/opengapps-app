@@ -58,7 +58,7 @@
     <!--______Nav-Drawer______-->
         <string name="label_links">Link</string>
         <string name="label_blog">Blog</string>
-        <string name="label_donate">Dona</string>
+        <string name="label_support_us">Dona</string>
 
     <!--______GENERAL______-->
         <!--LABELS-->

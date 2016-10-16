@@ -58,7 +58,7 @@
     <!--______Nav-Drawer______-->
         <string name="label_links">Ссылки</string>
         <string name="label_blog">Блог</string>
-        <string name="label_donate">Поддержать авторов</string>
+        <string name="label_support_us">Поддержать авторов</string>
 
     <!--______GENERAL______-->
         <!--LABELS-->
