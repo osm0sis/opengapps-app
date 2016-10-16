@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="8dp"
                         android:paddingTop="8dp"
-                        android:text="@string/app_name"
+                        android:text="@string/opengapps_project"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
                         android:textStyle="normal|bold" />

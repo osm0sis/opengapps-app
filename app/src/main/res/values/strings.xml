@@ -58,7 +58,7 @@
     <!--______Nav-Drawer______-->
     <string name="label_links">Links</string>
     <string name="label_blog">Blog</string>
-    <string name="label_donate">Donate</string>
+    <string name="label_donate">Support the Open Source Project</string>
 
     <!--______GENERAL______-->
     <!--LABELS-->
@@ -167,6 +167,7 @@
         <item>pico</item>
     </string-array>
     <!--NAMES-->
+    <string name="opengapps_project" translatable="false">The Open GApps Project</string>
     <string name="label_website" translatable="false">OpenGApps.org</string>
     <string name="designer" translatable="false">Adam Lapinski</string>
     <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016  - All Rights Reserved</string>
@@ -187,7 +188,7 @@
     <string name="github_link" translatable="false">https://github.com/opengapps/opengapps/</string>
     <string name="link_yeti" translatable="false">http://www.yeti-designs.com/</string>
     <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
-    <string name="url_donate" translatable="false">http://opengapps.org/donate/</string>
+    <string name="url_donate" translatable="false">http://opengapps.org/support/</string>
     <string name="url_producer" translatable="false">https://github.com/mfonville/</string>
     <string name="url_translate">https://github.com/opengapps/opengapps-app-support</string>
     <!--FILECHOOSER (EXTERNAL LIBRARY)-->
