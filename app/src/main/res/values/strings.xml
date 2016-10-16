@@ -58,7 +58,7 @@
     <!--______Nav-Drawer______-->
     <string name="label_links">Links</string>
     <string name="label_blog">Blog</string>
-    <string name="label_support_us">Support the Open Source Project</string>
+    <string name="label_support_opengapps">Support the Open GApps Project</string>
 
     <!--______GENERAL______-->
     <!--LABELS-->
@@ -188,7 +188,7 @@
     <string name="github_link" translatable="false">https://github.com/opengapps/opengapps/</string>
     <string name="link_yeti" translatable="false">http://www.yeti-designs.com/</string>
     <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
-    <string name="url_support_us" translatable="false">http://opengapps.org/support/</string>
+    <string name="url_support_opengapps" translatable="false">http://opengapps.org/support/</string>
     <string name="url_producer" translatable="false">https://github.com/mfonville/</string>
     <string name="url_translate">https://github.com/opengapps/opengapps-app-support</string>
     <!--FILECHOOSER (EXTERNAL LIBRARY)-->

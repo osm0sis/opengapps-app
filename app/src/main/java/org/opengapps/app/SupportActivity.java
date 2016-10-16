@@ -40,7 +40,7 @@ public class SupportActivity extends AppCompatActivity {
         };
 
         findViewById(R.id.translate_button).setOnClickListener(listener);
-        findViewById(R.id.support_us_button).setOnClickListener(listener);
+        findViewById(R.id.support_opengapps_button).setOnClickListener(listener);
         findViewById(R.id.wiki_button).setOnClickListener(listener);
         findViewById(R.id.chat_button).setOnClickListener(listener);
         findViewById(R.id.bugreport_button).setOnClickListener(listener);

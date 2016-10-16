@@ -108,10 +108,10 @@ public class NavigationActivity extends AppCompatActivity
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.label_adblock_detected))
                 .setMessage(R.string.explanation_adblock_detected)
-                .setPositiveButton(R.string.label_support_us, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.label_support_opengapps, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent x = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_support_us)));
+                        Intent x = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_support_opengapps)));
                         startActivity(x);
                     }
                 })

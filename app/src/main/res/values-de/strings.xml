@@ -58,7 +58,7 @@
     <!--______Nav-Drawer______-->
         <string name="label_links">Links</string>
         <string name="label_blog">Blog</string>
-        <string name="label_support_us">Unterstütze das Open-Source Projekt</string>
+        <string name="label_support_opengapps">Unterstütze das Open GApps Projekt</string>
 
     <!--______GENERAL______-->
         <!--LABELS-->
