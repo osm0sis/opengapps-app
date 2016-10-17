@@ -58,7 +58,6 @@
     <!--______Nav-Drawer______-->
         <string name="label_links">Ссылки</string>
         <string name="label_blog">Блог</string>
-        <string name="label_support_opengapps">Поддержать авторов</string>
 
     <!--______GENERAL______-->
         <!--LABELS-->
@@ -122,6 +121,8 @@
         <string name="label_wiki">Открыть GApps Wiki</string>
         <string name="label_support_forum">Форум поддержки</string>
         <string name="label_support_chat">Чат поддержки</string>
+        <string name="label_support_opengapps">Support the Open GApps Project</string>
+        <string name="label_support_opengapps_description">The open source project providing the scripts for the OpenGApps.org packages</string>
         <string name="label_report_bug">Сообщить о баге</string>
 
     <!--______ABOUT______-->

@@ -58,7 +58,6 @@
     <!--______Nav-Drawer______-->
         <string name="label_links">Liens</string>
         <string name="label_blog">Blog</string>
-        <string name="label_support_opengapps">Faire un don</string>
 
     <!--______GENERAL______-->
         <!--LABELS-->
@@ -122,6 +121,8 @@
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Forum de support</string>
         <string name="label_support_chat">Chat de support</string>
+        <string name="label_support_opengapps">Support the Open GApps Project</string>
+        <string name="label_support_opengapps_description">The open source project providing the scripts for the OpenGApps.org packages</string>
         <string name="label_report_bug">Rapporter un problème</string>
 
     <!--______ABOUT______-->

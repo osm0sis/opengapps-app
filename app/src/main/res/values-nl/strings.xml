@@ -58,7 +58,6 @@
     <!--______Nav-Drawer______-->
         <string name="label_links">Links</string>
         <string name="label_blog">Blog</string>
-        <string name="label_support_opengapps">Steun het Open GApps Project</string>
 
     <!--______GENERAL______-->
         <!--LABELS-->
@@ -122,6 +121,8 @@
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Ondersteuningsforum</string>
         <string name="label_support_chat">Chat hulp</string>
+        <string name="label_support_opengapps">Steun het Open GApps Project</string>
+        <string name="label_support_opengapps_description">Het open source project dat de scripts voor de OpenGApps.org pakketten maakt</string>
         <string name="label_report_bug">Fout melden</string>
 
     <!--______ABOUT______-->
