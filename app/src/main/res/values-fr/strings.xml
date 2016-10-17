@@ -121,8 +121,8 @@
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Forum de support</string>
         <string name="label_support_chat">Chat de support</string>
-        <string name="label_support_opengapps">Support the Open GApps Project</string>
-        <string name="label_support_opengapps_description">The open source project providing the scripts for the OpenGApps.org packages</string>
+        <string name="label_support_opengapps">Soutenez le Projet Open GApps</string>
+        <string name="label_support_opengapps_description">le projet open source qui prodigue les scripts pour les packages OpenGApps.org</string>
         <string name="label_report_bug">Rapporter un problème</string>
 
     <!--______ABOUT______-->
