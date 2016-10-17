@@ -122,7 +122,7 @@
         <string name="label_support_forum">Support Forum</string>
         <string name="label_support_chat">Support Chat</string>
         <string name="label_support_opengapps">Unterstütze das Open GApps Projekt</string>
-        <string name="label_support_opengapps_description">The open source project providing the scripts for the OpenGApps.org packages</string>
+        <string name="label_support_opengapps_description">Das Open-Source Projekt, das die Skripte für die OpenGApps.org-Pakete anbietet</string>
         <string name="label_report_bug">Fehler melden</string>
 
     <!--______ABOUT______-->
