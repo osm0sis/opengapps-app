@@ -15,6 +15,15 @@ android {
 //        resConfigs "nodpi"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
+
+    splits {
+        density {
+            enable true
+            reset()
+            include "nodpi"
+        }
+    }
+
     buildTypes {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
