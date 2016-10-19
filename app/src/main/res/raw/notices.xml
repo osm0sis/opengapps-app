@@ -2,7 +2,7 @@
     <notice>
         <name>LicensesDialog</name>
         <url>http://psdev.de</url>
-        <copyright>Copyright 2013 Philip Schiffer &lt;admin@psdev.de></copyright>
+        <copyright>Copyright 2013 Philip Schiffer</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
@@ -14,9 +14,7 @@
     <notice>
         <name>AppIntro</name>
         <url>https://github.com/PaoloRotolo/AppIntro</url>
-        <copyright>Copyright 2015 Paolo Rotolo
-            Copyright 2016 Maximilian Narr
-        </copyright>
+        <copyright>Copyright 2015 Paolo Rotolo, 2016 Maximilian Narr</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
@@ -26,7 +24,7 @@
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
-        <name>Andrxoid-DirectoryChooser</name>
+        <name>Android-DirectoryChooser</name>
         <url>https://github.com/passy/Android-DirectoryChooser</url>
         <copyright>Copyright 2013-2015 Pascal Hartig</copyright>
         <license>Apache Software License 2.0</license>
@@ -40,13 +38,13 @@
     <notice>
         <name>Material Stepper</name>
         <url>https://github.com/fcannizzaro/material-stepper</url>
-        <copyright>Copyright (c) 2015 Francesco Saverio Cannizzaro</copyright>
+        <copyright>Copyright 2015 Francesco Saverio Cannizzaro</copyright>
         <license>MIT License</license>
     </notice>
     <notice>
         <name>Tooltip</name>
         <url>https://github.com/ViHtarb/Tooltip</url>
-        <copyright>Copyright (c) 2016. Viнt@rь</copyright>
+        <copyright>Copyright 2016 Viнt@rь</copyright>
         <license>MIT License</license>
     </notice>
 </notices>
