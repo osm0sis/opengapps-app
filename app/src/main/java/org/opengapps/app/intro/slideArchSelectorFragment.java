@@ -7,7 +7,6 @@ import org.opengapps.app.R;
 
 @SuppressLint("ValidFragment")
 public class slideArchSelectorFragment extends GappsSelectionFragment {
-//TODO - ARCH -> CPU-Architecture
 
     public slideArchSelectorFragment() {
         super(R.string.appintro_label_architecture, R.string.slide_arch_description, R.string.slide_arch_hint, R.string.arch_moreinfo, "selection_arch", R.array.architectures);

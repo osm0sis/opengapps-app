@@ -43,7 +43,7 @@ import okhttp3.ResponseBody;
 import static android.content.Context.MODE_PRIVATE;
 
 @SuppressWarnings("ConstantConditions")
-public class Downloader extends AsyncTask<Void, Void, Long> {
+public class    Downloader extends AsyncTask<Void, Void, Long> {
     private final static String downloadUrl = "https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip";
     private final static String feedUrl = "https://github.com/opengapps/%arch/releases.atom";
     private final static String subDir = "/OpenGApps/";

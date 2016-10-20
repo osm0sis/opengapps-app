@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/pref_header_download">
-
+    <PreferenceCategory
+        android:key="download_category"
+        android:summary="THIS IS A TEST"
+        android:title="@string/pref_header_download">
         <SwitchPreference
             android:defaultValue="true"
             android:key="download_wifi_only"

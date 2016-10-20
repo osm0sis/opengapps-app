@@ -8,10 +8,11 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import org.opengapps.app.BuildConfig;
 import org.opengapps.app.R;
 
 public class Preferences extends AppCompatActivity {
-    public final static String prefName = "org.opengapps.opengapps_preferences";
+    public final static String prefName = BuildConfig.APPLICATION_ID + "_preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class Preferences extends AppCompatActivity {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static class SettingsFragment extends PreferenceFragment{
+    public static class SettingsFragment extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
