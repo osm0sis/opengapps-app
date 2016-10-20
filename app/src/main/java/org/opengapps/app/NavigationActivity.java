@@ -167,13 +167,13 @@ public class NavigationActivity extends AppCompatActivity
             toolbar.setTitle(getString(R.string.pref_header_install));
         } else if (id == R.id.nav_settings) {
             Intent i = new Intent(this, Preferences.class);
-            startActivity(i);
+            startActivityForResult(i, 99); //We acutally dont expect or get a result. This is just a dirty hack to prevent the system from killing the mainActivity
         } else if (id == R.id.nav_support) {
             Intent i = new Intent(this, SupportActivity.class);
-            startActivity(i);
+            startActivityForResult(i, 99); //We acutally dont expect or get a result. This is just a dirty hack to prevent the system from killing the mainActivity
         } else if (id == R.id.nav_about) {
             Intent i = new Intent(this, AboutActivity.class);
-            startActivity(i);
+            startActivityForResult(i, 99); //We acutally dont expect or get a result. This is just a dirty hack to prevent the system from killing the mainActivity
         } else if (id == R.id.nav_github) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_link)));
             startActivity(i);
