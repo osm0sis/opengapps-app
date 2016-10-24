@@ -116,11 +116,13 @@
 
     <!--______SUPPORT______-->
         <string name="label_app">Приложение</string>
+        <string name="label_homepage">Домашняя страница</string>
         <string name="label_translate">Перевод</string>
         <string name="label_support">Поддержка</string>
         <string name="label_wiki">Открыть GApps Wiki</string>
         <string name="label_support_forum">Форум поддержки</string>
         <string name="label_support_chat">Чат поддержки</string>
+        <string name="label_sourcecode">Исходный код</string>
         <string name="label_support_opengapps">Поддержать проект Open GApps</string>
         <string name="label_support_opengapps_description">Проект с открытым исходным кодом, который лежит в основе пакетов OpenGApps.org</string>
         <string name="label_report_bug">Сообщить о баге</string>

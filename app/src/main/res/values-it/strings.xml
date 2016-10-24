@@ -114,14 +114,15 @@
             <string name="label_root_is_need_for_rootmode">Il tuo dispositivo deve essere rootato per poterlo attivare</string>
             <string name="autoinstall_root_disclaimer">L’Installazione Automatica funziona solo se Open GApps è installata come app di sistema o con i permessi di root</string>
 
-
     <!--______SUPPORT______-->
         <string name="label_app">App</string>
+        <string name="label_homepage">Homepage</string>
         <string name="label_translate">Traduzione</string>
         <string name="label_support">Supporto</string>
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Forum di Supporto</string>
         <string name="label_support_chat">Chat di Supporto</string>
+        <string name="label_sourcecode">Codice sorgente</string>
         <string name="label_support_opengapps">Sostieni il Progetto Open GApps</string>
         <string name="label_support_opengapps_description">Il progetto open source che fornisce gli script per i pacchetti OpenGApps.org</string>
         <string name="label_report_bug">Segnala Bug</string>

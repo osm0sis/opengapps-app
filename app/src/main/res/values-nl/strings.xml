@@ -116,11 +116,13 @@
 
     <!--______SUPPORT______-->
         <string name="label_app">App</string>
+        <string name="label_homepage">Homepage</string>
         <string name="label_translate">Vertaling</string>
         <string name="label_support">Ondersteuning</string>
         <string name="label_wiki">Open GApps Wiki</string>
-        <string name="label_support_forum">Ondersteuningsforum</string>
-        <string name="label_support_chat">Chat hulp</string>
+        <string name="label_support_forum">Hulp Forum</string>
+        <string name="label_support_chat">Hulp Chat</string>
+        <string name="label_sourcecode">Broncode</string>
         <string name="label_support_opengapps">Steun het Open GApps Project</string>
         <string name="label_support_opengapps_description">Het open source project dat de scripts voor de OpenGApps.org pakketten maakt</string>
         <string name="label_report_bug">Fout melden</string>

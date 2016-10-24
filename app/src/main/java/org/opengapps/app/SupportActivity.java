@@ -39,7 +39,13 @@ public class SupportActivity extends AppCompatActivity {
             }
         };
 
+        findViewById(R.id.homepage_button).setOnClickListener(listener);
         findViewById(R.id.translate_button).setOnClickListener(listener);
+        findViewById(R.id.bugreport_button).setOnClickListener(listener);
+        findViewById(R.id.wiki_button).setOnClickListener(listener);
+        findViewById(R.id.support_chat_button).setOnClickListener(listener);
+        findViewById(R.id.support_forum_button).setOnClickListener(listener);
+        findViewById(R.id.github_button).setOnClickListener(listener);
         findViewById(R.id.support_opengapps_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,9 +53,5 @@ public class SupportActivity extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
         });
-        findViewById(R.id.wiki_button).setOnClickListener(listener);
-        findViewById(R.id.chat_button).setOnClickListener(listener);
-        findViewById(R.id.bugreport_button).setOnClickListener(listener);
-        findViewById(R.id.support_forum_button).setOnClickListener(listener);
     }
 }

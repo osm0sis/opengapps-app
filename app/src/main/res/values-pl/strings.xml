@@ -117,11 +117,13 @@
 
     <!--______SUPPORT______-->
         <string name="label_app">Aplikacja</string>
+        <string name="label_homepage">Strona główna</string>
         <string name="label_translate">Tłumaczenie</string>
         <string name="label_support">Pomoc</string>
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Forum Pomocy</string>
         <string name="label_support_chat">Czat Pomocy</string>
+        <string name="label_sourcecode">Kod źródłowy</string>
         <string name="label_support_opengapps">Wspomóż projekt Open GApps</string>
         <string name="label_support_opengapps_description">Projekt open source zapewniający skrypty dla pakietów OpenGApps.org</string>
         <string name="label_report_bug">Zgłoś błąd</string>

@@ -30,12 +30,8 @@
         <menu>
             <item
                 android:id="@+id/nav_opengapps"
-                android:icon="@drawable/ic_opengapps_o"
+                android:icon="@drawable/ic_web"
                 android:title="@string/label_website"/>
-            <item
-                android:id="@+id/nav_github"
-                android:icon="@drawable/ic_github"
-                android:title="@string/label_Github" />
             <item
                 android:id="@+id/nav_blog"
                 android:icon="@drawable/ic_blog"

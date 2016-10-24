@@ -174,9 +174,6 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             Intent i = new Intent(this, AboutActivity.class);
             startActivityForResult(i, 99); //We acutally dont expect or get a result. This is just a dirty hack to prevent the system from killing the mainActivity
-        } else if (id == R.id.nav_github) {
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_link)));
-            startActivity(i);
         } else if (id == R.id.nav_blog) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_blog)));
             startActivity(i);

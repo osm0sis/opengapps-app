@@ -139,7 +139,7 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new Handler().postDelayed(new ButtonDisabler(view), 3000);
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_yeti)));
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_artwork)));
                 startActivity(i);
             }
         });

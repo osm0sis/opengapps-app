@@ -117,11 +117,13 @@
 
     <!--______SUPPORT______-->
         <string name="label_app">Aplicație</string>
+        <string name="label_homepage">Pagina principala</string>
         <string name="label_translate">Traducere</string>
         <string name="label_support">Suport</string>
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Forum pentru suport</string>
         <string name="label_support_chat">Chat pentru suport</string>
+        <string name="label_sourcecode">Cod sursa</string>
         <string name="label_support_opengapps">Sprijină proiectul Open GApps</string>
         <string name="label_support_opengapps_description">Proiectul open source care furnizează script-uri pentru pachetele OpenGApps.org</string>
         <string name="label_report_bug">Raportează Bug</string>

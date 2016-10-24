@@ -117,11 +117,13 @@
 
     <!--______SUPPORT______-->
         <string name="label_app">Aplikácia</string>
+        <string name="label_homepage">Úvodné</string>
         <string name="label_translate">Preklad</string>
         <string name="label_support">Podpora</string>
         <string name="label_wiki">Wiki Open GApps</string>
         <string name="label_support_forum">Fórum podpory</string>
         <string name="label_support_chat">Čet s podporou</string>
+        <string name="label_sourcecode">Zdrojový kód</string>
         <string name="label_support_opengapps">Podporte projekt Open GApps</string>
         <string name="label_support_opengapps_description">Projekt s otvoreným zdrojovým kódom poskytujúci skripty pre balíky OpenGApps.org</string>
         <string name="label_report_bug">Hlásenie o chybách</string>

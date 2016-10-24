@@ -53,6 +53,51 @@
                         tools:ignore="RtlSymmetry" />
 
                     <LinearLayout
+                        android:id="@+id/homepage_button"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:minHeight="48dp"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@string/label_homepage"
+                            android:src="@drawable/ic_web"
+                            android:tint="@color/grey" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginStart="32dp"
+                            android:orientation="vertical"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_homepage"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textStyle="normal|bold" />
+
+                            <TextView
+                                android:id="@+id/support_url_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/url_homepage"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                tools:ignore="DuplicateIds" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/translate_button"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -68,7 +113,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_translate"
-                            android:src="@drawable/ic_translate" />
+                            android:src="@drawable/ic_translate"
+                            android:tint="@color/grey" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -112,7 +158,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_report_bug"
-                            android:src="@drawable/ic_bug_report" />
+                            android:src="@drawable/ic_bug_report"
+                            android:tint="@color/grey" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -178,7 +225,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_wiki"
-                            android:src="@drawable/ic_wiki" />
+                            android:src="@drawable/ic_wiki"
+                            android:tint="@color/grey" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -222,7 +270,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_support_forum"
-                            android:src="@drawable/ic_xda" />
+                            android:src="@drawable/ic_xda"
+                            android:tint="@color/grey" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -251,7 +300,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/chat_button"
+                        android:id="@+id/support_chat_button"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"
@@ -266,7 +315,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_support_chat"
-                            android:src="@drawable/ic_support_chat" />
+                            android:src="@drawable/ic_support_chat"
+                            android:tint="@color/grey" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -295,6 +345,51 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/github_button"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:minHeight="48dp"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@string/label_sourcecode"
+                            android:src="@drawable/ic_github"
+                            android:tint="@color/grey" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginStart="32dp"
+                            android:orientation="vertical"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_sourcecode"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textStyle="normal|bold" />
+
+                            <TextView
+                                android:id="@+id/support_url_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/url_sourcecode"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                tools:ignore="DuplicateIds" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/support_opengapps_button"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -310,7 +405,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_support_opengapps"
-                            android:src="@drawable/ic_support_opengapps" />
+                            android:src="@drawable/ic_support_opengapps"
+                            android:tint="@color/grey" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
