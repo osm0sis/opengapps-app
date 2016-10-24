@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import org.opengapps.app.R;
 import org.opengapps.app.prefs.Preferences;
@@ -36,8 +35,8 @@ public class RequestRootFragment extends Fragment {
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<String> run = Shell.SU.run("whoami");
-                if (run != null && run.size() >= 1 && run.get(0).equals("root")) {
+                List<String> run = Shell.SU.run("id -u");
+                if (run != null && run.size() >= 1 && run.get(0).equals("0")) {
                     ((Button) view).setText(R.string.permission_granted);
                     view.setEnabled(false);
                     getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).edit().putBoolean("root_mode", true).apply();
