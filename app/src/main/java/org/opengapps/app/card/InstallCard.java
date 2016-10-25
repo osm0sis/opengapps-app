@@ -33,7 +33,6 @@ import org.opengapps.app.ZipInstaller;
 import org.opengapps.app.download.FileValidator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -193,8 +192,8 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
     private void showVersionlog() {
         String content;
         try {
-            content = new Scanner(versionLogFile).useDelimiter("\\Z").next();
-        } catch (FileNotFoundException e) {
+            content = new Scanner(versionLogFile, "UTF-8").useDelimiter("\\z").next();
+        } catch (java.io.IOException e) {
             content = getResources().getString(R.string.file_not_found);
         }
         //Passing null to the inflater is allowed when using AlertDialogs
