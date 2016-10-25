@@ -32,9 +32,10 @@ import org.opengapps.app.R;
 import org.opengapps.app.ZipInstaller;
 import org.opengapps.app.download.FileValidator;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.Locale;
-import java.util.Scanner;
 
 public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickListener {
     public static boolean invalidate = false;
@@ -191,8 +192,16 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     private void showVersionlog() {
         String content;
+        StringBuilder lines = new StringBuilder();
         try {
-            content = new Scanner(versionLogFile, "UTF-8").useDelimiter("\\z").next();
+            BufferedReader br = new BufferedReader(new FileReader(versionLogFile));
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.append(line);
+                lines.append('\n');
+            }
+            br.close();
+            content = lines.toString();
         } catch (java.io.IOException e) {
             content = getResources().getString(R.string.file_not_found);
         }
