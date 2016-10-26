@@ -6,9 +6,12 @@ import android.os.AsyncTask;
 import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.card.InstallCard;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.Scanner;
@@ -32,11 +35,13 @@ public class FileValidator extends AsyncTask<String, Void, Boolean> {
 
     public static String getMD5(File file) {
         try {
-            Scanner scanner = new Scanner(file);
-            String expectedHash = scanner.nextLine();
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String expectedHash = reader.readLine();
+            if(expectedHash==null)
+                throw new Exception();
             expectedHash = expectedHash.substring(0, expectedHash.indexOf(" "));
             return expectedHash;
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             return "FILE NOT FOUND";
         }
     }

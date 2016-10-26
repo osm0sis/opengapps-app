@@ -5,8 +5,9 @@ import android.os.Build;
 
 import org.opengapps.app.R;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.Scanner;
+import java.io.FileReader;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("WeakerAccess")
@@ -66,12 +67,12 @@ class PackageGuesser {
     public static String getVariant(Context context) {
         File propFile = new File("/system/etc/g.prop");
         try {
-            Scanner scanner = new Scanner(propFile);
+            FileReader reader = new FileReader(propFile);
+            BufferedReader bufferedReader = new BufferedReader(reader);
             Pattern pattern = Pattern.compile("ro\\.addon\\.open_type=.*");
             String line = "";
             String currentLine;
-            while (scanner.hasNext()) {
-                currentLine = scanner.nextLine();
+            while ((currentLine = bufferedReader.readLine()) != null) {
                 if (pattern.matcher(currentLine).matches()) {
                     line = currentLine;
                     break;
