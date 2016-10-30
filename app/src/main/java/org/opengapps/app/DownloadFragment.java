@@ -273,9 +273,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             Arrays.sort(files, new Comparator<File>() {
                 @Override
                 public int compare(File o1, File o2) {
-                    if (o1.lastModified() > o2.lastModified()) {
+                    if (o1.lastModified() < o2.lastModified()) {
                         return 1;
-                    } else if (o1.lastModified() < o2.lastModified()) {
+                    } else if (o1.lastModified() > o2.lastModified()) {
                         return -1;
                     } else {
                         return o1.compareTo(o2);
