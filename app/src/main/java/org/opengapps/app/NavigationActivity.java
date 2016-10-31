@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -32,6 +33,8 @@ public class NavigationActivity extends AppCompatActivity
     private DownloadFragment downloadFragment;
     private Toolbar toolbar;
     private NavigationView navigationView;
+
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,16 +121,16 @@ public class NavigationActivity extends AppCompatActivity
                 .show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == EXIT_CODE && resultCode == 1) {
-            finish();
-        } else if (requestCode == EXIT_CODE && resultCode == 2) {
-            if (downloadFragment != null && downloadFragment.isVisible()) {
-                downloadFragment.initDownloader(false);
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == EXIT_CODE && resultCode == 1) {
+//            finish();
+//        } else if (requestCode == EXIT_CODE && resultCode == 2) {
+//            if (downloadFragment != null && downloadFragment.isVisible()) {
+//                downloadFragment.initDownloader(false);
+//            }
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -166,14 +169,11 @@ public class NavigationActivity extends AppCompatActivity
             showFragment(downloadFragment);
             toolbar.setTitle(getString(R.string.pref_header_install));
         } else if (id == R.id.nav_settings) {
-            Intent i = new Intent(this, Preferences.class);
-            startActivityForResult(i, 99); //We acutally dont expect or get a result. This is just a dirty hack to prevent the system from killing the mainActivity
+            startActivityAfterDrawerAnimation(Preferences.class);
         } else if (id == R.id.nav_support) {
-            Intent i = new Intent(this, SupportActivity.class);
-            startActivityForResult(i, 99); //We acutally dont expect or get a result. This is just a dirty hack to prevent the system from killing the mainActivity
+            startActivityAfterDrawerAnimation(SupportActivity.class);
         } else if (id == R.id.nav_about) {
-            Intent i = new Intent(this, AboutActivity.class);
-            startActivityForResult(i, 99); //We acutally dont expect or get a result. This is just a dirty hack to prevent the system from killing the mainActivity
+            startActivityAfterDrawerAnimation(AboutActivity.class);
         } else if (id == R.id.nav_blog) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_blog)));
             startActivity(i);
@@ -197,4 +197,16 @@ public class NavigationActivity extends AppCompatActivity
         transaction.replace(R.id.replaceme, fragment, tag).commit();
     }
 
+    private void startActivityAfterDrawerAnimation(final Class className) {
+
+        mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(NavigationActivity.this, className);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }
+        },280);
+    }
 }
