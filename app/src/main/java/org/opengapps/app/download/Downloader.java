@@ -43,7 +43,7 @@ import okhttp3.ResponseBody;
 import static android.content.Context.MODE_PRIVATE;
 
 @SuppressWarnings("ConstantConditions")
-public class    Downloader extends AsyncTask<Void, Void, Long> {
+public class Downloader extends AsyncTask<Void, Void, Long> {
     private final static String downloadUrl = "https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip";
     private final static String feedUrl = "https://github.com/opengapps/%arch/releases.atom";
     private final static String subDir = "/OpenGApps/";
@@ -63,9 +63,9 @@ public class    Downloader extends AsyncTask<Void, Void, Long> {
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
         manager = downloadFragment.getFragmentManager();
-        analytics = FirebaseAnalytics.getInstance(downloadFragment.getActivity());
+        analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
         prefs = downloadFragment.getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
-        downloadManager = (DownloadManager) downloadFragment.getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         this.architecture = prefs.getString("selection_arch", "arm");
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);

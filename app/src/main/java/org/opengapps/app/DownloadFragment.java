@@ -70,6 +70,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         isRestored = true;
     }
 
+    @Override
+    public Context getContext() {
+        return globalContext;
+    }
 
     public void onDeleteFile() {
         onDeleteFile(null);
