@@ -72,19 +72,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         feedFile = new File(downloadFragment.getActivity().getFilesDir(), "gapps_feed.xml");
         urlString = feedUrl.replace("%arch", architecture);
         baseUrl = downloadUrl;
-        setLastFile(downloadFragment.getActivity());
     }
-
-    public static void setLastFile(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
-        String architecture = prefs.getString("selection_arch", "arm").toLowerCase();
-        String android = prefs.getString("selection_android", "").toLowerCase();
-        String variant = prefs.getString("selection_variant", "").toLowerCase();
-        String path = prefs.getString("download_dir", defaultDownloadDir);
-        String title = "open_gapps-" + architecture + "-" + android + "-" + variant + "-" + getLastDownloadedTag(context);
-        File f = new File(path, title + ".zip");
-    }
-
 
     @Override
     protected void onPreExecute() {

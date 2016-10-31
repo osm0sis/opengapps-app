@@ -206,7 +206,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         } else {
             editor.putString("last_downloaded_tag", lastDL).apply();
         }
-        Downloader.setLastFile(globalContext);
         lastTag = "";
         initDownloader(false);
     }
