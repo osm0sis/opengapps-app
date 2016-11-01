@@ -121,16 +121,16 @@ public class NavigationActivity extends AppCompatActivity
                 .show();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == EXIT_CODE && resultCode == 1) {
-//            finish();
-//        } else if (requestCode == EXIT_CODE && resultCode == 2) {
-//            if (downloadFragment != null && downloadFragment.isVisible()) {
-//                downloadFragment.initDownloader(false);
-//            }
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EXIT_CODE && resultCode == 1) {
+            finish();
+        } else if (requestCode == EXIT_CODE && resultCode == 2) {
+            if (downloadFragment != null && downloadFragment.isVisible()) {
+                downloadFragment.initDownloader(false);
+            }
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -204,8 +204,7 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void run() {
                 Intent i = new Intent(NavigationActivity.this, className);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
+                startActivityForResult(i, 99);
             }
         },280);
     }
