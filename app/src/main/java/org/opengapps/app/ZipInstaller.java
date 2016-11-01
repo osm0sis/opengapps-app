@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
+import android.os.Bundle;
 import android.os.PowerManager;
 import android.widget.Toast;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.app.download.Downloader;
 import org.opengapps.app.prefs.Preferences;
@@ -29,6 +32,12 @@ public class ZipInstaller {
     }
 
     public void installZip(File file) {
+        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(context);
+        Bundle params = new Bundle(1);
+        params.putString("selection_arch", prefs.getString("selection_arch", "null"));
+        params.putString("selection_android", prefs.getString("selection_android", "null"));
+        params.putString("selection_variant", prefs.getString("selection_variant", "null"));
+        analytics.logEvent("install", params);
         if (prefs.getBoolean("root_mode", false) && ZipInstaller.hasRoot()) {
             try {
                 File f = new File(context.getFilesDir(), "openrecoveryscript");
