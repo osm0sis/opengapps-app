@@ -12,6 +12,7 @@
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".OGappsApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"

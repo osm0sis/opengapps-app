@@ -30,6 +30,7 @@ android {
 
     buildTypes {
         release {
+            buildConfigField "Boolean", "REPORT_CRASH", '"true"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             minifyEnabled true
             shrinkResources true
@@ -38,6 +39,7 @@ android {
             }
         }
         debug{
+            buildConfigField "Boolean", "REPORT_CRASH", '"false"'
             lintOptions{
                 abortOnError false
             }
