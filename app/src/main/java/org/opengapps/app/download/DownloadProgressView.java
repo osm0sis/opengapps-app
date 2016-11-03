@@ -299,6 +299,7 @@ public class DownloadProgressView extends LinearLayout {
     private void onDownloadInterruptedView() {
         downloadButton.setText("Download");
         downloadButton.setEnabled(false);
+        downloadButton.setTextColor(Color.parseColor("#757575"));
     }
 
     public interface DownloadStatusListener {
