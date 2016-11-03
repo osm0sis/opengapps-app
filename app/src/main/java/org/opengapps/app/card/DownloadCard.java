@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
@@ -17,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.R;
@@ -36,6 +39,7 @@ public class DownloadCard extends CardView {
     private State state;
     private DownloadFragment fragment;
     private Context context;
+    private FirebaseAnalytics analytics;
 
     //make customize button private and globally accessible [for hide/unhide]
     private Button customize;
@@ -51,6 +55,7 @@ public class DownloadCard extends CardView {
 
     public void init(DownloadFragment fragment) {
         this.fragment = fragment;
+        analytics = FirebaseAnalytics.getInstance(getContext());
         if (!DownloadFragment.isRestored) {
             setState(State.DISABLED);
         }
@@ -118,11 +123,20 @@ public class DownloadCard extends CardView {
             @Override
             public void onClick(View view) {
                 fragment.showAd();
+                logSelections();
                 fragment.getDownloader().execute();
                 // hide CHANGE SELECTION button
                 customize.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    private void logSelections() {
+        Bundle params = new Bundle(1);
+        params.putString("selection_arch", prefs.getString("selection_arch", "null"));
+        params.putString("selection_android", prefs.getString("selection_android", "null"));
+        params.putString("selection_variant", prefs.getString("selection_variant", "null"));
+        analytics.logEvent("download", params);
     }
 
     public void restoreDownloadProgress() {

@@ -56,14 +56,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private File feedFile;
     private String urlString;
     private String baseUrl;
-    private FirebaseAnalytics analytics;
     private SharedPreferences prefs;
     private DownloadManager downloadManager;
 
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
         manager = downloadFragment.getFragmentManager();
-        analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
         prefs = downloadFragment.getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         this.architecture = prefs.getString("selection_arch", "arm");
@@ -149,6 +147,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static void deletePackage(File gappsFile) {
         File md5File = new File(gappsFile.getAbsolutePath() + DownloadFragment.md5FileExtension);
         String versionLog = gappsFile.getAbsolutePath().substring(0, gappsFile.getAbsolutePath().length() - ".zip".length()) + DownloadFragment.versionlogFileExtension;
@@ -156,15 +155,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         md5File.delete();
         versionlogFile.delete();
         gappsFile.delete();
-    }
-
-
-    private void logSelections() {
-        Bundle params = new Bundle(1);
-        params.putString("selection_arch", prefs.getString("selection_arch", "null"));
-        params.putString("selection_android", prefs.getString("selection_android", "null"));
-        params.putString("selection_variant", prefs.getString("selection_variant", "null"));
-        analytics.logEvent("download", params);
     }
 
     private Uri generateUri() {
@@ -376,8 +366,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         protected void onPostExecute(String s) {
             if (errorOccured) {
                 checkAndHandleError();
-            } else {
-                logSelections();
             }
             tag = s;
             if (downloadFragment != null && downloadFragment.isVisible()) {
