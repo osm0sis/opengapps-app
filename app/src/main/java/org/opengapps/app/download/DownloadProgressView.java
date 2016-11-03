@@ -258,6 +258,9 @@ public class DownloadProgressView extends LinearLayout {
 
                                         //show 'CHANGE SELECTION' button after download successful too
                                         customize.setVisibility(View.VISIBLE);
+                                        //since latest version is downloaded successfully the onDownloadInterruptedView() flow
+                                        //can be applicable here too
+                                        onDownloadInterruptedView();
                                     }
                                 } else {
                                     downloading = true;
