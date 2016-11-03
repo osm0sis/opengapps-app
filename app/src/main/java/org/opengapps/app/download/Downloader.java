@@ -9,13 +9,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
-
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.R;
@@ -62,12 +59,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
         manager = downloadFragment.getFragmentManager();
-        prefs = downloadFragment.getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        prefs = downloadFragment.getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         this.architecture = prefs.getString("selection_arch", "arm");
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
-        feedFile = new File(downloadFragment.getActivity().getFilesDir(), "gapps_feed.xml");
+        feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
         urlString = feedUrl.replace("%arch", architecture);
         baseUrl = downloadUrl;
     }
@@ -80,7 +77,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
                 DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
                 progress.begin();
             } else {
-                Toast.makeText(downloadFragment.getActivity(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
+                Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -218,8 +215,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private void checkAndHandleError() {
-        if (errorOccured && downloadFragment != null && downloadFragment.getActivity() != null) {
-            Toast.makeText(downloadFragment.getActivity(), R.string.label_download_error, Toast.LENGTH_SHORT).show();
+        if (errorOccured && downloadFragment != null && downloadFragment.getContext() != null) {
+            Toast.makeText(downloadFragment.getContext(), R.string.label_download_error, Toast.LENGTH_SHORT).show();
         }
     }
 
