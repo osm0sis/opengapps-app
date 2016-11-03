@@ -36,6 +36,9 @@ public class DownloadCard extends CardView {
     private DownloadFragment fragment;
     private Context context;
 
+    //make customize button private and globally accessible [for hide/unhide]
+    private Button customize;
+
     public DownloadCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -62,7 +65,7 @@ public class DownloadCard extends CardView {
     }
 
     private void initCustomizeButton() {
-        Button customize = (Button) findViewById(R.id.change_button);
+        customize = (Button) findViewById(R.id.change_button);
         customize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +117,8 @@ public class DownloadCard extends CardView {
             public void onClick(View view) {
                 fragment.showAd();
                 fragment.getDownloader().execute();
+                // hide CHANGE SELECTION button
+                customize.setVisibility(View.INVISIBLE);
             }
         });
     }

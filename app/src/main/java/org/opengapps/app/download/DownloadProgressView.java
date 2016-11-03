@@ -36,6 +36,8 @@ public class DownloadProgressView extends LinearLayout {
     private boolean downloading;
     private DownloadStatusListener listener;
 
+    private Button customize;
+
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
         Context context1 = context;
@@ -154,6 +156,7 @@ public class DownloadProgressView extends LinearLayout {
     public void begin() {
         View parentView = (View) getParent();
         Button downloadButton = (Button) parentView.findViewById(R.id.download_button);
+        customize = (Button) parentView.findViewById(R.id.change_button);
         setVisibility(VISIBLE);
         startingDownload.setVisibility(VISIBLE);
 
@@ -194,6 +197,7 @@ public class DownloadProgressView extends LinearLayout {
                     downloadManager.remove(downloadID);
                     try {
                         listener.downloadCancelled();
+                        customize.setVisibility(View.VISIBLE);
                     } catch (Exception ignored) {
                     }
                 }
