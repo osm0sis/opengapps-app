@@ -165,7 +165,7 @@ public class DownloadCard extends CardView {
         if (Build.VERSION.SDK_INT != 1000) //PreRelease-Versions of Android usually have SDK_INT=1000 which would corrupt our int-code. So in case of dev-device, SDK_INT==0 instead
             identifier += Build.VERSION.SDK_INT * 10;
         String[] architectures = context.getResources().getStringArray(R.array.architectures);
-        for (int i = 0; i < variants.length; i++) {
+        for (int i = 0; i < architectures.length; i++) {
             if (prefs.getString("selection_arch", "null").equalsIgnoreCase(architectures[i]))
                 identifier += i * 1000;
         }
