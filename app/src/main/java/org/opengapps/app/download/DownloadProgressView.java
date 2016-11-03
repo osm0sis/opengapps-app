@@ -3,12 +3,16 @@ package org.opengapps.app.download;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,8 +22,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.opengapps.app.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
+import org.opengapps.app.R;
+import org.opengapps.app.prefs.Preferences;
+
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
 /**
@@ -194,6 +203,7 @@ public class DownloadProgressView extends LinearLayout {
             @Override
             public void onClick(View view) {
                 view.setEnabled(false);
+                logCancel(getContext());
                 if (downloadManager != null) {
                     downloadManager.remove(downloadID);
                     try {
@@ -296,8 +306,46 @@ public class DownloadProgressView extends LinearLayout {
         }.start();
     }
 
+    private void logCancel(Context context) {
+        FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(context);
+        SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
+
+        //Regular, string-based log. Only accssesible via BigQuery (expensive), but still logged in case we have the money later
+        Bundle params = new Bundle(1);
+        params.putString("selection_arch", prefs.getString("selection_arch", "null"));
+        params.putString("selection_android", prefs.getString("selection_android", "null"));
+        params.putString("selection_variant", prefs.getString("selection_variant", "null"));
+        analytics.logEvent("cancel", params);
+
+
+        //Calculates an integer out of the selection. allows us to analyze the downloads without paying for bigQuery by using integer-magic.
+        //  packagesize (# 1 to 8, from small to big) (pico, micro, mini, ...)
+        //  +
+        //  sdk integer * 10
+        //  +
+        //  arch (#1 to 4, arm, arm64, x86, x86_64) * 1000
+
+        int identifier = 0;
+        String[] variants = context.getResources().getStringArray(R.array.opengapps_variant);
+        Collections.reverse(Arrays.asList(variants));
+        for (int i = 0; i < variants.length; i++) {
+            if (prefs.getString("selection_variant", "null").equalsIgnoreCase(variants[i]))
+                identifier += i;
+        }
+        if (Build.VERSION.SDK_INT != 1000) //PreRelease-Versions of Android usually have SDK_INT=1000 which would corrupt our int-code. So in case of dev-device, SDK_INT==0 instead
+            identifier += Build.VERSION.SDK_INT * 10;
+        String[] architectures = context.getResources().getStringArray(R.array.architectures);
+        for (int i = 0; i < variants.length; i++) {
+            if (prefs.getString("selection_arch", "null").equalsIgnoreCase(architectures[i]))
+                identifier += i * 1000;
+        }
+        Bundle int_params = new Bundle(1);
+        int_params.putInt(FirebaseAnalytics.Param.VALUE, identifier);
+        analytics.logEvent("cancel_int", int_params);
+    }
+
     private void onDownloadInterruptedView() {
-        downloadButton.setText("Download");
+        downloadButton.setText(R.string.label_download);
         downloadButton.setEnabled(false);
         downloadButton.setTextColor(Color.parseColor("#757575"));
     }
