@@ -67,7 +67,7 @@ public class DownloadCard extends CardView {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, Stepper.class);
-                context.startActivity(i);
+                fragment.getActivity().startActivityForResult(i, 99);
             }
         });
     }
