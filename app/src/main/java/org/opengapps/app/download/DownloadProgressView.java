@@ -240,6 +240,8 @@ public class DownloadProgressView extends LinearLayout {
                                 } else if (status == DownloadManager.STATUS_FAILED) {
                                     downloading = false;
                                     setVisibility(View.GONE);
+                                    //show 'CHANGE SELECTION' button after download failed too
+                                    customize.setVisibility(View.VISIBLE);
 
                                     try {
                                         listener.downloadFailed(reason);
