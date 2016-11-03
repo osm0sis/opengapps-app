@@ -37,6 +37,7 @@ public class DownloadProgressView extends LinearLayout {
     private DownloadStatusListener listener;
 
     private Button customize;
+    private Button downloadButton;
 
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -155,7 +156,7 @@ public class DownloadProgressView extends LinearLayout {
 
     public void begin() {
         View parentView = (View) getParent();
-        Button downloadButton = (Button) parentView.findViewById(R.id.download_button);
+        downloadButton = (Button) parentView.findViewById(R.id.download_button);
         customize = (Button) parentView.findViewById(R.id.change_button);
         setVisibility(VISIBLE);
         startingDownload.setVisibility(VISIBLE);
@@ -198,6 +199,7 @@ public class DownloadProgressView extends LinearLayout {
                     try {
                         listener.downloadCancelled();
                         customize.setVisibility(View.VISIBLE);
+                        onDownloadInterruptedView();
                     } catch (Exception ignored) {
                     }
                 }
@@ -242,6 +244,7 @@ public class DownloadProgressView extends LinearLayout {
                                     setVisibility(View.GONE);
                                     //show 'CHANGE SELECTION' button after download failed too
                                     customize.setVisibility(View.VISIBLE);
+                                    onDownloadInterruptedView();
 
                                     try {
                                         listener.downloadFailed(reason);
@@ -288,6 +291,11 @@ public class DownloadProgressView extends LinearLayout {
                 } while (downloading);
             }
         }.start();
+    }
+
+    private void onDownloadInterruptedView() {
+        downloadButton.setText("Download");
+        downloadButton.setEnabled(false);
     }
 
     public interface DownloadStatusListener {
