@@ -413,7 +413,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onRefresh() {
         loadInstallCards();
-        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
+//        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
         downloader.new TagUpdater().execute();
     }
 

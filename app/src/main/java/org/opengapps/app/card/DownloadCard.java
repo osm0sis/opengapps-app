@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -31,6 +32,8 @@ import org.opengapps.app.prefs.Preferences;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 
 public class DownloadCard extends CardView {
@@ -59,7 +62,7 @@ public class DownloadCard extends CardView {
         if (!DownloadFragment.isRestored) {
             setState(State.DISABLED);
         }
-        onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
+//        onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
         initButtons();
         initSelections();
         restoreDownloadProgress();
@@ -97,6 +100,9 @@ public class DownloadCard extends CardView {
         if (!isDownloading()) {
             if (lastDownloadedTag.equals(lastAvailableTag)) {
                 setState(State.DISABLED);
+            } else if (TextUtils.isEmpty(lastAvailableTag)) {
+                setState(State.DISABLED);
+                version.setText(convertDate(PackageGuesser.getCurrentlyInstalled(context)));
             } else if (!TextUtils.isEmpty(lastDownloadedTag)) {
                 setState(State.UPDATEABLE);
             } else {
@@ -132,11 +138,45 @@ public class DownloadCard extends CardView {
     }
 
     private void logSelections() {
+        //Regular, string-based log. Only accssesible via BigQuery (expensive), but still logged in case we have the money later
         Bundle params = new Bundle(1);
         params.putString("selection_arch", prefs.getString("selection_arch", "null"));
         params.putString("selection_android", prefs.getString("selection_android", "null"));
         params.putString("selection_variant", prefs.getString("selection_variant", "null"));
         analytics.logEvent("download", params);
+
+
+        //Calculates an integer out of the selection. allows us to analyze the downloads without paying for bigQuery by using integer-magic.
+        //  packagesize (# 1 to 8, from small to big) (pico, micro, mini, ...)
+        //  +
+        //  sdk integer * 10
+        //  +
+        //  arch (#1 to 4, arm, arm64, x86, x86_64) * 1000
+        //  +
+        //  date * 10.000
+
+        int identifier = 0;
+        String[] variants = context.getResources().getStringArray(R.array.opengapps_variant);
+        Collections.reverse(Arrays.asList(variants));
+        for (int i = 0; i < variants.length; i++) {
+            if (prefs.getString("selection_variant", "null").equalsIgnoreCase(variants[i]))
+                identifier += i;
+        }
+        if (Build.VERSION.SDK_INT != 1000) //PreRelease-Versions of Android usually have SDK_INT=1000 which would corrupt our int-code. So in case of dev-device, SDK_INT==0 instead
+            identifier += Build.VERSION.SDK_INT * 10;
+        String[] architectures = context.getResources().getStringArray(R.array.architectures);
+        for (int i = 0; i < variants.length; i++) {
+            if (prefs.getString("selection_arch", "null").equalsIgnoreCase(architectures[i]))
+                identifier += i * 1000;
+        }
+        String tagString = fragment.getDownloader().getTag();
+        if (!TextUtils.isEmpty(tagString)) {
+            int tag = Integer.parseInt(tagString);
+            identifier += tag * 10000;
+        }
+        Bundle int_params = new Bundle(1);
+        int_params.putInt(FirebaseAnalytics.Param.VALUE, identifier);
+        analytics.logEvent("download_int", int_params);
     }
 
     public void restoreDownloadProgress() {
