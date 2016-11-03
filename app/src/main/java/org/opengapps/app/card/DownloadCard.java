@@ -23,6 +23,7 @@ import org.opengapps.app.R;
 import org.opengapps.app.Stepper;
 import org.opengapps.app.download.DownloadProgressView;
 import org.opengapps.app.download.Downloader;
+import org.opengapps.app.intro.PackageGuesser;
 import org.opengapps.app.prefs.Preferences;
 
 import java.text.ParseException;
@@ -53,6 +54,7 @@ public class DownloadCard extends CardView {
         if (!DownloadFragment.isRestored) {
             setState(State.DISABLED);
         }
+        onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
         initButtons();
         initSelections();
         restoreDownloadProgress();

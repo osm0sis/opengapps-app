@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("WeakerAccess")
-class PackageGuesser {
+public class PackageGuesser {
     private PackageGuesser() {
     }
 
@@ -70,6 +70,26 @@ class PackageGuesser {
             FileReader reader = new FileReader(propFile);
             BufferedReader bufferedReader = new BufferedReader(reader);
             Pattern pattern = Pattern.compile("ro\\.addon\\.open_type=.*");
+            String line = "";
+            String currentLine;
+            while ((currentLine = bufferedReader.readLine()) != null) {
+                if (pattern.matcher(currentLine).matches()) {
+                    line = currentLine;
+                    break;
+                }
+            }
+            return line.trim().substring(line.indexOf('=') + 1, line.trim().length());
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static String getCurrentlyInstalled(Context context) {
+        File propFile = new File("/system/etc/g.prop");
+        try {
+            FileReader reader = new FileReader(propFile);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            Pattern pattern = Pattern.compile("ro\\.addon\\.open_version=.*");
             String line = "";
             String currentLine;
             while ((currentLine = bufferedReader.readLine()) != null) {

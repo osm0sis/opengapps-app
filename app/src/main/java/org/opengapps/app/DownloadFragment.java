@@ -28,6 +28,7 @@ import org.opengapps.app.card.InstallCard;
 import org.opengapps.app.card.PermissionCard;
 import org.opengapps.app.download.DownloadProgressView;
 import org.opengapps.app.download.Downloader;
+import org.opengapps.app.intro.PackageGuesser;
 import org.opengapps.app.prefs.Preferences;
 
 import java.io.File;
@@ -412,6 +413,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onRefresh() {
         loadInstallCards();
+        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
         downloader.new TagUpdater().execute();
     }
 
