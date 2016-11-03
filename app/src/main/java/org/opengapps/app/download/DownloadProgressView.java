@@ -250,6 +250,9 @@ public class DownloadProgressView extends LinearLayout {
                                         downloading = false;
                                         setVisibility(View.GONE);
                                         listener.downloadSuccessful(filePath.substring("file://".length()));
+
+                                        //show 'CHANGE SELECTION' button after download successful too
+                                        customize.setVisibility(View.VISIBLE);
                                     }
                                 } else {
                                     downloading = true;
