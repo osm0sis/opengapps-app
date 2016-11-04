@@ -14,7 +14,7 @@ public class slideVariantSelectionFragment extends GappsSelectionFragment {
 
     @Override
     public String getGuessedSelection(Context context) {
-        return PackageGuesser.getVariant(context);
+        return PackageGuesser.getVariant();
     }
 
     @Override

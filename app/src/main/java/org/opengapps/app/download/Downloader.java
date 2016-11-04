@@ -163,6 +163,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         return Uri.parse(url);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean runningDownload(Context context, String expectedName) {
         DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Query query = new DownloadManager.Query();

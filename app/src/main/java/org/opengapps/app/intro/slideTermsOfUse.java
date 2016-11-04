@@ -15,7 +15,6 @@ import org.opengapps.app.R;
 
 @SuppressWarnings("ConstantConditions")
 public class slideTermsOfUse extends AbstractStep {
-    private boolean isAccepted = false;
 
     @Override
     public String name() {
@@ -52,7 +51,6 @@ public class slideTermsOfUse extends AbstractStep {
                 Bundle params = new Bundle(1);
                 params.putString(FirebaseAnalytics.Param.VALUE, "accept");
                 analytics.logEvent("terms_of_service", params);
-                isAccepted = true;
                 ((AppIntroActivity) getActivity()).onTermsAccepted((Button) v);
             }
         });

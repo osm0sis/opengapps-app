@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -50,7 +49,6 @@ public class DownloadProgressView extends LinearLayout {
 
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Context context1 = context;
 
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DownloadProgressView, 0, 0);
 
@@ -83,69 +81,6 @@ public class DownloadProgressView extends LinearLayout {
 
         //hides view.
         setVisibility(View.GONE);
-    }
-
-    /**
-     * This method sets the color of the downloadedSize TextView.
-     *
-     * @param downloadedSizeColor the color of the downloadedSize TextView.
-     */
-    public void setDownloadedSizeColor(int downloadedSizeColor) {
-        this.downloadedSizeColor = downloadedSizeColor;
-        downloadedSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
-        invalidate();
-        requestLayout();
-    }
-
-    /**
-     * This method sets the color of the totalSize TextView.
-     *
-     * @param totalSizeColor the color of the totalSize TextView.
-     */
-    public void setTotalSizeColor(int totalSizeColor) {
-        this.totalSizeColor = totalSizeColor;
-        totalSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
-        invalidate();
-        requestLayout();
-    }
-
-    /**
-     * This method sets the color of the percentage TextView.
-     *
-     * @param percentageColor the color of the percentage TextView.
-     */
-    public void setPercentageColor(int percentageColor) {
-        this.percentageColor = percentageColor;
-        percentageView.setTextColor(ColorStateList.valueOf(percentageColor));
-        invalidate();
-        requestLayout();
-    }
-
-    /**
-     * This method returns the color of the downloadedSize TextView.
-     *
-     * @return the color of the downloadedSize TextView.
-     */
-    public int getDownloadedSizeColor() {
-        return downloadedSizeColor;
-    }
-
-    /**
-     * This method returns the color of the totalSize TextView.
-     *
-     * @return the color of the totalSize TextView.
-     */
-    public int getTotalSizeColor() {
-        return totalSizeColor;
-    }
-
-    /**
-     * This method returns the color of the percentage TextView.
-     *
-     * @return the color of the percentage TextView.
-     */
-    public int getPercentageColor() {
-        return percentageColor;
     }
 
     /**

@@ -62,10 +62,6 @@ public class ZipInstaller {
         }
     }
 
-    void installZip() {
-        installZip(new File(Downloader.getDownloadedFile(context)));
-    }
-
     public static boolean canReboot(Context context) {
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(BuildConfig.APPLICATION_ID, 0);

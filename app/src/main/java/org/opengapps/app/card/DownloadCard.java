@@ -102,7 +102,7 @@ public class DownloadCard extends CardView {
                 setState(State.DISABLED);
             } else if (TextUtils.isEmpty(lastAvailableTag)) {
                 setState(State.DISABLED);
-                version.setText(convertDate(PackageGuesser.getCurrentlyInstalled(context)));
+                version.setText(convertDate(PackageGuesser.getCurrentlyInstalled()));
             } else if (!TextUtils.isEmpty(lastDownloadedTag)) {
                 setState(State.UPDATEABLE);
             } else {
