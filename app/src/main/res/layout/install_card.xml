@@ -16,6 +16,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_size_headline"
         android:textStyle="normal|bold"
+        android:fontFamily="sans-serif-condensed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
