@@ -56,45 +56,63 @@ public class DownloadCard extends CardView {
         prefs = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
     }
 
+    /**
+     * Initializes the DownloadCard, gets instance of Analytics and most importantly supplies the reference to DownloadFragment
+     * @param fragment The DownloadFragment holding the downloadCard
+     */
     public void init(DownloadFragment fragment) {
         this.fragment = fragment;
         analytics = FirebaseAnalytics.getInstance(getContext());
         if (!DownloadFragment.isRestored) {
             setState(State.DISABLED);
         }
-//        onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
         initButtons();
         initSelections();
         restoreDownloadProgress();
     }
 
+    /**
+     * Container-Method for initializing text, state and onClickBehaviour of all buttons
+     */
     private void initButtons() {
         initDownloadButton();
         initCustomizeButton();
         initSelections();
     }
 
+    /**
+     * Initializes "change-selection"-Buttton to start the Selection-Stepper on click
+     */
     private void initCustomizeButton() {
         customize = (Button) findViewById(R.id.change_button);
         customize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, Stepper.class);
-                fragment.getActivity().startActivityForResult(i, 99);
+                fragment.startActivityForResult(i, 99);
             }
         });
     }
 
+    /**
+     * Checks if a download initiated by the app is currently running
+     * @return Returns true if a download that was started by the app is currently pending/running/waiting. Returns false otherwise
+     */
     private boolean isDownloading() {
         return ((DownloadProgressView) findViewById(R.id.progress_view)).isDownloading();
     }
 
+    /**
+     * Receives updated tag from DownloadFragment via TagUpdater in Downloader. Then writes the latest version as formatted string (dependent on Users locale) in the corresponding textbox
+     * and updates the state of the DownloadCard-View
+     * @param lastAvailableTag Latest Versionnumber of the OpenGApps package as string in the format "yyyyMMdd"
+     */
     public void onTagUpdated(String lastAvailableTag) {
         String lastDownloadedTag = Downloader.getLastDownloadedTag(context);
 
         TextView version = (TextView) findViewById(R.id.newest_version);
         //noinspection deprecation,
-        Spanned spanned = Html.fromHtml("<b>" + convertDate(lastAvailableTag) + "</b>");
+        Spanned spanned = Html.fromHtml("<b>" + convertDate(lastAvailableTag) + "</b>"); //Thanks to spanned, android-TextViews do support HTML codes
         version.setText(spanned);
 
         if (!isDownloading()) {
@@ -111,6 +129,9 @@ public class DownloadCard extends CardView {
         }
     }
 
+    /**
+     * Initializes the textboxes for architecture, android-version and variant. Fetches the values from SharedPreferences
+     */
     public void initSelections() {
         TextView arch_selection = (TextView) findViewById(R.id.selected_architecture);
         TextView android_selection = (TextView) findViewById(R.id.selected_android);
@@ -122,6 +143,9 @@ public class DownloadCard extends CardView {
         variant_selection.setText(prefs.getString("selection_variant", null));
     }
 
+    /**
+     * Initializes and resets the Download-Button. Also sets onClick-Behaviour.
+     */
     private void initDownloadButton() {
         Button downloadButton = (Button) findViewById(R.id.download_button);
         downloadButton.setText(getString(R.string.label_download));
@@ -137,6 +161,11 @@ public class DownloadCard extends CardView {
         });
     }
 
+    /**
+     * When downloading, the selection of the user as well as the latest GApps Version gets logged to Firebase Analytics. 2 Events are triggered
+     * download: Puts selection and version as String in the Event. Only accessible via BigQuery (paid service)
+     * download-int: Encodes selection and version as integer and puts it in the Event. Accessible via free firebase-Version, but has to be decoded
+     */
     private void logSelections() {
         //Regular, string-based log. Only accssesible via BigQuery (expensive), but still logged in case we have the money later
         Bundle params = new Bundle(1);
@@ -179,6 +208,11 @@ public class DownloadCard extends CardView {
         analytics.logEvent("download_int", int_params);
     }
 
+    /**
+     * Restores the download-Progress when the app was closed during download.
+     * This works by saving the download_id as soon as the download is started.
+     * This method loads the id and completes the necessary steps/shows the progress
+     */
     public void restoreDownloadProgress() {
         Long id = prefs.getLong("running_download_id", 0);
         if (id != 0) {
@@ -187,6 +221,11 @@ public class DownloadCard extends CardView {
         }
     }
 
+    /**
+     * Sets the "state" of the DownloadCard. Includes coloring and enabling/disabling of the downloadbutton and appending colored (new) to the version if necessary
+     * If Storage-Permission is not granted, state is always disabled
+     * @param state State of the downloadcard. (NORMAL, UPDATEABLE or DISABLED).
+     */
     public void setState(State state) {
         this.state = state;
         TextView version = (TextView) findViewById(R.id.newest_version);
@@ -219,6 +258,11 @@ public class DownloadCard extends CardView {
     }
 
 
+    /**
+     * Reads a date as String in the format "yyyyMMdd" and converts it to the corresponding local dateformat for easy reading
+     * @param tag Date as String in the format yyyyMMdd
+     * @return Date as human-readable string dependent on the Locale of the user
+     */
     private String convertDate(String tag) {
         if (tag == null || tag.equals("")) {
             return "";
@@ -234,6 +278,11 @@ public class DownloadCard extends CardView {
         return dateFormat.format(date);
     }
 
+    /**
+     * Helpermethod to avoid using getResources for every little String
+     * @param id ID of the needed String
+     * @return String
+     */
     private String getString(int id) {
         return getResources().getString(id);
     }

@@ -61,10 +61,17 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         initButtons();
     }
 
+    /**
+     * Listener that is called on delete of the file is set here. (Usually the DownloadFragment containing the view
+     * @param listener DownloadFragment that gets notified when a gappsPackage is deleted
+     */
     public void setDeleteListener(DownloadFragment listener) {
         deleteListener = listener;
     }
 
+    /**
+     * ContainerMethod for initializing all needed buttons and defining the onClick-Behaviour
+     */
     private void initButtons() {
         initDeleteButton();
         initMenuButton();
@@ -72,6 +79,9 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         initMd5Button();
     }
 
+    /**
+     * Initializes the checkmark and the cross to show the corresponding tooltip
+     */
     private void initMd5Button() {
         View success = findViewById(R.id.md5_success);
         success.setOnClickListener(new OnClickListener() {
@@ -100,6 +110,11 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         });
     }
 
+    /**
+     * Initializes the InstallButton and sets onClick-Behaviour.
+     * If root is granted and rootmode is active, the button turns red and onClick makes it install the ZIP
+     * Otherwise, button is gray and clicking only shows a toast.
+     */
     private void initInstallButton() {
         Button installButton = (Button) findViewById(R.id.install_button);
         if (!ZipInstaller.canReboot(getContext())) {
@@ -120,6 +135,9 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         }
     }
 
+    /**
+     * Sets the 3dot-menu-button to show the menu on click
+     */
     private void initMenuButton() {
         ImageButton menuButton = (ImageButton) findViewById(R.id.menu_button);
         menuButton.setOnClickListener(new OnClickListener() {
@@ -130,6 +148,9 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         });
     }
 
+    /**
+     * Initializes the deletebutton and sets onClick to Delete all the files associated with the package as well as notify the deleteListener
+     */
     private void initDeleteButton() {
         Button deleteButton = (Button) findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(new OnClickListener() {
@@ -143,6 +164,9 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         });
     }
 
+    /**
+     * Removes Package, Versionlogfile as well as MD5-File if they exist.
+     */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void removeFiles() {
         gappsFile.delete();
@@ -150,6 +174,10 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         versionLogFile.delete();
     }
 
+    /**
+     * Associates a File with the installCard. checks if md5/versionlog exists, sets filename and tries to check MD5 if possible
+     * @param file GApps-Package as File. ZIP-File, not md5/versionlog
+     */
     public void setFile(File file) {
         gappsFile = file;
         md5File = new File(gappsFile.getAbsolutePath() + DownloadFragment.md5FileExtension);
@@ -162,6 +190,10 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         checkMD5();
     }
 
+    /**
+     * Shows the options of the 3dot-menu. Hides "show MD5" and "show Versionlog" if necessary
+     * @param view Root-View that has to contain the popup
+     */
     private void showPopup(View view) {
         PopupMenu popup = new PopupMenu(getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
