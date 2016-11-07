@@ -148,7 +148,7 @@ public class DownloadProgressView extends LinearLayout {
                     } catch (Exception ignored) {
                     }
                 }
-                setVisibility(View.INVISIBLE);
+                setVisibility(View.GONE);
             }
         });
         new Thread() {
@@ -188,7 +188,8 @@ public class DownloadProgressView extends LinearLayout {
                                     downloading = false;
                                     setVisibility(View.GONE);
                                     //show 'CHANGE SELECTION' button after download failed too
-                                    customize.setVisibility(View.VISIBLE);
+                                    if(customize != null)
+                                        customize.setVisibility(View.VISIBLE);
                                     onDownloadInterruptedView();
 
                                     try {
@@ -202,7 +203,8 @@ public class DownloadProgressView extends LinearLayout {
                                         listener.downloadSuccessful(filePath.substring("file://".length()));
 
                                         //show 'CHANGE SELECTION' button after download successful too
-                                        customize.setVisibility(View.VISIBLE);
+                                        if(customize != null)
+                                            customize.setVisibility(View.VISIBLE);
                                         //since latest version is downloaded successfully the onDownloadInterruptedView() flow
                                         //can be applicable here too
                                         onDownloadInterruptedView();
