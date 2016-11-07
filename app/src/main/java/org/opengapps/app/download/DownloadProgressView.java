@@ -80,7 +80,7 @@ public class DownloadProgressView extends LinearLayout {
         percentageView.setTextColor(ColorStateList.valueOf(percentageColor));
 
         //hides view.
-        setVisibility(View.INVISIBLE);
+        setVisibility(View.GONE);
     }
 
     /**
@@ -186,7 +186,7 @@ public class DownloadProgressView extends LinearLayout {
                                     downloadProgressBar.setProgress((int) download_percentage);
                                 } else if (status == DownloadManager.STATUS_FAILED) {
                                     downloading = false;
-                                    setVisibility(View.INVISIBLE);
+                                    setVisibility(View.GONE);
                                     //show 'CHANGE SELECTION' button after download failed too
                                     customize.setVisibility(View.VISIBLE);
                                     onDownloadInterruptedView();
@@ -198,7 +198,7 @@ public class DownloadProgressView extends LinearLayout {
                                 } else if (status == DownloadManager.STATUS_SUCCESSFUL) {
                                     synchronized (Looper.getMainLooper()) {
                                         downloading = false;
-                                        setVisibility(View.INVISIBLE);
+                                        setVisibility(View.GONE);
                                         listener.downloadSuccessful(filePath.substring("file://".length()));
 
                                         //show 'CHANGE SELECTION' button after download successful too
@@ -221,7 +221,7 @@ public class DownloadProgressView extends LinearLayout {
                             @Override
                             public void run() {
                                 downloading = false;
-                                setVisibility(View.INVISIBLE);
+                                setVisibility(View.GONE);
 
                                 try {
                                     listener.downloadFailed(-1);
