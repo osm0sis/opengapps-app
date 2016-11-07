@@ -67,11 +67,11 @@ dependencies {
     compile 'com.github.fcannizzaro:material-stepper:1.2.2' //licensed
     compile 'com.github.vihtarb:tooltip:0.1.9' //licensed
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta2'
 
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
 }
 apply plugin: 'com.google.gms.google-services'

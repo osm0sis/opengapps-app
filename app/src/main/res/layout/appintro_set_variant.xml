@@ -57,6 +57,7 @@
             android:layout_marginStart="0dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_info"
+            android:contentDescription="@string/title_activity_about"
             android:tint="@android:color/white" />
 
         <TextView

@@ -121,7 +121,7 @@ public class AppIntroActivity extends AppIntro {
     private void setInitialSettings() {
         GappsSelectionFragment.selectionArch = PackageGuesser.getArch(getBaseContext());
         GappsSelectionFragment.selectionAnd = PackageGuesser.getAndroidVersion(getBaseContext());
-        String guessedVariant = PackageGuesser.getVariant(getBaseContext());
+        String guessedVariant = PackageGuesser.getVariant();
         GappsSelectionFragment.selectionVariant = !TextUtils.isEmpty(guessedVariant) ? guessedVariant : "stock";
     }
 

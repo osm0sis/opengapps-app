@@ -64,7 +64,7 @@ public class PackageGuesser {
         }
     }
 
-    public static String getVariant(Context context) {
+    public static String getVariant() {
         File propFile = new File("/system/etc/g.prop");
         try {
             FileReader reader = new FileReader(propFile);
@@ -84,7 +84,7 @@ public class PackageGuesser {
         }
     }
 
-    public static String getCurrentlyInstalled(Context context) {
+    public static String getCurrentlyInstalled() {
         File propFile = new File("/system/etc/g.prop");
         try {
             FileReader reader = new FileReader(propFile);

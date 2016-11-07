@@ -39,7 +39,6 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
     private final int description;
     private final int smallDesc;
     private final int link;
-    private static boolean hintShown = false;
     private ColorStateList style;
     private final String key;
     private final int stringArray;

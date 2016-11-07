@@ -17,9 +17,8 @@ public class PermissionGranter {
     private static final int PERMISSIONS_DIALOG_DELAY = 1000;
     private static final int GRANT_BUTTON_INDEX = 1;
 
-    public static void allowPermissionsIfNeeded(String permissionNeeded) {
+    public static void allowPermissionsIfNeeded(@SuppressWarnings("SameParameterValue") String permissionNeeded) {
         try {
-            Context context = InstrumentationRegistry.getTargetContext();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !hasNeededPermission(permissionNeeded)) {
                 sleep(PERMISSIONS_DIALOG_DELAY);
                 UiDevice device = UiDevice.getInstance(getInstrumentation());
@@ -42,7 +41,7 @@ public class PermissionGranter {
         return permissionStatus == PackageManager.PERMISSION_GRANTED;
     }
 
-    private static void sleep(long millis) {
+    private static void sleep(@SuppressWarnings("SameParameterValue") long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {

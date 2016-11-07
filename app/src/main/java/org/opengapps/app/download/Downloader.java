@@ -9,13 +9,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
-
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.R;
@@ -56,20 +53,18 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private File feedFile;
     private String urlString;
     private String baseUrl;
-    private FirebaseAnalytics analytics;
     private SharedPreferences prefs;
     private DownloadManager downloadManager;
 
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
         manager = downloadFragment.getFragmentManager();
-        analytics = FirebaseAnalytics.getInstance(downloadFragment.getContext());
-        prefs = downloadFragment.getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        prefs = downloadFragment.getContext().getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         downloadManager = (DownloadManager) downloadFragment.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         this.architecture = prefs.getString("selection_arch", "arm");
         this.android = prefs.getString("selection_android", null);
         this.variant = prefs.getString("selection_variant", null);
-        feedFile = new File(downloadFragment.getActivity().getFilesDir(), "gapps_feed.xml");
+        feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
         urlString = feedUrl.replace("%arch", architecture);
         baseUrl = downloadUrl;
     }
@@ -82,7 +77,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
                 DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
                 progress.begin();
             } else {
-                Toast.makeText(downloadFragment.getActivity(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
+                Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -149,6 +144,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static void deletePackage(File gappsFile) {
         File md5File = new File(gappsFile.getAbsolutePath() + DownloadFragment.md5FileExtension);
         String versionLog = gappsFile.getAbsolutePath().substring(0, gappsFile.getAbsolutePath().length() - ".zip".length()) + DownloadFragment.versionlogFileExtension;
@@ -156,15 +152,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         md5File.delete();
         versionlogFile.delete();
         gappsFile.delete();
-    }
-
-
-    private void logSelections() {
-        Bundle params = new Bundle(1);
-        params.putString("selection_arch", prefs.getString("selection_arch", "null"));
-        params.putString("selection_android", prefs.getString("selection_android", "null"));
-        params.putString("selection_variant", prefs.getString("selection_variant", "null"));
-        analytics.logEvent("download", params);
     }
 
     private Uri generateUri() {
@@ -176,6 +163,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         return Uri.parse(url);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean runningDownload(Context context, String expectedName) {
         DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Query query = new DownloadManager.Query();
@@ -228,8 +216,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private void checkAndHandleError() {
-        if (errorOccured && downloadFragment != null && downloadFragment.getActivity() != null) {
-            Toast.makeText(downloadFragment.getActivity(), R.string.label_download_error, Toast.LENGTH_SHORT).show();
+        if (errorOccured && downloadFragment != null && downloadFragment.getContext() != null) {
+            Toast.makeText(downloadFragment.getContext(), R.string.label_download_error, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -376,8 +364,6 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         protected void onPostExecute(String s) {
             if (errorOccured) {
                 checkAndHandleError();
-            } else {
-                logSelections();
             }
             tag = s;
             if (downloadFragment != null && downloadFragment.isVisible()) {
