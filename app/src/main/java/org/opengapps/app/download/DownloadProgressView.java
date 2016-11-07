@@ -73,7 +73,7 @@ public class DownloadProgressView extends LinearLayout {
         percentageView.setTextColor(ColorStateList.valueOf(percentageColor));
 
         //hides view.
-        setVisibility(View.GONE);
+        setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -203,7 +203,7 @@ public class DownloadProgressView extends LinearLayout {
                     } catch (Exception ignored) {
                     }
                 }
-                setVisibility(View.GONE);
+                setVisibility(View.INVISIBLE);
             }
         });
         new Thread() {
@@ -241,7 +241,7 @@ public class DownloadProgressView extends LinearLayout {
                                     downloadProgressBar.setProgress((int) download_percentage);
                                 } else if (status == DownloadManager.STATUS_FAILED) {
                                     downloading = false;
-                                    setVisibility(View.GONE);
+                                    setVisibility(View.INVISIBLE);
                                     //show 'CHANGE SELECTION' button after download failed too
                                     customize.setVisibility(View.VISIBLE);
                                     onDownloadInterruptedView();
@@ -253,7 +253,7 @@ public class DownloadProgressView extends LinearLayout {
                                 } else if (status == DownloadManager.STATUS_SUCCESSFUL) {
                                     synchronized (Looper.getMainLooper()) {
                                         downloading = false;
-                                        setVisibility(View.GONE);
+                                        setVisibility(View.INVISIBLE);
                                         listener.downloadSuccessful(filePath.substring("file://".length()));
 
                                         //show 'CHANGE SELECTION' button after download successful too
@@ -276,7 +276,7 @@ public class DownloadProgressView extends LinearLayout {
                             @Override
                             public void run() {
                                 downloading = false;
-                                setVisibility(View.GONE);
+                                setVisibility(View.INVISIBLE);
 
                                 try {
                                     listener.downloadFailed(-1);
