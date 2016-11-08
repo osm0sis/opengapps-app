@@ -12,9 +12,22 @@
 
 
     <ImageView
+        android:id="@+id/splash_logo"
         android:src="@drawable/ic_opengapps_large"
         android:layout_centerInParent="true"
         android:layout_width="130dp"
         android:layout_height="130dp" />
+
+    <TextView
+        android:id="@+id/splash_text"
+        android:text="opengapps.org"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:textColor="@color/splash_activity_color"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
