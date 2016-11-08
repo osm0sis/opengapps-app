@@ -40,41 +40,37 @@
                 android:value=".NavigationActivity" />
         </activity>
         <activity
-            android:name="org.opengapps.app.intro.AppIntroActivity"
+            android:name=".intro.AppIntroActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:parentActivityName="org.opengapps.app.NavigationActivity"
+            android:parentActivityName=".NavigationActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.opengapps.app.NavigationActivity" />
         </activity>
         <activity
-            android:name="org.opengapps.app.prefs.Preferences"
+            android:name=".prefs.Preferences"
             android:label="@string/action_settings"
-            android:parentActivityName="org.opengapps.app.NavigationActivity">
+            android:parentActivityName=".NavigationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.opengapps.app.NavigationActivity" />
         </activity>
         <activity
-            android:name="org.opengapps.app.AboutActivity"
+            android:name=".AboutActivity"
             android:label="@string/title_activity_about"
-            android:parentActivityName="org.opengapps.app.NavigationActivity">
+            android:parentActivityName=".NavigationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.opengapps.app.NavigationActivity" />
         </activity>
         <activity
-            android:name="org.opengapps.app.NavigationActivity"
+            android:name=".NavigationActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:theme="@style/SpecialNavD">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- Google Mobile Ads activity. -->
         <activity
@@ -83,12 +79,18 @@
             android:theme="@style/MyTheme"
             tools:replace="android:theme" />
         <activity
-            android:name="org.opengapps.app.SupportActivity"
+            android:name=".SupportActivity"
             android:label="@string/label_support"
-            android:parentActivityName="org.opengapps.app.NavigationActivity">
+            android:parentActivityName=".NavigationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.opengapps.app.NavigationActivity" />
+        </activity>
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
