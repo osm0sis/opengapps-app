@@ -167,7 +167,11 @@ public class DownloadProgressView extends LinearLayout {
                         final long bytes_downloaded = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
                         final long bytes_total = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
                         final String filePath = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                        final long download_percentage = (bytes_downloaded * 100L) / bytes_total;
+                        final long download_percentage;
+                        if (bytes_total != 0)
+                            download_percentage = (bytes_downloaded * 100L) / bytes_total;
+                        else
+                            download_percentage = 0;
 
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @SuppressLint("SetTextI18n")
@@ -188,7 +192,7 @@ public class DownloadProgressView extends LinearLayout {
                                     downloading = false;
                                     setVisibility(View.GONE);
                                     //show 'CHANGE SELECTION' button after download failed too
-                                    if(customize != null)
+                                    if (customize != null)
                                         customize.setVisibility(View.VISIBLE);
                                     onDownloadInterruptedView();
 
@@ -203,7 +207,7 @@ public class DownloadProgressView extends LinearLayout {
                                         listener.downloadSuccessful(filePath.substring("file://".length()));
 
                                         //show 'CHANGE SELECTION' button after download successful too
-                                        if(customize != null)
+                                        if (customize != null)
                                             customize.setVisibility(View.VISIBLE);
                                         //since latest version is downloaded successfully the onDownloadInterruptedView() flow
                                         //can be applicable here too
@@ -282,9 +286,11 @@ public class DownloadProgressView extends LinearLayout {
     }
 
     private void onDownloadInterruptedView() {
-        downloadButton.setText(R.string.label_download);
-        downloadButton.setEnabled(false);
-        downloadButton.setTextColor(Color.parseColor("#757575"));
+        if (downloadButton != null) {
+            downloadButton.setText(R.string.label_download);
+            downloadButton.setEnabled(false);
+            downloadButton.setTextColor(Color.parseColor("#757575"));
+        }
     }
 
     public interface DownloadStatusListener {
