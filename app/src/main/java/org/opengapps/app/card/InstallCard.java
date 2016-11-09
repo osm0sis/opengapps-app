@@ -129,7 +129,17 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             installButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new ZipInstaller(getContext()).installZip(gappsFile);
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.pref_header_install)
+                            .setMessage(R.string.explanation_install_warning)
+                            .setPositiveButton(R.string.label_install, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    new ZipInstaller(getContext()).installZip(gappsFile);
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel_label, null);
+
                 }
             });
         }
