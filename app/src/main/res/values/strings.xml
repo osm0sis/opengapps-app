@@ -48,7 +48,7 @@
             <string name="confirm_label">Confirm</string>
             <string name="selected_folder_label">Selected folder:</string>
             <string name="create_folder_label">Create folder</string>
-            <string name="create_folder_msg" tools:ignore="StringFormatCount">Create new folder with name "%1$s"?</string>
+            <string name="create_folder_msg">Create new folder with name "%1$s"?</string>
             <string name="create_folder_success">Created new folder</string>
             <string name="create_folder_error_no_write_access">Cannot write to this folder</string>
             <string name="create_folder_error_already_exists">Folder already exists</string>
@@ -81,7 +81,7 @@
             <string name="ms_next">Next</string>
             <string name="ms_end">Complete</string>
         <!--EXPLANATION-->
-            <string name="explanation_permission_denied">In order to work correctly you have to grant Open GApps the permission to your external storage. Makes sense, doesn\'t it?</string>
+            <string name="explanation_permission_denied">In order to work correctly you have to grant Open GApps the permission to your external storage. Makes sense, doesn’t it?</string>
             <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead</string>
 
     <!--______DOWNLOAD/INSTALL______-->
