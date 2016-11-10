@@ -42,15 +42,15 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:paddingTop="8dp"
                         android:text="@string/label_app"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
-                        android:textStyle="normal|bold"
-                        tools:ignore="RtlSymmetry" />
+                        android:textStyle="normal|bold" />
 
                     <LinearLayout
                         android:id="@+id/homepage_button"
@@ -197,7 +197,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
@@ -403,7 +403,7 @@
                             android:tint="@color/grey" />
 
                         <LinearLayout
-                            android:layout_width="fill_parent"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
                             android:orientation="vertical"
@@ -415,11 +415,13 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_support_opengapps"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                android:textStyle="normal|bold" />
+                                android:textStyle="normal|bold"
+                                android:gravity="start"
+                                android:maxLines="2" />
 
                             <TextView
                                 android:id="@+id/support_url_text"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_support_opengapps_description"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
