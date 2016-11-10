@@ -107,12 +107,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         downloadAd = new InterstitialAd(globalContext);
         downloadAd.setAdUnitId(interstitialAdId);
         requestAd();
-        downloadAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestAd();
-            }
-        });
+        downloadAd.setAdListener(ifAdLoadedListener);
 
         prefs = globalContext.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
@@ -417,23 +412,33 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (downloadAd.isLoaded()) {
             downloadAd.show();
         } else {
-           requestAd();
+            requestAd();
 
-            downloadAd.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                    downloadAd.show();
-                }
-
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-                    requestAd();
-                }
-            });
+            downloadAd.setAdListener(ifAdNotLoadedListener);
         }
     }
+
+    private AdListener ifAdLoadedListener = new AdListener() {
+        @Override
+        public void onAdClosed() {
+            super.onAdClosed();
+            requestAd();
+        }
+    };
+
+    private AdListener ifAdNotLoadedListener = new AdListener() {
+        @Override
+        public void onAdClosed() {
+            super.onAdClosed();
+            requestAd();
+        }
+
+        @Override
+        public void onAdLoaded() {
+            super.onAdLoaded();
+            showAd();
+        }
+    };
 
     public InstallCard getInstallCard(String path) {
         return fileCards.get(path);
