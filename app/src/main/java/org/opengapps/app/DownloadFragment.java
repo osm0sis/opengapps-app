@@ -418,6 +418,20 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             downloadAd.show();
         } else {
            requestAd();
+
+            downloadAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                    downloadAd.show();
+                }
+
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    requestAd();
+                }
+            });
         }
     }
 
