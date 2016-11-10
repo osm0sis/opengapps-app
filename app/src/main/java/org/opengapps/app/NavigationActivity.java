@@ -17,10 +17,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import org.opengapps.app.download.DownloadProgressView;
+import org.opengapps.app.download.Downloader;
 import org.opengapps.app.intro.AppIntroActivity;
 import org.opengapps.app.prefs.Preferences;
 
@@ -154,6 +158,29 @@ public class NavigationActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(Gravity.START)) {
             drawer.closeDrawer(Gravity.START);
+        }
+
+        /*
+        * = Downloader check routine =
+        *
+        * - Checks if startinDownload TextView is visible
+        * - Not an ideal way but gives you enough time for the download thread to start
+        *
+        * */
+
+        Downloader downloader = downloadFragment.getDownloader();
+        if(downloader != null) {
+            DownloadProgressView progressView = downloader.getProgressView();
+
+            if(progressView !=null) {
+                if (progressView.startingDownload.getVisibility() == View.VISIBLE) {
+                    showToast("Download not started yet. Wait a sec.");
+                } else {
+                    super.onBackPressed();
+                }
+            } else {
+                super.onBackPressed();
+            }
         } else {
             super.onBackPressed();
         }
@@ -207,5 +234,9 @@ public class NavigationActivity extends AppCompatActivity
                 startActivityForResult(i, 99);
             }
         },280);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

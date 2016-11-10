@@ -37,7 +37,8 @@ import java.util.Locale;
 public class DownloadProgressView extends LinearLayout {
 
     private final ProgressBar downloadProgressBar;
-    private final TextView downloadedSizeView, totalSizeView, percentageView, startingDownload, backslash;
+    private final TextView downloadedSizeView, totalSizeView, percentageView, backslash;
+    public final TextView startingDownload;
     private final DownloadManager downloadManager;
     private int downloadedSizeColor, totalSizeColor, percentageColor;
     private long downloadID;
