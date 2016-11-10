@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/pref_header_download">
+    <PreferenceCategory android:title="@string/pref_header_download">
         <SwitchPreference
             android:defaultValue="true"
             android:key="download_wifi_only"
@@ -28,6 +27,11 @@
             android:title="@string/label_download_versionlog" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_header_install">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_install_warning"
+            android:summary="@string/explanation_pref_install_warning"
+            android:title="@string/label_pref_install_warning" />
         <org.opengapps.app.prefs.RootPreference
             android:defaultValue="false"
             android:key="root_mode"

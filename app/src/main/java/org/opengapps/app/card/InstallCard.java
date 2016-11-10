@@ -20,7 +20,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.R;
 import org.opengapps.app.ZipInstaller;
 import org.opengapps.app.download.FileValidator;
+import org.opengapps.app.prefs.Preferences;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,6 +67,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     /**
      * Listener that is called on delete of the file is set here. (Usually the DownloadFragment containing the view
+     *
      * @param listener DownloadFragment that gets notified when a gappsPackage is deleted
      */
     public void setDeleteListener(DownloadFragment listener) {
@@ -131,7 +136,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                 public void onClick(View view) {
                     new AlertDialog.Builder(getContext())
                             .setTitle(R.string.pref_header_install)
-                            .setMessage(R.string.explanation_install_warning)
+                            .setView(new showAgainDiag(getContext()))
                             .setPositiveButton(R.string.label_install, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -186,6 +191,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     /**
      * Associates a File with the installCard. checks if md5/versionlog exists, sets filename and tries to check MD5 if possible
+     *
      * @param file GApps-Package as File. ZIP-File, not md5/versionlog
      */
     public void setFile(File file) {
@@ -202,6 +208,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     /**
      * Shows the options of the 3dot-menu. Hides "show MD5" and "show Versionlog" if necessary
+     *
      * @param view Root-View that has to contain the popup
      */
     private void showPopup(View view) {
@@ -332,6 +339,29 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     public boolean exists() {
         return gappsFile.exists();
+    }
+
+
+    private class showAgainDiag extends LinearLayout {
+        public showAgainDiag(Context context) {
+            super(context);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater.inflate(R.layout.dont_show_again_diag, InstallCard.this, false);
+            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+            checkBox.setChecked(false);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).edit().putBoolean("show_install_warning", b).apply();
+                }
+            });
+        }
+
+        @Override
+        protected void onAttachedToWindow() {
+            super.onAttachedToWindow();
+
+        }
     }
 
 }
