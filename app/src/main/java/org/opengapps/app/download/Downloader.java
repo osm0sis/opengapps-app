@@ -55,6 +55,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private String baseUrl;
     private SharedPreferences prefs;
     private DownloadManager downloadManager;
+    private DownloadProgressView progress;
 
     public Downloader(DownloadFragment downloadFragment) {
         this.downloadFragment = downloadFragment;
@@ -74,7 +75,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         super.onPreExecute();
         if (downloadFragment != null) {
             if (!errorOccured) {
-                DownloadProgressView progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
+                progress = (DownloadProgressView) downloadFragment.getView().findViewById(R.id.progress_view);
                 progress.begin();
             } else {
                 Toast.makeText(downloadFragment.getContext(), downloadFragment.getString(R.string.download_started), Toast.LENGTH_SHORT).show();
@@ -340,6 +341,10 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             }
         }
         return "";
+    }
+
+    public DownloadProgressView getProgressView() {
+        return progress;
     }
 
     public class
