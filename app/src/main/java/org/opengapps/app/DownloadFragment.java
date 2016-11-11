@@ -405,7 +405,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onRefresh() {
         loadInstallCards();
 //        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
-        downloader.new TagUpdater().execute();
+        if (downloader != null) {
+            downloader.new TagUpdater().execute();
+        }
     }
 
     public void showAd() {
