@@ -120,7 +120,7 @@ public class DownloadProgressView extends LinearLayout {
         DownloadManager.Query query = new DownloadManager.Query();
         query.setFilterById(downloadID);
         Cursor c = downloadManager.query(query);
-        if (c.moveToFirst()) {
+        if (c != null && c.moveToFirst()) {
             int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
             if (status == DownloadManager.STATUS_PAUSED || status == DownloadManager.STATUS_PENDING || status == DownloadManager.STATUS_RUNNING) {
                 return true;
@@ -168,7 +168,7 @@ public class DownloadProgressView extends LinearLayout {
                     else
                         dlMan = downloadManager;
                     c = dlMan.query(query);
-                    if (c.moveToFirst()) {
+                    if (c != null && c.moveToFirst()) {
                         final int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));//Get download status
                         final int reason = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON));//Get download status
                         final long bytes_downloaded = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
