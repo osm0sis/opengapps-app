@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -411,6 +412,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         loadInstallCards();
 //        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
         downloader.new TagUpdater().execute();
+    }
+
+    public static int spToPx(Context context, float sp) {
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+        return px;
     }
 
     public void showAd() {

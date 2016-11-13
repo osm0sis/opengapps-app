@@ -37,14 +37,16 @@
             <string name="only_newest_version">Veraltete Pakete automatisch löschen</string>
             <string name="label_download_versionlog">Versionshinweise herunterladen</string>
             <string name="label_root_mode">Root-Rechte verwenden</string>
-        <!--SUMMARIES-->
+            <string name="label_pref_install_warning">Installationsbestätigung anzeigen</string>
+    <!--SUMMARIES-->
             <string name="summary_wifi_only">Nur über Wi-Fi herunterladen</string>
             <string name="explanation_newest_version">Alle vorherigen Versionen eines GApps-Paketes löschen, wenn eine neue erfolgreich heruntergeladen wurde</string>
             <string name="explanation_download_md5">MD5-Prüfsumme herunterladen um Downloadfehler zu vermeiden</string>
             <string name="explanation_download_versionlog">VersionLog herunterladen um die Paketinhalte anzuzeigen</string>
             <string name="summary_root_mode">Erteile Root-Zugriff, um automatische Installation und Cache-Bereinigung zu aktivieren</string>
             <string name="explanation_wipe_dalvik">Erneute App-Optimierung bei nächsten Boot erzwingen. Benötigt mehr Zeit aber hilft, potentielle Probleme zu vermeiden</string>
-        <!--FILECHOOSER (EXTERNAL LIBRARY)-->
+            <string name="explanation_pref_install_warning">Um versehntliche Installationen zu verhindern, kann eine Bestätigung vor der Installation angezeigt werden</string>
+    <!--FILECHOOSER (EXTERNAL LIBRARY)-->
             <string name="confirm_label">Auswählen</string>
             <string name="selected_folder_label">Ausgewähltes Verzeichnis:</string>
             <string name="create_folder_label">Ordner erstellen</string>
@@ -108,6 +110,7 @@
             <string name="label_checksum_valid">Die Prüfsumme ist korrekt</string>
             <string name="label_checksum_invalid">Die Prüfsumme ist falsch</string>
             <string name="label_starting_download">Starte Download&#8230;</string>
+            <string name="dont_show_again">Nicht wieder anzeigen</string>
     <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Eine Aktualisierung für die App ist verfügbar</string>
             <string name="explanation_forced_update">Um die App weiter zu benutzen, muss sie aktualisiert werden</string>

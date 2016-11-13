@@ -134,17 +134,21 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             installButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(R.string.pref_header_install)
-                            .setView(new showAgainDiag(getContext()))
-                            .setPositiveButton(R.string.label_install, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    new ZipInstaller(getContext()).installZip(gappsFile);
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel_label, null);
-
+                    boolean showInstallWarning = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).getBoolean("show_install_warning", true);
+                    if (showInstallWarning)
+                        new AlertDialog.Builder(getContext())
+                                .setTitle(R.string.pref_header_install)
+                                .setView(new showAgainDiag(getContext()))
+                                .setPositiveButton(R.string.label_install, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        new ZipInstaller(getContext()).installZip(gappsFile);
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel_label, null)
+                                .show();
+                    else
+                        new ZipInstaller(getContext()).installZip(gappsFile);
                 }
             });
         }
@@ -345,17 +349,25 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
     private class showAgainDiag extends LinearLayout {
         public showAgainDiag(Context context) {
             super(context);
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            inflater.inflate(R.layout.dont_show_again_diag, InstallCard.this, false);
-            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
-            checkBox.setChecked(false);
+            setOrientation(VERTICAL);
+            final LayoutParams params = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            final int margin = DownloadFragment.dpToPx(getContext(), 16);
+            params.setMargins(margin, margin, margin, 0);
+            TextView textView = new TextView(getContext());
+            textView.setTextSize(DownloadFragment.spToPx(getContext(), 6));
+            textView.setText(R.string.explanation_install_warning);
+            addView(textView, params);
+            CheckBox checkBox = new CheckBox(getContext());
+            checkBox.setText(R.string.dont_show_again);
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).edit().putBoolean("show_install_warning", b).apply();
+                    getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).edit().putBoolean("show_install_warning", !b).apply();
                 }
             });
+            addView(checkBox, params);
         }
+
 
         @Override
         protected void onAttachedToWindow() {
