@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class DownloadCard extends CardView {
 
     /**
      * Initializes the DownloadCard, gets instance of Analytics and most importantly supplies the reference to DownloadFragment
+     *
      * @param fragment The DownloadFragment holding the downloadCard
      */
     public void init(DownloadFragment fragment) {
@@ -96,6 +98,7 @@ public class DownloadCard extends CardView {
 
     /**
      * Checks if a download initiated by the app is currently running
+     *
      * @return Returns true if a download that was started by the app is currently pending/running/waiting. Returns false otherwise
      */
     private boolean isDownloading() {
@@ -105,6 +108,7 @@ public class DownloadCard extends CardView {
     /**
      * Receives updated tag from DownloadFragment via TagUpdater in Downloader. Then writes the latest version as formatted string (dependent on Users locale) in the corresponding textbox
      * and updates the state of the DownloadCard-View
+     *
      * @param lastAvailableTag Latest Versionnumber of the OpenGApps package as string in the format "yyyyMMdd"
      */
     public void onTagUpdated(String lastAvailableTag) {
@@ -224,6 +228,7 @@ public class DownloadCard extends CardView {
     /**
      * Sets the "state" of the DownloadCard. Includes coloring and enabling/disabling of the downloadbutton and appending colored (new) to the version if necessary
      * If Storage-Permission is not granted, state is always disabled
+     *
      * @param state State of the downloadcard. (NORMAL, UPDATEABLE or DISABLED).
      */
     public void setState(State state) {
@@ -245,7 +250,11 @@ public class DownloadCard extends CardView {
                 //noinspection deprecation
                 {
                     //noinspection deprecation
-                    version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>"));
+                    Configuration configuration = getResources().getConfiguration();
+                    if (configuration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+                        version.setText(Html.fromHtml("<font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>" + " <b>" + version.getText() + "</b>"));
+                    else
+                        version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>"));
                 }
                 downloadButton.setEnabled(true);
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
@@ -260,6 +269,7 @@ public class DownloadCard extends CardView {
 
     /**
      * Reads a date as String in the format "yyyyMMdd" and converts it to the corresponding local dateformat for easy reading
+     *
      * @param tag Date as String in the format yyyyMMdd
      * @return Date as human-readable string dependent on the Locale of the user
      */
@@ -280,6 +290,7 @@ public class DownloadCard extends CardView {
 
     /**
      * Helpermethod to avoid using getResources for every little String
+     *
      * @param id ID of the needed String
      * @return String
      */

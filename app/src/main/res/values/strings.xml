@@ -37,7 +37,6 @@
             <string name="only_newest_version">Automatically clean-up downloads</string>
             <string name="label_download_versionlog">Download VersionLog</string>
             <string name="label_root_mode">Use Root Permission</string>
-            <string name="label_pref_install_warning">Show Install Confirmation Dialog</string>
         <!--SUMMARIES-->
             <string name="summary_wifi_only">Download over Wi-Fi only</string>
             <string name="explanation_newest_version">Delete outdated version if a new similar variant has been downloaded</string>
@@ -45,7 +44,6 @@
             <string name="explanation_download_versionlog">Download VersionLog to list package content</string>
             <string name="summary_root_mode">Grant root access to enable install-mode and the wipe cache/dalvik setting</string>
             <string name="explanation_wipe_dalvik">Forces re-optimization of cache at next boot. Takes more time, but helps to prevent potential issues.</string>
-            <string name="explanation_pref_install_warning">A confirmation dialog can be shown for the installation to prevent accidental installs</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
             <string name="confirm_label">Confirm</string>
             <string name="selected_folder_label">Selected folder:</string>
@@ -110,13 +108,11 @@
             <string name="label_checksum_valid">The checksum is valid</string>
             <string name="label_checksum_invalid">The checksum is invalid</string>
             <string name="label_starting_download">Starting Download</string>
-            <string name="dont_show_again">Don\'t show again</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">An update for the app is available</string>
             <string name="explanation_forced_update">You have to update in order to continue using the app</string>
             <string name="label_root_is_need_for_rootmode">Your device needs to be rooted in order to activate</string>
             <string name="autoinstall_root_disclaimer">Automatic Install only works only if Open GApps is installed as system app or with root permission</string>
-            <string name="explanation_install_warning">Are you sure?</string>
 
     <!--______SUPPORT______-->
         <string name="label_app">App</string>

@@ -108,12 +108,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         downloadAd = new InterstitialAd(globalContext);
         downloadAd.setAdUnitId(interstitialAdId);
         requestAd();
-        downloadAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestAd();
-            }
-        });
+        downloadAd.setAdListener(ifAdLoadedListener);
 
         prefs = globalContext.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
@@ -411,7 +406,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onRefresh() {
         loadInstallCards();
 //        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
-        downloader.new TagUpdater().execute();
+        if (downloader != null) {
+            downloader.new TagUpdater().execute();
+        }
     }
 
     public static int spToPx(Context context, float sp) {
@@ -422,18 +419,35 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void showAd() {
         if (downloadAd.isLoaded()) {
             downloadAd.show();
-            downloadAd.setAdListener(null);
         } else {
-            downloadAd.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                    downloadAd.show();
-                    downloadAd.setAdListener(null);
-                }
-            });
+            requestAd();
+
+            downloadAd.setAdListener(ifAdNotLoadedListener);
         }
     }
+
+    private AdListener ifAdLoadedListener = new AdListener() {
+        @Override
+        public void onAdClosed() {
+            super.onAdClosed();
+            requestAd();
+        }
+    };
+
+    private AdListener ifAdNotLoadedListener = new AdListener() {
+        @Override
+        public void onAdClosed() {
+            super.onAdClosed();
+            requestAd();
+        }
+
+        @Override
+        public void onAdLoaded() {
+            super.onAdLoaded();
+            showAd();
+            downloadAd.setAdListener(ifAdLoadedListener);
+        }
+    };
 
     public InstallCard getInstallCard(String path) {
         return fileCards.get(path);

@@ -120,7 +120,7 @@ public class DownloadProgressView extends LinearLayout {
         DownloadManager.Query query = new DownloadManager.Query();
         query.setFilterById(downloadID);
         Cursor c = downloadManager.query(query);
-        if (c.moveToFirst()) {
+        if (c != null && c.moveToFirst()) {
             int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
             if (status == DownloadManager.STATUS_PAUSED || status == DownloadManager.STATUS_PENDING || status == DownloadManager.STATUS_RUNNING) {
                 return true;
@@ -132,7 +132,7 @@ public class DownloadProgressView extends LinearLayout {
     private void showDownloadProgress() {
         setVisibility(View.VISIBLE);
         View parentView = (View) getParent();
-        Button downloadButton = (Button) parentView.findViewById(R.id.download_button);
+        final Button downloadButton = (Button) parentView.findViewById(R.id.download_button);
         downloadButton.setText(getResources().getString(R.string.label_cancel));
         downloadButton.setEnabled(true);
         downloadButton.setOnClickListener(new OnClickListener() {
@@ -161,8 +161,14 @@ public class DownloadProgressView extends LinearLayout {
                     final Cursor c;
                     DownloadManager.Query query = new DownloadManager.Query();
                     query.setFilterById(downloadID);
-                    c = downloadManager.query(query);
-                    if (c.moveToFirst()) {
+                    //We are actually not sure if all of this fixes a bug where downloadManager would work just fine. We will just leave that in the code now to test out if the bug will reoccur or not
+                    DownloadManager dlMan;
+                    if (downloadManager == null)
+                        dlMan = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+                    else
+                        dlMan = downloadManager;
+                    c = dlMan.query(query);
+                    if (c != null && c.moveToFirst()) {
                         final int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));//Get download status
                         final int reason = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON));//Get download status
                         final long bytes_downloaded = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
