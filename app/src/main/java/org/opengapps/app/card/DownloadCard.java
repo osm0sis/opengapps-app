@@ -2,12 +2,15 @@ package org.opengapps.app.card;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -156,11 +159,23 @@ public class DownloadCard extends CardView {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragment.showAd();
-                logSelections();
-                fragment.getDownloader().execute();
-                // hide CHANGE SELECTION button
-                customize.setVisibility(View.INVISIBLE);
+                boolean downloadWifiOnly = prefs.getBoolean("download_wifi_only", true);
+                ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                boolean wifiConnected = networkInfo.isConnectedOrConnecting();
+                if (downloadWifiOnly && !wifiConnected) {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.pref_header_download)
+                            .setMessage(R.string.explanation_wifi_needed)
+                            .setPositiveButton(R.string.accept, null)
+                            .show();
+                } else {
+                    fragment.showAd();
+                    logSelections();
+                    fragment.getDownloader().execute();
+                    // hide CHANGE SELECTION button
+                    customize.setVisibility(View.INVISIBLE);
+                }
             }
         });
     }

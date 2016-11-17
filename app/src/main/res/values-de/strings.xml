@@ -112,6 +112,7 @@
             <string name="label_starting_download">Starte Download&#8230;</string>
             <string name="dont_show_again">Nicht wieder anzeigen</string>
     <!--EXPLANATION-->
+            <string name="explanation_wifi_needed">Sie sind nicht mit dem Wi-Fi verbunden. Deaktivieren sie "Nur Wi-Fi" in den Einstellungen um das Paket trotzdem herunterzuladen</string>
             <string name="explanation_optional_app_update">Eine Aktualisierung für die App ist verfügbar</string>
             <string name="explanation_forced_update">Um die App weiter zu benutzen, muss sie aktualisiert werden</string>
             <string name="label_root_is_need_for_rootmode">Zum Aktivieren werden Root-Rechte benötigt</string>

@@ -17,10 +17,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import org.opengapps.app.download.DownloadProgressView;
+import org.opengapps.app.download.Downloader;
 import org.opengapps.app.intro.AppIntroActivity;
 import org.opengapps.app.prefs.Preferences;
 
@@ -165,13 +169,13 @@ public class NavigationActivity extends AppCompatActivity
         * */
 
         Downloader downloader = downloadFragment.getDownloader();
-        if(downloader != null) {
+        if (downloader != null) {
             DownloadProgressView progressView = downloader.getProgressView();
 
-            if(progressView !=null) {
+            if (progressView != null) {
                 if (progressView.startingDownload.getVisibility() == View.VISIBLE) {
 //                    showToast("Download not started yet. Wait a sec.");
-                    Log.d(TAG, "User trying to exit before thread created.");
+                    Log.d("NavigationActivity", "User trying to exit before thread created.");
                 } else {
                     super.onBackPressed();
                 }
@@ -230,6 +234,6 @@ public class NavigationActivity extends AppCompatActivity
                 Intent i = new Intent(NavigationActivity.this, className);
                 startActivityForResult(i, 99);
             }
-        },280);
+        }, 280);
     }
 }

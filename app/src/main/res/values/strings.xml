@@ -109,6 +109,7 @@
             <string name="label_checksum_invalid">The checksum is invalid</string>
             <string name="label_starting_download">Starting Download</string>
         <!--EXPLANATION-->
+            <string name="explanation_wifi_needed">You are not connected to Wi-Fi. To enable downloading via mobile data, disable "Wi-Fi only" in the settings</string>
             <string name="explanation_optional_app_update">An update for the app is available</string>
             <string name="explanation_forced_update">You have to update in order to continue using the app</string>
             <string name="label_root_is_need_for_rootmode">Your device needs to be rooted in order to activate</string>
