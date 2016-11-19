@@ -139,7 +139,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             return;
         }
         Arrays.sort(files);
-        for (int i = 0; i < files.length - 1; i++) {
+        int keptFiles = prefs.getInt("kept_packages", 1);
+        for (int i = 0; i < files.length - keptFiles; i++) {
             //noinspection ResultOfMethodCallIgnored
             deletePackage(files[i]);
         }

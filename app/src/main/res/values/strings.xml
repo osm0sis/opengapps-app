@@ -36,11 +36,13 @@
             <string name="label_wipe_cache">Wipe Cache/Dalvik</string>
             <string name="label_download_md5">Download MD5</string>
             <string name="only_newest_version">Automatically clean-up downloads</string>
+            <string name="packages_to_keep">Packages to keep</string>
             <string name="label_download_versionlog">Download VersionLog</string>
             <string name="label_root_mode">Use Root Permission</string>
         <!--SUMMARIES-->
             <string name="summary_wifi_only">Download over Wi-Fi only</string>
             <string name="explanation_newest_version">Delete outdated version if a new similar variant has been downloaded</string>
+            <string name="explanation_keep_packages">The last %1$d packages are kept</string>
             <string name="explanation_download_md5">Download MD5-Checksum to verify package integrity</string>
             <string name="explanation_download_versionlog">Download VersionLog to list package content</string>
             <string name="summary_root_mode">Grant root access to enable install-mode and the wipe cache/dalvik setting</string>
@@ -196,7 +198,7 @@
             <string name="url_artwork" translatable="false">http://www.yeti-designs.com/</string>
             <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
             <string name="url_producer" translatable="false">https://github.com/mfonville/</string>
-            <string name="url_translate">https://github.com/opengapps/opengapps-app-support</string>
+            <string name="url_translate" translatable="false">https://github.com/opengapps/opengapps-app-support</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
             <string name="cancel_label" translatable="false">@string/label_cancel</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
