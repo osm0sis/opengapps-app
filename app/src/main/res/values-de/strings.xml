@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 <!--AUTHORS: @beatbrot, @achalmgucker, @visi0nary-->
+    <string name="translators">"@beatbrot, @achalmgucker, @visi0nary"</string>
     <!--______APP INTRO______-->
         <!--TITLES-->
             <string name="appintro_introslide_title">Willkommen bei der offiziellen OpenGApps.org App</string>
@@ -133,6 +134,7 @@
             <string name="label_version">Version</string>
             <string name="main_dev">Hauptentwickler</string>
             <string name="label_design">Artwork</string>
+            <string name="label_translator">Übersetzer</string>
             <string name="label_producer">Produzent</string>
             <string name="label_easteregg_found">Easteregg gefunden</string>
             <string name="used_libs">Bibliotheken</string>

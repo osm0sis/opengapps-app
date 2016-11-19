@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 <!--AUTHORS: @eurochild-->
+    <string name="translators">"@eurochild"</string>
     <!--______APP INTRO______-->
         <!--TITLES-->
             <string name="appintro_introslide_title">Καλωσήρθατε στην επίσημη OpenGApps.org εφαρμογή</string>

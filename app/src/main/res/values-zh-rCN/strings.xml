@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--AUTHORS: Youfu Zhang-->
+    <string name="translators">"Youfu Zhang"</string>
         <!--______APP INTRO______-->
         <!--TITLES-->
             <string name="appintro_introslide_title">欢迎使用 OpenGApps.org 官方应用</string>

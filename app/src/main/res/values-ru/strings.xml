@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 <!--AUTHORS: P. Kazmirchuk, @AlexLartsev19-->
+    <string name="translators">"P. Kazmirchuk, @AlexLartsev19"</string>
     <!--______APP INTRO______-->
         <!--TITLES-->
             <string name="appintro_introslide_title">Добро пожаловать в официальное приложение OpenGApps.org</string>
