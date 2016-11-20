@@ -6,8 +6,7 @@
             android:key="download_wifi_only"
             android:summary="@string/summary_wifi_only"
             android:title="@string/label_wifi_only" />
-        <org.opengapps.app.prefs.FileChooserPref
-            android:defaultValue="/sdcard/Download"
+        <Preference
             android:key="download_dir"
             android:title="@string/label_download_dir" />
         <CheckBoxPreference
