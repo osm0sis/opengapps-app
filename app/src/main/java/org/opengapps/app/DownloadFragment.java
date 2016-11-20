@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -448,6 +449,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     public Downloader getDownloader() {
+        if (downloader == null || downloader.getStatus() != AsyncTask.Status.PENDING)
+            downloader = new Downloader(this);
         return downloader;
     }
 }
