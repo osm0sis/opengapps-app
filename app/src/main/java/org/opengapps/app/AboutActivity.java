@@ -47,6 +47,7 @@ public class AboutActivity extends AppCompatActivity {
 
     private void initButtons() {
         initMainDevButton();
+        initCoDevButton();
         initLicenseButton();
         intitSecretButton();
         initMausiButton();
@@ -106,6 +107,18 @@ public class AboutActivity extends AppCompatActivity {
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_main_dev)));
                     startActivity(i);
                 }
+            }
+        });
+    }
+
+    private void initCoDevButton() {
+        LinearLayout coDev = (LinearLayout) findViewById(R.id.co_dev_button);
+        coDev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_co_dev)));
+                startActivity(i);
             }
         });
     }
