@@ -3,19 +3,25 @@ package org.opengapps.app.prefs;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.codekidlabs.storagechooser.StorageChooserBuilder;
 
 import org.opengapps.app.BuildConfig;
 import org.opengapps.app.R;
 
 public class Preferences extends AppCompatActivity {
     public final static String prefName = BuildConfig.APPLICATION_ID + "_preferences";
+    public final static String DOWNLOAD_PATH_KEY = "user_download_path";
+    public static FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_toolbar);
+        fragmentManager = getSupportFragmentManager();
         getFragmentManager().beginTransaction()
                 .replace(R.id.settings_fragment, new SettingsFragment())
                 .commit();
@@ -44,6 +50,17 @@ public class Preferences extends AppCompatActivity {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    StorageChooserBuilder.Builder builder = new StorageChooserBuilder.Builder()
+                            .withActivity(getActivity())
+                            .withMemoryBar(true)
+                            .withFragmentManager(Preferences.fragmentManager)
+                            .withPredefinedPath("/Download/OpenGApps")
+                            .actionSave(getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE), Preferences.DOWNLOAD_PATH_KEY)
+                            .build();
+
+                    builder.show();
+
+
                     return false;
                 }
             });
