@@ -206,4 +206,5 @@
     <string name="co_dev">Co-Developer</string>
     <string name="dev_co">Ashish Shekar</string>
     <string name="url_co_dev">https://github.com/codekidX</string>
+    <string name="label_select_external_storage">Select External Storage</string>
 </resources>
