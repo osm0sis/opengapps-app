@@ -67,11 +67,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         loadInstallCards();
