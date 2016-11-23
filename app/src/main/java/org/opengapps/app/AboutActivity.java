@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import org.opengapps.app.prefs.Preferences;
 
 import java.util.regex.Matcher;
@@ -27,6 +29,11 @@ import de.psdev.licensesdialog.LicensesDialog;
 public class AboutActivity extends AppCompatActivity {
     private boolean playGAppsActive = false;
     private int gfCount = 0;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +56,18 @@ public class AboutActivity extends AppCompatActivity {
         initMainDevButton();
         initCoDevButton();
         initLicenseButton();
+        initTranslatorButton();
         intitSecretButton();
         initMausiButton();
         initYetiButton();
         initCopyrightButton();
         initEasterEggFoundButton();
+    }
+
+    private void initTranslatorButton() {
+        View translators = findViewById(R.id.translators);
+        if (getString(R.string.translators).equals("PLACEHOLDER"))
+            translators.setVisibility(View.GONE);
     }
 
     private void initEasterEggFoundButton() {
@@ -190,7 +204,6 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
-
     private static class ButtonDisabler implements Runnable {
         private View view;
 
