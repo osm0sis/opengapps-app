@@ -79,6 +79,7 @@
         <!-- Google Mobile Ads activity. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
+            android:noHistory="true"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/MyTheme"
             tools:replace="android:theme" />

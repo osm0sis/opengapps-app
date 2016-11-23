@@ -15,7 +15,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +58,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private SwipeRefreshLayout refreshLayout;
     private boolean downloaderLoaded = false;
 
-    // add boolean to monitor ad state changes
-    private static boolean isAddShown = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,13 +69,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onPause() {
         super.onPause();
-
-        // ad is shown to user and it doesn't need to be manually closed when user pauses the activity
-        if(downloadAd.isLoaded() && isAddShown) {
-            // programmatically close it by firing back KeyEvent
-            getActivity().dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-            isAddShown = false;
-        }
     }
 
     @Override
@@ -431,7 +421,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void showAd() {
         if (downloadAd.isLoaded()) {
             downloadAd.show();
-            isAddShown = true;
         } else {
             requestAd();
             downloadAd.setAdListener(ifAdNotLoadedListener);
@@ -443,7 +432,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         public void onAdClosed() {
             super.onAdClosed();
             requestAd();
-            isAddShown = false;
         }
     };
 
@@ -452,14 +440,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         public void onAdClosed() {
             super.onAdClosed();
             requestAd();
-            isAddShown = false;
         }
 
         @Override
         public void onAdLoaded() {
             super.onAdLoaded();
             showAd();
-            isAddShown = true;
             downloadAd.setAdListener(ifAdLoadedListener);
         }
     };
