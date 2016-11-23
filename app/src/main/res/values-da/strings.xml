@@ -105,13 +105,13 @@
             <string name="label_show_versionlog">Vis VersionLog</string>
             <string name="label_share">Del</string>
             <string name="label_new">ny</string>
-            <string name="label_checksum_valid">Checksum'en er korrekt</string>
-            <string name="label_checksum_invalid">Checksum'en er forkert</string>
+            <string name="label_checksum_valid">Checksum’en er korrekt</string>
+            <string name="label_checksum_invalid">Checksum’en er forkert</string>
             <string name="label_starting_download">Starter fil-hentning</string>
         <!--EXPLANATION-->
             <string name="explanation_optional_app_update">Der er en opdatering klar</string>
             <string name="explanation_forced_update">Du skal opdatere for at bruge denne app</string>
-            <string name="label_root_is_need_for_rootmode">Din enhed skal roote's for at kunne aktivere</string>
+            <string name="label_root_is_need_for_rootmode">Din enhed skal roote’s for at kunne aktivere</string>
             <string name="autoinstall_root_disclaimer">Automatisk installation virker kun hvis Open GApps er installeret på en enhed med root rettigheder</string>
 
     <!--______SUPPORT______-->
