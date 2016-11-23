@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--AUTHORS: @beatbrot, @mfonville-->
-    <string name="translators">PLACEHOLDER</string>
+    <!--<string name="translators">PLACEHOLDER</string>-->
         <!--______APP INTRO______-->
         <!--TITLES-->
             <string name="appintro_introslide_title">Welcome to the official OpenGApps.org App</string>
