@@ -3,6 +3,7 @@ package org.opengapps.app;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -65,8 +66,11 @@ public class AboutActivity extends AppCompatActivity {
 
     private void initTranslatorButton() {
         View translators = findViewById(R.id.translators);
-        if (getString(R.string.translators).equals("PLACEHOLDER"))
+        try {
+            getString(R.string.translators);
+        } catch (Resources.NotFoundException e) {
             translators.setVisibility(View.GONE);
+        }
     }
 
     private void initEasterEggFoundButton() {
@@ -191,6 +195,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
+
     private static class ButtonDisabler implements Runnable {
         private View view;
 
