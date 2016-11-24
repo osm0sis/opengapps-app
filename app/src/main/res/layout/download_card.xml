@@ -9,7 +9,6 @@
         android:id="@+id/headline_download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/label_download_package"
         android:textSize="@dimen/font_size_headline"
@@ -17,175 +16,181 @@
         android:textStyle="normal|bold"
         android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/label_architecture"
         android:layout_width="110dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/label_architecture"
         android:textAllCaps="false"
         android:textSize="@dimen/font_size_subheadline"
         app:layout_constraintStart_toEndOf="@+id/image_arch"
-        app:layout_constraintTop_toBottomOf="@+id/label_installed_tag" />
+        app:layout_constraintTop_toBottomOf="@+id/label_installed_tag"
+        tools:layout_editor_absoluteX="56dp" />
 
     <TextView
         android:id="@+id/label_android"
         android:layout_width="110dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/label_android"
         android:textSize="@dimen/font_size_subheadline"
         app:layout_constraintStart_toEndOf="@+id/image_android"
-        app:layout_constraintTop_toBottomOf="@+id/label_architecture" />
+        app:layout_constraintTop_toBottomOf="@+id/label_architecture"
+        tools:layout_editor_absoluteX="56dp" />
 
     <TextView
         android:id="@+id/label_variant"
         android:layout_width="110dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/label_variant"
         android:textSize="@dimen/font_size_subheadline"
         app:layout_constraintStart_toEndOf="@+id/image_variant"
-        app:layout_constraintTop_toBottomOf="@+id/label_android" />
+        app:layout_constraintTop_toBottomOf="@+id/label_android"
+        tools:layout_editor_absoluteX="56dp" />
 
     <ImageView
         android:id="@+id/image_arch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/label_architecture"
         android:src="@drawable/ic_architecture"
+        android:tint="@color/iconColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_version" />
+        app:layout_constraintTop_toBottomOf="@+id/image_version"
+        tools:layout_editor_absoluteX="24dp" />
 
     <ImageView
         android:id="@+id/image_android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/label_android"
         android:src="@drawable/ic_android"
+        android:tint="@color/iconColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_arch" />
+        app:layout_constraintTop_toBottomOf="@+id/image_arch"
+        tools:layout_editor_absoluteX="24dp" />
 
     <ImageView
         android:id="@+id/image_variant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/label_variant"
         android:src="@drawable/ic_variant"
+        android:tint="@color/iconColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_android" />
+        app:layout_constraintTop_toBottomOf="@+id/image_android"
+        tools:layout_editor_absoluteX="24dp" />
 
     <TextView
         android:id="@+id/selected_architecture"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/invalid_combo"
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintStart_toEndOf="@+id/label_architecture"
-        app:layout_constraintTop_toBottomOf="@+id/newest_version" />
+        app:layout_constraintTop_toBottomOf="@+id/newest_version"
+        tools:layout_editor_absoluteX="182dp" />
 
     <TextView
         android:id="@+id/selected_android"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/invalid_combo"
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintStart_toEndOf="@+id/label_android"
-        app:layout_constraintTop_toBottomOf="@+id/selected_architecture" />
+        app:layout_constraintTop_toBottomOf="@+id/selected_architecture"
+        tools:layout_editor_absoluteX="182dp" />
 
     <TextView
         android:id="@+id/selected_variant"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/invalid_combo"
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintStart_toEndOf="@+id/label_variant"
-        app:layout_constraintTop_toBottomOf="@+id/selected_android" />
+        app:layout_constraintTop_toBottomOf="@+id/selected_android"
+        tools:layout_editor_absoluteX="182dp" />
 
     <TextView
         android:id="@+id/label_installed_tag"
         android:layout_width="110dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:text="@string/label_version"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/image_version"
-        app:layout_constraintTop_toBottomOf="@+id/headline_download" />
+        app:layout_constraintTop_toBottomOf="@+id/headline_download"
+        tools:layout_editor_absoluteX="56dp" />
 
     <TextView
         android:id="@+id/newest_version"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/label_installed_tag"
         app:layout_constraintTop_toBottomOf="@+id/headline_download"
-        tools:text="latest Version" />
+        tools:text="latest Version"
+        tools:layout_editor_absoluteX="182dp" />
 
     <ImageView
         android:id="@+id/image_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/label_version"
         android:src="@drawable/ic_current_version"
+        android:tint="@color/iconColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headline_download" />
+        app:layout_constraintTop_toBottomOf="@+id/headline_download"
+        tools:layout_editor_absoluteX="24dp" />
 
     <org.opengapps.app.download.DownloadProgressView
         android:id="@+id/progress_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_variant" />
+        app:layout_constraintTop_toBottomOf="@+id/label_variant"
+        tools:layout_editor_absoluteX="192dp" />
 
     <Button
         android:id="@+id/download_button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:enabled="false"
         android:text="@string/label_download"
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress_view" />
+        app:layout_constraintTop_toBottomOf="@+id/progress_view"
+        tools:layout_editor_absoluteX="268dp" />
 
     <Button
         android:id="@+id/change_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/label_change_selection"
         app:layout_constraintEnd_toStartOf="@+id/download_button"
-        app:layout_constraintTop_toBottomOf="@+id/progress_view" />
+        app:layout_constraintTop_toBottomOf="@+id/progress_view"
+        tools:layout_editor_absoluteX="103dp" />
 
 </android.support.constraint.ConstraintLayout>

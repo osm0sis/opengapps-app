@@ -64,6 +64,7 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/action_settings"
         android:src="@drawable/ic_more"
+        android:tint="@color/iconColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,6 +82,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/label_checksum_valid"
             android:src="@drawable/ic_checkmark"
+            android:tint="@color/iconColor"
             android:visibility="invisible" />
 
         <ImageView
@@ -89,6 +91,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/label_decline"
             android:src="@drawable/ic_cross"
+            android:tint="@color/iconColor"
             android:visibility="invisible" />
 
         <ProgressBar
