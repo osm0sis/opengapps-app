@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -243,7 +244,11 @@ public class DownloadProgressView extends LinearLayout {
                             }
                         });
                     }
-                    c.close();
+                    if (c != null) {
+                        c.close();
+                    } else {
+                        Log.d(getClass().getSimpleName(), "run: Cursor is already null. Therefore cant close it.");
+                    }
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
