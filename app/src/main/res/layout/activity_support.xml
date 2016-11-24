@@ -69,7 +69,7 @@
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_homepage"
                             android:src="@drawable/ic_web"
-                            android:tint="@color/grey" />
+                            android:tint="@color/iconColor" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -113,7 +113,7 @@
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_translate"
                             android:src="@drawable/ic_translate"
-                            android:tint="@color/grey" />
+                            android:tint="@color/iconColor" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -157,7 +157,7 @@
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_report_bug"
                             android:src="@drawable/ic_bug_report"
-                            android:tint="@color/grey" />
+                            android:tint="@color/iconColor" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -224,7 +224,7 @@
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_wiki"
                             android:src="@drawable/ic_wiki"
-                            android:tint="@color/grey" />
+                            android:tint="@color/iconColor" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -268,7 +268,7 @@
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_support_forum"
                             android:src="@drawable/ic_xda"
-                            android:tint="@color/grey" />
+                            android:tint="@color/iconColor" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -312,7 +312,7 @@
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_support_chat"
                             android:src="@drawable/ic_support_chat"
-                            android:tint="@color/grey" />
+                            android:tint="@color/iconColor" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -356,7 +356,7 @@
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_sourcecode"
                             android:src="@drawable/ic_github"
-                            android:tint="@color/grey" />
+                            android:tint="@color/iconColor" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -400,7 +400,7 @@
                             android:layout_height="24dp"
                             android:contentDescription="@string/label_support_opengapps"
                             android:src="@drawable/ic_support_opengapps"
-                            android:tint="@color/grey" />
+                            android:tint="@color/iconColor" />
 
                         <LinearLayout
                             android:layout_width="match_parent"

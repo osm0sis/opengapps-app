@@ -20,7 +20,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/label_version"
-            android:src="@drawable/ic_info" />
+            android:src="@drawable/ic_info"
+            android:tint="@color/iconColor"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -62,7 +63,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/main_dev"
-            android:src="@drawable/ic_person" />
+            android:src="@drawable/ic_person"
+            android:tint="@color/iconColor"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -146,7 +148,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/label_design"
-            android:src="@drawable/ic_yeti" />
+            android:src="@drawable/ic_yeti"
+            android:tint="@color/iconColor"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -188,7 +191,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/label_translator"
-            android:src="@drawable/ic_translate" />
+            android:src="@drawable/ic_translate"
+            android:tint="@color/iconColor"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -232,7 +236,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/label_producer"
-            android:src="@drawable/ic_copyright" />
+            android:src="@drawable/ic_copyright"
+            android:tint="@color/iconColor"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -275,7 +280,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/label_easteregg_found"
-            android:src="@drawable/ic_eastergg" />
+            android:src="@drawable/ic_eastergg"
+            android:tint="@color/iconColor"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -320,7 +326,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/used_libs"
-            android:src="@drawable/ic_variant" />
+            android:src="@drawable/ic_variant"
+            android:tint="@color/iconColor"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
