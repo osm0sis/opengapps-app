@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!--AUTHORS: @beatbrot, @mfonville-->
-    <string name="translators">"@beatbrot, @mfonville"</string>
-        <!--______APP INTRO______-->
+    <!--<string name="translators">"@beatbrot, @mfonville"</string>--> <!--put/add yourself here as the AUTHOR(S) of this translation-->
+    <!--______APP INTRO______-->
         <!--TITLES-->
             <string name="appintro_introslide_title">Welcome to the official OpenGApps.org App</string>
             <string name="appintro_storageperm_title">File Storage Permission</string>
@@ -206,4 +205,7 @@
     <string name="co_dev">Co-Developer</string>
     <string name="dev_co">Ashish Shekar</string>
     <string name="url_co_dev">https://github.com/codekidX</string>
+    <string name="label_select_external_storage">Select External Storage</string>
+    <string name="message_webview_not_installed">It seems you have uninstalled \"Stock WebView\", but your ROM does not support the \"Google WebView\". Re-flash your ROM and ask the ROM developer to add support for alternative WebView Providers.</string>
+    <string name="title_webview_not_installed">Oops! No WebView Provider installed!?</string>
 </resources>

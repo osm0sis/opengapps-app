@@ -19,6 +19,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -172,6 +173,9 @@ public class DownloadCard extends CardView {
                 } else {
                     fragment.showAd();
                     logSelections();
+                    if (fragment.getDownloader() == null) {
+                        Log.e(getClass().getSimpleName(), "onClick: Could not get downloader. Therefor cant download and downloadButton is useless");
+                    }
                     fragment.getDownloader().execute();
                     // hide CHANGE SELECTION button
                     customize.setVisibility(View.INVISIBLE);
@@ -216,6 +220,10 @@ public class DownloadCard extends CardView {
         for (int i = 0; i < architectures.length; i++) {
             if (prefs.getString("selection_arch", "null").equalsIgnoreCase(architectures[i]))
                 identifier += i * 1000;
+        }
+        if (fragment.getDownloader() == null) {
+            Log.d("DownloadCard", "logSelections: unable to get Downloader from downloadFragment. Aborted logging");
+            return;
         }
         String tagString = fragment.getDownloader().getTag();
         if (!TextUtils.isEmpty(tagString)) {

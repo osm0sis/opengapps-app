@@ -3,9 +3,11 @@ package org.opengapps.app;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -203,15 +205,23 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             startActivityAfterDrawerAnimation(AboutActivity.class);
         } else if (id == R.id.nav_blog) {
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_blog)));
-            startActivity(i);
+                openURL(getString(R.string.url_blog));
         } else if (id == R.id.nav_opengapps) {
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_opengapps)));
-            startActivity(i);
+                openURL(getString(R.string.url_opengapps));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(Gravity.START);
         return true;
+    }
+
+    private void openURL(String webUri) {
+        PackageManager pm = getPackageManager();
+        if(pm.hasSystemFeature(PackageManager.FEATURE_WEBVIEW)) {
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(webUri));
+            startActivity(i);
+        } else {
+            showAlertWithMessage(getString(R.string.title_webview_not_installed), getString(R.string.message_webview_not_installed));
+        }
     }
 
 
@@ -235,5 +245,20 @@ public class NavigationActivity extends AppCompatActivity
                 startActivityForResult(i, 99);
             }
         }, 280);
+    }
+
+    private void showAlertWithMessage(String title,String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.label_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
