@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/label_interface">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="nightMode"
+            android:summary="@string/explanation_dark_mode"
+            android:title="@string/label_dark_mode" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_header_download">
         <SwitchPreference
             android:defaultValue="true"
