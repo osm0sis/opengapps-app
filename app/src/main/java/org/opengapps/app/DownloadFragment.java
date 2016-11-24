@@ -454,9 +454,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         return fileCards.get(path);
     }
 
+    @Nullable
     public Downloader getDownloader() {
-        if (downloader == null || downloader.getStatus() != AsyncTask.Status.PENDING)
+        if (downloader == null || downloader.getStatus() != AsyncTask.Status.PENDING) {
+            if (getContext() == null)
+                return null;
             downloader = new Downloader(this);
+        }
         return downloader;
     }
 }
