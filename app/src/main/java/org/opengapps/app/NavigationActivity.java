@@ -32,7 +32,7 @@ import org.opengapps.app.prefs.Preferences;
 
 @SuppressWarnings("WrongConstant")
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     public final static int EXIT_CODE = 1;
     public static boolean forcedUpdate = false;
@@ -153,6 +153,8 @@ public class NavigationActivity extends AppCompatActivity
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_download_update)));
             startActivity(i);
         }
+        SharedPreferences prefs = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        prefs.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -260,5 +262,17 @@ public class NavigationActivity extends AppCompatActivity
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if(s.equals("nightMode")){
+            try {
+                recreate();
+            }catch (Exception e){
+                //At this point, we dont really care if the recreate fails. It's rather a best effort thing that *might* work but doesnt need to
+                Log.d(getClass().getSimpleName(), "onSharedPreferenceChanged: NightMode-Setting was triggered, but for some reason could not apply it");
+            }
+        }
     }
 }

@@ -27,6 +27,8 @@
         <!--LABELS-->
             <!--<string name="pref_header_install">Install (noun variant, not used in English)</string>-->
             <!--<string name="pref_header_download">Download (noun variant, not used in English)</string>-->
+            <string name="label_interface">Interface</string>
+            <string name="label_dark_mode">Dark theme</string>
             <string name="new_folder">New Folder</string>
             <string name="pref_header_gapps_selection">GApps-Selection</string>
             <string name="action_settings">Settings</string>
@@ -39,6 +41,7 @@
             <string name="label_download_versionlog">Download VersionLog</string>
             <string name="label_root_mode">Use Root Permission</string>
         <!--SUMMARIES-->
+            <string name="explanation_dark_mode">Dark theme improves readability in low light conditions</string>
             <string name="summary_wifi_only">Download over Wi-Fi only</string>
             <string name="explanation_newest_version">Delete outdated version if a new similar variant has been downloaded</string>
             <string name="explanation_keep_packages">The last %1$d packages are kept</string>

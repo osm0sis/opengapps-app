@@ -1,10 +1,12 @@
 package org.opengapps.app.prefs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
 import com.codekidlabs.storagechooser.StorageChooserBuilder;
@@ -44,7 +46,25 @@ public class Preferences extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
             bindPreferenceSummaryToValue(findPreference("download_dir"));
+            setDarkModeListener();
         }
+
+        private void setDarkModeListener() {
+            Preference nightMode = findPreference("nightMode");
+            nightMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
+                    if (((Boolean) o)) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }
+                    getActivity().recreate();
+                    return true;
+                }
+            });
+        }
+
         private void bindPreferenceSummaryToValue(Preference preference) {
             // Set the listener to watch for value changes.
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
