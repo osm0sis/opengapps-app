@@ -263,7 +263,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void loadRateUsCard() {
         int count = prefs.getInt("rate_count", 0);
         boolean rate_status = prefs.getBoolean("rate_done",false);
-        if(count == 10 && !rate_status) {
+        if(count % 10 == 0 && !rate_status) {
         if(rateUsCard == null) {
             showRateUsCard();
         }
@@ -280,14 +280,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 NavigationActivity.openURL(globalContext, "market://details?id=org.opengapps.app");
                 editor.putBoolean("rate_done", true);
                 editor.apply();
+                rateUsCard.setVisibility(View.GONE);
             }
         });
         rateUsCard.setLaterListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(prefs.getInt("rate_count",0) > 5) {
-                    editor.putInt("rate_count", 5);
-                }
                 editor.putBoolean("rate_done", false);
                 editor.apply();
                 rateUsCard.setVisibility(View.GONE);
@@ -327,6 +325,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                     NavigationActivity.openURL(globalContext, "https://play.google.com/store/apps/details?id=org.opengapps.app");
                     editor.putBoolean("support_done", true);
                     editor.apply();
+                    supportCard.setVisibility(View.GONE);
                 }
             });
             supportCard.setLaterListener(new View.OnClickListener() {
