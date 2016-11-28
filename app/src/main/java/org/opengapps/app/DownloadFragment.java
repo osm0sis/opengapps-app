@@ -248,7 +248,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             rateUsCard.setRateListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    NavigationActivity.openURL(globalContext, "https://play.google.com/store/apps/details?id=org.opengapps.app");
+                    NavigationActivity.openURL(globalContext, "market://details?id=org.opengapps.app");
                     editor.putBoolean("rate_done", true);
                     editor.apply();
                 }
