@@ -51,8 +51,6 @@ public class DownloadProgressView extends LinearLayout {
     private Button customize;
     private Button downloadButton;
 
-    private SharedPreferences sharedPreferences;
-
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -87,9 +85,6 @@ public class DownloadProgressView extends LinearLayout {
 
         //hides view.
         setVisibility(View.GONE);
-
-        //init preference
-        sharedPreferences = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
     }
 
     /**
@@ -228,13 +223,12 @@ public class DownloadProgressView extends LinearLayout {
                                         //can be applicable here too
                                         onDownloadInterruptedView();
 
-                                        //rate us dialog
+                                        //increment rate
+                                        SharedPreferences sharedPreferences = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
+                                        final SharedPreferences.Editor editor = sharedPreferences.edit();
                                         int count = sharedPreferences.getInt("rate_count", 0);
                                         boolean rate_status = sharedPreferences.getBoolean("rate_done",false);
-                                        if(count == 10 && !rate_status) {
-                                            DialogUtil.showRatingDialog(getContext()).show();
-                                        } else {
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        if(count != 10 && !rate_status) {
                                             count += 1;
                                             editor.putInt("rate_count", count);
                                             editor.apply();
