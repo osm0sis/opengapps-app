@@ -64,6 +64,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private RateUsCard rateUsCard;
     private SupportCard supportCard;
 
+    // status booleans used for checking if rate status is set
+    // and show them during onResume
     private boolean isRateUsCardSet = false;
     private boolean isSupportCardSet = false;
 
@@ -80,6 +82,19 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         super.onResume();
         loadInstallCards();
         isRestored = true;
+
+        rateUsCard=null;
+        supportCard=null;
+
+        if(isRateUsCardSet) {
+            showRateUsCard();
+        }
+        if(isSupportCardSet) {
+            showSupportCard();
+        }
+        loadRateUsCard();
+        loadSupportCard();
+
     }
 
     @Override
@@ -245,42 +260,48 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         return card;
     }
 
-    private void createAndShowRateUsCard() {
-        final SharedPreferences.Editor editor = prefs.edit();
+    private void loadRateUsCard() {
         int count = prefs.getInt("rate_count", 0);
         boolean rate_status = prefs.getBoolean("rate_done",false);
         if(count == 10 && !rate_status) {
         if(rateUsCard == null) {
-            rateUsCard = new RateUsCard(globalContext);
-            rateUsCard.setRateListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    NavigationActivity.openURL(globalContext, "market://details?id=org.opengapps.app");
-                    editor.putBoolean("rate_done", true);
-                    editor.apply();
-                }
-            });
-            rateUsCard.setLaterListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    editor.putInt("rate_count", 5);
-                    editor.putBoolean("rate_done", false);
-                    editor.apply();
-                    rateUsCard.setVisibility(View.GONE);
-                    rateUsCard = null;
-                }
-            });
-            LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
-            rateUsCard.setVisibility(View.VISIBLE);
-
-            layout.addView(rateUsCard, 2, params);
+            showRateUsCard();
         }
         }
     }
 
-    private void createAndShowSupportCard() {
+    private void showRateUsCard() {
+        final SharedPreferences.Editor editor = prefs.edit();
+        isRateUsCardSet = true;
+        rateUsCard = new RateUsCard(globalContext);
+        rateUsCard.setRateListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavigationActivity.openURL(globalContext, "market://details?id=org.opengapps.app");
+                editor.putBoolean("rate_done", true);
+                editor.apply();
+            }
+        });
+        rateUsCard.setLaterListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putInt("rate_count", 5);
+                editor.putBoolean("rate_done", false);
+                editor.apply();
+                rateUsCard.setVisibility(View.GONE);
+                rateUsCard = null;
+                isRateUsCardSet = false;
+            }
+        });
+        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
+        rateUsCard.setVisibility(View.VISIBLE);
+
+        layout.addView(rateUsCard, 2, params);
+    }
+
+    private void loadSupportCard() {
         //support dialog
         Random random = new Random();
         int randomMin = 1;
@@ -289,7 +310,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         int randomNum = random.nextInt((randomMax - randomMin) + 1) + randomMin;
 
         if(randomNum == 11) {
+            showSupportCard();
+        }
+    }
+
+    private void showSupportCard() {
         if(supportCard == null) {
+            isSupportCardSet = true;
             supportCard = new SupportCard(globalContext);
             supportCard.setSupportButton(new View.OnClickListener() {
                 @Override
@@ -302,6 +329,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 public void onClick(View view) {
                     supportCard.setVisibility(View.GONE);
                     supportCard = null;
+                    isSupportCardSet = false;
                 }
             });
             LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
@@ -310,7 +338,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             supportCard.setVisibility(View.VISIBLE);
 
             layout.addView(supportCard, 2, params);
-        }
         }
     }
 
@@ -485,9 +512,22 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onRefresh() {
         loadInstallCards();
-        createAndShowRateUsCard();
-        createAndShowSupportCard();
-//        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
+
+        // null the cards to show them if it's set
+        rateUsCard = null;
+        supportCard = null;
+
+        if(isRateUsCardSet) {
+            showRateUsCard();
+        }
+        if(isSupportCardSet) {
+            showSupportCard();
+        }
+
+        loadRateUsCard();
+        loadSupportCard();
+
+        //        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
         if (downloader != null) {
             downloader.new TagUpdater().execute();
         }
