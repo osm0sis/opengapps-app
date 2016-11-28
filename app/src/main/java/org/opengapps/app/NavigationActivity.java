@@ -1,5 +1,6 @@
 package org.opengapps.app;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -29,6 +30,7 @@ import org.opengapps.app.download.DownloadProgressView;
 import org.opengapps.app.download.Downloader;
 import org.opengapps.app.intro.AppIntroActivity;
 import org.opengapps.app.prefs.Preferences;
+import org.opengapps.app.utils.DialogUtil;
 
 @SuppressWarnings("WrongConstant")
 public class NavigationActivity extends AppCompatActivity
@@ -92,6 +94,10 @@ public class NavigationActivity extends AppCompatActivity
                     SharedPreferences.Editor e = getPrefs.edit();
 
                     //  Edit preference to make it false because we don't want this to run again
+
+                    // add rate count during 1st run
+                    e.putInt("rate_count", 0);
+                    e.putBoolean("rate_done", false);
                     //  Apply changes
                     e.apply();
                 }
@@ -207,22 +213,23 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             startActivityAfterDrawerAnimation(AboutActivity.class);
         } else if (id == R.id.nav_blog) {
-                openURL(getString(R.string.url_blog));
+                openURL(this,getString(R.string.url_blog));
         } else if (id == R.id.nav_opengapps) {
-                openURL(getString(R.string.url_opengapps));
+                openURL(this,getString(R.string.url_opengapps));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(Gravity.START);
         return true;
     }
 
-    private void openURL(String webUri) {
-        PackageManager pm = getPackageManager();
+    public static void openURL(Context context, String webUri) {
+        PackageManager pm = context.getPackageManager();
         if(pm.hasSystemFeature(PackageManager.FEATURE_WEBVIEW)) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(webUri));
-            startActivity(i);
+            context.startActivity(i);
         } else {
-            showAlertWithMessage(getString(R.string.title_webview_not_installed), getString(R.string.message_webview_not_installed));
+            DialogUtil.showAlertWithMessage(context,context.getString(R.string.title_webview_not_installed),
+                    context.getString(R.string.message_webview_not_installed));
         }
     }
 
@@ -247,21 +254,6 @@ public class NavigationActivity extends AppCompatActivity
                 startActivityForResult(i, 99);
             }
         }, 280);
-    }
-
-    private void showAlertWithMessage(String title,String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton(getString(R.string.label_yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 
     @Override
