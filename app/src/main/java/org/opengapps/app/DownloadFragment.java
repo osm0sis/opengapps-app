@@ -28,6 +28,8 @@ import com.google.android.gms.ads.InterstitialAd;
 import org.opengapps.app.card.DownloadCard;
 import org.opengapps.app.card.InstallCard;
 import org.opengapps.app.card.PermissionCard;
+import org.opengapps.app.card.RateUsCard;
+import org.opengapps.app.card.SupportCard;
 import org.opengapps.app.download.DownloadProgressView;
 import org.opengapps.app.download.Downloader;
 import org.opengapps.app.prefs.Preferences;
@@ -36,6 +38,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -236,6 +239,70 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         return card;
     }
 
+    private void createAndShowRateUsCard() {
+        final SharedPreferences.Editor editor = prefs.edit();
+        int count = prefs.getInt("rate_count", 0);
+        boolean rate_status = prefs.getBoolean("rate_done",false);
+        if(count == 10 && !rate_status) {
+            final RateUsCard rateUsCard = new RateUsCard(globalContext);
+            rateUsCard.setRateListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NavigationActivity.openURL(globalContext, "https://play.google.com/store/apps/details?id=org.opengapps.app");
+                    editor.putBoolean("rate_done", true);
+                    editor.apply();
+                }
+            });
+            rateUsCard.setLaterListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    editor.putInt("rate_count", 5);
+                    editor.putBoolean("rate_done",false);
+                    editor.apply();
+                    rateUsCard.setVisibility(View.GONE);
+                }
+            });
+            LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
+            rateUsCard.setVisibility(View.VISIBLE);
+
+            layout.addView(rateUsCard, 1, params);
+
+        }
+    }
+
+    private void createAndShowSupportCard() {
+        //support dialog
+        Random random = new Random();
+        int randomMin = 1;
+        int randomMax = 20;
+
+        int randomNum = random.nextInt((randomMax - randomMin) + 1) + randomMin;
+
+        if(randomNum == 11) {
+            final SupportCard supportCard = new SupportCard(globalContext);
+            supportCard.setSupportButton(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NavigationActivity.openURL(globalContext, "https://play.google.com/store/apps/details?id=org.opengapps.app");
+                }
+            });
+            supportCard.setLaterListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    supportCard.setVisibility(View.GONE);
+                }
+            });
+            LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
+            supportCard.setVisibility(View.VISIBLE);
+
+            layout.addView(supportCard, 1, params);
+        }
+    }
+
     private void addInstallCard(InstallCard installCard) {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -407,6 +474,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onRefresh() {
         loadInstallCards();
+        createAndShowRateUsCard();
+        createAndShowSupportCard();
 //        downloadCard.onTagUpdated(PackageGuesser.getCurrentlyInstalled(getContext()));
         if (downloader != null) {
             downloader.new TagUpdater().execute();
