@@ -308,13 +308,14 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         int randomMax = 20;
 
         int randomNum = random.nextInt((randomMax - randomMin) + 1) + randomMin;
-
-        if(randomNum == 11) {
+        boolean support_status = prefs.getBoolean("support_done",false);
+        if(randomNum == 11 && !support_status) {
             showSupportCard();
         }
     }
 
     private void showSupportCard() {
+        final SharedPreferences.Editor editor = prefs.edit();
         if(supportCard == null) {
             isSupportCardSet = true;
             supportCard = new SupportCard(globalContext);
@@ -322,6 +323,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 @Override
                 public void onClick(View view) {
                     NavigationActivity.openURL(globalContext, "https://play.google.com/store/apps/details?id=org.opengapps.app");
+                    editor.putBoolean("support_done", true);
+                    editor.apply();
                 }
             });
             supportCard.setLaterListener(new View.OnClickListener() {
