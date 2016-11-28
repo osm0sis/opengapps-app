@@ -1,6 +1,7 @@
 package org.opengapps.app.download;
 
 import android.annotation.SuppressLint;
+import android.app.DialogFragment;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,6 +27,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.app.R;
 import org.opengapps.app.prefs.Preferences;
+import org.opengapps.app.utils.DialogUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,6 +50,8 @@ public class DownloadProgressView extends LinearLayout {
 
     private Button customize;
     private Button downloadButton;
+
+    private SharedPreferences sharedPreferences;
 
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -83,6 +87,9 @@ public class DownloadProgressView extends LinearLayout {
 
         //hides view.
         setVisibility(View.GONE);
+
+        //init preference
+        sharedPreferences = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
     }
 
     /**
@@ -220,6 +227,18 @@ public class DownloadProgressView extends LinearLayout {
                                         //since latest version is downloaded successfully the onDownloadInterruptedView() flow
                                         //can be applicable here too
                                         onDownloadInterruptedView();
+
+                                        //rate us dialog
+                                        int count = sharedPreferences.getInt("rate_count", 0);
+                                        boolean rate_status = sharedPreferences.getBoolean("rate_done",false);
+                                        if(count == 10 && !rate_status) {
+                                            DialogUtil.showRatingDialog(getContext()).show();
+                                        } else {
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            count += 1;
+                                            editor.putInt("rate_count", count);
+                                            editor.apply();
+                                        }
                                     }
                                 } else {
                                     downloading = true;

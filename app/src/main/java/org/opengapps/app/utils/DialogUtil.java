@@ -1,0 +1,63 @@
+package org.opengapps.app.utils;
+
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+
+import org.opengapps.app.NavigationActivity;
+import org.opengapps.app.R;
+import org.opengapps.app.prefs.Preferences;
+
+public class DialogUtil {
+
+    public static Dialog showRatingDialog(final Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
+
+        return new AlertDialog.Builder(context)
+                .setTitle(R.string.rate_us_title)
+                .setMessage(R.string.rate_us_message)
+                .setPositiveButton(R.string.now_text, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        NavigationActivity.openURL(context, "https://play.google.com/store/apps/details?id=org.opengapps.app");
+                        editor.putBoolean("rate_done", true);
+                        editor.apply();
+                    }
+                })
+                .setNegativeButton(R.string.later_text, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        editor.putInt("rate_count", 5);
+                        editor.putBoolean("rate_done",false);
+                        editor.apply();
+                    }
+                })
+                .setNeutralButton(R.string.never_text, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        editor.putBoolean("rate_done", true);
+                        editor.apply();
+                    }
+                })
+                .create();
+    }
+
+    public static Dialog showAlertWithMessage(Context context, String title,String message) {
+        return new android.support.v7.app.AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(context.getString(R.string.label_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                }).create();
+    }
+}
