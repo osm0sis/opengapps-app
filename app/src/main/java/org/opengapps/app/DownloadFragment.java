@@ -285,7 +285,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         rateUsCard.setLaterListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putInt("rate_count", 5);
+                if(prefs.getInt("rate_count",0) > 5) {
+                    editor.putInt("rate_count", 5);
+                }
                 editor.putBoolean("rate_done", false);
                 editor.apply();
                 rateUsCard.setVisibility(View.GONE);
