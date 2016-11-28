@@ -61,6 +61,12 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private SwipeRefreshLayout refreshLayout;
     private boolean downloaderLoaded = false;
 
+    private RateUsCard rateUsCard;
+    private SupportCard supportCard;
+
+    private boolean isRateUsCardSet = false;
+    private boolean isSupportCardSet = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -244,7 +250,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         int count = prefs.getInt("rate_count", 0);
         boolean rate_status = prefs.getBoolean("rate_done",false);
         if(count == 10 && !rate_status) {
-            final RateUsCard rateUsCard = new RateUsCard(globalContext);
+        if(rateUsCard == null) {
+            rateUsCard = new RateUsCard(globalContext);
             rateUsCard.setRateListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -257,9 +264,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 @Override
                 public void onClick(View view) {
                     editor.putInt("rate_count", 5);
-                    editor.putBoolean("rate_done",false);
+                    editor.putBoolean("rate_done", false);
                     editor.apply();
                     rateUsCard.setVisibility(View.GONE);
+                    rateUsCard = null;
                 }
             });
             LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
@@ -267,8 +275,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
             rateUsCard.setVisibility(View.VISIBLE);
 
-            layout.addView(rateUsCard, 1, params);
-
+            layout.addView(rateUsCard, 2, params);
+        }
         }
     }
 
@@ -281,7 +289,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         int randomNum = random.nextInt((randomMax - randomMin) + 1) + randomMin;
 
         if(randomNum == 11) {
-            final SupportCard supportCard = new SupportCard(globalContext);
+        if(supportCard == null) {
+            supportCard = new SupportCard(globalContext);
             supportCard.setSupportButton(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -292,6 +301,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 @Override
                 public void onClick(View view) {
                     supportCard.setVisibility(View.GONE);
+                    supportCard = null;
                 }
             });
             LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
@@ -299,7 +309,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
             supportCard.setVisibility(View.VISIBLE);
 
-            layout.addView(supportCard, 1, params);
+            layout.addView(supportCard, 2, params);
+        }
         }
     }
 
