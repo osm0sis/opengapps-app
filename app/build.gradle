@@ -57,7 +57,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-ads:10.0.1'
     compile 'com.google.firebase:firebase-crash:10.0.1'
-    compile 'com.squareup.okhttp3:okhttp:3.4.2' //licensed
+    compile 'com.squareup.okhttp3:okhttp:3.5.0' //licensed
     compile 'com.github.paolorotolo:appintro:4.1.0' //licensed
     compile 'eu.chainfire:libsuperuser:1.0.0.201608240809' //licensed
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.1' //licensed
