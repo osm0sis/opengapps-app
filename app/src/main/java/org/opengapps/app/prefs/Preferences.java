@@ -75,12 +75,11 @@ public class Preferences extends AppCompatActivity {
                             .withMemoryBar(true)
                             .withFragmentManager(Preferences.fragmentManager)
                             .withPredefinedPath("/Download/OpenGApps")
-                            .actionSave(getActivity().getSharedPreferences(Preferences.prefName, MODE_PRIVATE), Preferences.DOWNLOAD_PATH_KEY)
+                            .actionSave(true)
+                            .withPreference(getActivity().getSharedPreferences(prefName, MODE_PRIVATE))
                             .build();
 
                     builder.show();
-
-
                     return false;
                 }
             });
