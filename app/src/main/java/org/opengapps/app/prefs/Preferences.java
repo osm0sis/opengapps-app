@@ -13,6 +13,7 @@ import com.codekidlabs.storagechooser.StorageChooserBuilder;
 
 import org.opengapps.app.BuildConfig;
 import org.opengapps.app.R;
+import org.opengapps.app.download.Downloader;
 
 public class Preferences extends AppCompatActivity {
     public final static String prefName = BuildConfig.APPLICATION_ID + "_preferences";
@@ -74,8 +75,7 @@ public class Preferences extends AppCompatActivity {
                             .withActivity(getActivity())
                             .withMemoryBar(true)
                             .withFragmentManager(Preferences.fragmentManager)
-                            .withPredefinedPath("/Download/OpenGApps")
-                            .actionSave(true)
+                            .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
                             .withPreference(getActivity().getSharedPreferences(prefName, MODE_PRIVATE))
                             .build();
 

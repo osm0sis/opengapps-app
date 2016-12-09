@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -18,6 +19,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
+import com.codekidlabs.storagechooser.utils.DiskUtil;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
 import com.github.paolorotolo.appintro.AppIntroViewPager;
@@ -25,6 +27,7 @@ import com.github.paolorotolo.appintro.AppIntroViewPager;
 import org.opengapps.app.NavigationActivity;
 import org.opengapps.app.R;
 import org.opengapps.app.ZipInstaller;
+import org.opengapps.app.download.Downloader;
 import org.opengapps.app.prefs.Preferences;
 
 
@@ -130,11 +133,16 @@ public class AppIntroActivity extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         SharedPreferences sharedPref = getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("selection_android", GappsSelectionFragment.selectionAnd);
-        editor.putString("selection_variant", GappsSelectionFragment.selectionVariant);
-        editor.putString("selection_arch", GappsSelectionFragment.selectionArch);
-        editor.apply();
-        editor.putBoolean("firstStart", false).apply();
+        editor.putString("selection_android", GappsSelectionFragment.selectionAnd)
+        .putString("selection_variant", GappsSelectionFragment.selectionVariant)
+        .putString("selection_arch", GappsSelectionFragment.selectionArch)
+        .putBoolean("firstStart", false)
+        //  Add primary download path to pref
+        .putString(DiskUtil.SC_PREFERENCE_KEY, Environment.getExternalStorageDirectory().getAbsolutePath() + Downloader.OPENGAPPS_PREDEFINED_PATH)
+        // add rate count during 1st run
+        .putInt("rate_count", 1)
+        .putBoolean("rate_done", false).apply();
+
         Intent i = new Intent(getBaseContext(), NavigationActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
         startActivity(i);
