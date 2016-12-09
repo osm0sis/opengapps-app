@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.codekidlabs.storagechooser.utils.DiskUtil;
 
 import org.opengapps.app.download.DownloadProgressView;
 import org.opengapps.app.download.Downloader;
@@ -76,8 +79,6 @@ public class NavigationActivity extends AppCompatActivity
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                //  Initialize SharedPreferences
-                SharedPreferences getPrefs = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
 
                 //  Create a new boolean and preference and set it to true
                 //  If the activity has never started before...
@@ -89,17 +90,6 @@ public class NavigationActivity extends AppCompatActivity
                     //  Launch app intro
                     Intent i = new Intent(getApplicationContext(), AppIntroActivity.class);
                     startActivity(i);
-
-                    //  Make a new preferences editor
-                    SharedPreferences.Editor e = getPrefs.edit();
-
-                    //  Edit preference to make it false because we don't want this to run again
-
-                    // add rate count during 1st run
-                    e.putInt("rate_count", 0);
-                    e.putBoolean("rate_done", false);
-                    //  Apply changes
-                    e.apply();
                 }
 
             }

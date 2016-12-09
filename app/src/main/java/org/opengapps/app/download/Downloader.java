@@ -44,7 +44,8 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     private final static String downloadUrl = "https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip";
     private final static String feedUrl = "https://github.com/opengapps/%arch/releases.atom";
     private final static String subDir = "/OpenGApps/";
-    public final static String defaultDownloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + subDir;
+    public static String defaultDownloadDir;
+    public static final String OPENGAPPS_PREDEFINED_PATH = "/Download/OpenGApps";
 
     private final DownloadFragment downloadFragment;
     private String architecture, android, variant, tag;
@@ -68,6 +69,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         feedFile = new File(downloadFragment.getContext().getFilesDir(), "gapps_feed.xml");
         urlString = feedUrl.replace("%arch", architecture);
         baseUrl = downloadUrl;
+        defaultDownloadDir = DownloadFragment.getDownloadDir(downloadFragment.getContext());
     }
 
     @Override

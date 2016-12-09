@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.codekidlabs.storagechooser.utils.DiskUtil;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -149,6 +150,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             initDownloader(isRestored);
             downloaderLoaded = true;
         }
+    }
+
+    public static String getDownloadDir(Context context) {
+        return context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getString(DiskUtil.SC_PREFERENCE_KEY, "");
     }
 
     private void requestAd() {
@@ -405,7 +410,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 return;
             }
         }
-        File downloadDir = new File(prefs.getString("download_dir", Downloader.defaultDownloadDir));
+        File downloadDir = new File(prefs.getString("download_dir", getDownloadDir(getContext())));
 
         FilenameFilter filter = new FilenameFilter() {
             @Override
