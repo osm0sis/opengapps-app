@@ -263,7 +263,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void loadRateUsCard() {
         int count = prefs.getInt("rate_count", 0);
         boolean rate_status = prefs.getBoolean("rate_done",false);
-        if(count % 10 == 0 && !rate_status) {
+        if(count % 9 == 0 && !rate_status) {
         if(rateUsCard == null) {
             showRateUsCard();
         }
