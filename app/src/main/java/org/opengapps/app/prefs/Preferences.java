@@ -1,8 +1,8 @@
 package org.opengapps.app.prefs;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
 import com.codekidlabs.storagechooser.StorageChooserBuilder;
+import com.codekidlabs.storagechooser.utils.MemoryUtil;
 
 import org.opengapps.app.BuildConfig;
 import org.opengapps.app.R;
@@ -46,7 +47,15 @@ public class Preferences extends AppCompatActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
-            bindPreferenceSummaryToValue(findPreference("download_dir"));
+
+            Preference p = findPreference("download_dir");
+            if(MemoryUtil.isExternalStoragePresent()) {
+                bindPreferenceSummaryToValue(p);
+            } else {
+                PreferenceCategory preferenceCategory = (PreferenceCategory) findPreference("cat_download");
+                preferenceCategory.removePreference(p);
+            }
+
             setDarkModeListener();
         }
 

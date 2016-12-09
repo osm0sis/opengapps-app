@@ -7,7 +7,9 @@
             android:summary="@string/explanation_dark_mode"
             android:title="@string/label_dark_mode" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_header_download">
+    <PreferenceCategory
+        android:key="cat_download"
+        android:title="@string/pref_header_download">
         <SwitchPreference
             android:defaultValue="true"
             android:key="download_wifi_only"
