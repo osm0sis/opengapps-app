@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">Storage Chooser</string>
-    <string name="choose_storage">Choose Storage</string>
-    <string name="choose_external_storage">Choose External Storage</string>
-</resources>
