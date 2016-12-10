@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
@@ -29,7 +28,6 @@ import android.widget.Toast;
 
 import com.tooltip.Tooltip;
 
-import org.opengapps.app.BuildConfig;
 import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.R;
 import org.opengapps.app.ZipInstaller;
@@ -296,7 +294,8 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
     private void shareGappsFile() {
         Intent sendIntent = new Intent();
-        Uri uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", gappsFile);
+        Uri uri = Uri.parse(gappsFile.getAbsolutePath());
+
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
         sendIntent.setType("application/zip");
