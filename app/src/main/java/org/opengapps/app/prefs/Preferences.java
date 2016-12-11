@@ -87,7 +87,7 @@ public class Preferences extends AppCompatActivity {
                             .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
                             .withPreference(getActivity().getSharedPreferences(prefName, MODE_PRIVATE))
                             .actionSave(true)
-                            .setDialogTitle(getActivity().getString(R.string.storage_chooser_title)
+                            .setDialogTitle(getActivity().getString(R.string.storage_chooser_title))
                             .setInternalStorageText(getActivity().getString(R.string.storage_chooser_internal_text))
                             .build();
 
