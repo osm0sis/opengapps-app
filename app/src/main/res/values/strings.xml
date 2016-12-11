@@ -218,6 +218,4 @@
     <string name="never_text">Never</string>
     <string name="ok_text">OK</string>
     <string name="rate_text">rate</string>
-    <string name="storage_chooser_title">Choose Storage</string>
-    <string name="storage_chooser_internal_text">Internal Storage</string>
 </resources>

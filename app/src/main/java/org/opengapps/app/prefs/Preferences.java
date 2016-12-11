@@ -61,33 +61,36 @@ public class Preferences extends AppCompatActivity {
 
         private void setDarkModeListener() {
             Preference nightMode = findPreference("nightMode");
-            nightMode.setOnPreferenceChangeListener((preference, o) -> {
-                if (((Boolean) o)) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            nightMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
+                    if (((Boolean) o)) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }
+                    getActivity().recreate();
+                    return true;
                 }
-                getActivity().recreate();
-                return true;
             });
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {
             // Set the listener to watch for value changes.
-            preference.setOnPreferenceClickListener(preference1 -> {
-                StorageChooserBuilder.Builder builder = new StorageChooserBuilder.Builder()
-                        .withActivity(getActivity())
-                        .withMemoryBar(true)
-                        .withFragmentManager(Preferences.fragmentManager)
-                        .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
-                        .withPreference(getActivity().getSharedPreferences(prefName, MODE_PRIVATE))
-                        .actionSave(true)
-                        .setDialogTitle(getActivity().getString(R.string.storage_chooser_title))
-                        .setInternalStorageText(getActivity().getString(R.string.storage_chooser_internal_text))
-                        .build();
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    StorageChooserBuilder.Builder builder = new StorageChooserBuilder.Builder()
+                            .withActivity(getActivity())
+                            .withMemoryBar(true)
+                            .withFragmentManager(Preferences.fragmentManager)
+                            .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
+                            .withPreference(getActivity().getSharedPreferences(prefName, MODE_PRIVATE))
+                            .build();
 
-                builder.show();
-                return false;
+                    builder.show();
+                    return false;
+                }
             });
         }
     }
