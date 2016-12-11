@@ -25,9 +25,9 @@ public class OGappsApplication extends Application {
 
     @Override
     public void onCreate() {
-        super.onCreate();
         SharedPreferences preferences = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         if (preferences.getBoolean("nightMode", false))
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        super.onCreate();
     }
 }

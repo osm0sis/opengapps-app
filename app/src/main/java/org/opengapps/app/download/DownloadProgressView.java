@@ -43,7 +43,6 @@ public class DownloadProgressView extends LinearLayout {
     private final TextView downloadedSizeView, totalSizeView, percentageView, backslash;
     public final TextView startingDownload;
     private final DownloadManager downloadManager;
-    private int downloadedSizeColor, totalSizeColor, percentageColor;
     private long downloadID;
     private boolean downloading;
     private DownloadStatusListener listener;
@@ -53,16 +52,6 @@ public class DownloadProgressView extends LinearLayout {
 
     public DownloadProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DownloadProgressView, 0, 0);
-
-        try {
-            downloadedSizeColor = typedArray.getColor(R.styleable.DownloadProgressView_downloadedSizeColor, Color.BLACK);
-            totalSizeColor = typedArray.getColor(R.styleable.DownloadProgressView_totalSizeColor, Color.BLACK);
-            percentageColor = typedArray.getColor(R.styleable.DownloadProgressView_totalSizeColor, Color.BLACK);
-        } finally {
-            typedArray.recycle();
-        }
 
         setOrientation(LinearLayout.VERTICAL);
         setGravity(Gravity.CENTER);
@@ -79,9 +68,9 @@ public class DownloadProgressView extends LinearLayout {
         startingDownload = (TextView) findViewById(R.id.download_starting);
         backslash = (TextView) findViewById(R.id.backslash);
 
-        downloadedSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
-        totalSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
-        percentageView.setTextColor(ColorStateList.valueOf(percentageColor));
+//        downloadedSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
+//        totalSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
+//        percentageView.setTextColor(ColorStateList.valueOf(percentageColor));
 
         //hides view.
         setVisibility(View.GONE);

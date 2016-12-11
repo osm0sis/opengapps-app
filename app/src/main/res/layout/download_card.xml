@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/label_download_package"
-        android:textSize="@dimen/font_size_headline"
         android:fontFamily="sans-serif-condensed"
-        android:textStyle="normal|bold"
+        android:text="@string/label_download_package"
         android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_size_headline"
+        android:textStyle="normal|bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,6 +27,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/label_architecture"
         android:textAllCaps="false"
+        android:textColor="@color/textColor"
         android:textSize="@dimen/font_size_subheadline"
         app:layout_constraintStart_toEndOf="@+id/image_arch"
         app:layout_constraintTop_toBottomOf="@+id/label_installed_tag" />
@@ -38,6 +39,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/label_android"
+        android:textColor="@color/textColor"
         android:textSize="@dimen/font_size_subheadline"
         app:layout_constraintStart_toEndOf="@+id/image_android"
         app:layout_constraintTop_toBottomOf="@+id/label_architecture" />
@@ -49,6 +51,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/label_variant"
+        android:textColor="@color/textColor"
         android:textSize="@dimen/font_size_subheadline"
         app:layout_constraintStart_toEndOf="@+id/image_variant"
         app:layout_constraintTop_toBottomOf="@+id/label_android" />
@@ -96,6 +99,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/invalid_combo"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintStart_toEndOf="@+id/label_architecture"
@@ -108,6 +112,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/invalid_combo"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintStart_toEndOf="@+id/label_android"
@@ -120,6 +125,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/invalid_combo"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintStart_toEndOf="@+id/label_variant"
@@ -132,6 +138,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:text="@string/label_version"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/image_version"
         app:layout_constraintTop_toBottomOf="@+id/headline_download" />
@@ -142,6 +149,7 @@
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/label_installed_tag"
         app:layout_constraintTop_toBottomOf="@+id/headline_download"
@@ -164,8 +172,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_variant" />
 
     <Button

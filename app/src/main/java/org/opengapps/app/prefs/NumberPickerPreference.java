@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.preference.Preference;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.NumberPicker;
 
 import org.opengapps.app.R;
@@ -32,6 +33,12 @@ public class NumberPickerPreference extends Preference {
                     }
                 })
                 .create();
+    }
+
+    @Override
+    protected void onBindView(View view) {
+        super.onBindView(view);
+        view.setPaddingRelative(100, 0, 0, 0);
     }
 
     @Override

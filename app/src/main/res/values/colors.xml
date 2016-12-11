@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00796B</color>
     <color name="colorAccent">#e53935</color>
     <color name="iconColor">#616161</color>
+    <color name="textColor">#757575</color>
+    <color name="backgroundColor">@color/colorPrimary</color>
     <color name="splash_activity_color">#bebebe</color>
     <color name="splash_status_color">#cfcfcf</color>
 </resources>

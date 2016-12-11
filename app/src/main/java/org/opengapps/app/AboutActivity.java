@@ -30,11 +30,6 @@ import de.psdev.licensesdialog.LicensesDialog;
 public class AboutActivity extends AppCompatActivity {
     private boolean playGAppsActive = false;
     private int gfCount = 0;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +129,6 @@ public class AboutActivity extends AppCompatActivity {
         coDev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_co_dev)));
                 startActivity(i);
             }
