@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="iconColor">#EEEEEE</color>
-    <color name="textColor">#FAFAFA</color>
+    <color name="colorPrimary">#00796B</color>
+    <color name="colorPrimaryDark">#005E53</color>
+    <color name="iconColor">#9E9E9E</color>
+    <color name="textColor">#F5F5F5</color>
+    <color name="backgroundColor">@color/colorPrimary</color>
     <color name="splash_activity_color">@color/colorPrimary</color>
     <color name="splash_status_color">@color/colorPrimaryDark</color>
 </resources>
