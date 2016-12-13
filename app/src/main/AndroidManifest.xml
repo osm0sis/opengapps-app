@@ -62,6 +62,7 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
+            android:configChanges="keyboardHidden|orientation"
             android:parentActivityName=".NavigationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

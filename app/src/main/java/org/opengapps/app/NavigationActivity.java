@@ -1,6 +1,7 @@
 package org.opengapps.app;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -22,11 +23,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.codekidlabs.storagechooser.utils.DiskUtil;
@@ -106,7 +109,7 @@ public class NavigationActivity extends AppCompatActivity
         toolbar.setTitle(getString(R.string.pref_header_install));
         navigationView.setCheckedItem(R.id.nav_download);
 
-        if (AdBlockDetector.hasAdBlockEnabled(this)) {
+        if (AdBlockDetector.hasAdBlockEnabled(this) && !isFirstStart) {
             showAdBlockDialog();
         }
     }
@@ -205,9 +208,9 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             startActivityAfterDrawerAnimation(AboutActivity.class);
         } else if (id == R.id.nav_blog) {
-                openURL(this,getString(R.string.url_blog));
+            openURL(this, getString(R.string.url_blog));
         } else if (id == R.id.nav_opengapps) {
-                openURL(this,getString(R.string.url_opengapps));
+            openURL(this, getString(R.string.url_opengapps));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(Gravity.START);
@@ -216,11 +219,11 @@ public class NavigationActivity extends AppCompatActivity
 
     public static void openURL(Context context, String webUri) {
         PackageManager pm = context.getPackageManager();
-        if(pm.hasSystemFeature(PackageManager.FEATURE_WEBVIEW)) {
+        if (pm.hasSystemFeature(PackageManager.FEATURE_WEBVIEW)) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(webUri));
             context.startActivity(i);
         } else {
-            DialogUtil.showAlertWithMessage(context,context.getString(R.string.title_webview_not_installed),
+            DialogUtil.showAlertWithMessage(context, context.getString(R.string.title_webview_not_installed),
                     context.getString(R.string.message_webview_not_installed));
         }
     }
@@ -250,10 +253,10 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if(s.equals("nightMode")){
+        if (s.equals("nightMode")) {
             try {
                 recreate();
-            }catch (Exception e){
+            } catch (Exception e) {
                 //At this point, we dont really care if the recreate fails. It's rather a best effort thing that *might* work but doesnt need to
                 Log.d(getClass().getSimpleName(), "onSharedPreferenceChanged: NightMode-Setting was triggered, but for some reason could not apply it");
             }

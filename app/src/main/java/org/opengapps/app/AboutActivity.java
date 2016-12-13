@@ -1,5 +1,6 @@
 package org.opengapps.app;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,11 +8,13 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +44,20 @@ public class AboutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initButtons();
         initLabels();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("playGAppsActive", playGAppsActive);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        playGAppsActive = savedInstanceState.getBoolean("playGAppsActive", false);
+        intitSecretButton();
     }
 
     private void initLabels() {
@@ -176,17 +193,29 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new Handler().postDelayed(new ButtonDisabler(view), 3000);
-                new LicensesDialog.Builder(AboutActivity.this)
+                Dialog dialog = new LicensesDialog.Builder(AboutActivity.this)
                         .setNotices(R.raw.notices)
-                        .build()
-                        .show();
+                        .build().create();
+                dialog.show();
+                doKeepDialog(dialog);
+
             }
         });
+    }
+
+    private static void doKeepDialog(Dialog dialog) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
     }
 
     private void intitSecretButton() {
         final ImageView logoLarge = (ImageView) findViewById(R.id.logo_large);
         final SharedPreferences prefs = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        if (playGAppsActive)
+            logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_playgapps_large));
         logoLarge.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
