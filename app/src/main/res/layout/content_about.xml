@@ -105,8 +105,9 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@string/main_dev"
-            android:src="@drawable/ic_person" />
+            android:contentDescription="@string/co_dev"
+            android:src="@drawable/ic_person"
+            android:tint="@color/iconColor"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
