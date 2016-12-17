@@ -49,12 +49,7 @@ public class Preferences extends AppCompatActivity {
             addPreferencesFromResource(R.xml.preferences);
 
             Preference p = findPreference("download_dir");
-            if(MemoryUtil.isExternalStoragePresent()) {
-                bindPreferenceSummaryToValue(p);
-            } else {
-                PreferenceCategory preferenceCategory = (PreferenceCategory) findPreference("cat_download");
-                preferenceCategory.removePreference(p);
-            }
+            bindPreferenceSummaryToValue(p);
 
             setDarkModeListener();
         }
@@ -87,6 +82,7 @@ public class Preferences extends AppCompatActivity {
                             .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
                             .withPreference(getActivity().getSharedPreferences(prefName, MODE_PRIVATE))
                             .actionSave(true)
+                            .allowCustomPath(true)
                             .setDialogTitle(getActivity().getString(R.string.storage_chooser_title))
                             .setInternalStorageText(getActivity().getString(R.string.storage_chooser_internal_text))
                             .build();
