@@ -82,10 +82,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     public void onResume() {
         super.onResume();
         loadInstallCards();
+        loadSupportCard();
+        loadRateUsCard();
         isRestored = true;
-
-        rateUsCard=null;
-        supportCard=null;
 
         if(isRateUsCardSet) {
             showRateUsCard();
@@ -93,8 +92,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if(isSupportCardSet) {
             showSupportCard();
         }
-        loadRateUsCard();
-        loadSupportCard();
 
     }
 
@@ -277,37 +274,39 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     private void showRateUsCard() {
         final SharedPreferences.Editor editor = prefs.edit();
-        isRateUsCardSet = true;
-        rateUsCard = new RateUsCard(globalContext);
-        rateUsCard.setRateListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavigationActivity.openURL(globalContext, "market://details?id=org.opengapps.app");
-                editor.putBoolean("rate_done", true);
-                editor.apply();
-                rateUsCard.setVisibility(View.GONE);
-            }
-        });
-        rateUsCard.setLaterListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editor.putBoolean("rate_done", false);
-                editor.apply();
-                rateUsCard.setVisibility(View.GONE);
-                rateUsCard = null;
-                isRateUsCardSet = false;
-            }
-        });
-        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
-        rateUsCard.setVisibility(View.VISIBLE);
 
-        layout.addView(rateUsCard, 2, params);
+        if(rateUsCard == null) {
+            isRateUsCardSet = true;
+            rateUsCard = new RateUsCard(globalContext);
+            rateUsCard.setRateListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NavigationActivity.openURL(globalContext, "market://details?id=org.opengapps.app");
+                    editor.putBoolean("rate_done", true);
+                    editor.apply();
+                    rateUsCard.setVisibility(View.GONE);
+                }
+            });
+            rateUsCard.setLaterListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    editor.putBoolean("rate_done", false);
+                    editor.apply();
+                    rateUsCard.setVisibility(View.GONE);
+                    rateUsCard = null;
+                    isRateUsCardSet = false;
+                }
+            });
+            LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
+            rateUsCard.setVisibility(View.VISIBLE);
+
+            layout.addView(rateUsCard, 2, params);
+        }
     }
 
     private void loadSupportCard() {
-        //support dialog
         Random random = new Random();
         int randomMin = 1;
         int randomMax = 20;
@@ -321,6 +320,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     private void showSupportCard() {
         final SharedPreferences.Editor editor = prefs.edit();
+
         if(supportCard == null) {
             isSupportCardSet = true;
             supportCard = new SupportCard(globalContext);
@@ -341,10 +341,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                     isSupportCardSet = false;
                 }
             });
+            supportCard.setVisibility(View.VISIBLE);
+
             LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
-            supportCard.setVisibility(View.VISIBLE);
 
             layout.addView(supportCard, 2, params);
         }
@@ -521,10 +522,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onRefresh() {
         loadInstallCards();
-
-        // null the cards to show them if it's set
-        rateUsCard = null;
-        supportCard = null;
+        loadRateUsCard();
+        loadSupportCard();
 
         if(isRateUsCardSet) {
             showRateUsCard();
