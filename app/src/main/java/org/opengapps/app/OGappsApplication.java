@@ -3,7 +3,6 @@ package org.opengapps.app;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatDelegate;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 
@@ -27,16 +26,6 @@ public class OGappsApplication extends Application {
     @Override
     public void onCreate() {
         SharedPreferences preferences = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
-        //DEBUGGING
-        boolean a = preferences.getBoolean("nightMode", false);
-        boolean b = preferences.getBoolean("nightMode", true);
-        if (a && b || (!a && !b)) {
-            Toast.makeText(this, "The preference for nightmode is " + a, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "The preference can't be read and the default is " + a, Toast.LENGTH_SHORT).show();
-        }
-
-
         if (preferences.getBoolean("nightMode", false))
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         super.onCreate();
