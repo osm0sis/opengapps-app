@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.opengapps.app.prefs.Preferences;
 
@@ -61,8 +58,14 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void initLabels() {
+        //App-Version-Number
         TextView version = (TextView) findViewById(R.id.app_version);
         version.setText(BuildConfig.VERSION_NAME);
+
+        //If Translators contain a comma, we use the respective plural version
+        if (getString(R.string.translators).contains(",")) {
+            ((TextView) findViewById(R.id.label_translators)).setText(R.string.label_translators);
+        }
     }
 
     private void initButtons() {
@@ -204,11 +207,14 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private static void doKeepDialog(Dialog dialog) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.getWindow().setAttributes(lp);
+        try {
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(dialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setAttributes(lp);
+        } catch (Exception ignored) {
+        }
     }
 
     private void intitSecretButton() {
