@@ -137,7 +137,7 @@
             <string name="label_producer">Прадзюсер</string>
             <string name="label_easteregg_found">Велікоднае яйка</string>
             <string name="used_libs">Бібліятэкі</string>
-            <string name="click_show_more">Яшчэ</string>
+            <string name="tap_show_more">Яшчэ</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
             <string name="notices_title">Заўвагі</string>
 </resources>
