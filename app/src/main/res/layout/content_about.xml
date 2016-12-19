@@ -206,6 +206,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/label_translators"
                 android:text="@string/label_translator"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textStyle="normal|bold" />
@@ -214,6 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
+                android:id="@+id/translators_about"
                 android:maxLines="1"
                 android:text="@string/translators"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
