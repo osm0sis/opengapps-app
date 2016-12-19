@@ -2,7 +2,6 @@ package org.opengapps.app.prefs;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
 import com.codekidlabs.storagechooser.StorageChooserBuilder;
-import com.codekidlabs.storagechooser.utils.MemoryUtil;
 
 import org.opengapps.app.BuildConfig;
 import org.opengapps.app.R;
@@ -83,8 +81,8 @@ public class Preferences extends AppCompatActivity {
                             .withPreference(getActivity().getSharedPreferences(prefName, MODE_PRIVATE))
                             .actionSave(true)
                             .allowCustomPath(true)
-                            .setDialogTitle(getActivity().getString(R.string.storage_chooser_title))
-                            .setInternalStorageText(getActivity().getString(R.string.storage_chooser_internal_text))
+                            .setDialogTitle(getActivity().getString(R.string.title_storage_chooser))
+                            .setInternalStorageText(getActivity().getString(R.string.label_storage_chooser_internal))
                             .build();
 
                     builder.show();

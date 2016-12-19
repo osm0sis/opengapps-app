@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/rate_us_title"
+        android:text="@string/title_rate_us"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_size_headline"
         android:textStyle="normal|bold"
@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/rate_us_message"
+        android:text="@string/message_rate_us"
         android:textSize="14sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/rate_text"
+        android:text="@string/label_rate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newest_version" />
 
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/later_text"
+        android:text="@string/label_later"
         app:layout_constraintEnd_toStartOf="@+id/rate_button"
         app:layout_constraintTop_toBottomOf="@+id/newest_version" />
 </android.support.constraint.ConstraintLayout>

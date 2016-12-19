@@ -138,7 +138,7 @@
             <string name="label_producer">Producent</string>
             <string name="label_easteregg_found">Sekret znaleziony</string>
             <string name="used_libs">Biblioteka</string>
-            <string name="click_show_more">Kliknij aby zobaczyć więcej</string>
+            <string name="tap_show_more">Kliknij aby zobaczyć więcej</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
             <string name="notices_title">Powiadomienie</string>
 </resources>

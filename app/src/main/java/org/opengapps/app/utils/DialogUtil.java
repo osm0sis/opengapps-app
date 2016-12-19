@@ -20,9 +20,9 @@ public class DialogUtil {
         final SharedPreferences.Editor editor = preferences.edit();
 
         return new AlertDialog.Builder(context)
-                .setTitle(R.string.rate_us_title)
-                .setMessage(R.string.rate_us_message)
-                .setPositiveButton(R.string.now_text, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.title_rate_us)
+                .setMessage(R.string.message_rate_us)
+                .setPositiveButton(R.string.label_now, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         NavigationActivity.openURL(context, "https://play.google.com/store/apps/details?id=org.opengapps.app");
@@ -30,7 +30,7 @@ public class DialogUtil {
                         editor.apply();
                     }
                 })
-                .setNegativeButton(R.string.later_text, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.label_later, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -39,7 +39,7 @@ public class DialogUtil {
                         editor.apply();
                     }
                 })
-                .setNeutralButton(R.string.never_text, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.label_never, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         editor.putBoolean("rate_done", true);

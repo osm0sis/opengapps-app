@@ -350,7 +350,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:maxLines="1"
-                android:text="@string/click_show_more"
+                android:text="@string/tap_show_more"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 tools:text="1.0" />
         </LinearLayout>

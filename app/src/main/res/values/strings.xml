@@ -61,6 +61,9 @@
             <string name="create_folder_error_already_exists">Folder already exists</string>
             <string name="create_folder_error">Could not create folder</string>
             <string name="up_label">Up</string>
+            <string name="title_storage_chooser">Choose Storage</string>
+            <string name="label_select_external_storage">Select External Storage</string>
+            <string name="label_storage_chooser_internal">Internal Storage</string>
 
     <!--______Nav-Drawer______-->
         <string name="label_links">Links</string>
@@ -69,6 +72,7 @@
     <!--______GENERAL______-->
         <!--LABELS-->
             <string name="app_name">Open GApps</string>
+            <string name="label_ok">OK</string>
             <string name="label_cancel">Cancel</string>
             <string name="label_no">No</string>
             <string name="label_yes">Yes</string>
@@ -87,14 +91,26 @@
             <string name="ms_prev">Previous</string>
             <string name="ms_next">Next</string>
             <string name="ms_end">Complete</string>
+        <!--FEEDBACK-->
+            <string name="label_now">Now</string>
+            <string name="label_later">Later</string>
+            <string name="label_never">Never</string>
+            <string name="label_rate">Rate</string>
+            <string name="title_rate_us">Rate this app</string>
+            <string name="message_rate_us">We hope you enjoy using this app, it won\'t take more than a minute to give a feedback rating. It helps other users discover this app too! Thank you for your support.</string>
         <!--EXPLANATION-->
             <string name="explanation_permission_denied">In order to work correctly you have to grant Open GApps the permission to your external storage. Makes sense, doesn\'t it?</string>
             <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead</string>
+            <string name="title_webview_not_installed">Oops! No WebView Provider installed!?</string>
+            <string name="message_webview_not_installed">It seems you have uninstalled \"Stock WebView\", but your ROM does not support the \"Google WebView\". Re-flash your ROM and ask the ROM developer to add support for alternative WebView Providers.</string>
 
     <!--______DOWNLOAD/INSTALL______-->
         <!--LABELS-->
             <string name="label_download_error">Connection to server failed</string>
             <string name="label_download">Download</string>
+            <string name="label_pause">Pause</string>
+            <string name="label_paused">Paused</string>
+            <string name="label_resume">Resume</string>
             <string name="label_architecture">Architecture</string>
             <string name="label_variant">Variant</string>
             <string name="invalid_combo">Invalid combination</string>
@@ -140,12 +156,15 @@
             <string name="title_activity_about">About</string>
             <string name="label_version">Version</string>
             <string name="main_dev">Main Developer</string>
+            <string name="co_dev">Co-Developer</string>
             <string name="label_design">Artwork</string>
             <string name="label_translator">Translator</string>
+            <string name="label_translators">Translators</string>
             <string name="label_producer">Producer</string>
             <string name="label_easteregg_found">Easter egg found</string>
+            <string name="label_eastereggs_found">Easter eggs found</string>
             <string name="used_libs">Libraries</string>
-            <string name="click_show_more">Tap to show more</string>
+            <string name="tap_show_more">Tap to show more</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
             <string name="notices_title">Notices</string>
 
@@ -184,6 +203,7 @@
             <string name="designer" translatable="false">Adam Lapinski</string>
             <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016  - All Rights Reserved</string>
             <string name="dev" translatable="false">Christoph Loy</string>
+            <string name="dev_co" translatable="false">Ashish Shekar</string>
             <string name="label_android" translatable="false">Android</string>
         <!--LINKS-->
             <string name="arch_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-platforms</string>
@@ -191,6 +211,7 @@
             <string name="variant_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki/Package-Comparison</string>
             <string name="url_download_update" translatable="false">http://opengapps.org/app/</string>
             <string name="url_main_dev" translatable="false">https://github.com/beatbrot/</string>
+            <string name="url_co_dev" translatable="false">https://github.com/codekidX/</string>
             <string name="url_homepage" translatable="false">http://opengapps.org/app/</string>
             <string name="url_report_bug" translatable="false">https://github.com/opengapps/opengapps-app-support/issues/</string>
             <string name="url_wiki" translatable="false">http://opengapps.org/wiki/</string>
@@ -207,19 +228,4 @@
             <string name="cancel_label" translatable="false">@string/label_cancel</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
             <string name="notices_close" translatable="false">@string/label_close</string>
-    <string name="co_dev">Co-Developer</string>
-    <string name="dev_co">Ashish Shekar</string>
-    <string name="url_co_dev">https://github.com/codekidX</string>
-    <string name="label_select_external_storage">Select External Storage</string>
-    <string name="message_webview_not_installed">It seems you have uninstalled \"Stock WebView\", but your ROM does not support the \"Google WebView\". Re-flash your ROM and ask the ROM developer to add support for alternative WebView Providers.</string>
-    <string name="title_webview_not_installed">Oops! No WebView Provider installed!?</string>
-    <string name="rate_us_message">If you enjoy using this app it wont take more than a minute to express your view by rating us. Thank you for your support.</string>
-    <string name="rate_us_title">Rate this app</string>
-    <string name="now_text">NOW</string>
-    <string name="later_text">Later</string>
-    <string name="never_text">Never</string>
-    <string name="ok_text">OK</string>
-    <string name="rate_text">rate</string>
-    <string name="storage_chooser_title">Choose Storage</string>
-    <string name="storage_chooser_internal_text">Internal Storage</string>
 </resources>
