@@ -203,7 +203,7 @@
             <string name="designer" translatable="false">Adam Lapinski</string>
             <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016  - All Rights Reserved</string>
             <string name="dev" translatable="false">Christoph Loy</string>
-            <string name="dev_co">Ashish Shekar</string>
+            <string name="dev_co" translatable="false">Ashish Shekar</string>
             <string name="label_android" translatable="false">Android</string>
         <!--LINKS-->
             <string name="arch_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-platforms</string>
@@ -211,7 +211,7 @@
             <string name="variant_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki/Package-Comparison</string>
             <string name="url_download_update" translatable="false">http://opengapps.org/app/</string>
             <string name="url_main_dev" translatable="false">https://github.com/beatbrot/</string>
-            <string name="url_co_dev">https://github.com/codekidX/</string>
+            <string name="url_co_dev" translatable="false">https://github.com/codekidX/</string>
             <string name="url_homepage" translatable="false">http://opengapps.org/app/</string>
             <string name="url_report_bug" translatable="false">https://github.com/opengapps/opengapps-app-support/issues/</string>
             <string name="url_wiki" translatable="false">http://opengapps.org/wiki/</string>
