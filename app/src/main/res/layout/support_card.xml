@@ -29,7 +29,6 @@
         android:layout_marginTop="16dp"
         android:text="@string/label_support_opengapps_description"
         android:textSize="14sp"
-        android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headline_install" />
