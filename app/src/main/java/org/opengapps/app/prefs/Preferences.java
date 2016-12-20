@@ -1,5 +1,6 @@
 package org.opengapps.app.prefs;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
 import com.codekidlabs.storagechooser.StorageChooser;
+import com.codekidlabs.storagechooser.utils.DiskUtil;
 
 import org.opengapps.app.BuildConfig;
 import org.opengapps.app.R;
@@ -69,20 +71,32 @@ public class Preferences extends AppCompatActivity {
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {
+            final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(prefName, MODE_PRIVATE);
+            // set summary of current download path
+            preference.setSummary(sharedPreferences.getString(DiskUtil.SC_PREFERENCE_KEY,""));
+
             // Set the listener to watch for value changes.
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
-                public boolean onPreferenceClick(Preference preference) {
+                public boolean onPreferenceClick(final Preference preference) {
                     StorageChooser chooser = new StorageChooser.Builder()
                             .withActivity(getActivity())
                             .withMemoryBar(true)
                             .withFragmentManager(Preferences.fragmentManager)
                             .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
-                            .withPreference(getActivity().getSharedPreferences(prefName, MODE_PRIVATE))
+                            .withPreference(sharedPreferences)
                             .actionSave(true)
                             .allowCustomPath(true)
                             .allowAddFolder(true)
                             .build();
+
+                    chooser.setOnSelectListener(new StorageChooser.OnSelectListener() {
+                        @Override
+                        public void onSelect(String s) {
+                            // set summary after selection of new path
+                            preference.setSummary(s);
+                        }
+                    });
 
                     chooser.show();
                     return true;
