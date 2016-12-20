@@ -53,17 +53,15 @@
             <string name="explanation_pref_install_warning">Show warning before installation to prevent accidental installation</string>
     <!--FILECHOOSER (EXTERNAL LIBRARY)-->
             <string name="confirm_label">Confirm</string>
-            <string name="selected_folder_label">Selected folder:</string>
-            <string name="create_folder_label">Create folder</string>
-            <string name="create_folder_msg" tools:ignore="StringFormatCount">Create new folder with name "%1$s"?</string>
-            <string name="create_folder_success">Created new folder</string>
-            <string name="create_folder_error_no_write_access">Cannot write to this folder</string>
-            <string name="create_folder_error_already_exists">Folder already exists</string>
+            <string name="label_select">Select</string>
+            <string name="label_create">Create</string>
+            <string name="create_folder_success">Folder created</string>
             <string name="create_folder_error">Could not create folder</string>
-            <string name="up_label">Up</string>
             <string name="title_storage_chooser">Choose Storage</string>
+            <string name="title_storage_chooser_internal">Internal Storage</string>
+            <string name="hint_folder_name">Folder Name</string>
+            <string name="error_tip_empty_field">Empty folder name</string>
             <string name="label_select_external_storage">Select External Storage</string>
-            <string name="label_storage_chooser_internal">Internal Storage</string>
 
     <!--______Nav-Drawer______-->
         <string name="label_links">Links</string>
