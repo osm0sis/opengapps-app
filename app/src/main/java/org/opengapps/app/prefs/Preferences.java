@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
 import com.codekidlabs.storagechooser.StorageChooser;
+import com.codekidlabs.storagechooser.StorageChooserView;
 import com.codekidlabs.storagechooser.utils.DiskUtil;
 
 import org.opengapps.app.BuildConfig;
@@ -97,6 +98,22 @@ public class Preferences extends AppCompatActivity {
                             preference.setSummary(s);
                         }
                     });
+
+                    // set view and strings for localization
+                    StorageChooserView.setViewSc(StorageChooserView.SC_LAYOUT_SHEET);
+                    // overview texts
+                    StorageChooserView.setChooserHeading(getString(R.string.title_storage_chooser));
+                    StorageChooserView.setInternalStorageText(getString(R.string.title_storage_chooser_internal));
+                    // button labels
+                    StorageChooserView.setLabelCreate(getString(R.string.label_create));
+                    StorageChooserView.setLabelSelect(getString(R.string.label_select));
+                    StorageChooserView.setLabelNewFolder(getString(R.string.new_folder));
+                    // textfield strings
+                    StorageChooserView.setTextfieldHint(getString(R.string.hint_folder_name));
+                    StorageChooserView.setTextfieldError(getString(R.string.error_tip_empty_field));
+                    // toast strings
+                    StorageChooserView.setToastFolderCreated(getString(R.string.create_folder_success));
+                    StorageChooserView.setToastFolderError(getString(R.string.create_folder_error));
 
                     chooser.show();
                     return true;
