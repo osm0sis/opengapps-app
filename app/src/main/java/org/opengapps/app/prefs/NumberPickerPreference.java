@@ -2,6 +2,7 @@ package org.opengapps.app.prefs;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
@@ -17,10 +18,11 @@ public class NumberPickerPreference extends Preference {
     public NumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         numberPicker = new NumberPicker(getContext());
-        numberPicker.setMinValue(1);
+        numberPicker.setMinValue(0);
         numberPicker.setMaxValue(10);
         numberPicker.setValue(1);
-        setSummary(context.getString(R.string.explanation_keep_packages, getPersistedInt(1)));
+        final SharedPreferences prefs = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
+        setSummary(context.getString(R.string.explanation_keep_packages, prefs.getInt(getKey(), 1)));
         alertDialog = new AlertDialog.Builder(context)
                 .setTitle(getTitle())
                 .setView(numberPicker)

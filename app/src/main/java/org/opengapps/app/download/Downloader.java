@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
@@ -142,7 +141,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
         Arrays.sort(files);
         int keptFiles = prefs.getInt("kept_packages", 1);
-        for (int i = 0; i < files.length - keptFiles; i++) {
+        for (int i = 0; i < files.length - keptFiles - 1; i++) {
             //noinspection ResultOfMethodCallIgnored
             deletePackage(files[i]);
         }
