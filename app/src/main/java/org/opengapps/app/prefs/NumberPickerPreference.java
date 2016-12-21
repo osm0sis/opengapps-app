@@ -21,6 +21,7 @@ public class NumberPickerPreference extends Preference {
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(10);
         numberPicker.setValue(1);
+        numberPicker.setWrapSelectorWheel(false);
         final SharedPreferences prefs = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         setSummary(context.getString(R.string.explanation_keep_packages, prefs.getInt(getKey(), 1)));
         alertDialog = new AlertDialog.Builder(context)
