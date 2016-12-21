@@ -46,7 +46,7 @@
             <string name="explanation_dark_mode">Dark theme improves readability in low light conditions</string>
             <string name="summary_wifi_only">Download over Wi-Fi only</string>
             <string name="explanation_newest_version">Delete outdated version if a new similar variant has been downloaded</string>
-            <string name="explanation_keep_packages">%1$d older similar packages will be kept before clean-up</string>
+            <string name="explanation_keep_packages">%1$d older similar packages will be kept</string>
             <string name="explanation_download_md5">Download MD5-Checksum to verify package integrity</string>
             <string name="explanation_download_versionlog">Download VersionLog to list package content</string>
             <string name="summary_root_mode">Grant root access to enable install-mode and the wipe cache/dalvik setting</string>
