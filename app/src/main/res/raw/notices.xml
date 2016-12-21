@@ -6,6 +6,12 @@
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
+        <name>Storage-Chooser</name>
+        <url>https://github.com/codekidX/storage-chooser</url>
+        <copyright>Copyright 2016 Ashish Shekar</copyright>
+        <license>GNU Lesser General Public License 3</license>
+    </notice>
+    <notice>
         <name>OkHttp</name>
         <url>http://square.github.io/okhttp/</url>
         <copyright>Copyright 2016 Square, Inc.</copyright>
