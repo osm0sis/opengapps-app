@@ -45,7 +45,7 @@
             <string name="summary_root_mode">منح أذن الروت لتفعيل التثبيت والتعديل ومسح إعدادات cache/dalvik</string>
             <string name="explanation_wipe_dalvik">فرض إعادة التحسين للتخزين المؤقت في الإقلاع التالي. يأخذ المزيد من الوقت، ولكن يساعد على منع المشاكل المحتملة.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">تأكيد</string>
+            <string name="label_confirm">تأكيد</string>
             <string name="selected_folder_label">تحديد مجلد:</string>
             <string name="create_folder_label">إنشاء مجلد</string>
             <string name="create_folder_msg">إنشاء مجلد جديد بالاسم "%1$s"؟</string>

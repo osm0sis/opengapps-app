@@ -25,9 +25,9 @@
 
     <!--______PREFERENCES______-->
         <!--LABELS-->
+            <string name="pref_header_interface">Interface</string>
             <!--<string name="pref_header_install">Install (noun variant, not used in English)</string>-->
             <!--<string name="pref_header_download">Download (noun variant, not used in English)</string>-->
-            <string name="label_interface">Interface</string>
             <string name="label_dark_mode">Dark theme</string>
             <string name="new_folder">New Folder</string>
             <string name="pref_header_gapps_selection">GApps-Selection</string>
@@ -53,8 +53,10 @@
             <string name="explanation_wipe_dalvik">Forces re-optimization of cache at next boot. Takes more time, but helps to prevent potential issues.</string>
             <string name="explanation_pref_install_warning">Show a warning dialog before installation to prevent accidental installation</string>
             <string name="explanation_pref_delete_warning">Show a warning dialog before deleting a package to prevent accidental removal</string>
+        <!--DIALOG-->
+            <string name="explanation_cleanup_now">Clean-up older packages right now?</string>
     <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Confirm</string>
+            <string name="label_confirm">Confirm</string>
             <string name="label_select">Select</string>
             <string name="label_create">Create</string>
             <string name="create_folder_success">Folder created</string>

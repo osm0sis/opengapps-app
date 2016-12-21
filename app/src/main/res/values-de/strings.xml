@@ -27,7 +27,7 @@
         <!--LABELS-->
             <!--<string name="pref_header_install">Install (noun variant, not used in English)</string>-->
             <!--<string name="pref_header_download">Download (noun variant, not used in English)</string>-->
-            <string name="label_interface">Oberfläche</string>
+            <string name="pref_header_interface">Oberfläche</string>
             <string name="label_dark_mode">Dunkles Design</string>
             <string name="new_folder">Neuer Ordner</string>
             <string name="pref_header_gapps_selection">GApps-Auswahl</string>
@@ -52,7 +52,7 @@
             <string name="explanation_wipe_dalvik">Erneute App-Optimierung bei nächsten Boot erzwingen. Benötigt mehr Zeit aber hilft, potentielle Probleme zu vermeiden</string>
             <string name="explanation_pref_install_warning">Um versehntliche Installationen zu verhindern, kann eine Bestätigung vor der Installation angezeigt werden</string>
     <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Auswählen</string>
+            <string name="label_confirm">Auswählen</string>
             <string name="selected_folder_label">Ausgewähltes Verzeichnis:</string>
             <string name="create_folder_label">Ordner erstellen</string>
             <string name="create_folder_msg">Neuen Ordner mit dem Namen "%1$s" erstellen?</string>

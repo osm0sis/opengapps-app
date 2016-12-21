@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Предоставить root права для режима непосредственной установки и для очистки кеша/dalvik</string>
             <string name="explanation_wipe_dalvik">Повторно оптимизировать кеш при следующем включении устройства. На это потребуется больше времени, но это помогает избежать потенциальных проблем.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Подтвердить</string>
+            <string name="label_confirm">Подтвердить</string>
             <string name="selected_folder_label">Выбранная папка:</string>
             <string name="create_folder_label">Новая папка</string>
             <string name="create_folder_msg">Создать новую папку "%1$s"?</string>

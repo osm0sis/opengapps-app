@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Accorder les droits d’utilisateur root afin d’activer le mode d’installation intégré et l’option "Effacer Cache/Dalvik"</string>
             <string name="explanation_wipe_dalvik">Force la réoptimisation du cache au prochain redémarrage. Cela peut prendre plus de temps, mais contribue à éviter de potentielles difficultés techniques.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Valider</string>
+            <string name="label_confirm">Valider</string>
             <string name="selected_folder_label">Dossier séléctionné:</string>
             <string name="create_folder_label">Créer un dossier</string>
             <string name="create_folder_msg">Créer le dossier "%1$s"?</string>

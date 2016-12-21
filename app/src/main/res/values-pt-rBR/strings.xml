@@ -44,7 +44,7 @@
             <string name="summary_root_mode">Dar permissão root para habilitar o modo de instalação e a limpeza de cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Forçar re-otimização do cache no próximo boot. Toma mais tempo, porém ajuda a prevenir problemas potenciais.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Confirmar</string>
+            <string name="label_confirm">Confirmar</string>
             <string name="selected_folder_label">Pasta selecionada:</string>
             <string name="create_folder_label">Criar pasta</string>
             <string name="create_folder_msg">Criar nova pasta com o nome "%1$s"?</string>

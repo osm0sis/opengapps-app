@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Acordă acces root pentru a activa install-mode şi setarea de ştergere cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Forţează optimizarea cache la următoarea pornire a aparatului. Durează mai mult timp, dar ajută la prevenirea unor potenţiale probleme.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Confirm</string>
+            <string name="label_confirm">Confirm</string>
             <string name="selected_folder_label">Dosar selectat:</string>
             <string name="create_folder_label">Crează dosar</string>
             <string name="create_folder_msg">Crează dosar nou cu numele "%1$s"?</string>

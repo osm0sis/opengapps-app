@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Udeliť prístup root pre povolenie inštalačného režimu a nastavenia vyčistiť cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Vynúti novú optimalizáciu cache pri nasledujúcom zavedení systému. Trvá to síce dlhšie, ale pomáha predchádzať možným problémom.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Potvrdiť</string>
+            <string name="label_confirm">Potvrdiť</string>
             <string name="selected_folder_label">Vybraný priečinok:</string>
             <string name="create_folder_label">Vytvoriť priečinok</string>
             <string name="create_folder_msg">Vytvoriť nový priečinok s názvom "%1$s"?</string>

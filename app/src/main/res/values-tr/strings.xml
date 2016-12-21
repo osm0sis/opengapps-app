@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Yükleme modunu ve önbellek/dalvik ’i temizlemek için root iznini sağlayın</string>
             <string name="explanation_wipe_dalvik">Önbelleği açılışta optimize eder. Uzun zaman alır ancak potansiyel hataların oluşmamasını sağlar.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Onayla</string>
+            <string name="label_confirm">Onayla</string>
             <string name="selected_folder_label">Seçili Klasör:</string>
             <string name="create_folder_label">Klasör oluştur</string>
             <string name="create_folder_msg">Klasörü şu isimle oluştur "%1$s"?</string>

@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Donar accés root per habilitar l’instalador i netejar la cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Força la re-optimizació de la cache a la propera arrencada. Requereix més temps, però ajuda a prevenir possibles problemes.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Confirmar</string>
+            <string name="label_confirm">Confirmar</string>
             <string name="selected_folder_label">Carpeta seleccionada:</string>
             <string name="create_folder_label">Crear carpeta</string>
             <string name="create_folder_msg">Crear nova carpeta amb el nom "%1$s"?</string>

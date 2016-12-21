@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Падаць root правы для рэжыму непасрэднай ўстаноўкі і для ачысткі кэша/dalvik</string>
             <string name="explanation_wipe_dalvik">Паўторна аптымізаваць кэш пры наступным ўключэнні прылады. На гэта спатрэбіцца больш часу, але гэта дапамагае пазбегнуць патэнцыйных праблем.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Пацвердзіць</string>
+            <string name="label_confirm">Пацвердзіць</string>
             <string name="selected_folder_label">Абраная папка:</string>
             <string name="create_folder_label">Новая папка</string>
             <string name="create_folder_msg">Стварыць новую папку "%1$s"?</string>

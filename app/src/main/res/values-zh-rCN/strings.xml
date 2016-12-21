@@ -45,7 +45,7 @@
             <string name="summary_root_mode">授予 root 权限才能启用安装模式和清空 Cache/Dalvik</string>
             <string name="explanation_wipe_dalvik">强制在下次启动重新优化应用，更花时间但是可以帮助避免可能发生的问题</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">确定</string>
+            <string name="label_confirm">确定</string>
             <string name="selected_folder_label">选择的路径：</string>
             <string name="create_folder_label">新建目录</string>
             <string name="create_folder_msg">新建目录 "%1$s" ？</string>

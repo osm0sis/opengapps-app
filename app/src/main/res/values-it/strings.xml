@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Concedi l’accesso root per abilitare la modalità di installazione e l’azzeramento cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Forza ri-ottimizzazione della cache al prossimo avvio. Impiega più tempo, ma aiuta a prevenire eventuali problemi.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Conferma</string>
+            <string name="label_confirm">Conferma</string>
             <string name="selected_folder_label">Seleziona cartella:</string>
             <string name="create_folder_label">Crea cartella</string>
             <string name="create_folder_msg">Creare una nuova cartella con il nome "%1$s"?</string>

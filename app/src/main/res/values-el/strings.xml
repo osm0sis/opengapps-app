@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Χρήση αδειας Root για την εγκατάσταση και τον καθαρισμό cache/dalvik</string>
             <string name="explanation_wipe_dalvik">Επιβολή βελτιστοποίησης μνήμης cache στην επόμενη εκκίνηση του συστήματος. Απαιτεί περισσότερο χρόνο αλλά βοηθάει στην αποφυγή προβλημάτων.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Επιβεβαίωση</string>
+            <string name="label_confirm">Επιβεβαίωση</string>
             <string name="selected_folder_label">Επιλεγμένος φάκελος:</string>
             <string name="create_folder_label">Δημιουργία Φακέλου</string>
             <string name="create_folder_msg">Δημιουργία νέου φακέλου με όνομα "%1$s"?</string>

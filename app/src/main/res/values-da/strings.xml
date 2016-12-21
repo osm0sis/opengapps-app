@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Giv root-adgang for at tillade installation og sletning af cache/Dalvik</string>
             <string name="explanation_wipe_dalvik">Kræv gen-optimering af cache ved næste genstart. Det tager lidt tid, men giver færre problemer.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Bekræft</string>
+            <string name="label_confirm">Bekræft</string>
             <string name="selected_folder_label">Vælg folder:</string>
             <string name="create_folder_label">Lav folder</string>
             <string name="create_folder_msg">Lav ny folder med navnet "%1$s"?</string>

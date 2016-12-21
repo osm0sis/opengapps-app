@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Geef root-toegang voor het gebruik van de installatiemodus en de optie om de Cache/Dalvik te wissen</string>
             <string name="explanation_wipe_dalvik">Heroptimaliseert eenmalig de cache bij het opstarten. Kost meer tijd, maar voorkomt mogelijke problemen.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Bevestigen</string>
+            <string name="label_confirm">Bevestigen</string>
             <string name="selected_folder_label">Geselecteerde map:</string>
             <string name="create_folder_label">Maak nieuwe map aan</string>
             <string name="create_folder_msg">Nieuwe map aanmaken met de naam "%1$s"?</string>

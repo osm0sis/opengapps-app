@@ -45,7 +45,7 @@
             <string name="summary_root_mode">Povolit práva root k povolení přímé instalaci a vyčištění Mezipaměti/Dalvik</string>
             <string name="explanation_wipe_dalvik">Vyčistí mezipaměť a znovuvytvoří Dalvik Cache (ARM). První spuštění poté trvá déle, ale lze tím předejít některým potížím.</string>
         <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="confirm_label">Potvrdit</string>
+            <string name="label_confirm">Potvrdit</string>
             <string name="selected_folder_label">Vybrat složku:</string>
             <string name="create_folder_label">Vytvořit složku</string>
             <string name="create_folder_msg">Vytvořit složku s názvem "%1$s"?</string>
