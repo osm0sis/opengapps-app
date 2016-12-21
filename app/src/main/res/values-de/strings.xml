@@ -99,6 +99,7 @@
             <string name="label_variant">Variante</string>
             <string name="invalid_combo">Ungültige Wahl</string>
             <string name="label_install">Installieren</string>
+            <string name="label_install_warning">%1$s installieren?</string>
             <string name="label_update">Update</string>
             <string name="label_change_selection">Auswahl ändern</string>
             <string name="download_started">Download gestartet</string>
@@ -122,7 +123,7 @@
             <string name="explanation_forced_update">Um die App weiter zu benutzen, muss sie aktualisiert werden</string>
             <string name="label_root_is_need_for_rootmode">Zum Aktivieren werden Root-Rechte benötigt</string>
             <string name="autoinstall_root_disclaimer">Das automatische Installieren funktioniert nur als System-App oder mit Root-Rechten</string>
-            <string name="explanation_install_warning">"Sind sie sicher, dass sie %1s installieren wollen?"</string>
+            <string name="explanation_install_warning">Sind sie sicher?</string>
 
     <!--______SUPPORT______-->
         <string name="label_app">App</string>

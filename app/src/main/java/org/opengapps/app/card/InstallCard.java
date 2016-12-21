@@ -353,7 +353,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             params.setMargins(margin, margin, margin, 0);
             TextView textView = new TextView(getContext());
             textView.setTextSize(DownloadFragment.spToPx(getContext(), 6));
-            textView.setText(context.getString(R.string.explanation_install_warning, name));
+            textView.setText(context.getString(R.string.label_install_warning, name));
             addView(textView, params);
             CheckBox checkBox = new CheckBox(getContext());
             checkBox.setText(R.string.dont_show_again);
