@@ -282,7 +282,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@string/label_easteregg_found"
+            android:contentDescription="@string/label_eastereggs_found"
             android:src="@drawable/ic_eastergg"
             android:tint="@color/iconColor"/>
 
@@ -297,7 +297,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_easteregg_found"
+                android:text="@string/label_eastereggs_found"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textStyle="normal|bold" />
 
