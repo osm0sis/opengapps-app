@@ -121,7 +121,7 @@
             <string name="label_variant">Variant</string>
             <string name="invalid_combo">Invalid combination</string>
             <string name="label_install">Install</string>
-            <string name="label_install_warning">Install %1$d?</string>
+            <string name="label_install_warning">Install %1$s?</string>
             <string name="label_update">Update</string>
             <string name="label_change_selection">Change Selection</string>
             <string name="download_started">Download started</string>
@@ -144,7 +144,6 @@
             <string name="explanation_forced_update">You have to update in order to continue using the app</string>
             <string name="label_root_is_need_for_rootmode">Your device needs to be rooted in order to activate</string>
             <string name="autoinstall_root_disclaimer">Automatic Install only works only if Open GApps is installed as system app or with root permission</string>
-            <string name="explanation_install_warning">Are you sure you want to install %1s?</string>
 
     <!--______SUPPORT______-->
         <string name="label_app">App</string>
