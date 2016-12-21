@@ -34,7 +34,7 @@
             <string name="label_download_dir">Папка для загрузок</string>
             <string name="label_wipe_cache">Очистить кэш/Dalvik</string>
             <string name="label_download_md5">Скачать MD5</string>
-            <string name="only_newest_version">Автоматически очищать загрузки</string>
+            <string name="label_automatic_cleanup">Автоматически очищать загрузки</string>
             <string name="label_download_versionlog">Скачать VersionLog</string>
             <string name="label_root_mode">Использовать права администратора</string>
         <!--SUMMARIES-->
@@ -135,7 +135,7 @@
             <string name="label_design">Графический дизайн</string>
             <string name="label_translator">Переводчик</string>
             <string name="label_producer">Продюсер</string>
-            <string name="label_easteregg_found">Пасхальное яйцо</string>
+            <string name="label_eastereggs_found">Пасхальное яйцо</string>
             <string name="used_libs">Библиотеки</string>
             <string name="tap_show_more">Ещё</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

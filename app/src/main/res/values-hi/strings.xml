@@ -34,7 +34,7 @@
             <string name="label_download_dir">डाउनलोड निर्देशिका</string>
             <string name="label_wipe_cache">साफ कर लें कैश / दळवीं</string>
             <string name="label_download_md5">डाउनलोड एमडी5</string>
-            <string name="only_newest_version">खुद ब खुद साफ़ करे डौनलोड्स</string>
+            <string name="label_automatic_cleanup">खुद ब खुद साफ़ करे डौनलोड्स</string>
             <string name="label_download_versionlog">डाउनलोड वेर्सिओनलोग</string>
             <string name="label_root_mode">रूट अनुमति का उपयोग</string>
         <!--SUMMARIES-->
@@ -135,7 +135,7 @@
             <string name="label_design">कलाकृति</string>
             <string name="label_translator">अनुवादक</string>
             <string name="label_producer">उत्पादक</string>
-            <string name="label_easteregg_found">ईस्टर एग फाउंड</string>
+            <string name="label_eastereggs_found">ईस्टर एग फाउंड</string>
             <string name="used_libs">पुस्तकालय</string>
             <string name="tap_show_more">अधिक दिखाने के लिए टैप</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

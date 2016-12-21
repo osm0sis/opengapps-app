@@ -34,7 +34,7 @@
             <string name="label_download_dir">Descarregar Carpeta</string>
             <string name="label_wipe_cache">Netejar Cache/Dalvik</string>
             <string name="label_download_md5">Descarregar MD5</string>
-            <string name="only_newest_version">Netejar descàrregues automàticament</string>
+            <string name="label_automatic_cleanup">Netejar descàrregues automàticament</string>
             <string name="label_download_versionlog">Descarregar VersionLog</string>
             <string name="label_root_mode">Usar Permisos de Root</string>
         <!--SUMMARIES-->
@@ -135,7 +135,7 @@
             <string name="label_design">Artista</string>
             <string name="label_translator">Traductor</string>
             <string name="label_producer">Productor</string>
-            <string name="label_easteregg_found">Ou de pasqua trobat</string>
+            <string name="label_eastereggs_found">Ou de pasqua trobat</string>
             <string name="used_libs">Llibreries</string>
             <string name="tap_show_more">Click per veure més</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

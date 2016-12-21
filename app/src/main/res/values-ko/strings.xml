@@ -34,7 +34,7 @@
             <string name="label_download_dir">다운로드 경로</string>
             <string name="label_wipe_cache">Cache/Dalvik 파티션 지우기</string>
             <string name="label_download_md5">MD5 다운로드</string>
-            <string name="only_newest_version">이전 버전 삭제 후 다운로드</string>
+            <string name="label_automatic_cleanup">이전 버전 삭제 후 다운로드</string>
             <string name="label_download_versionlog">버전 로그 다운로드</string>
             <string name="label_root_mode">루트 권한</string>
         <!--SUMMARIES-->
@@ -135,7 +135,7 @@
             <string name="label_design">디자인</string>
             <string name="label_translator">번역자</string>
             <string name="label_producer">제작자</string>
-            <string name="label_easteregg_found">이스터 에그를 발견하셨습니다</string>
+            <string name="label_eastereggs_found">이스터 에그를 발견하셨습니다</string>
             <string name="used_libs">라이브러리</string>
             <string name="tap_show_more">더 보시려면 눌러주세요</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

@@ -34,7 +34,7 @@
             <string name="label_download_dir">موقع التنزيل</string>
             <string name="label_wipe_cache">مسح Cache/Dalvik</string>
             <string name="label_download_md5">تنزيل MD5</string>
-            <string name="only_newest_version">تنظيف تلقائي للتنزيلات</string>
+            <string name="label_automatic_cleanup">تنظيف تلقائي للتنزيلات</string>
             <string name="label_download_versionlog">تنزيل سجل الإصدار</string>
             <string name="label_root_mode">إستخدام أذن الروت</string>
         <!--SUMMARIES-->
@@ -135,7 +135,7 @@
             <string name="label_design">العمل الفني</string>
             <string name="label_translator">المترجم</string>
             <string name="label_producer">منتج</string>
-            <string name="label_easteregg_found">وجدت بيض الفصح</string>
+            <string name="label_eastereggs_found">وجدت بيض الفصح</string>
             <string name="used_libs">المكتبات</string>
             <string name="tap_show_more">اضغط لإظهار المزيد</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

@@ -22,11 +22,11 @@
             android:defaultValue="true"
             android:key="download_delete_old_files"
             android:summary="@string/explanation_newest_version"
-            android:title="@string/only_newest_version" />
+            android:title="@string/label_automatic_cleanup" />
         <org.opengapps.app.prefs.NumberPickerPreference
             android:dependency="download_delete_old_files"
             android:key="kept_packages"
-            android:title="@string/packages_to_keep" />
+            android:title="@string/label_number_packages_kept" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="download_md5"

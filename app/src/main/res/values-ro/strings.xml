@@ -34,7 +34,7 @@
             <string name="label_download_dir">Dosar descărcări</string>
             <string name="label_wipe_cache">Şterge Cache/Dalvik</string>
             <string name="label_download_md5">Descarcă MD5</string>
-            <string name="only_newest_version">Curăţare automată a descărcărilor</string>
+            <string name="label_automatic_cleanup">Curăţare automată a descărcărilor</string>
             <string name="label_download_versionlog">Descarcă VersionLog</string>
             <string name="label_root_mode">Foloseşte permisie root</string>
         <!--SUMMARIES-->
@@ -136,7 +136,7 @@
             <string name="label_design">Artwork</string>
             <string name="label_translator">Traducător</string>
             <string name="label_producer">Producător</string>
-            <string name="label_easteregg_found">Easter egg găsit</string>
+            <string name="label_eastereggs_found">Easter egg găsit</string>
             <string name="used_libs">Biblioteci</string>
             <string name="tap_show_more">Click pentru a dezvălui mai mult</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

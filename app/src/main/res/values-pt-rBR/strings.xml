@@ -33,7 +33,7 @@
             <string name="label_download_dir">Diretório do Download</string>
             <string name="label_wipe_cache">Limpar Cache/Dalvik</string>
             <string name="label_download_md5">Download MD5</string>
-            <string name="only_newest_version">Limpar downloads automaticamente</string>
+            <string name="label_automatic_cleanup">Limpar downloads automaticamente</string>
             <string name="label_download_versionlog">Download VersionLog</string>
             <string name="label_root_mode">Usar Permissão Root</string>
         <!--SUMMARIES-->
@@ -129,7 +129,7 @@
             <string name="label_design">Arte</string>
             <string name="label_translator">Tradutor</string>
             <string name="label_producer">Produtor</string>
-            <string name="label_easteregg_found">Achou o Easter egg</string>
+            <string name="label_eastereggs_found">Achou o Easter egg</string>
             <string name="used_libs">Livravias</string>
             <string name="tap_show_more">Clique para mostrar mais</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

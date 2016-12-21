@@ -34,7 +34,7 @@
             <string name="label_download_dir">Descargar Carpeta</string>
             <string name="label_wipe_cache">Limpiar Cache/Dalvik</string>
             <string name="label_download_md5">Descargar MD5</string>
-            <string name="only_newest_version">Limipiar descargas automáticamente</string>
+            <string name="label_automatic_cleanup">Limipiar descargas automáticamente</string>
             <string name="label_download_versionlog">Descargar VersionLog</string>
             <string name="label_root_mode">Usar Permisos de Root</string>
         <!--SUMMARIES-->
@@ -135,7 +135,7 @@
             <string name="label_design">Artista</string>
             <string name="label_translator">Traductor</string>
             <string name="label_producer">Productor</string>
-            <string name="label_easteregg_found">Huevo de pascua encontrado</string>
+            <string name="label_eastereggs_found">Huevo de pascua encontrado</string>
             <string name="used_libs">Librerías</string>
             <string name="tap_show_more">Click para ver más</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

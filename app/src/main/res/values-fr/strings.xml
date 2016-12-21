@@ -34,7 +34,7 @@
             <string name="label_download_dir">Répertoire de téléchargement</string>
             <string name="label_wipe_cache">Effacer Cache/Dalvik</string>
             <string name="label_download_md5">Télécharger MD5</string>
-            <string name="only_newest_version">Nettoyer automatiquement les téléchargements</string>
+            <string name="label_automatic_cleanup">Nettoyer automatiquement les téléchargements</string>
             <string name="label_download_versionlog">Télécharger le log de la version</string>
             <string name="label_root_mode">Utiliser les droits d’utilisateur root</string>
         <!--SUMMARIES-->
@@ -135,7 +135,7 @@
             <string name="label_design">Artwork</string>
             <string name="label_translator">Traducteur</string>
             <string name="label_producer">Producteur</string>
-            <string name="label_easteregg_found">Œuf de Pâques découvert</string>
+            <string name="label_eastereggs_found">Œuf de Pâques découvert</string>
             <string name="used_libs">Bibliothèques</string>
             <string name="tap_show_more">Cliquez pour en savoir plus</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->

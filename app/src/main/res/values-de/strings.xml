@@ -36,8 +36,8 @@
             <string name="label_download_dir">Download-Ordner</string>
             <string name="label_wipe_cache">Cache/Dalvik löschen</string>
             <string name="label_download_md5">MD5-Prüfsumme herunterladen</string>
-            <string name="only_newest_version">Veraltete Pakete automatisch löschen</string>
-            <string name="packages_to_keep">Zu behaltende Pakete</string>
+            <string name="label_automatic_cleanup">Veraltete Pakete automatisch löschen</string>
+            <string name="label_number_packages_kept">Zu behaltende Pakete</string>
             <string name="label_download_versionlog">Versionshinweise herunterladen</string>
             <string name="label_root_mode">Root-Rechte verwenden</string>
             <string name="label_pref_install_warning">Installationsbestätigung anzeigen</string>
@@ -146,7 +146,7 @@
             <string name="label_translator">Übersetzer</string>
             <string name="label_translators">Übersetzerplur</string>
             <string name="label_producer">Produzent</string>
-            <string name="label_easteregg_found">Easteregg gefunden</string>
+            <string name="label_eastereggs_found">Easteregg gefunden</string>
             <string name="used_libs">Bibliotheken</string>
             <string name="tap_show_more">Für mehr Info tippen</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
