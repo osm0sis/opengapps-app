@@ -63,8 +63,12 @@ public class AboutActivity extends AppCompatActivity {
         version.setText(BuildConfig.VERSION_NAME);
 
         //If Translators contain a comma, we use the respective plural version
-        if (getString(R.string.translators).contains(",")) {
-            ((TextView) findViewById(R.id.label_translators)).setText(R.string.label_translators);
+        try {
+            if (getString(R.string.translators).contains(",")) {
+                ((TextView) findViewById(R.id.label_translators)).setText(R.string.label_translators);
+            }
+        } catch (Resources.NotFoundException ignored) {
+
         }
     }
 
