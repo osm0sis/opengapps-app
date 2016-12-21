@@ -135,8 +135,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                     boolean showInstallWarning = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).getBoolean("show_install_warning", true);
                     if (showInstallWarning)
                         new AlertDialog.Builder(getContext())
-                                .setTitle(R.string.pref_header_install)
-                                .setView(new showAgainDiag(getContext()))
+                                .setView(new showAgainDiag(getContext(), gappsFile.getName()))
                                 .setPositiveButton(R.string.label_install, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -346,7 +345,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
 
 
     private class showAgainDiag extends LinearLayout {
-        public showAgainDiag(Context context) {
+        public showAgainDiag(Context context, String name) {
             super(context);
             setOrientation(VERTICAL);
             final LayoutParams params = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -354,7 +353,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             params.setMargins(margin, margin, margin, 0);
             TextView textView = new TextView(getContext());
             textView.setTextSize(DownloadFragment.spToPx(getContext(), 6));
-            textView.setText(R.string.explanation_install_warning);
+            textView.setText(context.getString(R.string.explanation_install_warning, name));
             addView(textView, params);
             CheckBox checkBox = new CheckBox(getContext());
             checkBox.setText(R.string.dont_show_again);

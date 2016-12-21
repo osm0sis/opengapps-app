@@ -122,7 +122,7 @@
             <string name="explanation_forced_update">Um die App weiter zu benutzen, muss sie aktualisiert werden</string>
             <string name="label_root_is_need_for_rootmode">Zum Aktivieren werden Root-Rechte benötigt</string>
             <string name="autoinstall_root_disclaimer">Das automatische Installieren funktioniert nur als System-App oder mit Root-Rechten</string>
-            <string name="explanation_install_warning">Sind sie sicher?</string>
+            <string name="explanation_install_warning">"Sind sie sicher, dass sie %1s installieren wollen?"</string>
 
     <!--______SUPPORT______-->
         <string name="label_app">App</string>
