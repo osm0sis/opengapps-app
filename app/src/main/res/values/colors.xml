@@ -8,4 +8,5 @@
     <color name="backgroundColor">@color/colorPrimary</color>
     <color name="splash_activity_color">#bebebe</color>
     <color name="splash_status_color">#cfcfcf</color>
+    <color name="app-intro-seperator-color">#ffffff</color>
 </resources>

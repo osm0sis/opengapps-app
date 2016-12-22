@@ -93,6 +93,7 @@
             <string name="label_decline">Decline</string>
             <string name="label_delete">Delete</string>
             <string name="label_delete_warning">Delete %1$d?</string>
+            <string name="dont_show_again">Don't show again</string>
             <string name="title_optional_app_update">App update available</string>
             <string name="ms_prev">Previous</string>
             <string name="ms_next">Next</string>
