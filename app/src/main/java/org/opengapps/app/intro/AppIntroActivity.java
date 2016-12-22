@@ -40,7 +40,7 @@ public class AppIntroActivity extends AppIntro {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         showSkipButton(false);
-        setSeparatorColor(Color.parseColor("#ffffff"));
+        setSeparatorColor(ContextCompat.getColor(getBaseContext(), R.color.app_intro_seperator_color));
         setInitialSettings();
         int primaryDarkColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
         addSlide(AppIntro2Fragment.newInstance(getString(R.string.app_name), getString(R.string.appintro_introslide_title), R.drawable.ic_opengapps_large, primaryDarkColor));
