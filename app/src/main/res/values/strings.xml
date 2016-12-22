@@ -26,8 +26,8 @@
     <!--______PREFERENCES______-->
         <!--LABELS-->
             <string name="pref_header_interface">Interface</string>
-            <!--<string name="pref_header_install">Install (noun variant, not used in English)</string>-->
-            <!--<string name="pref_header_download">Download (noun variant, not used in English)</string>-->
+            <string name="pref_header_install">Install</string> <!--noun-->
+            <string name="pref_header_download">Download</string> <!--noun-->
             <string name="label_dark_mode">Dark theme</string>
             <string name="new_folder">New Folder</string>
             <string name="pref_header_gapps_selection">GApps-Selection</string>
@@ -103,7 +103,9 @@
             <string name="label_never">Never</string>
             <string name="label_rate">Rate</string>
             <string name="title_rate_us">Rate this app</string>
-            <string name="message_rate_us">We hope you enjoy using this app, it won\'t take more than a minute to give a feedback rating. It helps other users discover this app too! Thank you for your support.</string>
+            <string name="message_rate_us">We hope you enjoy using this app, it won\'t take more than a minute to rate or give some feedback. It can help other users discover this app too!</string>
+            <string name="label_supportproject">Support</string> <!--verb-->
+            <string name="message_supportproject">If you like the Open GApps packages, please consider supporting the project. The development of the packages is completely open source and we all benefit from the developers\' efforts!</string>
         <!--EXPLANATION-->
             <string name="explanation_permission_denied">In order to work correctly you have to grant Open GApps the permission to your external storage. Makes sense, doesn\'t it?</string>
             <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead</string>
@@ -113,14 +115,14 @@
     <!--______DOWNLOAD/INSTALL______-->
         <!--LABELS-->
             <string name="label_download_error">Connection to server failed</string>
-            <string name="label_download">Download</string>
+            <string name="label_download">Download</string> <!--verb-->
             <string name="label_pause">Pause</string>
             <string name="label_paused">Paused</string>
             <string name="label_resume">Resume</string>
             <string name="label_architecture">Architecture</string>
             <string name="label_variant">Variant</string>
             <string name="invalid_combo">Invalid combination</string>
-            <string name="label_install">Install</string>
+            <string name="label_install">Install</string> <!--verb-->
             <string name="label_install_warning">Install %1$s?</string>
             <string name="label_update">Update</string>
             <string name="label_change_selection">Change Selection</string>
@@ -146,10 +148,10 @@
             <string name="autoinstall_root_disclaimer">Automatic Install only works only if Open GApps is installed as system app or with root permission</string>
 
     <!--______SUPPORT______-->
+        <string name="label_support">Support</string> <!--noun-->
         <string name="label_app">App</string>
         <string name="label_homepage">Homepage</string>
         <string name="label_translate">Translate</string>
-        <string name="label_support">Support</string>
         <string name="label_wiki">Open GApps Wiki</string>
         <string name="label_support_forum">Support Forum</string>
         <string name="label_support_chat">Support Chat</string>
@@ -175,9 +177,6 @@
             <string name="notices_title">Notices</string>
 
     <!--______UNTRANSLATEABLE STRINGS______-->
-        <!--LABELS-->
-            <string name="pref_header_install">@string/label_install</string>
-            <string name="pref_header_download">@string/label_download</string>
         <!--ARRAYS-->
             <string-array name="architectures" tools:ignore="MissingTranslation">
                 <item>ARM</item>
@@ -230,8 +229,6 @@
             <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
             <string name="url_producer" translatable="false">https://github.com/mfonville/</string>
             <string name="url_translate" translatable="false">https://github.com/opengapps/opengapps-app-support</string>
-        <!--FILECHOOSER (EXTERNAL LIBRARY)-->
-            <string name="cancel_label" translatable="false">@string/label_cancel</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
             <string name="notices_close" translatable="false">@string/label_close</string>
 </resources>
