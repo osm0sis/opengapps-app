@@ -29,6 +29,11 @@
             android:title="@string/label_number_packages_kept" />
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="show_delete_warning"
+            android:summary="@string/explanation_pref_delete_warning"
+            android:title="@string/label_pref_delete_warning" />
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="download_md5"
             android:summary="@string/explanation_download_md5"
             android:title="@string/label_download_md5" />

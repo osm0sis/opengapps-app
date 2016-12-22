@@ -135,7 +135,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                     boolean showInstallWarning = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).getBoolean("show_install_warning", true);
                     if (showInstallWarning)
                         new AlertDialog.Builder(getContext())
-                                .setView(new showAgainDiag(getContext(), gappsFile.getName()))
+                                .setView(new InstallDiag(getContext(), gappsFile.getName()))
                                 .setPositiveButton(R.string.label_install, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -171,10 +171,27 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         Button deleteButton = (Button) findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (gappsFile != null) {
-                    removeFiles();
-                    deleteListener.onDeleteFile(gappsFile);
+            public void onClick(View v) {
+                boolean showDeleteWarning = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).getBoolean("show_delete_warning", true);
+                if(showDeleteWarning){
+                    new AlertDialog.Builder(getContext())
+                            .setView(new DeleteDiag(getContext(), gappsFile.getName()))
+                            .setPositiveButton(R.string.label_delete, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (gappsFile != null) {
+                                        removeFiles();
+                                        deleteListener.onDeleteFile(gappsFile);
+                                    }
+                                }
+                            })
+                            .setNegativeButton(R.string.label_cancel, null)
+                            .show();
+                }else {
+                    if (gappsFile != null) {
+                        removeFiles();
+                        deleteListener.onDeleteFile(gappsFile);
+                    }
                 }
             }
         });
@@ -343,9 +360,26 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         return gappsFile.exists();
     }
 
+    private class DeleteDiag extends showAgainDiag {
+        private final String name;
 
-    private class showAgainDiag extends LinearLayout {
-        public showAgainDiag(Context context, String name) {
+        public DeleteDiag(Context context, String name) {
+            super(context, R.string.label_delete_warning, name, "show_delete_warning");
+            this.name = name;
+        }
+    }
+
+    private class InstallDiag extends showAgainDiag {
+        private final String name;
+
+        public InstallDiag(Context context, String name) {
+            super(context, R.string.label_install_warning, name, "show_install_warning");
+            this.name = name;
+        }
+    }
+
+    private abstract class showAgainDiag extends LinearLayout {
+        public showAgainDiag(Context context, int stringID, String name, final String key) {
             super(context);
             setOrientation(VERTICAL);
             final LayoutParams params = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -353,19 +387,18 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             params.setMargins(margin, margin, margin, 0);
             TextView textView = new TextView(getContext());
             textView.setTextSize(DownloadFragment.spToPx(getContext(), 6));
-            textView.setText(context.getString(R.string.label_install_warning, name));
+            textView.setText(getContext().getString(stringID, name));
             addView(textView, params);
             CheckBox checkBox = new CheckBox(getContext());
             checkBox.setText(R.string.dont_show_again);
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).edit().putBoolean("show_install_warning", !b).apply();
+                    getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).edit().putBoolean(key, !b).apply();
                 }
             });
             addView(checkBox, params);
         }
-
 
         @Override
         protected void onAttachedToWindow() {
