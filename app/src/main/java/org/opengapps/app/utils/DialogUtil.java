@@ -1,12 +1,10 @@
 package org.opengapps.app.utils;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
 import org.opengapps.app.NavigationActivity;
@@ -25,7 +23,7 @@ public class DialogUtil {
                 .setPositiveButton(R.string.label_now, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        NavigationActivity.openURL(context, "https://play.google.com/store/apps/details?id=org.opengapps.app");
+                        NavigationActivity.openURL(context, context.getString(R.string.url_ogapps_market));
                         editor.putBoolean("rate_done", true);
                         editor.apply();
                     }

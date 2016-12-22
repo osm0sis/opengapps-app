@@ -42,7 +42,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class Downloader extends AsyncTask<Void, Void, Long> {
     private final static String downloadUrl = "https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip";
     private final static String feedUrl = "https://github.com/opengapps/%arch/releases.atom";
-    private final static String subDir = "/OpenGApps/";
     public static String defaultDownloadDir;
     public static final String OPENGAPPS_PREDEFINED_PATH = "/Download/OpenGApps";
 

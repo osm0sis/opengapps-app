@@ -14,13 +14,14 @@
     <ImageView
         android:id="@+id/splash_logo"
         android:src="@drawable/ic_opengapps_large"
+        android:contentDescription="@string/app_name"
         android:layout_centerInParent="true"
         android:layout_width="130dp"
         android:layout_height="130dp" />
 
     <TextView
         android:id="@+id/splash_text"
-        android:text="opengapps.org"
+        android:text="@string/splashscreen_title"
         android:textStyle="bold"
         android:textSize="26sp"
         android:textColor="@color/splash_activity_color"

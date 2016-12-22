@@ -1,12 +1,9 @@
 package org.opengapps.app.download;
 
 import android.annotation.SuppressLint;
-import android.app.DialogFragment;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
@@ -27,7 +24,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.opengapps.app.R;
 import org.opengapps.app.prefs.Preferences;
-import org.opengapps.app.utils.DialogUtil;
 
 import java.util.Arrays;
 import java.util.Collections;

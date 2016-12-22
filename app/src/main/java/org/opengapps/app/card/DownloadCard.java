@@ -275,9 +275,9 @@ public class DownloadCard extends CardView {
                     //noinspection deprecation
                     Configuration configuration = getResources().getConfiguration();
                     if (configuration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
-                        version.setText(Html.fromHtml("<font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>" + " <b>" + version.getText() + "</b>"));
+                        version.setText(Html.fromHtml("<font color='red'><i>(" + getString(R.string.label_new) + ")</i></font>" + " <b>" + version.getText() + "</b>"));
                     else
-                        version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i color=\"#E53935\">(" + getString(R.string.label_new) + ")</i></font>"));
+                        version.setText(Html.fromHtml("<b>" + version.getText() + "</b> <font color='red'><i>(" + getString(R.string.label_new) + ")</i></font>"));
                 }
                 downloadButton.setEnabled(true);
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));

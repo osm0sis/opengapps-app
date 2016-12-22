@@ -8,8 +8,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
@@ -93,7 +93,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                 new Tooltip.Builder(v)
                         .setText(R.string.label_checksum_valid)
                         .setCancelable(true)
-                        .setTextColor(Color.parseColor("#ffffff"))
+                        .setTextColor(ContextCompat.getColor(getContext(), R.color.app_intro_seperator_color))
                         .setDismissOnClick(true)
                         .show();
             }
@@ -106,7 +106,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                 new Tooltip.Builder(v)
                         .setText(R.string.label_checksum_invalid)
                         .setCancelable(true)
-                        .setTextColor(Color.parseColor("#ffffff"))
+                        .setTextColor(ContextCompat.getColor(getContext(), R.color.app_intro_seperator_color))
                         .setDismissOnClick(true)
                         .show();
             }
@@ -121,7 +121,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
     private void initInstallButton() {
         Button installButton = (Button) findViewById(R.id.install_button);
         if (!ZipInstaller.canReboot(getContext())) {
-            installButton.setTextColor(Color.parseColor("#757575"));
+            installButton.setTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
             installButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -285,7 +285,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(Color.parseColor("#000000"));
+                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(getContext(), R.color.solidBlack));
             }
         });
         dialog.show();

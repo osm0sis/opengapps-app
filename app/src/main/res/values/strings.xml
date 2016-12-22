@@ -93,7 +93,7 @@
             <string name="label_decline">Decline</string>
             <string name="label_delete">Delete</string>
             <string name="label_delete_warning">Delete %1$d?</string>
-            <string name="dont_show_again">Don't show again</string>
+            <string name="dont_show_again">Don\'t show again</string>
             <string name="title_optional_app_update">App update available</string>
             <string name="ms_prev">Previous</string>
             <string name="ms_next">Next</string>
@@ -211,6 +211,7 @@
             <string name="dev" translatable="false">Christoph Loy</string>
             <string name="dev_co" translatable="false">Ashish Shekar</string>
             <string name="label_android" translatable="false">Android</string>
+            <string name="splashscreen_title" translatable="false">opengapps.org</string>
         <!--LINKS-->
             <string name="arch_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-platforms</string>
             <string name="android_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-android-versions</string>
@@ -230,6 +231,8 @@
             <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
             <string name="url_producer" translatable="false">https://github.com/mfonville/</string>
             <string name="url_translate" translatable="false">https://github.com/opengapps/opengapps-app-support</string>
+            <string name="url_ogapps_market">market://details?id=org.opengapps.app</string>
+            <string name="url_version_info">http://opengapps.org/app/version.txt</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
             <string name="notices_close" translatable="false">@string/label_close</string>
 </resources>
