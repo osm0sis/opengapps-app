@@ -142,7 +142,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                                         new ZipInstaller(getContext()).installZip(gappsFile);
                                     }
                                 })
-                                .setNegativeButton(R.string.cancel_label, null)
+                                .setNegativeButton(R.string.label_cancel, null)
                                 .show();
                     else
                         new ZipInstaller(getContext()).installZip(gappsFile);
