@@ -68,7 +68,7 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
                                 openUpdateSite();
                             }
                         })
-                        .setNegativeButton(R.string.cancel_label, null)
+                        .setNegativeButton(R.string.label_cancel, null)
                         .show();
             }
         } else if (updateAvailable == UpdateStatus.forced) {
