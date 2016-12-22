@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -79,7 +78,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
                         new int[]{android.R.attr.state_checked} //checked
                 },
                 new int[]{
-                        Color.parseColor("#E8E8E8") //unchecked
+                        ContextCompat.getColor(getContext(), R.color.app_intro_unchecked_radio_color) //unchecked
                         , ContextCompat.getColor(getContext(), R.color.colorAccent)//checked
                 }
         );
@@ -137,7 +136,7 @@ public abstract class GappsSelectionFragment extends AbstractStep implements Rad
             AppCompatRadioButton radioButton = new AppCompatRadioButton(getActivity());
             radioButton.setText(item);
             radioButton.setSupportButtonTintList(style);
-            radioButton.setTextColor(Color.parseColor("#E0E0E0"));
+            radioButton.setTextColor(ContextCompat.getColor(getContext(), R.color.app_intro_radio_text_color));
             if (getGuessedSelection(getContext()).toLowerCase().equals(item.toLowerCase())) {
                 //noinspection deprecation
                 Spanned spanned = Html.fromHtml(radioButton.getText() + " <i color='red'>(" + getString(R.string.detected) + ")</i>");

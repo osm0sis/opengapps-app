@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import org.opengapps.app.download.Downloader;
 import org.opengapps.app.prefs.Preferences;
 
 import java.io.File;

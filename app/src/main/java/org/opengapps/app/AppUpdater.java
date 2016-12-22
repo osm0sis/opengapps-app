@@ -19,7 +19,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus> {
-    private final static String versionInfoUrl = "http://opengapps.org/app/version.txt";
 
     private OkHttpClient client;
     private Context context;
@@ -33,7 +32,7 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
     protected UpdateStatus doInBackground(Context... contexts) {
         context = contexts[0];
         Request request = new Request.Builder()
-                .url(versionInfoUrl)
+                .url(context.getString(R.string.url_version_info))
                 .build();
         try {
             Response response = client.newCall(request).execute();
@@ -80,7 +79,7 @@ public class AppUpdater extends AsyncTask<Context, Void, AppUpdater.UpdateStatus
 
     private void openUpdateSite() {
         try {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.url_ogapps_market))));
         } catch (android.content.ActivityNotFoundException anfe) {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.url_download_update))));
         }

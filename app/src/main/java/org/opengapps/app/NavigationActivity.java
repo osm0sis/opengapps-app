@@ -1,7 +1,5 @@
 package org.opengapps.app;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -10,11 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,16 +18,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
-
-import com.codekidlabs.storagechooser.utils.DiskUtil;
 
 import org.opengapps.app.download.DownloadProgressView;
 import org.opengapps.app.download.Downloader;
@@ -49,8 +40,6 @@ public class NavigationActivity extends AppCompatActivity
     private DownloadFragment downloadFragment;
     private Toolbar toolbar;
     private NavigationView navigationView;
-
-    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +139,7 @@ public class NavigationActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         if (forcedUpdate) {
-            Toast.makeText(this, "You have to update in order to continue using the app", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.explanation_forced_update, Toast.LENGTH_LONG).show();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_download_update)));
             startActivity(i);
         }
@@ -241,7 +230,7 @@ public class NavigationActivity extends AppCompatActivity
 
     private void startActivityAfterDrawerAnimation(final Class className) {
 
-        mHandler = new Handler();
+        Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

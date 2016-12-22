@@ -33,15 +33,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             minifyEnabled true
             shrinkResources true
-//            lintOptions {
-//                disable 'MissingTranslation'
-//            }
+            lintOptions {
+                disable 'MissingTranslation'
+            }
         }
         debug{
             buildConfigField "Boolean", "REPORT_CRASH", 'false'
-//            lintOptions{
-//                abortOnError false
-//            }
+            lintOptions{
+                abortOnError false
+            }
+            return 0;
         }
     }
 }
