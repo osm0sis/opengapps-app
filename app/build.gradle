@@ -39,10 +39,6 @@ android {
         }
         debug{
             buildConfigField "Boolean", "REPORT_CRASH", 'false'
-            lintOptions{
-                abortOnError false
-            }
-            return 0;
         }
     }
 }
@@ -65,7 +61,7 @@ dependencies {
     compile 'com.github.fcannizzaro:material-stepper:1.2.2' //licensed
     compile 'com.github.vihtarb:tooltip:0.1.9' //licensed
 
-    compile 'com.github.codekidX:storage-chooser:1.0.22'
+    compile 'com.github.codekidX:storage-chooser:1.0.22' //licensed
 
 
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
