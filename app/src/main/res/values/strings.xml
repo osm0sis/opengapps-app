@@ -55,20 +55,20 @@
             <string name="explanation_pref_delete_warning">Show a warning dialog before deleting a package to prevent accidental removal</string>
         <!--DIALOG-->
             <string name="explanation_cleanup_now">Clean-up older packages right now?</string>
-    <!--FILECHOOSER (EXTERNAL LIBRARY)-->
+        <!--FILECHOOSER (EXTERNAL LIBRARY)-->
             <string name="label_confirm">Confirm</string>
             <string name="label_select">Select</string>
             <string name="label_create">Create</string>
-            <string name="create_folder_success">Folder created</string>
-            <string name="create_folder_error">Could not create folder</string>
+            <string name="text_freespace">%1$s free</string>
             <string name="title_storage_chooser">Choose Storage</string>
             <string name="title_storage_chooser_internal">Internal Storage</string>
-            <string name="hint_folder_name">Folder Name</string>
-            <string name="error_tip_empty_field">Empty folder name</string>
             <string name="label_select_external_storage">Select External Storage</string>
+            <string name="create_folder_success">Folder created</string>
+            <string name="create_folder_error">Could not create folder</string>
             <string name="create_folder_error_no_write_access">Cannot write to this folder</string>
             <string name="create_folder_error_already_exists">Folder already exists</string>
-
+            <string name="hint_folder_name">Folder Name</string>
+            <string name="error_tip_empty_field">Empty folder name</string>
 
     <!--______Nav-Drawer______-->
         <string name="label_links">Links</string>
@@ -93,7 +93,7 @@
             <string name="label_decline">Decline</string>
             <string name="label_delete">Delete</string>
             <string name="label_delete_warning">Delete %1$s?</string>
-            <string name="dont_show_again">Don\'t show again</string>
+            <string name="dont_show_again">Don’t show again</string>
             <string name="title_optional_app_update">App update available</string>
             <string name="ms_prev">Previous</string>
             <string name="ms_next">Next</string>
@@ -104,11 +104,11 @@
             <string name="label_never">Never</string>
             <string name="label_rate">Rate</string>
             <string name="title_rate_us">Rate this app</string>
-            <string name="message_rate_us">We hope you enjoy using this app, it won\'t take more than a minute to rate or give some feedback. It can help other users discover this app too!</string>
+            <string name="message_rate_us">We hope you enjoy using this app, it won’t take more than a minute to rate or give some feedback. It can help other users discover this app too!</string>
             <string name="label_supportproject">Support</string> <!--verb-->
-            <string name="message_supportproject">If you like the Open GApps packages, please consider supporting the project. The development of the packages is completely open source and we all benefit from the developers\' efforts!</string>
+            <string name="message_supportproject">If you like the Open GApps packages, please consider supporting the project. The development of the packages is completely open source and we all benefit from the developers’ efforts!</string>
         <!--EXPLANATION-->
-            <string name="explanation_permission_denied">In order to work correctly you have to grant Open GApps the permission to your external storage. Makes sense, doesn\'t it?</string>
+            <string name="explanation_permission_denied">In order to work correctly you have to grant Open GApps the permission to your external storage. Makes sense, doesn’t it?</string>
             <string name="explanation_adblock_detected">Adblocker detected!? Ads can be frustrating, but they keep the project and its developers alive! Please consider disabling your adblocker or a donation instead</string>
             <string name="title_webview_not_installed">Oops! No WebView Provider installed!?</string>
             <string name="message_webview_not_installed">It seems you have uninstalled \"Stock WebView\", but your ROM does not support the \"Google WebView\". Re-flash your ROM and ask the ROM developer to add support for alternative WebView Providers.</string>
@@ -122,6 +122,8 @@
             <string name="label_resume">Resume</string>
             <string name="label_architecture">Architecture</string>
             <string name="label_variant">Variant</string>
+            <string name="label_size">Size</string>
+            <string name="label_filesize">File size</string>
             <string name="invalid_combo">Invalid combination</string>
             <string name="label_install">Install</string> <!--verb-->
             <string name="label_install_warning">Install %1$s?</string>
@@ -146,7 +148,7 @@
             <string name="explanation_optional_app_update">An update for the app is available</string>
             <string name="explanation_forced_update">You have to update in order to continue using the app</string>
             <string name="label_root_is_need_for_rootmode">Your device needs to be rooted in order to activate</string>
-            <string name="autoinstall_root_disclaimer">Automatic Install only works only if Open GApps is installed as system app or with root permission</string>
+            <string name="autoinstall_root_disclaimer">Automatic Install only works if Open GApps is installed as system app or with root permission</string>
 
     <!--______SUPPORT______-->
         <string name="label_support">Support</string> <!--noun-->
