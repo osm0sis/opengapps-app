@@ -86,10 +86,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         loadRateUsCard();
         isRestored = true;
 
-        if(isRateUsCardSet) {
+        if (isRateUsCardSet) {
             showRateUsCard();
         }
-        if(isSupportCardSet) {
+        if (isSupportCardSet) {
             showSupportCard();
         }
 
@@ -264,7 +264,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     private void loadRateUsCard() {
         int count = prefs.getInt("rate_count", 1);
-        boolean rate_status = prefs.getBoolean("rate_done",false);
+        boolean rate_status = prefs.getBoolean("rate_done", false);
         if (count % 9 == 0 && !rate_status) {
             if (rateUsCard == null) {
                 showRateUsCard();
@@ -275,7 +275,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void showRateUsCard() {
         final SharedPreferences.Editor editor = prefs.edit();
 
-        if(rateUsCard == null) {
+        if (rateUsCard == null) {
             isRateUsCardSet = true;
             rateUsCard = new RateUsCard(globalContext);
             rateUsCard.setRateListener(new View.OnClickListener() {
@@ -312,8 +312,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         int randomMax = 20;
 
         int randomNum = random.nextInt((randomMax - randomMin) + 1) + randomMin;
-        boolean support_status = prefs.getBoolean("support_done",false);
-        if(randomNum == 11 && !support_status) {
+        boolean support_status = prefs.getBoolean("support_done", false);
+        if (randomNum == 11 && !support_status) {
             showSupportCard();
         }
     }
@@ -321,7 +321,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void showSupportCard() {
         final SharedPreferences.Editor editor = prefs.edit();
 
-        if(supportCard == null) {
+        if (supportCard == null) {
             isSupportCardSet = true;
             supportCard = new SupportCard(globalContext);
             supportCard.setSupportButton(new View.OnClickListener() {
@@ -405,13 +405,14 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         return (int) (dp * scale + 0.5f);
     }
 
-    private void cleanUp() {
+    public static void cleanUp(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 return;
             }
         }
-        File downloadDir = new File(prefs.getString("download_dir", getDownloadDir(getContext())));
+        SharedPreferences prefs = context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        File downloadDir = new File(prefs.getString("download_dir", getDownloadDir(context)));
 
         FilenameFilter filter = new FilenameFilter() {
             @Override
@@ -443,6 +444,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             }
         }
 
+    }
+
+    private void cleanUp() {
+        cleanUp(globalContext);
     }
 
     public void onTagUpdated() {
@@ -525,10 +530,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         loadRateUsCard();
         loadSupportCard();
 
-        if(isRateUsCardSet) {
+        if (isRateUsCardSet) {
             showRateUsCard();
         }
-        if(isSupportCardSet) {
+        if (isSupportCardSet) {
             showSupportCard();
         }
 

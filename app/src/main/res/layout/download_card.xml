@@ -194,8 +194,8 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
+        android:minWidth="0dp"
         android:text="@string/label_change_selection"
         app:layout_constraintEnd_toStartOf="@+id/download_button"
         app:layout_constraintTop_toBottomOf="@+id/progress_view" />
