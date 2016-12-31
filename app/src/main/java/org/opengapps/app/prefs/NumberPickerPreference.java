@@ -1,5 +1,6 @@
 package org.opengapps.app.prefs;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.Toast;
 
 import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.R;
@@ -35,23 +35,25 @@ public class NumberPickerPreference extends Preference {
         layoutParams.setMargins(DownloadFragment.dpToPx(context, 64), 0, DownloadFragment.dpToPx(context, 64), 0);
         numberPicker.setLayoutParams(layoutParams);
         linearLayout.addView(numberPicker);
-        final CheckBox checkBox = new CheckBox(context);
-        checkBox.setVisibility(View.INVISIBLE);
-        checkBox.setText(R.string.explanation_cleanup_now);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(DownloadFragment.dpToPx(context, 8), 0, DownloadFragment.dpToPx(context, 8), 0);
-        checkBox.setLayoutParams(params);
-        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if (newVal >= prefs.getInt(getKey(), Integer.MAX_VALUE)) {
-                    checkBox.setVisibility(View.INVISIBLE);
-                } else {
-                    checkBox.setVisibility(View.VISIBLE);
+        if (false) { //THIS WILL GET ADDED IN 1.1.1!
+            final CheckBox checkBox = new CheckBox(context);
+            checkBox.setVisibility(View.INVISIBLE);
+            checkBox.setText(R.string.explanation_cleanup_now);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(DownloadFragment.dpToPx(context, 8), 0, DownloadFragment.dpToPx(context, 8), 0);
+            checkBox.setLayoutParams(params);
+            numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    if (newVal >= prefs.getInt(getKey(), Integer.MIN_VALUE)) {
+                        checkBox.setVisibility(View.INVISIBLE);
+                    } else {
+                        checkBox.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-        });
-        linearLayout.addView(checkBox);
+            });
+            linearLayout.addView(checkBox);
+        }
         setSummary(context.getString(R.string.explanation_keep_packages, prefs.getInt(getKey(), 1)));
         alertDialog = new AlertDialog.Builder(context)
                 .setTitle(getTitle())
@@ -60,12 +62,23 @@ public class NumberPickerPreference extends Preference {
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (numberPicker.getValue() < prefs.getInt(getKey(), Integer.MIN_VALUE)) {
+                            new AlertDialog.Builder(context)
+                                    .setMessage(R.string.explanation_cleanup_now)
+                                    .setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            DownloadFragment.cleanUp(context);
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.label_cancel, null)
+                                    .show();
+                        }
                         persistInt(numberPicker.getValue());
                         setSummary(getContext().getString(R.string.explanation_keep_packages, getPersistedInt(1)));
-                        if (checkBox.isChecked()) {
-                            Toast.makeText(context, "" + prefs.getInt(getKey(), -1), Toast.LENGTH_SHORT).show();
-                            DownloadFragment.cleanUp(context);
-                        }
+//                        if (checkBox.isChecked()) {
+//                            DownloadFragment.cleanUp(context);
+//                        }
                     }
                 })
                 .create();
