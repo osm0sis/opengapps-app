@@ -32,7 +32,7 @@ public class NumberPickerPreference extends Preference {
         numberPicker.setValue(1);
         numberPicker.setWrapSelectorWheel(false);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(DownloadFragment.dpToPx(context, 64), 0, DownloadFragment.dpToPx(context, 64), 0);
+        layoutParams.setMargins(DownloadFragment.dpToPx(context, 24), 0, DownloadFragment.dpToPx(context, 24), 0);
         numberPicker.setLayoutParams(layoutParams);
         linearLayout.addView(numberPicker);
         if (false) { //THIS WILL GET ADDED IN 1.1.1!
