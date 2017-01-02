@@ -12,6 +12,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">#1A00796B</item>
+        <item name="colorControlHighlight">@color/controlHighlight</item>
     </style>
 
     <style name="intro_radio_button" parent="Widget.AppCompat.CompoundButton.RadioButton">

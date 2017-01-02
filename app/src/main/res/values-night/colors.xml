@@ -7,4 +7,5 @@
     <color name="backgroundColor">@color/colorPrimary</color>
     <color name="splash_activity_color">@color/colorPrimary</color>
     <color name="splash_status_color">@color/colorPrimaryDark</color>
+    <color name="controlHighlight">#212121</color>
 </resources>

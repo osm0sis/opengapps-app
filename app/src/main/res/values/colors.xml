@@ -9,7 +9,7 @@
     <color name="splash_activity_color">#bebebe</color>
     <color name="splash_status_color">#cfcfcf</color>
     <color name="solidBlack">#000000</color>
-
+    <color name="controlHighlight">#dcdcdc</color>
 
     <color name="app_intro_seperator_color">#ffffff</color>
     <color name="app_intro_unchecked_radio_color">#E8E8E8</color>
