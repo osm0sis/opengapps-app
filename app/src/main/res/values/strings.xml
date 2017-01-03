@@ -209,7 +209,7 @@
             <string name="opengapps_project" translatable="false">The Open GApps Project</string>
             <string name="label_website" translatable="false">OpenGApps.org</string>
             <string name="designer" translatable="false">Adam Lapinski</string>
-            <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016  - All Rights Reserved</string>
+            <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016-2017  - All Rights Reserved</string>
             <string name="dev" translatable="false">Christoph Loy</string>
             <string name="dev_co" translatable="false">Ashish Shekar</string>
             <string name="label_android" translatable="false">Android</string>
