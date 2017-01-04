@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#00796B</color>
     <color name="colorPrimaryDark">#005E53</color>
+    <color name="colorAccent">#e53935</color>
     <color name="iconColor">#BFBFBF</color>
     <color name="textColor">#F5F5F5</color>
     <color name="backgroundColor">@color/colorPrimary</color>
@@ -9,12 +10,10 @@
     <color name="splash_status_color">@color/colorPrimaryDark</color>
     <color name="controlHighlight">#212121</color>
 
-    <color name="white_fifty_four">#6effffff</color>
-
     <!-- dialog colors -->
-    <color name="memory_status_color">@color/white_fifty_four</color>
+    <color name="memory_status_color">#6effffff</color>
     <color name="memory_bar_color">@color/colorAccent</color>
-    <color name="new_folder_color">@android:color/white</color>
+    <color name="new_folder_color">@color/textColor</color>
     <color name="select_color">@color/colorAccent</color>
-    <color name="cancel_color">@android:color/white</color>
+    <color name="cancel_color">@color/textColor</color>
 </resources>

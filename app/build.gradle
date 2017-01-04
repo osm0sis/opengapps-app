@@ -61,7 +61,7 @@ dependencies {
     compile 'com.github.fcannizzaro:material-stepper:1.2.2' //licensed
     compile 'com.github.vihtarb:tooltip:0.1.9' //licensed
 
-    compile 'com.github.codekidX:storage-chooser:3a2bfa4885' //licensed
+    compile 'com.github.codekidX:storage-chooser:09c5922' //licensed
 
 
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'

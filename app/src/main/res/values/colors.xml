@@ -18,7 +18,7 @@
     <!-- dialog colors -->
     <color name="memory_status_color">@color/colorPrimaryDark</color>
     <color name="memory_bar_color">@color/colorAccent</color>
-    <color name="new_folder_color">@color/iconColor</color>
+    <color name="new_folder_color">@color/textColor</color>
     <color name="select_color">@color/colorPrimaryDark</color>
-    <color name="cancel_color">@color/colorAccent</color>
+    <color name="cancel_color">@color/textColor</color>
 </resources>
