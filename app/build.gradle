@@ -9,8 +9,8 @@ android {
         applicationId "org.opengapps.app"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 9
-        versionName "1.0.3"
+        versionCode 10
+        versionName "1.1.0-alpha1"
 //        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
