@@ -8,4 +8,13 @@
     <color name="splash_activity_color">@color/colorPrimary</color>
     <color name="splash_status_color">@color/colorPrimaryDark</color>
     <color name="controlHighlight">#212121</color>
+
+    <color name="white_fifty_four">#6effffff</color>
+
+    <!-- dialog colors -->
+    <color name="memory_status_color">@color/white_fifty_four</color>
+    <color name="memory_bar_color">@color/colorAccent</color>
+    <color name="new_folder_color">@android:color/white</color>
+    <color name="select_color">@color/colorAccent</color>
+    <color name="cancel_color">@android:color/white</color>
 </resources>

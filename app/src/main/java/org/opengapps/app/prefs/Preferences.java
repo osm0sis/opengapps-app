@@ -117,36 +117,10 @@ public class Preferences extends AppCompatActivity {
                     StorageChooserView.setToastFolderCreated(getString(R.string.create_folder_success));
                     StorageChooserView.setToastFolderError(getString(R.string.create_folder_error));
 
-                    // { memory text, memory bar, new folder label, select label, cancel label }
-                    int[] nightColors = {R.color.white_fifty_seven, R.color.colorAccent, android.R.color.white,
-                            R.color.colorAccent,android.R.color.white};
-                    StorageChooserView.setNightColors(nightColors);
-
-                    chooserDayNightSetup(chooser);
-
                     chooser.show();
                     return true;
                 }
             });
-        }
-
-        private void chooserDayNightSetup(StorageChooser chooser) {
-            int currentNightMode = getResources().getConfiguration().uiMode
-                    & Configuration.UI_MODE_NIGHT_MASK;
-            switch (currentNightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    // Night mode is not active, we're in day time
-                    chooser.setMode(StorageChooser.DAY_MODE);
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    // Night mode is active, we're at night!
-                    chooser.setMode(StorageChooser.NIGHT_MODE);
-                    break;
-                case Configuration.UI_MODE_NIGHT_UNDEFINED:
-                    // We don't know what mode we're in, assume notnight
-                    chooser.setMode(StorageChooser.DAY_MODE);
-                    break;
-            }
         }
     }
 }
