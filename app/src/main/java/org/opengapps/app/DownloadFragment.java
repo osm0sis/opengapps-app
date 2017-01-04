@@ -265,6 +265,11 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void loadRateUsCard() {
         int count = prefs.getInt("rate_count", 1);
         boolean rate_status = prefs.getBoolean("rate_done", false);
+
+        if(prefs.getBoolean("show_rate_card", false) && rateUsCard == null) {
+            showRateUsCard();
+        }
+
         if (count % 9 == 0 && !rate_status) {
             if (rateUsCard == null) {
                 showRateUsCard();
@@ -277,6 +282,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
         if (rateUsCard == null) {
             isRateUsCardSet = true;
+            editor.putBoolean("show_rate_card", isRateUsCardSet);
+            editor.apply();
             rateUsCard = new RateUsCard(globalContext);
             rateUsCard.setRateListener(new View.OnClickListener() {
                 @Override
@@ -295,6 +302,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                     rateUsCard.setVisibility(View.GONE);
                     rateUsCard = null;
                     isRateUsCardSet = false;
+                    editor.putBoolean("show_rate_card", isRateUsCardSet);
+                    editor.apply();
                 }
             });
             LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
@@ -311,6 +320,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         int randomMin = 1;
         int randomMax = 20;
 
+        if(prefs.getBoolean("show_support_card", false) && supportCard == null) {
+            showSupportCard();
+        }
+
         int randomNum = random.nextInt((randomMax - randomMin) + 1) + randomMin;
         boolean support_status = prefs.getBoolean("support_done", false);
         if (randomNum == 11 && !support_status) {
@@ -323,6 +336,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
         if (supportCard == null) {
             isSupportCardSet = true;
+            editor.putBoolean("show_support_card", isSupportCardSet);
+            editor.apply();
             supportCard = new SupportCard(globalContext);
             supportCard.setSupportButton(new View.OnClickListener() {
                 @Override
@@ -339,6 +354,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                     supportCard.setVisibility(View.GONE);
                     supportCard = null;
                     isSupportCardSet = false;
+                    editor.putBoolean("show_support_card", isSupportCardSet);
+                    editor.apply();
                 }
             });
             supportCard.setVisibility(View.VISIBLE);
