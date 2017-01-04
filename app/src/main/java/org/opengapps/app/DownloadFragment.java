@@ -87,10 +87,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         isRestored = true;
 
         if (isRateUsCardSet) {
-            showRateUsCard();
+            showRateUsCard(prefs.getInt("rate_later_count", 0));
         }
         if (isSupportCardSet) {
-            showSupportCard();
+            showSupportCard(prefs.getInt("support_later_count", 0));
         }
 
     }
@@ -146,6 +146,14 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (!prefs.getBoolean("firstStart", true) && !downloaderLoaded) {
             initDownloader(isRestored);
             downloaderLoaded = true;
+        }
+
+        // counts to turn later to never
+        if(!prefs.contains("rate_later_count")) {
+            prefs.edit().putInt("rate_later_count", 0).apply();
+        }
+        if(!prefs.contains("support_later_count")) {
+            prefs.edit().putInt("support_later_count", 0).apply();
         }
     }
 
@@ -265,19 +273,22 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     private void loadRateUsCard() {
         int count = prefs.getInt("rate_count", 1);
         boolean rate_status = prefs.getBoolean("rate_done", false);
+        int rateLaterCount = prefs.getInt("rate_later_count", 0);
 
-        if(prefs.getBoolean("show_rate_card", false) && rateUsCard == null) {
-            showRateUsCard();
-        }
+        if(rateLaterCount < 2) {
+            if (prefs.getBoolean("show_rate_card", false) && rateUsCard == null) {
+                showRateUsCard(rateLaterCount);
+            }
 
-        if (count % 9 == 0 && !rate_status) {
-            if (rateUsCard == null) {
-                showRateUsCard();
+            if (count % 9 == 0 && !rate_status) {
+                if (rateUsCard == null) {
+                    showRateUsCard(rateLaterCount);
+                }
             }
         }
     }
 
-    private void showRateUsCard() {
+    private void showRateUsCard(final int laterCount) {
         final SharedPreferences.Editor editor = prefs.edit();
 
         if (rateUsCard == null) {
@@ -285,6 +296,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             editor.putBoolean("show_rate_card", isRateUsCardSet);
             editor.apply();
             rateUsCard = new RateUsCard(globalContext);
+            if(laterCount == 1) {
+                rateUsCard.setLaterLabel(getString(R.string.label_never));
+            }
             rateUsCard.setRateListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -303,6 +317,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                     rateUsCard = null;
                     isRateUsCardSet = false;
                     editor.putBoolean("show_rate_card", isRateUsCardSet);
+                    editor.putInt("rate_later_count", laterCount + 1);
                     editor.apply();
                 }
             });
@@ -319,19 +334,22 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         Random random = new Random();
         int randomMin = 1;
         int randomMax = 20;
-
-        if(prefs.getBoolean("show_support_card", false) && supportCard == null) {
-            showSupportCard();
-        }
-
         int randomNum = random.nextInt((randomMax - randomMin) + 1) + randomMin;
         boolean support_status = prefs.getBoolean("support_done", false);
-        if (randomNum == 11 && !support_status) {
-            showSupportCard();
+        int supportLaterCount = prefs.getInt("support_later_count", 0);
+
+        if(supportLaterCount < 2) {
+            if (prefs.getBoolean("show_support_card", false) && supportCard == null) {
+                showSupportCard(supportLaterCount);
+            }
+
+            if (randomNum == 11 && !support_status) {
+                showSupportCard(supportLaterCount);
+            }
         }
     }
 
-    private void showSupportCard() {
+    private void showSupportCard(final int laterCount) {
         final SharedPreferences.Editor editor = prefs.edit();
 
         if (supportCard == null) {
@@ -339,6 +357,9 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             editor.putBoolean("show_support_card", isSupportCardSet);
             editor.apply();
             supportCard = new SupportCard(globalContext);
+            if(laterCount == 1) {
+                supportCard.setLaterLabel(getString(R.string.label_never));
+            }
             supportCard.setSupportButton(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -355,6 +376,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                     supportCard = null;
                     isSupportCardSet = false;
                     editor.putBoolean("show_support_card", isSupportCardSet);
+                    editor.putInt("support_later_count", laterCount + 1);
                     editor.apply();
                 }
             });
@@ -548,10 +570,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         loadSupportCard();
 
         if (isRateUsCardSet) {
-            showRateUsCard();
+            showRateUsCard(prefs.getInt("rate_later_count", 0));
         }
         if (isSupportCardSet) {
-            showSupportCard();
+            showSupportCard(prefs.getInt("support_later_count", 0));
         }
 
 

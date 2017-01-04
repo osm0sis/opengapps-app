@@ -37,4 +37,8 @@ public class SupportCard extends CardView {
     public void setLaterListener(View.OnClickListener clickListener) {
         laterButton.setOnClickListener(clickListener);
     }
+
+    public void setLaterLabel(String label) {
+        laterButton.setText(label);
+    }
 }
