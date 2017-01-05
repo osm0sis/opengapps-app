@@ -38,7 +38,7 @@
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/label_install"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +49,8 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:minWidth="0dp"
         android:text="@string/label_delete"
         app:layout_constraintEnd_toStartOf="@+id/install_button"
         app:layout_constraintTop_toBottomOf="@+id/newest_version" />

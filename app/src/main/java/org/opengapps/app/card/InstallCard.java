@@ -133,8 +133,8 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                 @Override
                 public void onClick(View view) {
                     boolean showInstallWarning = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).getBoolean("show_install_warning", true);
-                    if (showInstallWarning)
-                        new AlertDialog.Builder(getContext())
+                    if (showInstallWarning) {
+                        final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                 .setView(new InstallDiag(getContext(), gappsFile.getName()))
                                 .setPositiveButton(R.string.label_install, new DialogInterface.OnClickListener() {
                                     @Override
@@ -143,7 +143,15 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                                     }
                                 })
                                 .setNegativeButton(R.string.label_cancel, null)
-                                .show();
+                                .create();
+                        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialog) {
+                                alertDialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
+                            }
+                        });
+                        alertDialog.show();
+                    }
                     else
                         new ZipInstaller(getContext()).installZip(gappsFile);
                 }
@@ -174,7 +182,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             public void onClick(View v) {
                 boolean showDeleteWarning = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).getBoolean("show_delete_warning", true);
                 if(showDeleteWarning){
-                    new AlertDialog.Builder(getContext())
+                    final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                             .setView(new DeleteDiag(getContext(), gappsFile.getName()))
                             .setPositiveButton(R.string.label_delete, new DialogInterface.OnClickListener() {
                                 @Override
@@ -186,7 +194,14 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                                 }
                             })
                             .setNegativeButton(R.string.label_cancel, null)
-                            .show();
+                            .create();
+                    alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialog) {
+                            alertDialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
+                        }
+                    });
+                    alertDialog.show();
                 }else {
                     if (gappsFile != null) {
                         removeFiles();
@@ -391,6 +406,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             addView(textView, params);
             CheckBox checkBox = new CheckBox(getContext());
             checkBox.setText(R.string.dont_show_again);
+            checkBox.setTextColor(ContextCompat.getColor(context, R.color.iconColor));
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
