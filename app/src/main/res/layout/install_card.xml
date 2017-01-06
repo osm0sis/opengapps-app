@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/label_install_package"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_size_headline"
         android:textStyle="normal|bold"
-        android:fontFamily="sans-serif-condensed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,8 +24,8 @@
         android:id="@+id/newest_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:textSize="14sp"
         android:typeface="monospace"
@@ -40,6 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:minWidth="0dp"
+        android:textColor="@color/colorAccent"
         android:text="@string/label_install"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newest_version" />
