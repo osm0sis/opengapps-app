@@ -149,10 +149,10 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         }
 
         // counts to turn later to never
-        if(!prefs.contains("rate_later_count")) {
+        if (!prefs.contains("rate_later_count")) {
             prefs.edit().putInt("rate_later_count", 0).apply();
         }
-        if(!prefs.contains("support_later_count")) {
+        if (!prefs.contains("support_later_count")) {
             prefs.edit().putInt("support_later_count", 0).apply();
         }
     }
@@ -275,7 +275,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         boolean rate_status = prefs.getBoolean("rate_done", false);
         int rateLaterCount = prefs.getInt("rate_later_count", 0);
 
-        if(rateLaterCount < 2) {
+        if (rateLaterCount < 2) {
             if (prefs.getBoolean("show_rate_card", false) && rateUsCard == null) {
                 showRateUsCard(rateLaterCount);
             }
@@ -296,7 +296,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             editor.putBoolean("show_rate_card", isRateUsCardSet);
             editor.apply();
             rateUsCard = new RateUsCard(globalContext);
-            if(laterCount == 1) {
+            if (laterCount == 1) {
                 rateUsCard.setLaterLabel(getString(R.string.label_never));
             }
             rateUsCard.setRateListener(new View.OnClickListener() {
@@ -338,7 +338,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         boolean support_status = prefs.getBoolean("support_done", false);
         int supportLaterCount = prefs.getInt("support_later_count", 0);
 
-        if(supportLaterCount < 2) {
+        if (supportLaterCount < 2) {
             if (prefs.getBoolean("show_support_card", false) && supportCard == null) {
                 showSupportCard(supportLaterCount);
             }
@@ -357,7 +357,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             editor.putBoolean("show_support_card", isSupportCardSet);
             editor.apply();
             supportCard = new SupportCard(globalContext);
-            if(laterCount == 1) {
+            if (laterCount == 1) {
                 supportCard.setLaterLabel(getString(R.string.label_never));
             }
             supportCard.setSupportButton(new View.OnClickListener() {
@@ -510,6 +510,21 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         prefs.edit().putString("running_download_tag", tag).apply();
     }
 
+    private void addFreshPackage(@Nullable final File result) {
+        if (result == null || !result.exists()) {
+            return;
+        }
+        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+        if (layout == null) {
+            return;
+        }
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
+        InstallCard card = createInstallCard(result);
+        fileCards.put(result.getAbsolutePath(), card);
+        layout.addView(card, 2, params); // IMPROVEME -> The 2 here is set because 0 = Permissioncard, 1 = Downloadcard. This should actually be set dynamically but it works for now
+    }
+
     @Override
     public void downloadFailed(int reason) {
         downloadFinished();
@@ -518,11 +533,13 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void downloadSuccessful(String filePath) {
         File gapps = new File(filePath);
+        File result = null;
         if (gapps.exists()) {
+            result = new File(filePath.substring(0, filePath.length() - ".tmp".length()));
             //noinspection ResultOfMethodCallIgnored
-            gapps.renameTo(new File(filePath.substring(0, filePath.length() - ".tmp".length())));
+            gapps.renameTo(result);
         }
-        loadInstallCards();
+        addFreshPackage(result);
         if (prefs.getBoolean("download_delete_old_files", true)) {
             Downloader.deleteOldFiles(globalContext);
         }
