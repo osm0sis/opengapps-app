@@ -16,4 +16,5 @@
     <color name="new_folder_color">@color/textColor</color>
     <color name="select_color">@color/colorAccent</color>
     <color name="cancel_color">@color/textColor</color>
+    <color name="solidBlack">@color/textColor</color>
 </resources>
