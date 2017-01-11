@@ -162,22 +162,25 @@ public class NavigationActivity extends AppCompatActivity
         *
         * */
 
-        Downloader downloader = downloadFragment.getDownloader();
-        if (downloader != null) {
-            DownloadProgressView progressView = downloader.getProgressView();
+        Downloader downloader;
+        if(downloadFragment !=null) {
+            downloader = downloadFragment.getDownloader();
+            if (downloader != null) {
+                DownloadProgressView progressView = downloader.getProgressView();
 
-            if (progressView != null) {
-                if (progressView.startingDownload.getVisibility() == View.VISIBLE) {
+                if (progressView != null) {
+                    if (progressView.startingDownload.getVisibility() == View.VISIBLE) {
 //                    showToast("Download not started yet. Wait a sec.");
-                    Log.d("NavigationActivity", "User trying to exit before thread created.");
+                        Log.d("NavigationActivity", "User trying to exit before thread created.");
+                    } else {
+                        super.onBackPressed();
+                    }
                 } else {
                     super.onBackPressed();
                 }
             } else {
                 super.onBackPressed();
             }
-        } else {
-            super.onBackPressed();
         }
     }
 
