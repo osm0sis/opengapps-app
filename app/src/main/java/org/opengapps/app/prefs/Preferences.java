@@ -91,6 +91,7 @@ public class Preferences extends AppCompatActivity {
                             .actionSave(true)
                             .allowCustomPath(true)
                             .allowAddFolder(true)
+                            .showHidden(true) // TODO: Show hidden folders, as the old filechooser did do, until we implement a toggle
                             .build();
 
                     chooser.setOnSelectListener(new StorageChooser.OnSelectListener() {
