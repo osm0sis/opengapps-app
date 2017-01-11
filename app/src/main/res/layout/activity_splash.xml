@@ -23,7 +23,7 @@
         android:id="@+id/splash_text"
         android:text="@string/splashscreen_title"
         android:textStyle="bold"
-        android:textSize="26sp"
+        android:textSize="28sp"
         android:textColor="@color/splash_activity_color"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
