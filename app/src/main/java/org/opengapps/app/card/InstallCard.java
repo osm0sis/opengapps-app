@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -41,6 +42,7 @@ import java.util.Locale;
 
 public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickListener {
     public static boolean invalidate = false;
+    private SharedPreferences prefs;
     private File gappsFile;
     private File md5File;
     private File versionLogFile;
@@ -53,6 +55,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.install_card, this, true);
+        prefs = context.getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
         initButtons();
     }
 
@@ -120,8 +123,8 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
      */
     private void initInstallButton() {
         Button installButton = (Button) findViewById(R.id.install_button);
-        if (!ZipInstaller.canReboot(getContext())) {
-            installButton.setTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
+        if (!prefs.getBoolean("root_mode", false)) {
+            installButton.setTextColor(ContextCompat.getColor(getContext(), R.color.disabledTextColor));
             installButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -151,8 +154,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                             }
                         });
                         alertDialog.show();
-                    }
-                    else
+                    } else
                         new ZipInstaller(getContext()).installZip(gappsFile);
                 }
             });
@@ -181,7 +183,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
             @Override
             public void onClick(View v) {
                 boolean showDeleteWarning = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE).getBoolean("show_delete_warning", true);
-                if(showDeleteWarning){
+                if (showDeleteWarning) {
                     final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                             .setView(new DeleteDiag(getContext(), gappsFile.getName()))
                             .setPositiveButton(R.string.label_delete, new DialogInterface.OnClickListener() {
@@ -202,7 +204,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                         }
                     });
                     alertDialog.show();
-                }else {
+                } else {
                     if (gappsFile != null) {
                         removeFiles();
                         deleteListener.onDeleteFile(gappsFile);

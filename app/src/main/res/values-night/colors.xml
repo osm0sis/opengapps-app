@@ -5,6 +5,7 @@
     <color name="colorAccent">#e53935</color>
     <color name="iconColor">#BFBFBF</color>
     <color name="textColor">#F5F5F5</color>
+    <color name="disabledTextColor">#757575</color>
     <color name="backgroundColor">@color/colorPrimary</color>
     <color name="splash_activity_color">@color/colorPrimary</color>
     <color name="splash_status_color">@color/colorPrimaryDark</color>
