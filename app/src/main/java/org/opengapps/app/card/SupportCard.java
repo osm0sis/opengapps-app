@@ -23,6 +23,9 @@ public class SupportCard extends CardView {
 
     public SupportCard(Context context, AttributeSet attrs) {
         super(context, attrs);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.support_card, this, true);
+        initButtons();
     }
 
     public void initButtons() {

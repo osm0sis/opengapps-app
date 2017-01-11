@@ -23,6 +23,9 @@ public class RateUsCard extends CardView {
 
     public RateUsCard(Context context, AttributeSet attrs) {
         super(context, attrs);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.rate_us_card, this, true);
+        initButtons();
     }
 
     public void initButtons() {
