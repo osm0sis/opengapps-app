@@ -23,11 +23,11 @@
         android:id="@+id/splash_text"
         android:text="@string/splashscreen_title"
         android:textStyle="bold"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textColor="@color/splash_activity_color"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="60dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
