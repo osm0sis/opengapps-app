@@ -103,7 +103,7 @@
         android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintStart_toEndOf="@+id/label_architecture"
-        app:layout_constraintTop_toBottomOf="@+id/newest_version" />
+        app:layout_constraintTop_toBottomOf="@+id/text_rateus" />
 
     <TextView
         android:id="@+id/selected_android"
@@ -144,7 +144,7 @@
         app:layout_constraintTop_toBottomOf="@+id/headline_download" />
 
     <TextView
-        android:id="@+id/newest_version"
+        android:id="@+id/text_rateus"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"

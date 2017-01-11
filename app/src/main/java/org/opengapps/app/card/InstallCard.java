@@ -154,8 +154,9 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
                             }
                         });
                         alertDialog.show();
-                    } else
+                    } else {
                         new ZipInstaller(getContext()).installZip(gappsFile);
+                    }
                 }
             });
         }
@@ -236,7 +237,7 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
         versionLogFile = new File(versionLog);
         md5Exists = md5File.exists();
         versionLogExists = versionLogFile.exists();
-        TextView fileName = (TextView) findViewById(R.id.newest_version);
+        TextView fileName = (TextView) findViewById(R.id.text_rateus);
         fileName.setText(file.getName());
         checkMD5();
     }

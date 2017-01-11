@@ -118,7 +118,7 @@ public class DownloadCard extends CardView {
     public void onTagUpdated(String lastAvailableTag) {
         String lastDownloadedTag = Downloader.getLastDownloadedTag(context);
 
-        TextView version = (TextView) findViewById(R.id.newest_version);
+        TextView version = (TextView) findViewById(R.id.text_rateus);
         //noinspection deprecation,
         Spanned spanned = Html.fromHtml("<b>" + convertDate(lastAvailableTag) + "</b>"); //Thanks to spanned, android-TextViews do support HTML codes
         version.setText(spanned);
@@ -256,7 +256,7 @@ public class DownloadCard extends CardView {
      */
     public void setState(State state) {
         this.state = state;
-        TextView version = (TextView) findViewById(R.id.newest_version);
+        TextView version = (TextView) findViewById(R.id.text_rateus);
         Button downloadButton = (Button) findViewById(R.id.download_button);
         initDownloadButton();
 

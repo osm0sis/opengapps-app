@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/headline_install"
+        android:id="@+id/headline_rateus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/newest_version"
+        android:id="@+id/text_rateus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -30,7 +30,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headline_install" />
+        app:layout_constraintTop_toBottomOf="@+id/headline_rateus" />
 
     <Button
         android:id="@+id/rate_button"
@@ -43,7 +43,7 @@
         android:text="@string/label_rate"
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newest_version" />
+        app:layout_constraintTop_toBottomOf="@+id/text_rateus" />
 
     <Button
         android:id="@+id/later_button"
@@ -55,5 +55,5 @@
         android:minWidth="0dp"
         android:text="@string/label_later"
         app:layout_constraintEnd_toStartOf="@+id/rate_button"
-        app:layout_constraintTop_toBottomOf="@+id/newest_version" />
+        app:layout_constraintTop_toBottomOf="@+id/text_rateus" />
 </android.support.constraint.ConstraintLayout>

@@ -295,7 +295,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             isRateUsCardSet = true;
             editor.putBoolean("show_rate_card", isRateUsCardSet);
             editor.apply();
-            rateUsCard = new RateUsCard(globalContext);
+            rateUsCard = new RateUsCard(getActivity());
             if (laterCount == 1) {
                 rateUsCard.setLaterLabel(getString(R.string.label_never));
             }
@@ -356,7 +356,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             isSupportCardSet = true;
             editor.putBoolean("show_support_card", isSupportCardSet);
             editor.apply();
-            supportCard = new SupportCard(globalContext);
+            supportCard = new SupportCard(getActivity());
             if (laterCount == 1) {
                 supportCard.setLaterLabel(getString(R.string.label_never));
             }
