@@ -181,6 +181,8 @@ public class NavigationActivity extends AppCompatActivity
             } else {
                 super.onBackPressed();
             }
+        } else {
+            super.onBackPressed();
         }
     }
 
