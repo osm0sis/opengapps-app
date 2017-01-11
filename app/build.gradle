@@ -62,6 +62,7 @@ dependencies {
     compile 'com.github.vihtarb:tooltip:0.1.9' //licensed
 
     compile 'com.github.codekidX:storage-chooser:1.0.22' //licensed
+    compile 'com.anjlab.android.iab.v3:library:1.0.37' //licensed
 
 
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
