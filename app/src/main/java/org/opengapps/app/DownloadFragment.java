@@ -302,7 +302,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
             rateUsCard.setRateListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    NavigationActivity.openURL(globalContext, getString(R.string.url_ogapps_market));
+                    NavigationActivity.openURL(getActivity(), getString(R.string.url_ogapps_market));
                     editor.putBoolean("rate_done", true);
                     editor.apply();
                     rateUsCard.setVisibility(View.GONE);
