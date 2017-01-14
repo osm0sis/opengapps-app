@@ -85,12 +85,6 @@ public class NumberPickerPreference extends Preference {
     }
 
     @Override
-    protected void onBindView(View view) {
-        super.onBindView(view);
-        view.setPaddingRelative(100, 0, 0, 0);
-    }
-
-    @Override
     protected void onClick() {
         super.onClick();
         numberPicker.setValue(getPersistedInt(1));
