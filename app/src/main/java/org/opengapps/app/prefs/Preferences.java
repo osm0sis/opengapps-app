@@ -76,7 +76,7 @@ public class Preferences extends AppCompatActivity {
         private void bindPreferenceSummaryToValue(Preference preference) {
             final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(prefName, MODE_PRIVATE);
             // set summary of current download path
-            preference.setSummary(sharedPreferences.getString(DiskUtil.SC_PREFERENCE_KEY,""));
+            preference.setSummary(sharedPreferences.getString(DiskUtil.SC_PREFERENCE_KEY, ""));
 
             // Set the listener to watch for value changes.
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -87,8 +87,7 @@ public class Preferences extends AppCompatActivity {
                             .withMemoryBar(true)
                             .withFragmentManager(Preferences.fragmentManager)
                             .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
-                            .withPreference(sharedPreferences)
-                            .actionSave(true)
+                            .actionSave(false)
                             .allowCustomPath(true)
                             .allowAddFolder(true)
                             .showHidden(true) // TODO: Show hidden folders, as the old filechooser did do, until we implement a toggle
@@ -99,6 +98,7 @@ public class Preferences extends AppCompatActivity {
                         public void onSelect(String s) {
                             // set summary after selection of new path
                             preference.setSummary(s);
+                            sharedPreferences.edit().putString("download_dir", s).apply();
                         }
                     });
 
