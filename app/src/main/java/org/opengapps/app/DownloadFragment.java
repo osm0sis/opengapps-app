@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -158,7 +159,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     public static String getDownloadDir(Context context) {
-        return context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getString(DiskUtil.SC_PREFERENCE_KEY, "");
+        return context.getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getString(DiskUtil.SC_PREFERENCE_KEY, Environment.getExternalStorageDirectory().getAbsolutePath() + Downloader.OPENGAPPS_PREDEFINED_PATH);
     }
 
     private void requestAd() {
