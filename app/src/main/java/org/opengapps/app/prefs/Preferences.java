@@ -3,6 +3,7 @@ package org.opengapps.app.prefs;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.FragmentManager;
@@ -76,7 +77,7 @@ public class Preferences extends AppCompatActivity {
         private void bindPreferenceSummaryToValue(Preference preference) {
             final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(prefName, MODE_PRIVATE);
             // set summary of current download path
-            preference.setSummary(sharedPreferences.getString(DiskUtil.SC_PREFERENCE_KEY, ""));
+            preference.setSummary(sharedPreferences.getString(DiskUtil.SC_PREFERENCE_KEY, Environment.getExternalStorageDirectory().getAbsolutePath() + Downloader.OPENGAPPS_PREDEFINED_PATH));
 
             // Set the listener to watch for value changes.
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
