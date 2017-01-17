@@ -337,15 +337,25 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         int randomMax = 20;
         int randomNum = random.nextInt((randomMax - randomMin) + 1) + randomMin;
         boolean support_status = prefs.getBoolean("support_done", false);
+        boolean rate_status = prefs.getBoolean("rate_done", false);
         int supportLaterCount = prefs.getInt("support_later_count", 0);
+        int rateLaterCount = prefs.getInt("rate_later_count", 0);
 
-        if (supportLaterCount < 2) {
-            if (prefs.getBoolean("show_support_card", false) && supportCard == null) {
-                showSupportCard(supportLaterCount);
-            }
+        if (supportLaterCount < 2 && !isRateUsCardSet) {
+            // show only if user has rated OR user has clicked the later button atleast once
+            if (rate_status || rateLaterCount > 0) {
+                // this if -->
+                // - checks if there was support card shown and there was no interaction by the
+                // user only then show the card
+                if (prefs.getBoolean("show_support_card", false) && supportCard == null) {
+                    showSupportCard(supportLaterCount);
+                }
 
-            if (randomNum == 11 && !support_status) {
-                showSupportCard(supportLaterCount);
+                // general if --> shows the card if user didn't click the support button and the
+                // random number is 11
+                if (randomNum == 11 && !support_status) {
+                    showSupportCard(supportLaterCount);
+                }
             }
         }
     }
