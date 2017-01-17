@@ -77,7 +77,7 @@ public class Preferences extends AppCompatActivity {
         private void bindPreferenceSummaryToValue(Preference preference) {
             final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(prefName, MODE_PRIVATE);
             // set summary of current download path
-            preference.setSummary(sharedPreferences.getString(DiskUtil.SC_PREFERENCE_KEY, Environment.getExternalStorageDirectory().getAbsolutePath() + Downloader.OPENGAPPS_PREDEFINED_PATH));
+            preference.setSummary(sharedPreferences.getString("download_dir", Environment.getExternalStorageDirectory().getAbsolutePath() + Downloader.OPENGAPPS_PREDEFINED_PATH));
 
             // Set the listener to watch for value changes.
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
