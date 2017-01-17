@@ -156,6 +156,17 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (!prefs.contains("support_later_count")) {
             prefs.edit().putInt("support_later_count", 0).apply();
         }
+
+        //increment rate
+        final SharedPreferences.Editor editor = prefs.edit();
+        int count = prefs.getInt("rate_count", 0);
+        boolean rate_status = prefs.getBoolean("rate_done",false);
+        if(count != 10 && !rate_status) {
+            count += 1;
+            Log.e("rate coount", "" + count);
+            editor.putInt("rate_count", count);
+            editor.apply();
+        }
     }
 
     public static String getDownloadDir(Context context) {
