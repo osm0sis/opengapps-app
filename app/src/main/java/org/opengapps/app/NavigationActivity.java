@@ -41,6 +41,8 @@ public class NavigationActivity extends AppCompatActivity
     private Toolbar toolbar;
     private NavigationView navigationView;
 
+    SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +68,9 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        final boolean isFirstStart = getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getBoolean("firstStart", true);
-        if (!isFirstStart && AppUpdater.checkAllowed(getSharedPreferences(Preferences.prefName, MODE_PRIVATE))) {
+        prefs = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
+        final boolean isFirstStart = prefs.getBoolean("firstStart", true);
+        if (!isFirstStart && AppUpdater.checkAllowed(prefs)) {
             new AppUpdater().execute(this);
         }
         Thread t = new Thread(new Runnable() {
@@ -143,7 +146,6 @@ public class NavigationActivity extends AppCompatActivity
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_download_update)));
             startActivity(i);
         }
-        SharedPreferences prefs = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -244,4 +246,5 @@ public class NavigationActivity extends AppCompatActivity
             }
         }
     }
+
 }

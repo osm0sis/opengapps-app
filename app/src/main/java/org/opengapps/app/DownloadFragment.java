@@ -1,6 +1,7 @@
 package org.opengapps.app;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -40,6 +41,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -155,17 +157,6 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         }
         if (!prefs.contains("support_later_count")) {
             prefs.edit().putInt("support_later_count", 0).apply();
-        }
-
-        //increment rate
-        final SharedPreferences.Editor editor = prefs.edit();
-        int count = prefs.getInt("rate_count", 0);
-        boolean rate_status = prefs.getBoolean("rate_done",false);
-        if(count != 10 && !rate_status) {
-            count += 1;
-            Log.e("rate coount", "" + count);
-            editor.putInt("rate_count", count);
-            editor.apply();
         }
     }
 
