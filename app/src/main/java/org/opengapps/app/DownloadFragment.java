@@ -1,6 +1,7 @@
 package org.opengapps.app;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -40,6 +41,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 

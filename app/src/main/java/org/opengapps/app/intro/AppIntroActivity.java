@@ -139,7 +139,7 @@ public class AppIntroActivity extends AppIntro {
         //  Add primary download path to pref
         .putString(DiskUtil.SC_PREFERENCE_KEY, Environment.getExternalStorageDirectory().getAbsolutePath() + Downloader.OPENGAPPS_PREDEFINED_PATH)
         // add rate count during 1st run
-        .putInt("rate_count", 1)
+        .putInt("rate_count", 0)
         .putBoolean("rate_done", false).apply();
 
         Intent i = new Intent(getBaseContext(), NavigationActivity.class);

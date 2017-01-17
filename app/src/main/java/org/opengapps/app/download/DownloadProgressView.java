@@ -207,17 +207,6 @@ public class DownloadProgressView extends LinearLayout {
                                         //since latest version is downloaded successfully the onDownloadInterruptedView() flow
                                         //can be applicable here too
                                         onDownloadInterruptedView();
-
-                                        //increment rate
-                                        SharedPreferences sharedPreferences = getContext().getSharedPreferences(Preferences.prefName, Context.MODE_PRIVATE);
-                                        final SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        int count = sharedPreferences.getInt("rate_count", 0);
-                                        boolean rate_status = sharedPreferences.getBoolean("rate_done",false);
-                                        if(count != 10 && !rate_status) {
-                                            count += 1;
-                                            editor.putInt("rate_count", count);
-                                            editor.apply();
-                                        }
                                     }
                                 } else {
                                     downloading = true;
