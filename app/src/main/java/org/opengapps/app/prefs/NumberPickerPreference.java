@@ -15,6 +15,7 @@ import android.widget.NumberPicker;
 
 import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.R;
+import org.opengapps.app.download.Downloader;
 
 public class NumberPickerPreference extends Preference {
     private final AlertDialog alertDialog;
@@ -29,7 +30,7 @@ public class NumberPickerPreference extends Preference {
         numberPicker = new NumberPicker(getContext());
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(10);
-        numberPicker.setValue(1);
+        numberPicker.setValue(0);
         numberPicker.setWrapSelectorWheel(false);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(DownloadFragment.dpToPx(context, 24), 0, DownloadFragment.dpToPx(context, 24), 0);
@@ -54,7 +55,7 @@ public class NumberPickerPreference extends Preference {
             });
             linearLayout.addView(checkBox);
         }
-        setSummary(context.getString(R.string.explanation_keep_packages, prefs.getInt(getKey(), 1)));
+        setSummary(context.getString(R.string.explanation_keep_packages, prefs.getInt(getKey(), 0)));
         alertDialog = new AlertDialog.Builder(context)
                 .setTitle(getTitle())
                 .setView(linearLayout)
@@ -68,7 +69,7 @@ public class NumberPickerPreference extends Preference {
                                     .setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            DownloadFragment.cleanUp(context);
+                                            Downloader.deleteOldFiles(context);
                                         }
                                     })
                                     .setNegativeButton(R.string.label_cancel, null)
@@ -87,7 +88,7 @@ public class NumberPickerPreference extends Preference {
     @Override
     protected void onClick() {
         super.onClick();
-        numberPicker.setValue(getPersistedInt(1));
+        numberPicker.setValue(getPersistedInt(0));
         alertDialog.show();
     }
 }
