@@ -43,11 +43,12 @@ public class OGappsApplication extends Application {
         final SharedPreferences.Editor editor = prefs.edit();
         int count = prefs.getInt("rate_count", 0);
         boolean rate_status = prefs.getBoolean("rate_done",false);
-        if(count != 10 && !rate_status) {
+        if(count != 9 && !rate_status) {
             count += 1;
-            Log.e("rate coount", "" + count);
-            editor.putInt("rate_count", count);
-            editor.apply();
+            Log.e("rate count", "" + count);
+            editor.putInt("rate_count", count).apply();
+        } else if(count == 9) {
+            editor.putInt("rate_count", 0).apply();
         }
     }
 }
