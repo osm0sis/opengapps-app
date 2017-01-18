@@ -1,7 +1,6 @@
 package org.opengapps.app;
 
 import android.Manifest;
-import android.app.ActivityManager;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -41,7 +40,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -283,7 +281,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                 showRateUsCard(rateLaterCount);
             }
 
-            if (count % 9 == 0 && !rate_status) {
+            if (count % 10 == 9 && !rate_status) {
                 if (rateUsCard == null) {
                     showRateUsCard(rateLaterCount);
                 }
@@ -321,6 +319,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
                     isRateUsCardSet = false;
                     editor.putBoolean("show_rate_card", isRateUsCardSet);
                     editor.putInt("rate_later_count", laterCount + 1);
+                    editor.putInt("rate_count", 0).apply(); // make sure we get at least 9 starts again until it pops up
                     editor.apply();
                 }
             });
