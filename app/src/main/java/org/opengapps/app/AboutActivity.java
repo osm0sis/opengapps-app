@@ -31,12 +31,6 @@ import de.psdev.licensesdialog.LicensesDialog;
 
 public class AboutActivity extends AppCompatActivity {
     private boolean playGAppsActive = false;
-    private int gfCount = 0;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +79,6 @@ public class AboutActivity extends AppCompatActivity {
         initLicenseButton();
         initTranslatorButton();
         intitSecretButton();
-        initMausiButton();
         initYetiButton();
         initCopyrightButton();
         initEasterEggFoundButton();
@@ -113,44 +106,8 @@ public class AboutActivity extends AppCompatActivity {
         mainDev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText edit = new EditText(AboutActivity.this);
-                DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String input = edit.getText().toString();
-
-                        if (input.trim().toUpperCase().startsWith("MI")) {
-                            Pattern p = Pattern.compile("(mii*\\s){2}(mii*)", Pattern.CASE_INSENSITIVE);
-                            Matcher matcher = p.matcher(input);
-                            if (matcher.matches()) {
-                                Toast.makeText(AboutActivity.this, "Meh❤", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                        if (input.trim().toLowerCase().startsWith("ha")) {
-                            Pattern p = Pattern.compile("Haa*sii*", Pattern.CASE_INSENSITIVE);
-                            Matcher matcher = p.matcher(input);
-                            if (matcher.matches()) {
-                                Toast.makeText(AboutActivity.this, "Maauusiiii❤", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                        if (input.contains("Chris") && input.contains("Cross")) {
-                            Toast.makeText(AboutActivity.this, "Mein Engel❤︎", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                };
-                if (gfCount == 5) {
-                    edit.setHint("Enter secret word");
-                    new AlertDialog.Builder(AboutActivity.this)
-                            .setTitle("This is only meant for my loved one, glad you found it")
-                            .setView(edit)
-                            .setPositiveButton(android.R.string.ok, listener)
-                            .show();
-                } else if (gfCount >= 1) {
-                    gfCount++;
-                } else {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_main_dev)));
-                    startActivity(i);
-                }
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_main_dev)));
+                startActivity(i);
             }
         });
     }
@@ -162,17 +119,6 @@ public class AboutActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_co_dev)));
                 startActivity(i);
-            }
-        });
-    }
-
-    private void initMausiButton() {
-        LinearLayout mainDev = (LinearLayout) findViewById(R.id.main_dev_button);
-        mainDev.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                gfCount = 1;
-                return true;
             }
         });
     }
