@@ -1,7 +1,6 @@
 package org.opengapps.app;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -9,28 +8,41 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.plattysoft.leonids.ParticleSystem;
+import com.plattysoft.leonids.modifiers.AlphaModifier;
 
 import org.opengapps.app.prefs.Preferences;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.psdev.licensesdialog.LicensesDialog;
 
 public class AboutActivity extends AppCompatActivity {
     private boolean playGAppsActive = false;
+    private int snowTapping = 0;
+    private ImageView logoLarge;
+
+    private ParticleSystem psLeft;
+    private ParticleSystem psRight;
+
+    private SharedPreferences pref;
+
+    private boolean[] eggsList = {false, false};
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +50,18 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        pref = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initButtons();
         initLabels();
+        updateEasterEggText();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean("playGAppsActive", playGAppsActive);
+        outState.putInt("snowTaps", snowTapping);
         super.onSaveInstanceState(outState);
     }
 
@@ -55,6 +70,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         playGAppsActive = savedInstanceState.getBoolean("playGAppsActive", false);
+        snowTapping = savedInstanceState.getInt("snowTaps", 0);
         intitSecretButton();
     }
 
@@ -81,7 +97,6 @@ public class AboutActivity extends AppCompatActivity {
         intitSecretButton();
         initYetiButton();
         initCopyrightButton();
-        initEasterEggFoundButton();
     }
 
     private void initTranslatorButton() {
@@ -90,14 +105,6 @@ public class AboutActivity extends AppCompatActivity {
             getString(R.string.translators);
         } catch (Resources.NotFoundException e) {
             translators.setVisibility(View.GONE);
-        }
-    }
-
-    private void initEasterEggFoundButton() {
-        boolean found = getSharedPreferences(Preferences.prefName, MODE_PRIVATE).getBoolean("eastereggFound", false);
-        if (found) {
-            TextView easterEggFound = (TextView) findViewById(R.id.found_indicator);
-            easterEggFound.setText(R.string.label_yes);
         }
     }
 
@@ -121,6 +128,49 @@ public class AboutActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        coDev.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                snowTapping = snowTapping + 1;
+                if (snowTapping > 4){
+                    Toast.makeText(AboutActivity.this, "❄", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+        });
+    }
+
+    private void updateEasterEggText() {
+        eggsList[0] = pref.getBoolean("eastereggFound", false);
+        eggsList[1] = pref.getBoolean("snowFallingFound", false);
+        TextView easterEggFound = (TextView) findViewById(R.id.found_indicator);
+        easterEggFound.setText(String.valueOf(amountTrue(eggsList)) + "/" + String.valueOf(eggsList.length));
+    }
+
+     private int amountTrue(boolean[] list) {
+        int count = 0;
+        for(int i = 0; i < list.length; i++) {
+            if(list[i]) {
+             count++;
+            }
+        }
+        return count;
+     }
+
+
+    private void initiateSnowFall() {
+        psRight = new ParticleSystem(this, 80, R.drawable.snow, 10000)
+                .setSpeedModuleAndAngleRange(0f, 0.15f, 180, 180)
+                .setAcceleration(0.000010f, 90)
+                .addModifier(new AlphaModifier(0, 255, 2000, 6000));
+
+        psLeft = new ParticleSystem(this, 80, R.drawable.snow, 10000)
+                .setSpeedModuleAndAngleRange(0f, 0.15f, 0, 0)
+                .setAcceleration(0.000010f, 90)
+                .addModifier(new AlphaModifier(0, 255, 2000, 6000));
+
+        psLeft.emit(findViewById(R.id.emiter_top_left), 3);
+        psRight.emit(findViewById(R.id.emiter_top_right), 3);
     }
 
     private void initCopyrightButton() {
@@ -175,15 +225,27 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void intitSecretButton() {
-        final ImageView logoLarge = (ImageView) findViewById(R.id.logo_large);
-        final SharedPreferences prefs = getSharedPreferences(Preferences.prefName, MODE_PRIVATE);
-        if (playGAppsActive)
+        logoLarge = (ImageView) findViewById(R.id.logo_large);
+        if (playGAppsActive) {
             logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_playgapps_large));
+        }
+
+        logoLarge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(snowTapping > 4) {
+                    pref.edit().putBoolean("snowFallingFound", true).apply();
+                    updateEasterEggText();
+                    initiateSnowFall();
+                }
+            }
+        });
+
         logoLarge.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                prefs.edit().putBoolean("eastereggFound", true).apply();
-                initEasterEggFoundButton();
+                pref.edit().putBoolean("eastereggFound", true).apply();
+                updateEasterEggText();
                 if (playGAppsActive) {
                     logoLarge.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_opengapps_large));
                 } else {
@@ -194,6 +256,16 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(psLeft !=null) {
+            psLeft.cancel();
+            psRight.cancel();
+        }
+    }
+
     private static class ButtonDisabler implements Runnable {
         private View view;
 
