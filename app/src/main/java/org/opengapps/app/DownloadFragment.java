@@ -526,15 +526,19 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         if (result == null || !result.exists()) {
             return;
         }
-        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
-        if (layout == null) {
-            return;
+        try {
+            LinearLayout layout = (LinearLayout) getView().findViewById(R.id.main_layout);
+            if (layout == null) {
+                return;
+            }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
+            InstallCard card = createInstallCard(result);
+            fileCards.put(result.getAbsolutePath(), card);
+            layout.addView(card, 2, params); // IMPROVEME -> The 2 here is set because 0 = Permissioncard, 1 = Downloadcard. This should actually be set dynamically but it works for now
+        } catch (NullPointerException e) {
+            Log.d(TAG, "addFreshPackage: Couldn't add Package to the UI as a nullpointerexception occured. Probably, layout isnt shown anymore so this shouldnt really matter");
         }
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(dpToPx(globalContext, 8), dpToPx(globalContext, 8), dpToPx(globalContext, 8), 0);
-        InstallCard card = createInstallCard(result);
-        fileCards.put(result.getAbsolutePath(), card);
-        layout.addView(card, 2, params); // IMPROVEME -> The 2 here is set because 0 = Permissioncard, 1 = Downloadcard. This should actually be set dynamically but it works for now
     }
 
     @Override
@@ -613,8 +617,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
     }
 
     public static int spToPx(Context context, float sp) {
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
-        return px;
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
 
     public void showAd() {
