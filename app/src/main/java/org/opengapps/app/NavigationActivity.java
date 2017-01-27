@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AndroidRuntimeException;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -114,7 +115,14 @@ public class NavigationActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent x = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_support_opengapps)));
-                        startActivity(x);
+                        try {
+                            startActivity(x);
+                        } catch (AndroidRuntimeException e) {
+                            Log.d("NavigationActivity", "onClick: Apparently, startActivity gave AndroidRunTimeException. This should be fixed by applying FLAG_ACTIVITY_NEW_TASK."
+                                    + "This however should be avoided as long as possible as this introduces a weird workflow");
+                            x.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(x);
+                        }
                     }
                 })
                 .show();
