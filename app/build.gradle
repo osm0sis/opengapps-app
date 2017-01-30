@@ -43,13 +43,13 @@ dependencies {
     compile "com.google.firebase:firebase-ads:${rootProject.ext.firebaseVersion}"
     compile "com.google.firebase:firebase-crash:${rootProject.ext.firebaseVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    compile 'com.squareup.okhttp3:okhttp:3.5.0' //licensed
+    compile 'com.squareup.okhttp3:okhttp:3.6.0' //licensed
     compile 'com.github.paolorotolo:appintro:92a5b6d' //licensed
     compile 'eu.chainfire:libsuperuser:1.0.0.201608240809' //licensed
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.2-SNAPSHOT' //licensed
     compile 'com.github.fcannizzaro:material-stepper:1.2.2' //licensed
     compile 'com.github.vihtarb:tooltip:0.1.9' //licensed
-    compile 'com.github.codekidX:storage-chooser:b3d5b07' //licensed
+    compile 'com.github.codekidX:storage-chooser:a7c22b6' //licensed
     compile 'com.plattysoft.leonids:LeonidsLib:1.3.2' //licensed
 
 
