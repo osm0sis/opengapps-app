@@ -92,7 +92,11 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             tag = parseFeed();
         }
         Uri uri = generateUri();
-        return doDownload(uri);
+        try {
+            return doDownload(uri);
+        } catch (SecurityException e) {
+            return (long) -2;
+        }
     }
 
     @Override
@@ -100,6 +104,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         if (id == -1) {
             checkAndHandleError();
             return;
+        } else if (id == -2) {
+            try {
+                downloadFragment.downloadFailed(0);
+                Toast.makeText(downloadFragment.getContext(), "You cant save to this directory", Toast.LENGTH_SHORT).show();
+            } catch (Exception ignored) {
+            }
         }
         DownloadFragment fragment = (DownloadFragment) manager.findFragmentByTag(DownloadFragment.TAG);
 
@@ -218,8 +228,10 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     private void checkAndHandleError() {
-        if (errorOccured && downloadFragment != null && downloadFragment.getContext() != null) {
+        try {
+            downloadFragment.downloadFailed(0);
             Toast.makeText(downloadFragment.getContext(), R.string.label_download_error, Toast.LENGTH_SHORT).show();
+        } catch (NullPointerException ignored) {
         }
     }
 
@@ -246,7 +258,7 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
     }
 
-    private long doDownload(Uri uri) {
+    private long doDownload(Uri uri) throws SecurityException {
         DownloadManager.Request request = new DownloadManager.Request(uri);
         String title = "open_gapps" + "-" + architecture.toLowerCase() + "-" + android.toLowerCase() + "-" + variant.toLowerCase() + "-" + tag.toLowerCase();
         request.setTitle(title);

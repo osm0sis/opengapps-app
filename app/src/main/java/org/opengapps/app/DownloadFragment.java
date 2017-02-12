@@ -543,6 +543,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void downloadFailed(int reason) {
+        DownloadProgressView progress = (DownloadProgressView) getActivity().findViewById(R.id.progress_view);
+        progress.setVisibility(View.GONE);
         downloadFinished();
     }
 
