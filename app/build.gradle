@@ -49,7 +49,7 @@ dependencies {
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.2-SNAPSHOT' //licensed
     compile 'com.github.fcannizzaro:material-stepper:1.2.2' //licensed
     compile 'com.github.vihtarb:tooltip:0.1.9' //licensed
-    compile 'com.github.codekidX:storage-chooser:a7c22b6' //licensed
+    compile 'com.github.codekidX:storage-chooser:cbc7f1f' //licensed
     compile 'com.plattysoft.leonids:LeonidsLib:1.3.2' //licensed
 
 

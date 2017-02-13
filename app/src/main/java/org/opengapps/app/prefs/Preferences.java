@@ -89,6 +89,7 @@ public class Preferences extends AppCompatActivity {
                             .withFragmentManager(Preferences.fragmentManager)
                             .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
                             .actionSave(false)
+                            .setType(StorageChooser.DIRECTORY_CHOOSER)
                             .allowCustomPath(true)
                             .allowAddFolder(true)
                             .showHidden(true) // TODO: Show hidden folders, as the old filechooser did do, until we implement a toggle
