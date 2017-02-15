@@ -178,4 +178,63 @@
             <string name="tap_show_more">Tap to show more</string>
         <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
             <string name="notices_title">Notices</string>
+
+    <!--______UNTRANSLATEABLE STRINGS______-->
+        <!--ARRAYS-->
+            <string-array name="architectures" tools:ignore="MissingTranslation">
+                <item>ARM</item>
+                <item>ARM64</item>
+                <item>x86</item>
+                <item>x86_64</item>
+            </string-array>
+            <string-array name="android_versions" tools:ignore="MissingTranslation">
+                <item>7.1</item>
+                <item>7.0</item>
+                <item>6.0</item>
+                <item>5.1</item>
+                <item>5.0</item>
+                <item>4.4</item>
+            </string-array>
+            <string-array name="opengapps_variant" tools:ignore="MissingTranslation">
+                <item>aroma</item>
+                <item>super</item>
+                <item>stock</item>
+                <item>full</item>
+                <item>mini</item>
+                <item>micro</item>
+                <item>nano</item>
+                <item>pico</item>
+            </string-array>
+        <!--NAMES-->
+            <string name="opengapps_project" translatable="false">The Open GApps Project</string>
+            <string name="label_website" translatable="false">OpenGApps.org</string>
+            <string name="designer" translatable="false">Adam Lapinski</string>
+            <string name="copyright_owner" translatable="false">Fonville IT - Copyright 2016-2017  - All Rights Reserved</string>
+            <string name="dev" translatable="false">Christoph Loy</string>
+            <string name="dev_co" translatable="false">Ashish Shekar</string>
+            <string name="label_android" translatable="false">Android</string>
+            <string name="splashscreen_title" translatable="false">opengapps.org</string>
+        <!--LINKS-->
+            <string name="arch_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-platforms</string>
+            <string name="android_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki#notes-for-android-versions</string>
+            <string name="variant_moreinfo" translatable="false">https://github.com/opengapps/opengapps/wiki/Package-Comparison</string>
+            <string name="url_download_update" translatable="false">http://opengapps.org/app/</string>
+            <string name="url_main_dev" translatable="false">https://github.com/beatbrot/</string>
+            <string name="url_co_dev" translatable="false">https://github.com/codekidX/</string>
+            <string name="url_homepage" translatable="false">http://opengapps.org/app/</string>
+            <string name="url_report_bug" translatable="false">https://github.com/opengapps/opengapps-app-support/issues/</string>
+            <string name="url_wiki" translatable="false">http://opengapps.org/wiki/</string>
+            <string name="url_support_chat" translatable="false">http://opengapps.org/gitter/</string>
+            <string name="url_support_forum" translatable="false">http://opengapps.org/xda/</string>
+            <string name="url_sourcecode" translatable="false">http://opengapps.org/github/</string>
+            <string name="url_support_opengapps" translatable="false">http://opengapps.org/support/</string>
+            <string name="url_opengapps" translatable="false">http://opengapps.org/</string>
+            <string name="url_artwork" translatable="false">http://www.yeti-designs.com/</string>
+            <string name="url_blog" translatable="false">http://opengapps.org/blog/</string>
+            <string name="url_producer" translatable="false">https://github.com/mfonville/</string>
+            <string name="url_translate" translatable="false">https://github.com/opengapps/opengapps-app-support</string>
+            <string name="url_ogapps_market" translatable="false">market://details?id=org.opengapps.app</string>
+            <string name="url_version_info" translatable="false">http://opengapps.org/app/version.txt</string>
+        <!--LIBRARIES DIALOG (EXTERNAL LIBRARY)-->
+            <string name="notices_close" translatable="false">@string/label_close</string>
 </resources>
