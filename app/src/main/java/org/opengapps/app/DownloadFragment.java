@@ -517,8 +517,8 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         });
     }
 
-    public void downloadStarted(long id, String tag) {
-        prefs.edit().putLong("running_download_id", id).apply();
+    public void downloadStarted(int id, String tag) {
+        prefs.edit().putInt("running_download_id", id).apply();
         prefs.edit().putString("running_download_tag", tag).apply();
     }
 
@@ -580,7 +580,7 @@ public class DownloadFragment extends Fragment implements SharedPreferences.OnSh
         downloader = new Downloader(this);
         refreshLayout.setRefreshing(true);
         onRefresh();
-        prefs.edit().putLong("running_download_id", 0).apply();
+        prefs.edit().putInt("running_download_id", 0).apply();
         prefs.edit().putString("running_download_tag", null).apply();
     }
 

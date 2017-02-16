@@ -241,7 +241,12 @@ public class DownloadCard extends CardView {
      * This method loads the id and completes the necessary steps/shows the progress
      */
     public void restoreDownloadProgress() {
-        int id = prefs.getInt("running_download_id", 0);
+        int id;
+        try {
+            id = prefs.getInt("running_download_id", 0);
+        } catch (ClassCastException e) {
+            id = 0;
+        }
         if (id != 0) {
             DownloadProgressView progress = (DownloadProgressView) findViewById(R.id.progress_view);
             progress.show(id, fragment);
