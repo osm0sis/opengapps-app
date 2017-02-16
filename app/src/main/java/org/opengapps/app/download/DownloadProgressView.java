@@ -21,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.thin.downloadmanager.DownloadRequest;
+import com.thin.downloadmanager.DownloadStatusListenerV1;
 
 import org.opengapps.app.R;
 import org.opengapps.app.prefs.Preferences;
@@ -33,13 +35,13 @@ import java.util.Locale;
  * Created by Ayoola Ajebeku on 6/29/15.
  * Modified by Christoph Loy
  */
-public class DownloadProgressView extends LinearLayout {
+public class DownloadProgressView extends LinearLayout implements DownloadStatusListenerV1 {
 
     private final ProgressBar downloadProgressBar;
     private final TextView downloadedSizeView, totalSizeView, percentageView, backslash;
     public final TextView startingDownload;
     private final DownloadManager downloadManager;
-    private long downloadID;
+    private int downloadID;
     private boolean downloading;
     private DownloadStatusListener listener;
 
@@ -64,10 +66,6 @@ public class DownloadProgressView extends LinearLayout {
         startingDownload = (TextView) findViewById(R.id.download_starting);
         backslash = (TextView) findViewById(R.id.backslash);
 
-//        downloadedSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
-//        totalSizeView.setTextColor(ColorStateList.valueOf(percentageColor));
-//        percentageView.setTextColor(ColorStateList.valueOf(percentageColor));
-
         //hides view.
         setVisibility(View.GONE);
     }
@@ -79,12 +77,12 @@ public class DownloadProgressView extends LinearLayout {
      * @param downloadStatusListener the downloadStatusListener to monitor when
      *                               download is successful, failed, cancelled.
      */
-    public void show(long downloadID, DownloadStatusListener downloadStatusListener) {
+    public void show(int downloadID, DownloadStatusListener downloadStatusListener) {
         this.downloadID = downloadID;
         backslash.setText("/");
         startingDownload.setVisibility(GONE);
         listener = downloadStatusListener;
-        showDownloadProgress();
+//        showDownloadProgress();
     }
 
     public void begin() {
@@ -289,6 +287,33 @@ public class DownloadProgressView extends LinearLayout {
             downloadButton.setText(R.string.label_download);
             downloadButton.setEnabled(false);
             downloadButton.setTextColor(Color.parseColor("#757575"));
+        }
+    }
+
+    @Override
+    public void onDownloadComplete(DownloadRequest downloadRequest) {
+        setVisibility(GONE);
+        onDownloadInterruptedView();
+        listener.downloadSuccessful(downloadRequest.getDestinationURI().getPath());
+    }
+
+    @Override
+    public void onDownloadFailed(DownloadRequest downloadRequest, int errorCode, String errorMessage) {
+        setVisibility(GONE);
+    }
+
+    @Override
+    public void onProgress(DownloadRequest downloadRequest, long totalBytes, long downloadedBytes, int progress) {
+        if (downloadID != downloadRequest.getDownloadId()) {
+            setVisibility(VISIBLE);
+        }
+        downloadedSizeView.setText(String.format(Locale.US, "%.0fMB", ((downloadedBytes * 1.0) / 1024L / 1024L)));
+        totalSizeView.setText(String.format(Locale.US, "%.0fMB", ((totalBytes * 1.0) / 1024L / 1024L)));
+        downloadProgressBar.setIndeterminate(false);
+        try {
+            downloadProgressBar.setProgress(progress, true);
+        } catch (ArithmeticException e) {
+            downloadProgressBar.setProgress(0);
         }
     }
 

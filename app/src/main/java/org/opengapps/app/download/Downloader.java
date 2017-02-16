@@ -13,6 +13,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import com.thin.downloadmanager.DownloadRequest;
+import com.thin.downloadmanager.ThinDownloadManager;
+
 import org.opengapps.app.DownloadFragment;
 import org.opengapps.app.R;
 import org.opengapps.app.prefs.Preferences;
@@ -39,7 +42,7 @@ import okhttp3.ResponseBody;
 import static android.content.Context.MODE_PRIVATE;
 
 @SuppressWarnings("ConstantConditions")
-public class Downloader extends AsyncTask<Void, Void, Long> {
+public class Downloader extends AsyncTask<Void, Void, Integer> {
     private final static String downloadUrl = "https://github.com/opengapps/%arch/releases/download/%tag/open_gapps-%arch-%android-%variant-%tag.zip";
     private final static String feedUrl = "https://github.com/opengapps/%arch/releases.atom";
     public static String defaultDownloadDir;
@@ -84,9 +87,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
     }
 
     @Override
-    protected Long doInBackground(Void... voids) {
+    protected Integer doInBackground(Void... voids) {
         if (errorOccured) {
-            return -1L;
+            return -1;
         }
         if (tag == null) {
             tag = parseFeed();
@@ -95,12 +98,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         try {
             return doDownload(uri);
         } catch (SecurityException e) {
-            return (long) -2;
+            return -2;
         }
     }
 
     @Override
-    protected void onPostExecute(Long id) {
+    protected void onPostExecute(Integer id) {
         if (id == -1) {
             checkAndHandleError();
             return;
@@ -258,12 +261,12 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
         }
     }
 
-    private long doDownload(Uri uri) throws SecurityException {
-        DownloadManager.Request request = new DownloadManager.Request(uri);
+    private int doDownload(Uri uri) throws SecurityException {
+        ThinDownloadManager manager = new ThinDownloadManager();
+        DownloadRequest downloadRequest = new DownloadRequest(uri);
         String title = "open_gapps" + "-" + architecture.toLowerCase() + "-" + android.toLowerCase() + "-" + variant.toLowerCase() + "-" + tag.toLowerCase();
-        request.setTitle(title);
         if (prefs.getBoolean("download_wifi_only", true)) {
-            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+//            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
         }
         File path = new File(prefs.getString("download_dir", defaultDownloadDir));
         File gappsPackage = new File(path, title + ".zip");
@@ -274,8 +277,9 @@ public class Downloader extends AsyncTask<Void, Void, Long> {
             downloadVersionLog(uri.toString(), new File(path, title + DownloadFragment.versionlogFileExtension));
         }
         gappsPackage = new File(gappsPackage + ".tmp");
-        request.setDestinationUri(Uri.fromFile(gappsPackage));
-        return downloadManager.enqueue(request);
+        downloadRequest.setDestinationURI(Uri.fromFile(gappsPackage));
+        downloadRequest.setStatusListener(progress);
+        return manager.add(downloadRequest);
     }
 
     private void downloadVersionLog(String uri, File file) {
