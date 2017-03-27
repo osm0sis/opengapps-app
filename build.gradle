@@ -27,7 +27,7 @@ ext {
     compileSdkVersion = 25
     buildToolsVersion = "25.0.2"
     supportLibVersion = "25.3.0"
-    firebaseVersion = "10.2.0"
+    firebaseVersion = "10.2.1"
 }
 
 task clean(type: Delete) {
