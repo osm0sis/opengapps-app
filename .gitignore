@@ -44,6 +44,7 @@ captures/
 
 # Keystore files
 *.jks
+keystore.properties
 
 ### Android Patch ###
 gen-external-apklibs
