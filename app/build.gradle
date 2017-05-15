@@ -59,9 +59,9 @@ dependencies {
     compile "com.google.firebase:firebase-ads:${rootProject.ext.firebaseVersion}"
     compile "com.google.firebase:firebase-crash:${rootProject.ext.firebaseVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.squareup.okhttp3:okhttp:3.7.0' //licensed
+    compile 'com.squareup.okhttp3:okhttp:3.8.0' //licensed
     compile 'com.github.paolorotolo:appintro:7cffb7c' //licensed
-    compile 'eu.chainfire:libsuperuser:1.0.0.201608240809' //licensed
+    compile 'eu.chainfire:libsuperuser:1.0.0.201704021214' //licensed
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.2' //licensed
     compile 'com.github.fcannizzaro:material-stepper:1.2.2' //licensed
     compile 'com.github.vihtarb:tooltip:0.1.9' //licensed
