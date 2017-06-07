@@ -99,7 +99,7 @@ public class NavigationActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             showFragment(downloadFragment);
         }
-        toolbar.setTitle(getString(R.string.pref_header_install));
+        toolbar.setTitle(getString(R.string.label_download));
         navigationView.setCheckedItem(R.id.nav_download);
 
         if (AdBlockDetector.hasAdBlockEnabled(this) && !isFirstStart) {

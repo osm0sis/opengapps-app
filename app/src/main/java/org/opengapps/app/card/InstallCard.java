@@ -40,6 +40,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Locale;
 
+import static org.opengapps.app.intro.AppIntroActivity.BUILD_FLAVOR;
+import static org.opengapps.app.intro.AppIntroActivity.FLAVOR_GPLAY;
+
 public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickListener {
     public static boolean invalidate = false;
     private SharedPreferences prefs;
@@ -50,6 +53,9 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
     private boolean md5Exists;
     private boolean versionLogExists;
     private DownloadFragment deleteListener;
+
+    //buttons
+    private Button installButton;
 
     public InstallCard(Context context) {
         super(context);
@@ -79,9 +85,18 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
      * ContainerMethod for initializing all needed buttons and defining the onClick-Behaviour
      */
     private void initButtons() {
+        installButton = (Button) findViewById(R.id.install_button);
+
         initDeleteButton();
         initMenuButton();
-        initInstallButton();
+
+        // if it's a 'gplay' build release then set installButton as GONE, no functionality of
+        // installButton will be accessible to user
+        if(!BUILD_FLAVOR.contentEquals(FLAVOR_GPLAY)) {
+            initInstallButton();
+        } else {
+            installButton.setVisibility(GONE);
+        }
         initMd5Button();
     }
 
@@ -122,7 +137,6 @@ public class InstallCard extends CardView implements PopupMenu.OnMenuItemClickLi
      * Otherwise, button is gray and clicking only shows a toast.
      */
     private void initInstallButton() {
-        Button installButton = (Button) findViewById(R.id.install_button);
         if (!prefs.getBoolean("root_mode", false)) {
             installButton.setTextColor(ContextCompat.getColor(getContext(), R.color.disabledTextColor));
             installButton.setOnClickListener(new OnClickListener() {

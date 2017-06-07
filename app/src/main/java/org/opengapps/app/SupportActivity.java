@@ -7,9 +7,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import static org.opengapps.app.intro.AppIntroActivity.BUILD_FLAVOR;
+import static org.opengapps.app.intro.AppIntroActivity.FLAVOR_GPLAY;
+
 public class SupportActivity extends AppCompatActivity {
+
+    private LinearLayout supportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +52,17 @@ public class SupportActivity extends AppCompatActivity {
         findViewById(R.id.support_chat_button).setOnClickListener(listener);
         findViewById(R.id.support_forum_button).setOnClickListener(listener);
         findViewById(R.id.github_button).setOnClickListener(listener);
-        findViewById(R.id.support_opengapps_button).setOnClickListener(new View.OnClickListener() {
+        supportButton = (LinearLayout) findViewById(R.id.support_opengapps_button);
+        supportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = getBaseContext().getString(R.string.url_support_opengapps);
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
         });
+
+        if(BUILD_FLAVOR.contentEquals(FLAVOR_GPLAY)) {
+            supportButton.setVisibility(View.GONE);
+        }
     }
 }

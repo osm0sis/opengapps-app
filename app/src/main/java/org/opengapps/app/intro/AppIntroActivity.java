@@ -23,6 +23,7 @@ import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
 import com.github.paolorotolo.appintro.AppIntroViewPager;
 
+import org.opengapps.app.BuildConfig;
 import org.opengapps.app.NavigationActivity;
 import org.opengapps.app.R;
 import org.opengapps.app.ZipInstaller;
@@ -34,6 +35,11 @@ public class AppIntroActivity extends AppIntro {
     private Button permButton;
     private boolean termsAccepted = false;
 
+    // flavor [GLOBALLY ACCESSIBLE SWITCH]
+    public static final String BUILD_FLAVOR = BuildConfig.BUILD_TYPE;
+    //flavor types
+    public static final String FLAVOR_GPLAY = "gplay";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +49,9 @@ public class AppIntroActivity extends AppIntro {
         setInitialSettings();
         int primaryDarkColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
         addSlide(AppIntro2Fragment.newInstance(getString(R.string.app_name), getString(R.string.appintro_introslide_title), R.drawable.ic_opengapps_large, primaryDarkColor));
-        addSlide(new slideTermsOfUse());
+        if(!BUILD_FLAVOR.contentEquals(FLAVOR_GPLAY)) {
+            addSlide(new slideTermsOfUse());
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -71,9 +79,11 @@ public class AppIntroActivity extends AppIntro {
                     setNextPageSwipeLock(false);
                 }
             }
-            if (newFragment.getClass().equals(slideTermsOfUse.class)) {
-                if (!termsAccepted) {
-                    setNextPageSwipeLock(true);
+            if(!BUILD_FLAVOR.contentEquals(FLAVOR_GPLAY)) {
+                if (newFragment.getClass().equals(slideTermsOfUse.class)) {
+                    if (!termsAccepted) {
+                        setNextPageSwipeLock(true);
+                    }
                 }
             }
             if (newFragment instanceof GappsSelectionFragment) {

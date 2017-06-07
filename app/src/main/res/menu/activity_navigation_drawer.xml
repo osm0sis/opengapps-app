@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_download"
             android:icon="@drawable/ic_download"
-            android:title="@string/pref_header_install" />
+            android:title="@string/label_download" />
     </group>
     <group
         android:id="@+id/neededid"
