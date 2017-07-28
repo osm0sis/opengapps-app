@@ -34,6 +34,7 @@ import org.opengapps.app.download.DownloadProgressView;
 import org.opengapps.app.download.Downloader;
 import org.opengapps.app.intro.PackageGuesser;
 import org.opengapps.app.prefs.Preferences;
+import org.opengapps.app.rest.GithubRelease;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,9 @@ public class DownloadCard extends CardView {
 
     //make customize button private and globally accessible [for hide/unhide]
     private Button customize;
+
+    //GithubRelease is responsible for all the release info
+    private GithubRelease mGithubRelease;
 
     public DownloadCard(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -75,6 +79,13 @@ public class DownloadCard extends CardView {
         initButtons();
         initSelections();
         restoreDownloadProgress();
+
+        // fetch github release object
+        // sets up the parser
+        mGithubRelease = new GithubRelease()
+                .init()
+                .constructFromArch(prefs.getString("selection_arch", null))
+                .request();
     }
 
     /**
