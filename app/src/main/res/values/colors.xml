@@ -16,10 +16,25 @@
     <color name="app_intro_unchecked_radio_color">#E8E8E8</color>
     <color name="app_intro_radio_text_color">#E0E0E0</color>
 
-    <!-- dialog colors -->
-    <color name="memory_status_color">@color/colorPrimaryDark</color>
-    <color name="memory_bar_color">@color/colorAccent</color>
-    <color name="new_folder_color">@color/textColor</color>
-    <color name="select_color">@color/colorPrimaryDark</color>
-    <color name="cancel_color">@color/textColor</color>
+
+    <array name="opengapps_theme">
+        <!-- Overview -->
+        <item>@color/colorPrimary</item> <!--  Top Header bg -->
+        <item>@android:color/white</item> <!-- header text   -->
+        <item>#252525</item> <!-- list bg  -->
+        <item>@android:color/white</item> <!--  storage list name text  -->
+        <item>#e1e1e1</item> <!-- free space text  -->
+        <item>@color/colorAccent</item> <!-- memory bar -->
+
+        <!-- secondary dialog colors -->
+        <item>@color/colorPrimary</item> <!-- folder tint -->
+        <item>#252525</item> <!-- list bg -->
+        <item>@android:color/white</item> <!-- list text -->
+        <item>@android:color/white</item> <!-- address bar tint -->
+        <item>@color/chevronBgColor</item> <!-- new folder hint tint -->
+        <item>#da6c6c</item> <!-- select button color -->
+        <item>@color/colorPrimaryDark</item> <!-- new folder layour bg -->
+        <item>#da6c6c</item> <!-- fab multiselect color -->
+        <item>@color/colorPrimary</item> <!-- address bar bg -->
+    </array>
 </resources>

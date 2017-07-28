@@ -13,8 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.codekidlabs.storagechooser.StorageChooser;
-import com.codekidlabs.storagechooser.StorageChooserView;
-import com.codekidlabs.storagechooser.utils.DiskUtil;
 
 import org.opengapps.app.BuildConfig;
 import org.opengapps.app.R;
@@ -23,13 +21,13 @@ import org.opengapps.app.download.Downloader;
 public class Preferences extends AppCompatActivity {
     public final static String prefName = BuildConfig.APPLICATION_ID + "_preferences";
     public final static String DOWNLOAD_PATH_KEY = "user_download_path";
-    public static FragmentManager fragmentManager;
+    public static android.app.FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_toolbar);
-        fragmentManager = getSupportFragmentManager();
+        fragmentManager = getFragmentManager();
         getFragmentManager().beginTransaction()
                 .replace(R.id.settings_fragment, new SettingsFragment())
                 .commit();
@@ -83,7 +81,7 @@ public class Preferences extends AppCompatActivity {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(final Preference preference) {
-                    StorageChooser chooser = new StorageChooser.Builder()
+                    StorageChooser.Builder builder = new StorageChooser.Builder()
                             .withActivity(getActivity())
                             .withMemoryBar(true)
                             .withFragmentManager(Preferences.fragmentManager)
@@ -92,8 +90,17 @@ public class Preferences extends AppCompatActivity {
                             .setType(StorageChooser.DIRECTORY_CHOOSER)
                             .allowCustomPath(true)
                             .allowAddFolder(true)
-                            .showHidden(true) // TODO: Show hidden folders, as the old filechooser did do, until we implement a toggle
-                            .build();
+                            .showHidden(true);
+
+                    if(sharedPreferences.getBoolean("nightMode", false)) {
+                        StorageChooser.Theme theme = new StorageChooser.Theme(getActivity());
+                        theme.setScheme(getActivity()
+                                .getResources()
+                                .getIntArray(R.array.opengapps_theme));
+                        builder.setTheme(theme);
+                    }
+
+                    StorageChooser chooser = builder.build();
 
                     chooser.setOnSelectListener(new StorageChooser.OnSelectListener() {
                         @Override
@@ -103,22 +110,6 @@ public class Preferences extends AppCompatActivity {
                             sharedPreferences.edit().putString("download_dir", s).apply();
                         }
                     });
-
-                    // set view and strings for localization
-                    StorageChooserView.setViewSc(StorageChooserView.SC_LAYOUT_SHEET);
-                    // overview texts
-                    StorageChooserView.setChooserHeading(getString(R.string.title_storage_chooser));
-                    StorageChooserView.setInternalStorageText(getString(R.string.title_storage_chooser_internal));
-                    // button labels
-                    StorageChooserView.setLabelCreate(getString(R.string.label_create));
-                    StorageChooserView.setLabelSelect(getString(R.string.label_select));
-                    StorageChooserView.setLabelNewFolder(getString(R.string.new_folder));
-                    // textfield strings
-                    StorageChooserView.setTextfieldHint(getString(R.string.hint_folder_name));
-                    StorageChooserView.setTextfieldError(getString(R.string.error_tip_empty_field));
-                    // toast strings
-                    StorageChooserView.setToastFolderCreated(getString(R.string.create_folder_success));
-                    StorageChooserView.setToastFolderError(getString(R.string.create_folder_error));
 
                     chooser.show();
                     return true;
