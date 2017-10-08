@@ -74,7 +74,7 @@ dependencies {
     //licensed
     compile 'com.github.vihtarb:tooltip:0.1.9'
     //licensed
-    compile 'com.github.codekidX:storage-chooser:opengapps-SNAPSHOT'
+    compile 'com.github.codekidX:storage-chooser:2.0.2'
     //licensed
     compile 'com.plattysoft.leonids:LeonidsLib:1.3.2'
     //licensed

@@ -12,9 +12,8 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.codekidlabs.storagechooser.Content;
 import com.codekidlabs.storagechooser.StorageChooser;
-import com.codekidlabs.storagechooser.StorageChooserView;
-import com.codekidlabs.storagechooser.utils.DiskUtil;
 
 import org.opengapps.app.BuildConfig;
 import org.opengapps.app.R;
@@ -47,6 +46,9 @@ public class Preferences extends AppCompatActivity {
     @SuppressWarnings("WeakerAccess")
     public static class SettingsFragment extends PreferenceFragment {
 
+        private StorageChooser.Builder builder;
+        private SharedPreferences sharedPreferences;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -55,6 +57,7 @@ public class Preferences extends AppCompatActivity {
             Preference p = findPreference("download_dir");
             bindPreferenceSummaryToValue(p);
 
+            configureChooser();
             setDarkModeListener();
         }
 
@@ -68,6 +71,7 @@ public class Preferences extends AppCompatActivity {
                     } else {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     }
+
                     getActivity().recreate();
                     return true;
                 }
@@ -75,7 +79,7 @@ public class Preferences extends AppCompatActivity {
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {
-            final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(prefName, MODE_PRIVATE);
+            sharedPreferences = getActivity().getSharedPreferences(prefName, MODE_PRIVATE);
             // set summary of current download path
             preference.setSummary(sharedPreferences.getString("download_dir", Environment.getExternalStorageDirectory().getAbsolutePath() + Downloader.OPENGAPPS_PREDEFINED_PATH));
 
@@ -83,18 +87,7 @@ public class Preferences extends AppCompatActivity {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(final Preference preference) {
-                    StorageChooser chooser = new StorageChooser.Builder()
-                            .withActivity(getActivity())
-                            .withMemoryBar(true)
-                            .withFragmentManager(Preferences.fragmentManager)
-                            .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
-                            .actionSave(false)
-                            .setType(StorageChooser.DIRECTORY_CHOOSER)
-                            .allowCustomPath(true)
-                            .allowAddFolder(true)
-                            .showHidden(true) // TODO: Show hidden folders, as the old filechooser did do, until we implement a toggle
-                            .build();
-
+                    StorageChooser chooser = builder.build();
                     chooser.setOnSelectListener(new StorageChooser.OnSelectListener() {
                         @Override
                         public void onSelect(String s) {
@@ -104,26 +97,47 @@ public class Preferences extends AppCompatActivity {
                         }
                     });
 
-                    // set view and strings for localization
-                    StorageChooserView.setViewSc(StorageChooserView.SC_LAYOUT_SHEET);
-                    // overview texts
-                    StorageChooserView.setChooserHeading(getString(R.string.title_storage_chooser));
-                    StorageChooserView.setInternalStorageText(getString(R.string.title_storage_chooser_internal));
-                    // button labels
-                    StorageChooserView.setLabelCreate(getString(R.string.label_create));
-                    StorageChooserView.setLabelSelect(getString(R.string.label_select));
-                    StorageChooserView.setLabelNewFolder(getString(R.string.new_folder));
-                    // textfield strings
-                    StorageChooserView.setTextfieldHint(getString(R.string.hint_folder_name));
-                    StorageChooserView.setTextfieldError(getString(R.string.error_tip_empty_field));
-                    // toast strings
-                    StorageChooserView.setToastFolderCreated(getString(R.string.create_folder_success));
-                    StorageChooserView.setToastFolderError(getString(R.string.create_folder_error));
-
                     chooser.show();
+
                     return true;
                 }
             });
+        }
+
+        private void configureChooser() {
+
+
+            Content content = new Content();
+            content.setOverviewHeading(getString(R.string.title_storage_chooser));
+            content.setCreateLabel(getString(R.string.label_create));
+            content.setCancelLabel(getString(R.string.label_cancel));
+            content.setSelectLabel(getString(R.string.label_select));
+            content.setInternalStorageText(getString(R.string.title_storage_chooser_internal));
+            content.setNewFolderLabel(getString(R.string.new_folder));
+            content.setTextfieldHintText(getString(R.string.hint_folder_name));
+            content.setTextfieldErrorText(getString(R.string.error_tip_empty_field));
+            content.setFolderCreatedToastText(getString(R.string.create_folder_success));
+            content.setFolderErrorToastText(getString(R.string.create_folder_error));
+
+            builder = new StorageChooser.Builder()
+                    .withActivity(getActivity())
+                    .withMemoryBar(true)
+                    .withFragmentManager(getFragmentManager())
+                    .withPredefinedPath(Downloader.OPENGAPPS_PREDEFINED_PATH)
+                    .withContent(content)
+                    .actionSave(false)
+                    .setType(StorageChooser.DIRECTORY_CHOOSER)
+                    .allowCustomPath(true)
+                    .allowAddFolder(true)
+                    .showHidden(true);
+
+            if (sharedPreferences.getBoolean("nightMode", false)) {
+                StorageChooser.Theme theme = new StorageChooser.Theme(getActivity());
+                theme.setScheme(getActivity()
+                        .getResources()
+                        .getIntArray(R.array.opengapps_theme));
+                builder.setTheme(theme);
+            }
         }
     }
 }
