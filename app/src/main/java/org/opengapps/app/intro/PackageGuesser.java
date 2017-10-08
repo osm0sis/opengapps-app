@@ -50,17 +50,19 @@ public class PackageGuesser {
             case 19:
                 return androidVersion[5];//KitKat-Device
             case 21:
-                return androidVersion[4];//Lollipop-5.0-Device
+                return androidVersion[5];//Lollipop-5.0-Device
             case 22:
-                return androidVersion[3];//Lollipop-5.1-Device
+                return androidVersion[4];//Lollipop-5.1-Device
             case 23:
-                return androidVersion[2];//Marshmallow-Device
+                return androidVersion[3];//Marshmallow-Device
             case 24:
-                return androidVersion[1];//Nougat-Device
+                return androidVersion[2];//Nougat-Device
             case 25:
-                return androidVersion[0];//Nougat-MR1-Device (hello pixel)
+                return androidVersion[1];//Nougat-MR1-Device (hello pixel)
+            case 26:
+                return androidVersion[0];//Oreo 8.0
             default:
-                return androidVersion[1]; //Default to nougat
+                return androidVersion[1]; //Default to nougat - Still the most used android ver.
         }
     }
 

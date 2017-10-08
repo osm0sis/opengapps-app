@@ -188,6 +188,7 @@
                 <item>x86_64</item>
             </string-array>
             <string-array name="android_versions" tools:ignore="MissingTranslation">
+                <item>8.0</item>
                 <item>7.1</item>
                 <item>7.0</item>
                 <item>6.0</item>
