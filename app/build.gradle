@@ -61,23 +61,16 @@ dependencies {
     compile "com.google.firebase:firebase-core:${rootProject.ext.firebaseVersion}"
     compile "com.google.firebase:firebase-ads:${rootProject.ext.firebaseVersion}"
     compile "com.google.firebase:firebase-crash:${rootProject.ext.firebaseVersion}"
+    compile "com.google.android.gms:play-services:${rootProject.ext.firebaseVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    //licensed
-    compile 'com.github.paolorotolo:appintro:7cffb7c'
-    //licensed
-    compile 'eu.chainfire:libsuperuser:1.0.0.201704021214'
-    //licensed
-    compile 'de.psdev.licensesdialog:licensesdialog:1.8.2'
-    //licensed
-    compile 'com.github.fcannizzaro:material-stepper:1.2.2'
-    //licensed
-    compile 'com.github.vihtarb:tooltip:0.1.9'
-    //licensed
-    compile 'com.github.codekidX:storage-chooser:2.0.2'
-    //licensed
-    compile 'com.plattysoft.leonids:LeonidsLib:1.3.2'
-    //licensed
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'    //licensed
+    compile 'com.github.apl-devs:appintro:v4.2.2'    //licensed
+    compile 'eu.chainfire:libsuperuser:1.0.0.201704021214'    //licensed
+    compile 'de.psdev.licensesdialog:licensesdialog:1.8.3'    //licensed
+    compile 'com.github.fcannizzaro:material-stepper:1.2.2'    //licensed
+    compile 'com.github.vihtarb:tooltip:0.1.9'    //licensed
+    compile 'com.github.codekidX:storage-chooser:2.0.2'    //licensed
+    compile 'com.plattysoft.leonids:LeonidsLib:1.3.2'    //licensed
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
