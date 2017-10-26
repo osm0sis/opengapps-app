@@ -60,7 +60,7 @@ public class NumberPickerPreference extends Preference {
                 .setTitle(getTitle())
                 .setView(linearLayout)
                 .setNegativeButton(R.string.label_cancel, null)
-                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.label_accept, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (numberPicker.getValue() < prefs.getInt(getKey(), Integer.MIN_VALUE)) {

@@ -168,7 +168,7 @@ public class DownloadCard extends CardView {
                     new AlertDialog.Builder(getContext())
                             .setTitle(R.string.pref_header_download)
                             .setMessage(R.string.explanation_wifi_needed)
-                            .setPositiveButton(R.string.accept, null)
+                            .setPositiveButton(R.string.label_accept, null)
                             .show();
                 } else {
                     fragment.showAd();
