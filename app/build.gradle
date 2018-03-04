@@ -12,9 +12,10 @@ android {
     defaultConfig {
         applicationId "org.opengapps.app"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 16
         versionName "1.1.2"
+        multiDexEnabled true
 //        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
